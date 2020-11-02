@@ -31,6 +31,4 @@ abstract class User {
     public List<User> get_friendList() {
         return _friendList;
     }
-
-
 }

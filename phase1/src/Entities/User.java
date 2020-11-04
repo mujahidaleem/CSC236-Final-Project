@@ -2,7 +2,7 @@ package src.Entities;
 
 import java.util.List;
 
-abstract class User {
+public abstract class User {
     private String _name; // username/name for user
     private String _password; // password for user
     private Schedule _personalSchedule; // personal event list

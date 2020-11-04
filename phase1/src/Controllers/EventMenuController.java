@@ -1,5 +1,7 @@
 package Controllers;
-import Event;
+import src.Entities.Event;
+import src.Entities.User;
+
 
 import java.util.Scanner;
 

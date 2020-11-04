@@ -1,24 +1,23 @@
 package src.Entities;
-
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
-/*Only difference between this and the user class is that it can only message to their events, and not edit their schedule
- * NOTE: If you decide to combine the broadcast methods in the message use case, then you would override message here*/
-public class Speaker extends User {
 
-    public Speaker(String name, String password, Schedule schedule, List<User> friends){
+
+public class Speaker extends User{
+    private String _name;
+    private String _password;
+    public List<User> _friendList;
+    public HashMap<String, LocalDateTime> _personalSchedule;
+    public HashMap<String, LocalDateTime> _speakingSchedule;
+
+    public Speaker(String name, String password, HashMap<String, LocalDateTime> schedule,
+                   List<User> friends, HashMap<String, LocalDateTime> speakingSchedule){
         super(name, password, schedule, friends);
+        _speakingSchedule = speakingSchedule;
     }
 
-    /*Cant broadcast to all*/
-    @Override
-    public void broadcast_all(String message) {
-        System.out.println("Can't do this");
+    public HashMap<String, LocalDateTime> get_speakingSchedule() {
+        return _speakingSchedule;
     }
-
-    /*cant edit schedule at all*/
-    @Override
-    public void edit_schedule(Schedule schedule) {
-        System.out.println("Can't do this");
-    }
-
 }

@@ -1,4 +1,4 @@
-package src.Presenters;
+package Presenters;
 
 public class EventMenuPresenter {
     private User currentUser;

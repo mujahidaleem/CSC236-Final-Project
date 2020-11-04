@@ -1,4 +1,4 @@
-package src.Controllers;
+package Controllers;
 import Event;
 
 import java.util.Scanner;

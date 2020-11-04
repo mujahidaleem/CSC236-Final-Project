@@ -1,7 +1,4 @@
-package User;
-
-import Event.Event;
-import Schedule.Schedule;
+package Entities;
 
 import java.util.List;
 

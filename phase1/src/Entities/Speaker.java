@@ -1,7 +1,4 @@
-package User;
-
-import Event.Event;
-import Schedule.Schedule;
+package Entities;
 
 import java.util.List;
 /*Only difference between this and the user class is that it can only message to their events, and not edit their schedule

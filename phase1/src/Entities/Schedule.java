@@ -1,4 +1,4 @@
-package Schedule;
+package Entities;
 //Collection of events
 public class Schedule {
 }

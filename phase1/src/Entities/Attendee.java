@@ -1,4 +1,4 @@
-package src.Entities;
+package Entities;
 
 import java.util.List;
 /*Only difference between this and the user class is that it cant broadcast at all

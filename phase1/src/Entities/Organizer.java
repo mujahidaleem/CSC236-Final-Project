@@ -1,4 +1,4 @@
-package Entities;
+package src.Entities;
 
 import java.util.List;
 /*Only difference between this and the user class is it has access to the whole schedule, so you could implement the

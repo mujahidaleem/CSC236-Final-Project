@@ -1,4 +1,6 @@
-package Presenters;
+package src.Presenters;
+import src.Entities.Event;
+import src.Entities.User;
 
 public class EventMenuPresenter {
     private User currentUser;
@@ -42,8 +44,8 @@ public class EventMenuPresenter {
 
     public void printCommands(){
         System.out.println("---------------------------------------------------------------------------------");
-        System.out.println("To sign up for an event, type Sign up for: 'Event'");
-        System.out.println("To cancel your position in an event, type Leave: 'Event'");
+        System.out.println("To sign up for an event, type Sign up for_Event");
+        System.out.println("To cancel your position in an event, type Leave_Event");
         System.out.println("To return to the main menu, type return");
     }
 }

@@ -1,5 +1,6 @@
 package src.Entities;
 
+import Entities.Attendee;
 import Entities.Organizer;
 
 import java.time.LocalDateTime;
@@ -33,5 +34,21 @@ public class Event {
 
     public Organizer getOrganizer(){
         return organizer;
+    }
+
+    public boolean add(Attendee attendee){
+        if (attendees.contains(attendee)){
+            return false;
+        }
+        attendees.add(attendee);
+        return true;
+    }
+
+    public boolean remove(Attendee attendee){
+        if (!attendees.contains(attendee)){
+            return false;
+        }
+        attendees.remove(attendee);
+        return true;
     }
 }

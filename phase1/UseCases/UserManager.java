@@ -1,4 +1,4 @@
-package src.UseCases;
+package UseCases;
 
 public class UserManager {
 }

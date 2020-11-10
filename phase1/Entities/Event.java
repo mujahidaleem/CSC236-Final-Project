@@ -7,12 +7,16 @@ import java.util.ArrayList;
 //Time, and users are contained in event
 public class Event {
     String event_name;
+    int event_id;
+    int room_num;
     LocalDateTime event_time;
     ArrayList<Attendee> attendees;
     Organizer organizer;
 
-    public Event(String name, LocalDateTime time, Organizer event_organizer){
+    public Event(String name, int num, LocalDateTime time,
+                 Organizer event_organizer){
         event_name = name;
+        room_num = num;
         event_time = time;
         attendees = new ArrayList<Attendee>();
         organizer = event_organizer;
@@ -20,6 +24,14 @@ public class Event {
 
     public String getEvent_name(){
         return event_name;
+    }
+
+    public int getId(){
+        return event_id;
+    }
+
+    public int getRoom_num(){
+        return room_num;
     }
 
     public LocalDateTime getEvent_time(){

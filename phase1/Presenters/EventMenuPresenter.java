@@ -22,7 +22,11 @@ public class EventMenuPresenter {
      */
     public void printMenu(EventManager eventManager) {
         System.out.println("Events Attending");
-        printEventsAttending(eventManager);
+        for (Event event : eventManager.events) {
+            if (manager.getCurrentUser().get_personalSchedule().containsKey(event.getName())) {
+                System.out.println(event);
+            }
+        }
         System.out.println("---------------------------------------------------------------------------------");
         System.out.println("Events Available");
         for (Event event : eventManager.events) {
@@ -68,17 +72,5 @@ public class EventMenuPresenter {
         System.out.println("To return to the main menu, type return");
         System.out.println("To sign up for an event, type Sign up for_Event");
         System.out.println("To cancel your position in an event, type Leave_Event");
-    }
-
-    protected void printEventsAttending(EventManager eventManager){
-        if (!(manager.getCurrentUser().get_personalSchedule() == null)){
-            for (Event event : eventManager.events) {
-                if (manager.getCurrentUser().get_personalSchedule().containsKey(event.getName())){
-                    System.out.println(event);
-                }
-            }
-        } else{
-            System.out.println("You are currently not attending any events.");
-        }
     }
 }

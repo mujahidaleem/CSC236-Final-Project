@@ -35,21 +35,21 @@ public abstract class EventMenuController {
             if (command[0].equals("return")) {
                 break;
             }
-            boolean standard = standardCommands(command, presenter);
+            boolean standard = standardCommands(command);
             if(!standard){
                 extraCommands(command);
             }
         }
     }
 
-    protected boolean standardCommands(String[] command, EventMenuPresenter presenter){
+    protected boolean standardCommands(String[] command){
         try{
             switch (command[0]){
                 case "Sign up for":
-                    signUpForEvent(eventManager.findEvent(command[1]), presenter);
+                    signUpForEvent(eventManager.findEvent(command[1]));
                     return true;
                 case "Leave":
-                    removeSpotFromEvent(eventManager.findEvent(command[1]), presenter);
+                    removeSpotFromEvent(eventManager.findEvent(command[1]));
                     return true;
             }
         } catch (NullPointerException e) {
@@ -64,8 +64,7 @@ public abstract class EventMenuController {
         System.out.println("Sorry, that command was not recognized. Please try again.");
     }
 
-    protected void signUpForEvent(Event event,
-                                  EventMenuPresenter presenter) {
+    protected void signUpForEvent(Event event) {
         if (userManager.canAttendEvent(event) && eventManager.userCanSignUp(userManager.getCurrentUser(), event)) {
             userManager.attendEvent(event);
             eventManager.addUser(event, userManager.getCurrentUser());
@@ -75,7 +74,7 @@ public abstract class EventMenuController {
         }
     }
 
-    protected void removeSpotFromEvent(Event event, EventMenuPresenter presenter) {
+    protected void removeSpotFromEvent(Event event) {
         if (userManager.canLeaveEvent(event) && eventManager.userCanLeave(userManager.getCurrentUser(), event)) {
             userManager.leaveEvent(event);
             eventManager.removeUser(event, userManager.getCurrentUser());

@@ -74,13 +74,13 @@ public class SpeakerManager extends UserManager{
 
     /**
      * Finds the speaker that has the same name as the given string
-     * @param speaker A string of the name of a speaker.
+     * @param id A string of the name of a speaker.
      * @return returns a speaker if a speaker with the same name exists, otherwise will return null
      */
-    public Speaker findSpeaker(int speaker){
-        for(Speaker s: speakers){
-            if (s.get_id() == (speaker)){
-                return s;
+    public Speaker findSpeaker(int id){
+        for(Speaker speaker: speakers){
+            if (speaker.get_id() == (id)){
+                return speaker;
             }
         }
         return null;

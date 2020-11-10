@@ -12,8 +12,6 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      */
     public OrganizerEventPresenter(OrganizerManager organizerManager) {
         super(organizerManager);
-        System.out.println("a " + organizerManager.getCurrentUser());
-        System.out.println("aa " + this.manager.getCurrentUser());
     }
 
     /**

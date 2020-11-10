@@ -1,5 +1,7 @@
 package Entities;
 
+import src.Entities.Event;
+
 import java.util.List;
 
 public abstract class User {

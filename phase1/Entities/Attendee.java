@@ -1,5 +1,7 @@
 package Entities;
 
+import src.Entities.Event;
+
 import java.util.List;
 /*Only difference between this and the user class is that it cant broadcast at all
 * NOTE: If you decide to combine the broadcast methods in the message use case, then you would override message here*/

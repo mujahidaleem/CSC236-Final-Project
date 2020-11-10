@@ -1,5 +1,3 @@
-package src.Entities;
-
 import Entities.Attendee;
 import Entities.Organizer;
 

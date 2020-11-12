@@ -1,3 +1,5 @@
+package Entities;
+
 import Entities.Attendee;
 import Entities.Organizer;
 
@@ -10,15 +12,16 @@ public class Event {
     int event_id;
     int room_num;
     LocalDateTime event_time;
-    ArrayList<Attendee> attendees;
-    Organizer organizer;
+    ArrayList<Integer> attendees;
+    int organizer;
+    int speaker;
 
     public Event(String name, int num, LocalDateTime time,
-                 Organizer event_organizer){
+                 int event_organizer){
         event_name = name;
         room_num = num;
         event_time = time;
-        attendees = new ArrayList<Attendee>();
+        attendees = new ArrayList<Integer>();
         organizer = event_organizer;
     }
 
@@ -38,27 +41,41 @@ public class Event {
         return event_time;
     }
 
-    public ArrayList<Attendee> getAttendees(){
+    public void setEvent_time(LocalDateTime event_time) {
+        this.event_time = event_time;
+    }
+
+    public ArrayList<Integer> getAttendees(){
         return attendees;
     }
 
-    public Organizer getOrganizer(){
+    public int getOrganizer(){
         return organizer;
     }
 
-    public boolean add(Attendee attendee){
-        if (attendees.contains(attendee)){
+    public boolean hasSpeaker(){return !(speaker == 0);}
+
+    public int getSpeaker() {
+        return speaker;
+    }
+
+    public void setSpeaker(int speaker) {
+        this.speaker = speaker;
+    }
+
+    public boolean add(User attendee){
+        if (attendees.contains(attendee.get_id())){
             return false;
         }
-        attendees.add(attendee);
+        attendees.add(attendee.get_id());
         return true;
     }
 
-    public boolean remove(Attendee attendee){
-        if (!attendees.contains(attendee)){
+    public boolean remove(User attendee){
+        if (!attendees.contains(attendee.get_id())){
             return false;
         }
-        attendees.remove(attendee);
+        attendees.remove(attendee.get_id());
         return true;
     }
 }

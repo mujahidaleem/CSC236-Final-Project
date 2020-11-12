@@ -1,22 +1,24 @@
 package Entities;
 
-import src.Entities.Event;
-
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 public abstract class User {
     private String _name; // username/name for user
+    private int _id;
     private String _password; // password for user
-    private Schedule _personalSchedule; // personal event list
+    private HashMap<String, LocalDateTime> _personalSchedule; // personal event list
     private List<User> _friendList; // personal friend list
 
 /*
 Initalize the user class
 */
-    public User(String name,
+    public User(int id, String name,
                 String password,
-                Schedule schedule,
+                HashMap<String, LocalDateTime> schedule,
                 List<User> friends){
+        _id = id;
         _name = name;
         _password = password;
         _personalSchedule = schedule;
@@ -33,7 +35,7 @@ Initalize the user class
         return _password;
     }
     /*Return the schedule (events) the user has signed up for*/
-    public Schedule get_personalSchedule() {
+    public HashMap<String, LocalDateTime> get_personalSchedule() {
         return _personalSchedule;
     }
 
@@ -52,6 +54,9 @@ Initalize the user class
         this._password = _password;
     }
 
+    public int get_id() {
+        return _id;
+    }
 
     /*EVERYTHING AFTER HERE IS USE CASE STUFF FOR THE USER/
     THESE ARE JUST EXAMPLES */

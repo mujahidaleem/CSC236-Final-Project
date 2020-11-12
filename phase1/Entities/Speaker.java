@@ -15,9 +15,9 @@ public class Speaker extends User {
      * @param friends A list of manageable users of the speaker
      * @param speakingSchedule A list of events that the speaker will be speaking at
      */
-    public Speaker(String name, String password, HashMap<String, LocalDateTime> schedule,
+    public Speaker(int id, String name, String password, HashMap<String, LocalDateTime> schedule,
                    List<User> friends, HashMap<String, LocalDateTime> speakingSchedule){
-        super(name, password, schedule, friends);
+        super(id, name, password, schedule, friends);
         _speakingSchedule = speakingSchedule;
     }
 

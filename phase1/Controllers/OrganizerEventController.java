@@ -41,7 +41,8 @@ public class OrganizerEventController extends EventMenuController{
         try{
             switch (command[0]) {
                 case "Create event":
-                    eventCreation(command[1], LocalDateTime.parse(command[2]));
+                    eventCreation(command[1], LocalDateTime.parse(command[2]), Integer.parseInt(command[3]),
+                            Integer.parseInt(command[4]));
                     break;
                 case "Assign speaker":
                     assignSpeaker(eventManager.findEvent(command[1]), Integer.parseInt(command[2]));
@@ -66,11 +67,12 @@ public class OrganizerEventController extends EventMenuController{
         }
     }
 
-    private void eventCreation(String name, LocalDateTime date) {
-        if (eventManager.eventCreatable(name, date, organizerManager.currentOrganizer) &&
+    private void eventCreation(String name, LocalDateTime date, int roomNumber, int id) {
+        if (eventManager.eventCreatable(name, date, organizerManager.currentOrganizer, roomNumber, id) &&
                 organizerManager.eventCreatable(name, date, organizerManager.currentOrganizer)) {
-            Event event = new Event(name, date, organizerManager.currentOrganizer.get_id(), 0, new ArrayList<>());
-            eventManager.events.add(event);
+            Event event = new Event(name, date, organizerManager.currentOrganizer.get_id(), 0,
+                    new ArrayList<>(), roomNumber, id);
+            eventManager.get_events().add(event);
             organizerManager.createEvent(organizerManager.currentOrganizer, event);
             presenter.createEventResults(true);
         } else {
@@ -83,7 +85,7 @@ public class OrganizerEventController extends EventMenuController{
         if (speaker1 == null){
             throw new NullSpeakerException("Speaker does not exist");
         } else {
-            if (speakerManager.available(speaker1, event.getDate())) {
+            if (speakerManager.available(speaker1, event.getEvent_time())) {
                 eventManager.setSpeaker(speaker1, event);
                 speakerManager.setSpeaker(speaker1, event);
                 presenter.setSpeakerResults(true, event);
@@ -116,7 +118,7 @@ public class OrganizerEventController extends EventMenuController{
 
     private void deleteEvent(Event event) {
         organizerManager.deleteEvent(event);
-        eventManager.events.remove(event);
+        eventManager.get_events().remove(event);
         presenter.deleteEvent(event);
     }
 }

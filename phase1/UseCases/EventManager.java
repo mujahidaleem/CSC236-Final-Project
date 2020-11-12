@@ -2,6 +2,7 @@ package UseCases;
 
 import Entities.Event;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import Entities.Attendee;
 import Entities.User;
 import Entities.Organizer;
 
-public class EventManager {
+public class EventManager implements Serializable {
     private ArrayList<Event> events;
 
     public EventManager(ArrayList<Event> events){

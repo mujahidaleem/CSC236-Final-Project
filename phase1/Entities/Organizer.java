@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Organizer extends User {
+    public HashMap<String, LocalDateTime> _eventsOrganizing;
 
     /**
      * Organizer constructor
@@ -14,7 +15,9 @@ public class Organizer extends User {
      * @param schedule A list of events that the speaker is attending
      * @param friends A list of manageable Organizers of the speaker
      */
-    public Organizer(int id, String name, String password, HashMap<String, LocalDateTime> schedule, List<User> friends){
+    public Organizer(int id, String name, String password, HashMap<String, LocalDateTime> schedule,
+                     List<User> friends, HashMap<String, LocalDateTime> eventsOrganizing) {
         super(id, name, password, schedule, friends);
+        _eventsOrganizing = eventsOrganizing;
     }
 }

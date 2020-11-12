@@ -1,12 +1,20 @@
 package Entities;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
-/*Only difference between this and the user class is it has access to the whole schedule, so you could implement the
-check here if you wanted to, or in the schedule section of the program (ie check if organizer in the edit_schedule method
- * NOTE: If you decide to combine the broadcast methods in the message use case, then you would override message here*/
+
 public class Organizer extends User {
 
-    public Organizer(String name, String password, Schedule schedule, List<User> friends){
-        super(name, password, schedule, friends);
+    /**
+     * Organizer constructor
+     * @param id A unique id representing the
+     * @param name A string representing the name of the Organizer
+     * @param password A string representing the password of the Organizer
+     * @param schedule A list of events that the speaker is attending
+     * @param friends A list of manageable Organizers of the speaker
+     */
+    public Organizer(int id, String name, String password, HashMap<String, LocalDateTime> schedule, List<User> friends){
+        super(id, name, password, schedule, friends);
     }
 }

@@ -1,37 +1,21 @@
 package Entities;
 
-import src.Entities.Event;
-
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
-/*Only difference between this and the user class is that it cant broadcast at all
-* NOTE: If you decide to combine the broadcast methods in the message use case, then you would override message here*/
+
 public class Attendee extends User {
 
-    /*Initalizes Attendee*/
-    public Attendee(String name, String password, Schedule schedule, List<User> friends){
-        super(name, password, schedule, friends);
+    /**
+     * Attendee constructor
+     * @param id A unique id representing the
+     * @param name A string representing the name of the Attendee
+     * @param password A string representing the password of the Attendee
+     * @param schedule A list of events that the speaker is attending
+     * @param friends A list of manageable Attendees of the speaker
+     */
+    public Attendee(int id, String name, String password, HashMap<String, LocalDateTime> schedule, List<User> friends){
+        super(id, name, password, schedule, friends);
     }
 
-    /*Attendee can't broadcast to events*/
-    @Override
-    public void broadcast_event(String message, Event event) {
-        System.out.println("Can't do this");
-    }
-    /*Cant broadcast to all*/
-    @Override
-    public void broadcast_all(String message) {
-        System.out.println("Can't do this");
-    }
-
-    /*only edit their own schedule*/
-    @Override
-    public void edit_schedule(Schedule schedule) {
-        if (schedule == this.get_personalSchedule()){
-            super.edit_schedule(schedule);
-        }
-        else{
-            System.out.println("Can't do this");
-
-        }
-    }
 }

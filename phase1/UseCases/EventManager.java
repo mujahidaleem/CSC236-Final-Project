@@ -1,16 +1,13 @@
 package UseCases;
 
-import Entities.Event;
+import Entities.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import Entities.Attendee;
-import Entities.User;
-import Entities.Organizer;
-
-public class EventManager {
+public class EventManager implements Serializable {
     private ArrayList<Event> events;
 
     public EventManager(ArrayList<Event> events){
@@ -74,4 +71,42 @@ public class EventManager {
         }
         return null;
     }
+
+    public void addUser(Event event, User user){
+        event.getAttendees().add(user.get_id());
+    }
+
+    public void removeUser(Event event, User user){
+        event.getAttendees().remove(new Integer(user.get_id()));
+    }
+
+    public boolean userCanSignUp(User user, Event event) {
+        if (event.getAttendees().size() >= 2) {
+            return false;
+        } else {
+            return !event.getAttendees().contains(user.get_id());
+        }
+    }
+
+    public boolean userCanLeave(User user, Event event){
+        return event.getAttendees().contains(user.get_id());
+    }
+
+    public boolean eventCreatable(String name, LocalDateTime date, Organizer organizer, int roomNumber, int id){
+        for(Event e:events){
+            if (e.getId() == id || (e.getEvent_time().isEqual(date) && e.getRoom_num() == roomNumber)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void setSpeaker(Speaker speaker, Event event){
+        event.setSpeaker(speaker.get_id());
+    }
+
+    public boolean hasSpeaker(Event event){
+        return event.hasSpeaker();
+    }
+
 }

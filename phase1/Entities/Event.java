@@ -5,6 +5,7 @@ import Entities.Organizer;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 //Time, and users are contained in event
 public class Event {
@@ -77,5 +78,16 @@ public class Event {
         }
         attendees.remove(attendee.get_id());
         return true;
+    }
+
+    public Event(String name, LocalDateTime date, int organizer, int speaker,
+                 ArrayList<Integer> userList, int roomNumber, int id){
+        this.event_name = name;
+        this.event_time = date;
+        this.attendees = userList;
+        this.organizer = organizer;
+        this.speaker = speaker;
+        this.event_id = id;
+        this.room_num = roomNumber;
     }
 }

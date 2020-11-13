@@ -1,86 +1,47 @@
 package Controllers;
 
 import Entities.Event;
-import Presenters.EventMenuPresenter;
 import UseCases.EventManager;
 import UseCases.UserManager;
-
-import java.util.Scanner;
 
 public abstract class EventMenuController {
     public UserManager userManager;
     public EventManager eventManager;
-    public EventMenuPresenter presenter;
     /**
      * AttendeeEventController constructor
      * @param userManager contains the attendee using the current session
      * @param eventManager contains the list of events
      */
-    public EventMenuController(UserManager userManager,
-                               EventManager eventManager, EventMenuPresenter presenter) {
+    public EventMenuController(UserManager userManager, EventManager eventManager) {
         this.userManager = userManager;
         this.eventManager = eventManager;
-        this.presenter = presenter;
     }
 
     /**
-     * The menu for events is initialized and commands relating to events can be
-     * performed by typing in the correct strings into the command line.
+     * Checks if the current user can sign up for an event and signs them up if they can
+     * @param event the event the user is trying to attend
+     * @return whether the user has signed up for the event
      */
-    public void run() {
-        Scanner userInput = new Scanner(System.in);
-        while (true) {
-            presenter.printMenu(eventManager);
-            String[] command = userInput.nextLine().split("_");
-            if (command[0].equals("return")) {
-                break;
-            }
-            boolean standard = standardCommands(command);
-            if(!standard){
-                extraCommands(command);
-            }
-        }
-    }
-
-    protected boolean standardCommands(String[] command){
-        try{
-            switch (command[0]){
-                case "Sign up for":
-                    signUpForEvent(eventManager.findEvent(command[1]));
-                    return true;
-                case "Leave":
-                    removeSpotFromEvent(eventManager.findEvent(command[1]));
-                    return true;
-            }
-        } catch (NullPointerException e) {
-            System.out.println("Event does not exist, please try again.");
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Your command was invalid, please try again.");
-        }
-        return false;
-    }
-
-    protected void extraCommands(String[] command){
-        System.out.println("Sorry, that command was not recognized. Please try again.");
-    }
-
-    protected void signUpForEvent(Event event) {
-        if (userManager.canAttendEvent(event) && eventManager.userCanSignUp(userManager.getCurrentUser(), event)) {
+    public boolean signUpForEvent(Event event) {
+        if (eventManager.addAttendee(event, userManager.getCurrentUser())){
             userManager.attendEvent(event);
-            eventManager.addUser(event, userManager.getCurrentUser());
-            presenter.signUpResult(true, event);
+            return true;
         } else {
-            presenter.signUpResult(false, event);
+            return false;
         }
     }
 
-    protected void removeSpotFromEvent(Event event) {
-        if (userManager.canLeaveEvent(event) && eventManager.userCanLeave(userManager.getCurrentUser(), event)) {
+    /**
+     * Checks if the user is currently attending an event and removes their spot if they are
+     * @param event the event the user is trying to cancel their spot from
+     * @return whether the user's spot has been removed from the event
+     */
+    public boolean removeSpotFromEvent(Event event) {
+        if (eventManager.removeUser(userManager.getCurrentUser(), event)) {
             userManager.leaveEvent(event);
-            eventManager.removeUser(event, userManager.getCurrentUser());
-            presenter.removalResult(true, event);
+            return true;
         } else {
-            presenter.removalResult(false, event);
+            return false;
         }
     }
 }

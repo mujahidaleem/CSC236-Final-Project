@@ -1,56 +1,56 @@
 package UseCases;
 
-import Entities.Event;
+import Entities.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
-import Entities.Attendee;
-import Entities.User;
-import Entities.Organizer;
-
-public class EventManager {
+public class EventManager implements Serializable {
     private ArrayList<Event> events;
 
     public EventManager(ArrayList<Event> events){
         this.events = events;
     }
 
-    public boolean add_attendee(Event event, User attendee){
-        if (event.getAttendees().size() >= 2) {
-            return false;
-        } else {
-            return event.add(attendee);
+    public boolean addAttendee(Event event, User attendee){
+        if (event.getAttendees().size() < 2) {
+            if (!event.getAttendees().contains(attendee.get_id())) {
+                event.add(attendee);
+                return true;
+            }
         }
+        return false;
     }
 
-    public boolean remove_attendee(Event event, Attendee attendee){
+    public boolean removeAttendee(Event event, Attendee attendee){
         return event.remove(attendee);
+    }
+
+    public void removeEvent(Event event){
+        events.remove(event);
     }
 
     public int getOrganizer(Event event){
         return event.getOrganizer();
     }
 
-    public boolean create_event(String event_name, int room_num,
-                                LocalDateTime start_date_time, Organizer organizer){
+    public Event createEvent(String eventName, int roomNumber,
+                                LocalDateTime startDateTime, Organizer organizer){
         for (Event event : events){
-            int rn = event.getRoom_num();
-            LocalDateTime e_start_time = event.getEvent_time();
-            LocalDateTime e_end_time = event.getEvent_time().plusMinutes(59);
-
-            if (rn == room_num && (start_date_time.isAfter(e_start_time)
-                    && start_date_time.isBefore(e_end_time))){
-                return false;
+            if ((startDateTime.isAfter(event.getEventTime()) &&
+                    startDateTime.isBefore(event.getEventTime().plusMinutes(59)) &&
+                    event.getRoomNumber() == roomNumber)){
+                return null;
             }
         }
-        Event e = new Event(event_name, room_num, start_date_time,organizer.get_id());
+        Event e = new Event(eventName, roomNumber, startDateTime,organizer.get_id());
         events.add(e);
-        return true;
+        organizer._eventsOrganizing.put(eventName, startDateTime);
+        return e;
     }
 
-    public ArrayList<Event> get_events(){
+    public ArrayList<Event> getEvents(){
         return events;
     }
 
@@ -58,20 +58,53 @@ public class EventManager {
         event.setSpeaker(0);
     }
 
-    public boolean eventDateChangeable(Event event, LocalDateTime date){
-        return event.getEvent_time().isAfter(LocalDateTime.now()) && !date.isBefore(LocalDateTime.now());
+    public boolean changeDate(Event event, LocalDateTime date){
+        if(event.getEventTime().isAfter(LocalDateTime.now()) && !date.isBefore(LocalDateTime.now())){
+            event.setEventTime(date);
+            return true;
+        } else{
+            return false;
+        }
     }
-
-    public void changeDate(Event event, LocalDateTime date){
-        event.setEvent_time(date);
-    }
-
     public Event findEvent(String name){
         for (Event event : events) {
-            if (event.getEvent_name().equals(name)) {
+            if (event.getEventName().equals(name)) {
                 return event;
             }
         }
         return null;
     }
+
+    public void addUser(Event event, User user){
+        event.getAttendees().add(user.get_id());
+    }
+
+    public boolean removeUser(User user, Event event){
+        if(event.getAttendees().contains(user.get_id())){
+            event.getAttendees().remove(user.get_id());
+            return true;
+        } else{
+            return false;
+        }
+    }
+    public boolean userCanSignUp(User user, Event event) {
+        if (event.getAttendees().size() >= 2) {
+            return false;
+        } else {
+            return !event.getAttendees().contains(user.get_id());
+        }
+    }
+
+    public boolean userCanLeave(User user, Event event){
+        return event.getAttendees().contains(user.get_id());
+    }
+
+    public void setSpeaker(Speaker speaker, Event event){
+        event.setSpeaker(speaker.get_id());
+    }
+
+    public boolean hasSpeaker(Event event){
+        return event.hasSpeaker();
+    }
+
 }

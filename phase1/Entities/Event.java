@@ -5,44 +5,40 @@ import Entities.Organizer;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 //Time, and users are contained in event
 public class Event {
-    String event_name;
-    int event_id;
-    int room_num;
-    LocalDateTime event_time;
+    String eventName;
+    int roomNumber;
+    LocalDateTime eventTime;
     ArrayList<Integer> attendees;
     int organizer;
     int speaker;
 
     public Event(String name, int num, LocalDateTime time,
                  int event_organizer){
-        event_name = name;
-        room_num = num;
-        event_time = time;
+        eventName = name;
+        roomNumber = num;
+        eventTime = time;
         attendees = new ArrayList<Integer>();
         organizer = event_organizer;
     }
 
-    public String getEvent_name(){
-        return event_name;
+    public String getEventName(){
+        return eventName;
     }
 
-    public int getId(){
-        return event_id;
+    public int getRoomNumber(){
+        return roomNumber;
     }
 
-    public int getRoom_num(){
-        return room_num;
+    public LocalDateTime getEventTime(){
+        return eventTime;
     }
 
-    public LocalDateTime getEvent_time(){
-        return event_time;
-    }
-
-    public void setEvent_time(LocalDateTime event_time) {
-        this.event_time = event_time;
+    public void setEventTime(LocalDateTime event_time) {
+        this.eventTime = event_time;
     }
 
     public ArrayList<Integer> getAttendees(){

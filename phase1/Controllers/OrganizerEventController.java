@@ -9,14 +9,10 @@ import UseCases.SpeakerManager;
 import Presenters.OrganizerEventPresenter;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-
 
 public class OrganizerEventController extends EventMenuController{
     private OrganizerManager organizerManager;
     private SpeakerManager speakerManager;
-    private OrganizerEventPresenter presenter;
 
     /**
      * OrganizerEventController constructor
@@ -29,94 +25,100 @@ public class OrganizerEventController extends EventMenuController{
     public OrganizerEventController(OrganizerManager manager,
                                     EventManager eventManager, UserManager userManager, SpeakerManager speakerManager,
                                     OrganizerEventPresenter presenter) {
-        super(userManager, eventManager, presenter);
+        super(userManager, eventManager);
         this.organizerManager = manager;
         this.speakerManager = speakerManager;
-        this.presenter = presenter;
         System.out.println(presenter.getClass());
     }
 
-    @Override
-    protected void extraCommands(String[] command) {
-        try{
-            switch (command[0]) {
-                case "Create event":
-                    eventCreation(command[1], LocalDateTime.parse(command[2]));
-                    break;
-                case "Assign speaker":
-                    assignSpeaker(eventManager.findEvent(command[1]), Integer.parseInt(command[2]));
-                    break;
-                case "Change date":
-                    changeEvent(eventManager.findEvent(command[1]), LocalDateTime.parse(command[2]));
-                    break;
-                case "Delete":
-                    deleteEvent(eventManager.findEvent(command[1]));
-                    break;
-                case "Remove speaker":
-                    removeSpeaker(eventManager.findEvent(command[1]));
-                default:
-                    System.out.println("Command does not exist, please try again.");
-            }
-        } catch (NullPointerException e){
-            System.out.println("This event does not exist. Please try again.");
-        } catch (NullSpeakerException e){
-            System.out.println("This speaker does not exist. Please try again.");
-        } catch (DateTimeParseException e) {
-            System.out.println("The date could not be read. Please try again.");
-        }
-    }
-
-    private void eventCreation(String name, LocalDateTime date) {
-        if (eventManager.eventCreatable(name, date, organizerManager.currentOrganizer) &&
-                organizerManager.eventCreatable(name, date, organizerManager.currentOrganizer)) {
-            Event event = new Event(name, date, organizerManager.currentOrganizer.get_id(), 0, new ArrayList<>());
-            eventManager.events.add(event);
-            organizerManager.createEvent(organizerManager.currentOrganizer, event);
-            presenter.createEventResults(true);
+    /**
+     * Tries to create an event and add it to the list of events.
+     * @param name the name of the new event
+     * @param date when the new event will happen
+     * @param roomNumber where the new event will happen
+     * @param id the ID of the new event
+     * @return whether or not the event can be created
+     */
+    public Event createEvent(String name, LocalDateTime date, int roomNumber, int id) {
+        if (organizerManager.eventCreatable(name, date, organizerManager.currentOrganizer)) {
+            return eventManager.createEvent(name, roomNumber, date, organizerManager.currentOrganizer);
         } else {
-            presenter.createEventResults(false);
+            return null;
         }
     }
 
-    private void assignSpeaker(Event event, int speaker) {
+    /**
+     * Checks if the chosen speaker can be assigned to an event
+     * @param event the event that the organizer is trying to assign the speaker to
+     * @param speaker the speaker that the organizer is trying to assign to an event
+     * @return whether or not the speaker can be assigned to the event
+     */
+    public boolean assignSpeaker(Event event, int speaker) {
         Speaker speaker1 = speakerManager.findSpeaker(speaker);
         if (speaker1 == null){
             throw new NullSpeakerException("Speaker does not exist");
         } else {
-            if (speakerManager.available(speaker1, event.getDate())) {
+            if (speakerManager.available(speaker1, event.getEventTime())) {
                 eventManager.setSpeaker(speaker1, event);
                 speakerManager.setSpeaker(speaker1, event);
-                presenter.setSpeakerResults(true, event);
+                return true;
             } else {
-                presenter.setSpeakerResults(false, event);
+                return false;
             }
         }
     }
 
-    private void removeSpeaker(Event event){
+    /**
+     * Checks if the speaker of an event can be removed and removes the speaker
+     * @param event the event that the organizer is trying to remove the speaker from
+     * @return whether or not the speaker has been removed
+     */
+    public boolean removeSpeaker(Event event){
         if (eventManager.hasSpeaker(event)){
             speakerManager.removeEvent(event);
             eventManager.removeSpeaker(event);
-            presenter.removeSpeakerResults(true);
+            return true;
         } else {
-            presenter.removeSpeakerResults(false);
+            return false;
         }
     }
 
-    private void changeEvent(Event event, LocalDateTime date) {
-        if (eventManager.eventDateChangeable(event, date) &&
-                speakerManager.dateChangeable(event, date)) {
+    /**
+     * Checks if the date of an event can be changed and if so, changes the event
+     * @param event the event that the organizer is trying to change the date
+     * @param date the new date of the event
+     * @return whether or not the date of the event has been changed
+     */
+    public boolean changeEvent(Event event, LocalDateTime date) {
+        if (speakerManager.dateChangeable(event, date) && eventManager.changeDate(event, date)) {
             speakerManager.changeDate(event, date);
-            eventManager.changeDate(event, date);
-            presenter.changeEventResults(true, event);
+            return true;
         } else {
-            presenter.changeEventResults(false, event);
+            return false;
         }
     }
 
-    private void deleteEvent(Event event) {
-        organizerManager.deleteEvent(event);
-        eventManager.events.remove(event);
-        presenter.deleteEvent(event);
+    /**
+     * Checks if the event can be deleted and if so, deletes the event and removes if from all user's schedule
+     * @param event the event that the organizer is trying to delete
+     * @return whether or not the event has been deleted
+     */
+    public boolean deleteEvent(Event event) {
+        if (organizerManager.cancelEvent(event)){
+            userManager.deleteEvent(event);
+            eventManager.removeEvent(event);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if an event is an event is being organized by the current organizer
+     * @param event the event that is being checked
+     * @return if the current organizer is organizing this event
+     */
+    public boolean eventModifiable(Event event){
+        return organizerManager.currentOrganizer._eventsOrganizing.containsKey(event.getEventName());
     }
 }

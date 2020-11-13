@@ -1,36 +1,112 @@
 package Presenters;
 
+import Controllers.EventMenuController;
+import Controllers.EnglishLanguagePack;
 import Entities.Event;
 import UseCases.EventManager;
 import UseCases.UserManager;
 
+import java.io.*;
+import java.util.Scanner;
+
 public class EventMenuPresenter {
-    public UserManager manager;
+    protected UserManager manager;
+    protected EventMenuController controller;
+    protected EventManager eventManager;
+    protected EnglishLanguagePack languagePack;
 
     /**
      * EventMenuPresenter constructor
      * @param manager stores the current user
+     * @param controller the controller that performs the commands inputted
+     * @param language decides which language is used in the UI
      */
-    public EventMenuPresenter(UserManager manager) {
+    public EventMenuPresenter(UserManager manager, EventMenuController controller, String language) {
         this.manager = manager;
-        System.out.println("b " + manager.getCurrentUser());
+        this.controller = controller;
+        try{
+            FileInputStream fi = new FileInputStream(new File("D:\\Language\\" + language + ".ser"));
+            ObjectInputStream oi = new ObjectInputStream(fi);
+
+            this.languagePack = (EnglishLanguagePack) oi.readObject();
+
+            oi.close();
+            fi.close();
+
+        } catch (FileNotFoundException e){
+            System.out.println("File not found.");
+        } catch (IOException e) {
+            System.out.println("Error initializing stream.");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * The menu for events is initialized and commands relating to events can be
+     * performed by typing in the correct strings into the command line.
+     */
+    public void run() {
+        Scanner userInput = new Scanner(System.in);
+        while (true) {
+            printMenu();
+            String[] command = userInput.nextLine().split("_");
+            if (command[0].equals("return")) {
+                break;
+            }
+            boolean standard = standardCommands(command);
+            if(!standard){
+                extraCommands(command);
+            }
+        }
+    }
+
+    /**
+     * Checks if the inputted command is one of the standard commands and tells the controller to perform it if it is
+     * @param input The command inputted by the user
+     * @return True if the command is a standard command. False if it is not.
+     */
+    protected boolean standardCommands(String[] input){
+        try{
+            switch (input[0]){
+                case "1":
+                    controller.signUpForEvent(eventManager.findEvent(input[1]));
+                    return true;
+                case "2":
+                    controller.removeSpotFromEvent(eventManager.findEvent(input[1]));
+                    return true;
+            }
+        } catch (NullPointerException e) {
+            System.out.println(languagePack.unknownEvent());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(languagePack.unknownCommand());
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the inputted command is one of the extra commands specific to this type of user. If it is,
+     * tells the correct controller to run it.
+     * @param input The command inpputted by the user.
+     */
+    protected void extraCommands(String[] input){
+        System.out.println(languagePack.unknownCommand());
     }
 
     /**
      * Prints the initial menu of the Event Menu, showing the organizer what commands can be used
-     * @param eventManager stores the list of events
      */
-    public void printMenu(EventManager eventManager) {
-        System.out.println("Events Attending");
-        for (Event event : eventManager.events) {
-            if (manager.getCurrentUser().get_personalSchedule().containsKey(event.getName())) {
+    public void printMenu() {
+        System.out.println(languagePack.menuHeadings()[0]);
+        for (Event event : eventManager.getEvents()) {
+            if (manager.getCurrentUser().get_personalSchedule().containsKey(event.getEventName())) {
                 System.out.println(event);
             }
         }
         System.out.println("---------------------------------------------------------------------------------");
-        System.out.println("Events Available");
-        for (Event event : eventManager.events) {
-            if (!manager.getCurrentUser().get_personalSchedule().containsKey(event.getName())) {
+        System.out.println(languagePack.menuHeadings()[1]);
+        for (Event event : eventManager.getEvents()) {
+            if (!manager.getCurrentUser().get_personalSchedule().containsKey(event.getEventName())) {
                 System.out.println(event);
             }
         }
@@ -44,9 +120,9 @@ public class EventMenuPresenter {
      */
     public void signUpResult(boolean i, Event event) {
         if (i) {
-            System.out.println("You are now registered for " + event.getName() + ".");
+            System.out.println(languagePack.standardResultsSuccess(event)[1]);
         } else {
-            System.out.println("Sorry, you are unable to attend this event.");
+            System.out.println(languagePack.standardResultsFailure(event)[1]);
         }
     }
 
@@ -57,20 +133,16 @@ public class EventMenuPresenter {
      */
     public void removalResult(boolean i, Event event) {
         if (i) {
-            System.out.println("You are no longer attending " + event + ".");
+            System.out.println(languagePack.standardResultsSuccess(event)[2]);
         } else {
-            System.out.println("You are already not attending " + event);
+            System.out.println(languagePack.standardResultsFailure(event)[2]);
         }
     }
 
+    /**
+     * Prints the list of commands that can be executed by the organizer
+     */
     protected void printCommands(){
-        printStandardCommands();
-    }
-
-    protected void printStandardCommands(){
-        System.out.println("---------------------------------------------------------------------------------");
-        System.out.println("To return to the main menu, type return");
-        System.out.println("To sign up for an event, type Sign up for_Event");
-        System.out.println("To cancel your position in an event, type Leave_Event");
+        languagePack.printStandardCommands();
     }
 }

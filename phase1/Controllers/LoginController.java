@@ -1,11 +1,13 @@
+
 package Controllers;
 
         import UseCases.UserLoginManager;
-        import Presenters.EventMenuPresenter;
+        import Presenters.LoginMenuPresenter;
         import UseCases.EventManager;
         import src.Managers;
         import Entities.User;
         import UseCases.UserManager;
+
 //import database from gateway?
 
 
@@ -35,25 +37,30 @@ public class  LoginMenuController {
 
     // show login screen to type username and password, ie. show or initialize presenter?
 
-    public boolean username_exists(String username){
+    public boolean username_exists(String username) {
         //if (username in database){return True;} else{return False;}
-        for (user in this.userManager.getusers()){
-            if (user._name == username){return true;}
+        for (user in; this.userManager.getusers()) {
+            if (user._name == username) {
+                return true;
+            }
             return false;
         }
     }
 
-    public boolean password_matches_username(String username, String password){
+    public boolean password_matches_username(String username, String password) {
         //check system to see if password matches username
 
     }
 
-    public String type_of_user(String username){
+    public String type_of_user(String username) {
         //check database to return a string of "Attendee", "Organizer" or "Speaker"
     }
 
     //exit program (cancel login)
-    public void exit(){}
+    public void exit() {
+    }
 
     //logout
-    public void logout(){}
+    public void logout() {
+    }
+}

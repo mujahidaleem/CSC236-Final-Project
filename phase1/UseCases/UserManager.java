@@ -57,4 +57,6 @@ public class UserManager implements Serializable {
             user.get_personalSchedule().remove(event.getEvent_name());
         }
     }
+
+    }
 }

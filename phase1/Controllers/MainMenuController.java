@@ -7,6 +7,7 @@ import Presenters.SpeakerEventPresenter;
 import Presenters.MainMenuPresenter;
 import UseCases.EventManager;
 import UseCases.UserManager;
+import Entities.User;
 
 import java.util.Scanner;
 
@@ -27,21 +28,22 @@ public class MainMenuController {
     */
     public void run(){
         MainMenuPresenter.printMainMenu();
-        Scanner userInput = new Scanner(System.in);
-        String userOption = userInput.nextLine();
+        String userOption = MainMenuPresenter.takeInput();
         while (!userOption.equals("1") && !userOption.equals("2") && !userOption.equals("3") && !userOption.equals("4")){
             System.out.println("Please enter a valid option:");
-            userInput = new Scanner(System.in);
-            userOption = userInput.nextLine();
+            userOption = MainMenuPresenter.takeInput();
         }
-        if (userOption == "1"){
-            eventPresenter.printMenu(eventManager);
-        } else if (userOption == "2") {
-            MessageMenuPresenter.printMenu(messageManager);
-        } else if (userOption == "3"){
-            LoginManager.logout();
-        } else if (userOption == "4"){
-            System.exit(0);
+        switch (userOption){
+            case "1":
+                eventPresenter.printMenu(eventManager);
+            case "2":
+                MessageMenuPresenter.printMenu(messageManager);
+            case "3":
+                LoginManager.logout();
+            case "4":
+
+            case "5":
+                System.exit(0);
         }
     }
 }

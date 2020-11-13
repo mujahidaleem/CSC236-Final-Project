@@ -37,26 +37,24 @@ public class UserManager implements Serializable {
     }
 
     public boolean canAttendEvent(Event event) {
-        return !(currentUser.get_personalSchedule().containsKey(event.getEvent_name()));
+        return !(currentUser.get_personalSchedule().containsKey(event.getEventName()));
     }
 
     public boolean canLeaveEvent(Event event) {
-        return currentUser.get_personalSchedule().containsKey(event.getEvent_name());
+        return currentUser.get_personalSchedule().containsKey(event.getEventName());
     }
 
     public void attendEvent(Event event) {
-        currentUser.get_personalSchedule().put(event.getEvent_name(), event.getEvent_time());
+        currentUser.get_personalSchedule().put(event.getEventName(), event.getEventTime());
     }
 
     public void leaveEvent(Event event) {
-        currentUser.get_personalSchedule().remove(event.getEvent_name());
+        currentUser.get_personalSchedule().remove(event.getEventName());
     }
 
     public void deleteEvent(Event event){
         for (User user :users) {
-            user.get_personalSchedule().remove(event.getEvent_name());
+            user.get_personalSchedule().remove(event.getEventName());
         }
-    }
-
     }
 }

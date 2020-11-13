@@ -1,17 +1,25 @@
 package Presenters;
 
+import Controllers.NullSpeakerException;
 import Entities.Event;
 import UseCases.OrganizerManager;
+import Controllers.OrganizerEventController;
 
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
 public class OrganizerEventPresenter extends EventMenuPresenter {
+    private OrganizerEventController organizerEventController;
+
     /**
-     * OrganizerEventPresenter constructor
+     * EventMenuPresenter constructor
      * @param organizerManager stores the current user
+     * @param organizerEventController the controller that performs the commands inputted
+     * @param language decides which language is used in the UI
      */
-    public OrganizerEventPresenter(OrganizerManager organizerManager) {
-        super(organizerManager);
+    public OrganizerEventPresenter(OrganizerManager organizerManager, OrganizerEventController organizerEventController, String language) {
+        super(organizerManager, organizerEventController, language);
+        this.organizerEventController = organizerEventController;
     }
 
     /**
@@ -19,73 +27,118 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      */
     @Override
     protected void printCommands(){
-        printStandardCommands();
-        printExtraCommands();
+        languagePack.printStandardCommands();
+        languagePack.printOrganizerCommands();
+    }
+
+    /**
+     * The menu for events is initialized and commands relating to events can be
+     * performed by typing in the correct strings into the command line.
+     */
+    @Override
+    protected void extraCommands(String[] command) {
+        try{
+            if (command[0].equals("Create event")){
+                Event event1 = organizerEventController.createEvent(command[1], LocalDateTime.parse(command[2]),
+                        Integer.parseInt(command[3]), Integer.parseInt(command[4]));
+                if (event1 == null){
+                    createEventResults(false, null);
+                } else {
+                    createEventResults(true, event1);
+                }
+            } else {
+                Event event = eventManager.findEvent(command[1]);
+                if(organizerEventController.eventModifiable(event)){
+                    System.out.println(languagePack.eventUnchangeable(event));
+                } else {
+                    switch (command[0]) {
+                        case "Assign speaker":
+                            setSpeakerResults(organizerEventController.assignSpeaker(event, Integer.parseInt(command[2])), event);
+                            break;
+                        case "Change date":
+                            changeEventResults(organizerEventController.changeEvent(event, LocalDateTime.parse(command[2])), event);
+                            break;
+                        case "Delete":
+                            deleteEvent(organizerEventController.deleteEvent(event),event);
+                            break;
+                        case "Remove speaker":
+                            removeSpeakerResults(organizerEventController.removeSpeaker(event), event);
+                        default:
+                            System.out.println(languagePack.unknownCommand());
+                    }
+                }
+            }
+        } catch (NullPointerException e){
+            System.out.println(languagePack.unknownEvent());
+        } catch (NullSpeakerException e){
+            System.out.println(languagePack.unknownSpeaker());
+        } catch (DateTimeParseException e) {
+            System.out.println(languagePack.unknownDate());
+        }
     }
 
     /**
      * Prints the result of trying to create a new event
-     * @param i determines whether the command was successful or not
+     * @param i Determines whether the command was successful or not
+     * @param event The event that the organizer is trying to create
      */
-    public void createEventResults(boolean i){
+    public void createEventResults(boolean i, Event event){
         if (i) {
-            System.out.println("Your event has successfully been created.");
+            System.out.println(languagePack.organizerResultsSuccess(event)[0]);
         } else {
-            System.out.println("Sorry, your event cannot be created. Please try again");
+            System.out.println(languagePack.organizerResultsFailure(event)[0]);
         }
     }
 
     /**
      * Prints the result of trying to assign a speaker to an event
      * @param i determines whether the command was successful or not
+     * @param event The event that the organizer is trying change speakers
      */
     public void setSpeakerResults(boolean i, Event event){
         if (i) {
-            System.out.println(event.getSpeaker() + " will now be speaking at " + event.getName());
+            System.out.println(languagePack.organizerResultsSuccess(event)[1]);
         } else {
-            System.out.println("Sorry, " + event.getSpeaker() + " is not available at that specific time.");
+            System.out.println(languagePack.organizerResultsFailure(event)[1]);
         }
     }
 
     /**
      * Prints the results of trying to remove a speaker from an event
-     * @param i determines whether the command was successful or not
+     * @param i Determines whether the command was successful or not
+     * @param event The event that the organizer is trying to remove the speaker from
      */
-    public void removeSpeakerResults(boolean i){
+    public void removeSpeakerResults(boolean i, Event event){
         if(i){
-            System.out.println("Speaker has successfully been removed.");
+            System.out.println(languagePack.organizerResultsSuccess(event)[2]);
         } else {
-            System.out.println("This event already does not have a speaker.");
+            System.out.println(languagePack.organizerResultsFailure(event)[2]);
         }
     }
 
     /**
      * Prints the result of trying to change the time of an event
-     * @param i determines whether the command was successful or not
+     * @param i Determines whether the command was successful or not
+     * @param event The event whose date is trying to be changed by the organizer
      */
     public void changeEventResults(boolean i, Event event){
         if (i) {
-            System.out.println(event.getName() + " will now occur at " +
-                    event.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm:ss")));
+            System.out.println(languagePack.organizerResultsSuccess(event)[3]);
         } else {
-            System.out.println("Sorry, the event time cannot be changed. ");
+            System.out.println(languagePack.organizerResultsFailure(event)[3]);
         }
     }
 
     /**
      * Prints that an event has been deleted
-     * @param event stores the event that has been deleted
+     * @param i Determines whether hte command was successful or not
+     * @param event The event that is being deleted by the organizer
      */
-    public void deleteEvent(Event event){
-        System.out.println(event.getName() + " has been deleted.");
+    public void deleteEvent(boolean i, Event event){
+        if (i){
+            System.out.println(languagePack.organizerResultsSuccess(event)[4]);
+        } else {
+            System.out.println(languagePack.organizerResultsFailure(event)[4]);
+        }
     }
-
-    private void printExtraCommands(){
-        System.out.println("To create a new event, type Create event_Name_YYYY-MM-DDTHH:mm:ss");
-        System.out.println("To assign a speaker to an event, type Assign speaker_Event_Speaker");
-        System.out.println("To remove a speaker from an event, type Remove speaker_Event");
-        System.out.println("To delete an event, type Delete_Event");
-        System.out.println("To change the date of an event, type Change date_Event_new date");
-    }
-
 }

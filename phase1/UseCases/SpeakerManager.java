@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class SpeakerManager extends UserManager{
-    public Speaker currentSpeaker;
+    private Speaker currentSpeaker;
     public List<Speaker> speakers;
 
     /**
@@ -19,6 +19,14 @@ public class SpeakerManager extends UserManager{
         super(currentUser);
         this.currentSpeaker = currentUser;
         this.speakers = speakers;
+    }
+
+    /**
+     * Returns the current speaker
+     * @return currentSpeaker
+     */
+    public Speaker getCurrentSpeaker(){
+        return currentSpeaker;
     }
 
     /**
@@ -52,7 +60,7 @@ public class SpeakerManager extends UserManager{
      */
     public void changeDate(Event event, LocalDateTime date){
         Speaker speaker = findSpeaker(event.getSpeaker());
-        speaker._speakingSchedule.replace(event.getEvent_name(), date);
+        speaker._speakingSchedule.replace(event.getEventName(), date);
     }
 
     /**
@@ -61,7 +69,7 @@ public class SpeakerManager extends UserManager{
      * @param event the even in which the speaker is being assigned to
      */
     public void setSpeaker(Speaker speaker, Event event){
-        speaker._speakingSchedule.put(event.getEvent_name(), event.getEvent_time());
+        speaker._speakingSchedule.put(event.getEventName(), event.getEventTime());
     }
 
     /**
@@ -69,7 +77,7 @@ public class SpeakerManager extends UserManager{
      * @param event the event that is being removed
      */
     public void removeEvent(Event event){
-        findSpeaker(event.getSpeaker())._speakingSchedule.remove(event.getEvent_name());
+        findSpeaker(event.getSpeaker())._speakingSchedule.remove(event.getEventName());
     }
 
     /**

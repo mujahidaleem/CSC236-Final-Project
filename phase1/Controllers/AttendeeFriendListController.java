@@ -28,8 +28,12 @@ public class AttendeeFriendListController extends UserFriendListController {
                 AttendeeFriendManager AttendeeFriendManager=(AttendeeFriendManager) UserFriendManager;
                 this.AttendeeFriendManager= AttendeeFriendManager;}}
 
+    /**
+     * For Attendee, messageable Users are All users in FriendList and Other Attendees / Speakers
+     * in the event that he sign up
+     */
 
-        @Override
+    @Override
         public ArrayList<String> getMessageableList(){
             ArrayList<String> result= new ArrayList<String>();
             int i = 0;

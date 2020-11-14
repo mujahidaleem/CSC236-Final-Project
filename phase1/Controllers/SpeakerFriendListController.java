@@ -28,6 +28,9 @@ public class SpeakerFriendListController extends UserFriendListController {
             SpeakerFriendManager SpeakerFriendManager=(SpeakerFriendManager) UserFriendManager;
             this.SpeakerFriendManager= SpeakerFriendManager;}}
 
+    /**
+     * Messageable Users for Speakers are all Users in Friendlist and all attendees in each of his event
+     */
 
     @Override
     public ArrayList<String> getMessageableList(){
@@ -37,7 +40,6 @@ public class SpeakerFriendListController extends UserFriendListController {
             result.add(this.Speaker.get_friendList[i].get_name());
             i=i+1; }
         for(Event event: this.Speaker.get_eventList()){
-            result.add(event.getSpeaker());
             for(User user :event.getAttendees()){
                 result.add(user.get_name());
             }
@@ -45,6 +47,11 @@ public class SpeakerFriendListController extends UserFriendListController {
         return result;
     }
 
+    /**
+     * Speakers can send Announcement to all Attendees in his event
+     * @param message
+     * @param event
+     */
     public void sendingAnnouncement(String message, Event event){
         for(User user:event.getAttendees()){
         this.SpeakerFriendManager.sendingMessageTo(message,user);

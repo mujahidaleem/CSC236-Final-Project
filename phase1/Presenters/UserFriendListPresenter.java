@@ -42,7 +42,7 @@ public abstract class UserFriendListPresenter {
      * * Display the chat log between User and another User
      */
     public void DisplayChatLog(User anotherUser){
-        ArrayList<String> Chatlog=this.UserFriendManager.checkHistoryMessage(anotherUser);
+        ArrayList<String> Chatlog=this.UserFriendManager.getHistoryMessage(anotherUser);
         for(String message : Chatlog){
         System.out.println(message);
     }

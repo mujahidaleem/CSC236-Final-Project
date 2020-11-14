@@ -1,10 +1,10 @@
-import Presenters.UserFriendListPresenter;
-import UseCases.UserFriendManager;
 
-import java.util.ArrayList;
+package Presenters;
+
+
 
 public class OrganizerFriendListPresenter extends UserFriendListPresenter {
-    public OrganizerFriendManager OrganizerFriendListManager;
+    public OrganizerFriendManager OrganizerFriendManager;
     public MessageReader MessageReader;
     public Organizer currentOrganizer;
     public User currentUser;

@@ -17,7 +17,7 @@ public class OrganizerFriendListController extends UserFriendListController {
     public OrganizerFriendManager OrganizerFriendManager;
 
 
-    public AttendeeFriendListController(User targetUser, UserFriendListPresenter UserFriendListPresenter,
+    public OrganizerFriendListController(User targetUser, UserFriendListPresenter UserFriendListPresenter,
                                         UserFriendManager UserFriendManager){
         super(targetUser,UserFriendListPresenter,UserFriendManager);
         if(currentUser instanceof Organizer){
@@ -28,7 +28,10 @@ public class OrganizerFriendListController extends UserFriendListController {
             OrganizerFriendManager OrganizerFriendManager=(OrganizerFriendManager) UserFriendManager;
             this.OrganizerFriendManager= OrganizerFriendManager;}}
 
-
+    /**
+     * for Organizer, the messageable Users are all users in friendlist and all Attendees and Speaker.
+     * @return
+     */
     @Override
     public ArrayList<String> getMessageableList(){
         ArrayList<String> result= new ArrayList<String>();

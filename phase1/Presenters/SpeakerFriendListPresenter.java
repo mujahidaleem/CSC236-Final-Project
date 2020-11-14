@@ -1,12 +1,12 @@
 package Presenters;
 
 import UseCases.UserFriendManager;
-//import Entities.User;
+import Entities.User;
 
 import java.util.ArrayList;
 
 public class SpeakerFriendListPresenter extends UserFriendListPresenter {
-    public SpeakerFriendManager SpeakerFriendListManager;
+    public SpeakerFriendManager SpeakerFriendManager;
     public MessageReader MessageReader;
     public Speaker currentSpeaker;
     public User currentUser;
@@ -45,7 +45,7 @@ public class SpeakerFriendListPresenter extends UserFriendListPresenter {
      * * Display the chat log between User and another User
      */
     public void DisplayChatLog(User anotherUser) {
-        ArrayList<String> Chatlog = this.UserFriendManager.checkHistoryMessage(anotherUser);
+        ArrayList<String> Chatlog = this.UserFriendManager.getHistoryMessage(anotherUser);
         for (String message : Chatlog) {
             System.out.println(message);
         }}

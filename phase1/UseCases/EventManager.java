@@ -15,7 +15,7 @@ public class EventManager implements Serializable {
 
     public boolean addAttendee(Event event, User attendee){
         if (event.getAttendees().size() < 2) {
-            if (!event.getAttendees().contains(attendee.get_id())) {
+            if (!event.getAttendees().contains(attendee.getId())) {
                 event.add(attendee);
                 return true;
             }
@@ -35,19 +35,16 @@ public class EventManager implements Serializable {
         return event.getOrganizer();
     }
 
-    public Event createEvent(String eventName, int roomNumber,
-                                LocalDateTime startDateTime, Organizer organizer){
-        for (Event event : events){
-            if ((startDateTime.isAfter(event.getEventTime()) &&
-                    startDateTime.isBefore(event.getEventTime().plusMinutes(59)) &&
-                    event.getRoomNumber() == roomNumber)){
+    public Event createEvent(String name, LocalDateTime date, Organizer organizer, int roomNumber){
+        for(Event event:events){
+            if ((event.getEventTime().isEqual(date) && event.getRoomNumber() == roomNumber)){
                 return null;
             }
         }
-        Event e = new Event(eventName, roomNumber, startDateTime,organizer.get_id());
-        events.add(e);
-        organizer._eventsOrganizing.put(eventName, startDateTime);
-        return e;
+        Event newEvent = new Event(events.size(), name, roomNumber, date, organizer.getId());
+        events.add(newEvent);
+        organizer._eventsOrganizing.put(name, date);
+        return newEvent;
     }
 
     public ArrayList<Event> getEvents(){
@@ -76,12 +73,12 @@ public class EventManager implements Serializable {
     }
 
     public void addUser(Event event, User user){
-        event.getAttendees().add(user.get_id());
+        event.getAttendees().add(user.getId());
     }
 
     public boolean removeUser(User user, Event event){
-        if(event.getAttendees().contains(user.get_id())){
-            event.getAttendees().remove(user.get_id());
+        if(event.getAttendees().contains(user.getId())){
+            event.getAttendees().remove(user.getId());
             return true;
         } else{
             return false;
@@ -91,20 +88,29 @@ public class EventManager implements Serializable {
         if (event.getAttendees().size() >= 2) {
             return false;
         } else {
-            return !event.getAttendees().contains(user.get_id());
+            return !event.getAttendees().contains(user.getId());
         }
     }
 
     public boolean userCanLeave(User user, Event event){
-        return event.getAttendees().contains(user.get_id());
+        return event.getAttendees().contains(user.getId());
     }
 
     public void setSpeaker(Speaker speaker, Event event){
-        event.setSpeaker(speaker.get_id());
+        event.setSpeaker(speaker.getId());
     }
 
     public boolean hasSpeaker(Event event){
         return event.hasSpeaker();
     }
 
+    public boolean changeRoom(Event event, int roomNumber){
+        for(Event e: events){
+            if (e.getRoomNumber() == roomNumber && e.getEventTime().isEqual(event.getEventTime())){
+                return false;
+            }
+        }
+        event.setRoomNumber(roomNumber);
+        return true;
+    }
 }

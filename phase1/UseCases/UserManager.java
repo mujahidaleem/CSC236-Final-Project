@@ -29,7 +29,7 @@ public class UserManager implements Serializable {
 
     public boolean userIsCreatable(int id, String username, String password) {
         for (User user : users) {
-            if (user.get_id() == id){
+            if (user.getId() == id){
                 return false;
             }
         }
@@ -37,24 +37,24 @@ public class UserManager implements Serializable {
     }
 
     public boolean canAttendEvent(Event event) {
-        return !(currentUser.get_personalSchedule().containsKey(event.getEventName()));
+        return !(currentUser.getPersonalSchedule().containsKey(event.getEventName()));
     }
 
     public boolean canLeaveEvent(Event event) {
-        return currentUser.get_personalSchedule().containsKey(event.getEventName());
+        return currentUser.getPersonalSchedule().containsKey(event.getEventName());
     }
 
     public void attendEvent(Event event) {
-        currentUser.get_personalSchedule().put(event.getEventName(), event.getEventTime());
+        currentUser.getPersonalSchedule().put(event.getEventName(), event.getEventTime());
     }
 
     public void leaveEvent(Event event) {
-        currentUser.get_personalSchedule().remove(event.getEventName());
+        currentUser.getPersonalSchedule().remove(event.getEventName());
     }
 
     public void deleteEvent(Event event){
         for (User user :users) {
-            user.get_personalSchedule().remove(event.getEventName());
+            user.getPersonalSchedule().remove(event.getEventName());
         }
     }
 }

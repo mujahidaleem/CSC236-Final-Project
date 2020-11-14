@@ -6,7 +6,7 @@ import Entities.User;
 import java.io.Serializable;
 import java.util.List;
 
-public class UserManager implements Serializable {
+public class UserManager<cannotcontainspace> implements Serializable {
     private User currentUser;
     public List<User> users;
 
@@ -56,5 +56,10 @@ public class UserManager implements Serializable {
         for (User user :users) {
             user.getPersonalSchedule().remove(event.getEventName());
         }
+    }
+    //use case for username and passwords
+    //if theres a space in username or password, throw exception
+    public void cannotcontainspace(User user){
+
     }
 }

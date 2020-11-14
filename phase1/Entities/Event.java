@@ -11,13 +11,15 @@ import java.util.List;
 public class Event {
     String eventName;
     int roomNumber;
+    int id;
     LocalDateTime eventTime;
     ArrayList<Integer> attendees;
     int organizer;
     int speaker;
 
-    public Event(String name, int num, LocalDateTime time,
+    public Event(int id, String name, int num, LocalDateTime time,
                  int event_organizer){
+        this.id = id;
         eventName = name;
         roomNumber = num;
         eventTime = time;
@@ -35,6 +37,10 @@ public class Event {
 
     public LocalDateTime getEventTime(){
         return eventTime;
+    }
+
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
     }
 
     public void setEventTime(LocalDateTime event_time) {
@@ -60,18 +66,18 @@ public class Event {
     }
 
     public boolean add(User attendee){
-        if (attendees.contains(attendee.get_id())){
+        if (attendees.contains(attendee.getId())){
             return false;
         }
-        attendees.add(attendee.get_id());
+        attendees.add(attendee.getId());
         return true;
     }
 
     public boolean remove(User attendee){
-        if (!attendees.contains(attendee.get_id())){
+        if (!attendees.contains(attendee.getId())){
             return false;
         }
-        attendees.remove(attendee.get_id());
+        attendees.remove(attendee.getId());
         return true;
     }
 }

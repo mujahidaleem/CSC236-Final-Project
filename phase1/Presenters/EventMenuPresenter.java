@@ -1,7 +1,7 @@
 package Presenters;
 
 import Controllers.EventMenuController;
-import Controllers.EnglishLanguagePack;
+import Controllers.LanguagePack;
 import Entities.Event;
 import UseCases.EventManager;
 import UseCases.UserManager;
@@ -13,7 +13,8 @@ public class EventMenuPresenter {
     protected UserManager manager;
     protected EventMenuController controller;
     protected EventManager eventManager;
-    protected EnglishLanguagePack languagePack;
+    protected LanguagePack languagePack;
+    protected String language;
 
     /**
      * EventMenuPresenter constructor
@@ -21,14 +22,22 @@ public class EventMenuPresenter {
      * @param controller the controller that performs the commands inputted
      * @param language decides which language is used in the UI
      */
-    public EventMenuPresenter(UserManager manager, EventMenuController controller, String language) {
+    public EventMenuPresenter(UserManager manager, EventMenuController controller, EventManager eventManager, String language) {
         this.manager = manager;
+        this.eventManager = eventManager;
         this.controller = controller;
+        this.language = language;
+    }
+
+    /**
+     * reads the ser file containing all the commands in a specific language so the event menu is in that language
+     */
+    public void setupLanguagePackage(){
         try{
             FileInputStream fi = new FileInputStream(new File("D:\\Language\\" + language + ".ser"));
             ObjectInputStream oi = new ObjectInputStream(fi);
 
-            this.languagePack = (EnglishLanguagePack) oi.readObject();
+            this.languagePack = (LanguagePack) oi.readObject();
 
             oi.close();
             fi.close();
@@ -47,11 +56,12 @@ public class EventMenuPresenter {
      * performed by typing in the correct strings into the command line.
      */
     public void run() {
+        setupLanguagePackage();
         Scanner userInput = new Scanner(System.in);
         while (true) {
             printMenu();
             String[] command = userInput.nextLine().split("_");
-            if (command[0].equals("return")) {
+            if (command[0].equals("0")) {
                 break;
             }
             boolean standard = standardCommands(command);
@@ -68,12 +78,13 @@ public class EventMenuPresenter {
      */
     protected boolean standardCommands(String[] input){
         try{
+            Event event = eventManager.findEvent(input[1]);
             switch (input[0]){
                 case "1":
-                    controller.signUpForEvent(eventManager.findEvent(input[1]));
+                    signUpResult(controller.signUpForEvent(event), event);
                     return true;
                 case "2":
-                    controller.removeSpotFromEvent(eventManager.findEvent(input[1]));
+                    removalResult(controller.removeSpotFromEvent(event), event);
                     return true;
             }
         } catch (NullPointerException e) {
@@ -87,7 +98,7 @@ public class EventMenuPresenter {
     /**
      * Checks if the inputted command is one of the extra commands specific to this type of user. If it is,
      * tells the correct controller to run it.
-     * @param input The command inpputted by the user.
+     * @param input The command inputted by the user.
      */
     protected void extraCommands(String[] input){
         System.out.println(languagePack.unknownCommand());
@@ -97,16 +108,17 @@ public class EventMenuPresenter {
      * Prints the initial menu of the Event Menu, showing the organizer what commands can be used
      */
     public void printMenu() {
-        System.out.println(languagePack.menuHeadings()[0]);
+        System.out.println(manager.getCurrentUser());
+        System.out.println(languagePack.eventMenuHeadings()[0]);
         for (Event event : eventManager.getEvents()) {
-            if (manager.getCurrentUser().get_personalSchedule().containsKey(event.getEventName())) {
+            if (manager.getCurrentUser().getPersonalSchedule().containsKey(event.getEventName())) {
                 System.out.println(event);
             }
         }
         System.out.println("---------------------------------------------------------------------------------");
-        System.out.println(languagePack.menuHeadings()[1]);
+        System.out.println(languagePack.eventMenuHeadings()[1]);
         for (Event event : eventManager.getEvents()) {
-            if (!manager.getCurrentUser().get_personalSchedule().containsKey(event.getEventName())) {
+            if (!manager.getCurrentUser().getPersonalSchedule().containsKey(event.getEventName())) {
                 System.out.println(event);
             }
         }

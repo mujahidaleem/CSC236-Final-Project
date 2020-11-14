@@ -1,6 +1,7 @@
 package Presenters;
 
 import Controllers.SpeakerEventController;
+import UseCases.EventManager;
 import UseCases.SpeakerManager;
 
 public class SpeakerEventPresenter extends EventMenuPresenter {
@@ -12,7 +13,7 @@ public class SpeakerEventPresenter extends EventMenuPresenter {
      * @param language decides which language is used in the UI
      */
     public SpeakerEventPresenter(SpeakerManager manager,
-                                 SpeakerEventController speakerEventController, String language) {
-        super(manager, speakerEventController, language);
+                                 SpeakerEventController speakerEventController, EventManager eventManager, String language) {
+        super(manager, speakerEventController, eventManager, language);
     }
 }

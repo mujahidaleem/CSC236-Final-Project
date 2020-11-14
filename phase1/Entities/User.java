@@ -14,77 +14,77 @@ public abstract class User {
      * @param schedule A list of events that the speaker is attending
      * @param friends A list of manageable users of the speaker
      */
-    private String _name;
-    private int _id;
-    private String _password;
-    private HashMap<String, LocalDateTime> _personalSchedule;
-    private List<User> _friendList;
+    private String name;
+    private int id;
+    private String password;
+    private HashMap<String, LocalDateTime> personalSchedule;
+    private List<User> friendList;
 
     public User(int id, String name,
                 String password,
                 HashMap<String, LocalDateTime> schedule,
                 List<User> friends){
-        _id = id;
-        _name = name;
-        _password = password;
-        _personalSchedule = schedule;
-        _friendList = friends;
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.personalSchedule = schedule;
+        this.friendList = friends;
     }
 
     /**
      * Getter for the name of the User
      * @return _name
      */
-    public String get_name() {
-        return _name;
+    public String getName() {
+        return name;
     }
 
     /**
      * Getter for the password of the User
      * @return _password
      */
-    public String get_password() {
-        return _password;
+    public String getPassword() {
+        return password;
     }
 
     /**
      * Getter for the schedule of the user
      * @return _personalSchedule
      */
-    public HashMap<String, LocalDateTime> get_personalSchedule() {
-        return _personalSchedule;
+    public HashMap<String, LocalDateTime> getPersonalSchedule() {
+        return personalSchedule;
     }
 
     /**
      * Getter for the friend list of the User
      * @return _friendList
      */
-    public List<User> get_friendList() {
-        return _friendList;
+    public List<User> getFriendList() {
+        return friendList;
     }
 
     /**
      * Sets the name of the User
      * @param _name
      */
-    public void set_name(String _name) {
-        this._name = _name;
+    public void setName(String _name) {
+        this.name = _name;
     }
 
     /**
      * Sets the password of the User
      * @param _password
      */
-    public void set_password(String _password) {
-        this._password = _password;
+    public void setPassword(String _password) {
+        this.password = _password;
     }
 
     /**
      * Getter for the personal ID of the user
      * @return _id
      */
-    public int get_id() {
-        return _id;
+    public int getId() {
+        return id;
     }
 
 }

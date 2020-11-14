@@ -1,14 +1,12 @@
 package Controllers;
 
 import Entities.Event;
+import Entities.Speaker;
 
-import java.time.format.DateTimeFormatter;
 
 public interface LanguagePack {
-    public String language = null;
-    public String directory = null;
 
-    public String[] menuHeadings();
+    public String[] eventMenuHeadings();
 
     public void printStandardCommands();
 
@@ -18,18 +16,9 @@ public interface LanguagePack {
 
     public String[] standardResultsFailure(Event event);
 
-    public String[] organizerResultsSuccess(Event event);
-
-    public String[] organizerResultsFailure(Event event);
-
     public String unknownCommand();
-
-    public String eventUnchangeable(Event event);
 
     public String unknownEvent();
 
-    public String unknownSpeaker();
-
     public String unknownDate();
-
 }

@@ -24,6 +24,10 @@ public class SpeakerFriendListPresenter extends UserFriendListPresenter {
             SpeakerFriendManager SpeakerFriendManager=(SpeakerFriendManager) UserFriendManager;
             this.SpeakerFriendManager= SpeakerFriendManager;}
         }
+
+    /**
+     * Display the messageable Users of speaker
+      */
     @Override
     public void DisplayMessageable(){
         ArrayList<User> messageableList = this.SpeakerFriendManager.get_MessageableList();
@@ -37,7 +41,7 @@ public class SpeakerFriendListPresenter extends UserFriendListPresenter {
      */
 
     public void DisplayRemove(User anotherUser){
-        String name=anotherUser.getname();
+        String name=anotherUser.get_name();
         System.out.println(name+"is removed from your friend list");
     }
 

@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class SpeakerFriendListController extends UserFriendListController {
     public User TargetUser;
-    public Presenters.UserFriendListPresenter UserFriendListPresenter;
-    public UseCases.UserFriendManager UserFriendManager;
+    public UserFriendListPresenter UserFriendListPresenter;
+    public UserFriendManager UserFriendManager;
     public Speaker currentSpeaker;
     public SpeakerFriendListPresenter SpeakerFriendListPresenter;
     public SpeakerFriendManager SpeakerFriendManager;
@@ -30,6 +30,7 @@ public class SpeakerFriendListController extends UserFriendListController {
 
     /**
      * Messageable Users for Speakers are all Users in Friendlist and all attendees in each of his event
+     * @return the messageable users of Speaker.
      */
 
     @Override
@@ -49,8 +50,8 @@ public class SpeakerFriendListController extends UserFriendListController {
 
     /**
      * Speakers can send Announcement to all Attendees in his event
-     * @param message
-     * @param event
+     * @param message the content of announcement
+     * @param event which Event of these attendees are belonged to
      */
     public void sendingAnnouncement(String message, Event event){
         for(User user:event.getAttendees()){
@@ -60,8 +61,10 @@ public class SpeakerFriendListController extends UserFriendListController {
 
 
     /**
-     *  Show the chat log of User and another User
+     * @param anotherUser
+     * @return the chat log of User and another User
      */
+
     public ArrayList<String> showChatLog(User anotherUser){
         ArrayList<String> result = new ArrayList<String>();
         if(this.UserFriendManager.messageable(anotherUser)){

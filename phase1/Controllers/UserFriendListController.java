@@ -19,12 +19,12 @@ public abstract class UserFriendListController {
     }
 
     /**
-     * Show list of messageable Users
+     * @return list of messageable Users（abstract）
      */
     abstract ArrayList<String> getMessageableList();
 
     /**
-     *  Show the chat log of User and another User
+     *  @return the chat log of currentUser and another User
      */
     public ArrayList<String> showChatLog(User anotherUser){
         ArrayList<String> result = new ArrayList<String>();
@@ -35,16 +35,19 @@ public abstract class UserFriendListController {
     }
 
     /**
-     * Send a message to the User
+     * currentUser Send a message to another User
+     * @param anotherUser User who receive the Message
+     * @param messageContent the content of the message
      */
     public void sendingMessage(User anotherUser,String messageContent){
         if(this.UserFriendManager.messageable(anotherUser)){
             this.UserFriendManager.SendMessageTo(messageContent,anotherUser);
         }}
 
-/**
- * Remove User from messageable Users
- */
+    /**
+     * Remove User from messageable Users
+     * @param anotherUser The user who is removed from the Current User's friend list
+     */
 
     public void removeFrom(User anotherUser){
        if(this.UserFriendManager.messageable(anotherUser)){
@@ -54,16 +57,17 @@ public abstract class UserFriendListController {
 
     /**
      * Add a User to list of messageable Users
+     * @param anotherUser The User who will be added into the friend list of current User
      */
     public void Add(User anotherUser){
         if(this.UserFriendManager.messageable(anotherUser)==false){
         this.UserFriendManager.addNewFriend(anotherUser);
     }}
 
-        /**
-         * Allow User to return to the menu
-          */
-        public void returnToMenu(){;
+    /**
+     * Allow User to return to the menu
+     */
+    public void returnToMenu(){;
 
         }
 

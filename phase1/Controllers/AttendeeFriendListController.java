@@ -31,6 +31,7 @@ public class AttendeeFriendListController extends UserFriendListController {
     /**
      * For Attendee, messageable Users are All users in FriendList and Other Attendees / Speakers
      * in the event that he sign up
+     * @return the messageable users of Attendee
      */
 
     @Override

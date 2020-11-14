@@ -30,7 +30,7 @@ public class OrganizerFriendListController extends UserFriendListController {
 
     /**
      * for Organizer, the messageable Users are all users in friendlist and all Attendees and Speaker.
-     * @return
+     * @return the messageable users of Organizers
      */
     @Override
     public ArrayList<String> getMessageableList(){

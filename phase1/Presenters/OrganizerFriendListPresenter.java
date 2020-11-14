@@ -23,6 +23,9 @@ public class OrganizerFriendListPresenter extends UserFriendListPresenter {
             this.OrganizerFriendManager= OrganizerFriendManager;}
     }
 
+    /**
+     * Display the messageable Users of Organizer
+     */
     @Override
     public void DisplayMessageable(){
         ArrayList<User> messageableList = this.OrganizerFriendManager.get_MessageableList();
@@ -32,7 +35,7 @@ public class OrganizerFriendListPresenter extends UserFriendListPresenter {
     }
 
     /**
-     * Display the command to add/remove an User from messageable list
+     * Display the command to add/remove another User from messageable list
      */
 
     public void RemoveMessage(User anotherUser){

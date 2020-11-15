@@ -1,12 +1,11 @@
-
 package Controllers;
 
-        import UseCases.UserLoginManager;
-        import Presenters.LoginMenuPresenter;
-        import UseCases.EventManager;
-        import src.Managers;
-        import Entities.User;
-        import UseCases.UserManager;
+import UseCases.LoginMenuManager;
+import Presenters.LoginMenuPresenter;
+import UseCases.EventManager;
+import Entities.User;
+import UseCases.UserManager;
+import Gateways.UserReader;
 
 //import database from gateway?
 
@@ -47,7 +46,7 @@ public class  LoginMenuController {
         }
     }
 
-    public boolean password_matches_username(String username, String password) {
+    public static boolean password_matches_username(String username, String password) {
         //check system to see if password matches username
 
     }
@@ -63,4 +62,3 @@ public class  LoginMenuController {
     //logout
     public void logout() {
     }
-}

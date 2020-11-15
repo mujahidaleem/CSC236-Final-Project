@@ -1,12 +1,24 @@
 package Presenters;
 
 import Controllers.AttendeeFriendListController;
+import Controllers.SpeakerFriendListController;
 import Controllers.UserFriendListController;
+import Controllers.OrganizerFriendListController;
+import Presenters.AttendeeFriendListPresenter;
+import Presenters.OrganizerFriendListPresenter;
+import Presenters.SpeakerFriendListPresenter;
+import Entities.User;
+import Entities.Speaker;
+import Entities.Attendee;
+import Entities.Organizer;
 
 public class MessageMenuController {
     public UserFriendListController UserFriendListController;
 
 
+    public MessageMenuController(UserFriendListController UserFriendListController){
+        this.UserFriendListController=UserFriendListController;
+    }
 
 
     public User matchNameWithUser(String name){

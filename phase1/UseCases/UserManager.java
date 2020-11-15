@@ -62,4 +62,8 @@ public class UserManager<cannotcontainspace> implements Serializable {
     public void cannotcontainspace(User user){
 
     }
+
+    public void changePassword(String password){
+        currentUser.setPassword(password);
+    }
 }

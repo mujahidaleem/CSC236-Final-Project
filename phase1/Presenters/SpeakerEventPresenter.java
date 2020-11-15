@@ -8,9 +8,10 @@ public class SpeakerEventPresenter extends EventMenuPresenter {
 
     /**
      * EventMenuPresenter constructor
-     * @param manager stores the current user
+     *
+     * @param manager                stores the current user
      * @param speakerEventController the controller that performs the commands inputted
-     * @param language decides which language is used in the UI
+     * @param language               decides which language is used in the UI
      */
     public SpeakerEventPresenter(SpeakerManager manager,
                                  SpeakerEventController speakerEventController, EventManager eventManager, String language) {

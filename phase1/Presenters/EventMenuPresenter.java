@@ -18,9 +18,10 @@ public class EventMenuPresenter {
 
     /**
      * EventMenuPresenter constructor
-     * @param manager stores the current user
+     *
+     * @param manager    stores the current user
      * @param controller the controller that performs the commands inputted
-     * @param language decides which language is used in the UI
+     * @param language   decides which language is used in the UI
      */
     public EventMenuPresenter(UserManager manager, EventMenuController controller, EventManager eventManager, String language) {
         this.manager = manager;
@@ -32,8 +33,8 @@ public class EventMenuPresenter {
     /**
      * reads the ser file containing all the commands in a specific language so the event menu is in that language
      */
-    public void setupLanguagePackage(){
-        try{
+    public void setupLanguagePackage() {
+        try {
             FileInputStream fi = new FileInputStream(new File("D:\\Language\\" + language + ".ser"));
             ObjectInputStream oi = new ObjectInputStream(fi);
 
@@ -42,7 +43,7 @@ public class EventMenuPresenter {
             oi.close();
             fi.close();
 
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println("File not found.");
         } catch (IOException e) {
             System.out.println("Error initializing stream.");
@@ -65,7 +66,7 @@ public class EventMenuPresenter {
                 break;
             }
             boolean standard = standardCommands(command);
-            if(!standard){
+            if (!standard) {
                 extraCommands(command);
             }
         }
@@ -73,13 +74,14 @@ public class EventMenuPresenter {
 
     /**
      * Checks if the inputted command is one of the standard commands and tells the controller to perform it if it is
+     *
      * @param input The command inputted by the user
      * @return True if the command is a standard command. False if it is not.
      */
-    protected boolean standardCommands(String[] input){
-        try{
+    protected boolean standardCommands(String[] input) {
+        try {
             Event event = eventManager.findEvent(input[1]);
-            switch (input[0]){
+            switch (input[0]) {
                 case "1":
                     signUpResult(controller.signUpForEvent(event), event);
                     return true;
@@ -98,9 +100,10 @@ public class EventMenuPresenter {
     /**
      * Checks if the inputted command is one of the extra commands specific to this type of user. If it is,
      * tells the correct controller to run it.
+     *
      * @param input The command inputted by the user.
      */
-    protected void extraCommands(String[] input){
+    protected void extraCommands(String[] input) {
         System.out.println(languagePack.unknownCommand());
     }
 
@@ -127,7 +130,8 @@ public class EventMenuPresenter {
 
     /**
      * Prints the result of trying to sign up for an event
-     * @param i whether the signup was successful or not
+     *
+     * @param i     whether the signup was successful or not
      * @param event the event that the user is trying to sign up for
      */
     public void signUpResult(boolean i, Event event) {
@@ -140,7 +144,8 @@ public class EventMenuPresenter {
 
     /**
      * Prints the result of trying to cancel the users spot from an event
-     * @param i whether the removal was successful or not
+     *
+     * @param i     whether the removal was successful or not
      * @param event the event that the user is trying to cancel their spot from
      */
     public void removalResult(boolean i, Event event) {
@@ -154,7 +159,7 @@ public class EventMenuPresenter {
     /**
      * Prints the list of commands that can be executed by the organizer
      */
-    protected void printCommands(){
+    protected void printCommands() {
         languagePack.printStandardCommands();
     }
 }

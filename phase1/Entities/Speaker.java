@@ -25,7 +25,7 @@ public class Speaker extends User {
      * Getter for the speaking schedule of the speaker
      * @return returns a Hashmap of event names corresponding to the date and time in which the event is happening
      */
-    public HashMap<String, LocalDateTime> get_speakingSchedule() {
+    public HashMap<String, LocalDateTime> getSpeakingSchedule() {
         return _speakingSchedule;
     }
 }

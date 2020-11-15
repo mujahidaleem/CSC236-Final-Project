@@ -12,35 +12,29 @@ public class EnglishLanguagePack implements LanguagePack, OrganizerEventLanguage
 
     /**
      * EnglishLanguagePack constructor
+     *
      * @param language the language of the strings
      */
-    public EnglishLanguagePack(String language){
+    public EnglishLanguagePack(String language) {
         this.language = language;
         this.directory = "D:\\Language\\" + language + ".ser";
     }
 
-    /**
-     * Contains the headings of the eventMenu
-     * @return the headings of the eventMenu
-     */
-    public String[] eventMenuHeadings(){
+    @Override
+    public String[] eventMenuHeadings() {
         return new String[]{"Events Attending", "Events Available"};
     }
 
-    /**
-     * Prints the instructions on how to input the standard commands
-     */
-    public void printStandardCommands(){
+    @Override
+    public void printStandardCommands() {
         System.out.println("---------------------------------------------------------------------------------");
         System.out.println("To return to the main menu, type 0");
         System.out.println("To sign up for an event, type 1_Event");
         System.out.println("To cancel your position in an event, type 2_Event");
     }
 
-    /**
-     * Prints how to input the extra organizer commands
-     */
-    public void printOrganizerCommands(){
+    @Override
+    public void printOrganizerCommands() {
         System.out.println("To create a new event, type Create event_Name_YYYY-MM-DDTHH:mm:ss_roomNumber_id");
         System.out.println("To assign a speaker to an event, type Assign speaker_Event_SpeakerID");
         System.out.println("To remove a speaker from an event, type Remove speaker_Event");
@@ -50,32 +44,20 @@ public class EnglishLanguagePack implements LanguagePack, OrganizerEventLanguage
         System.out.println("To create a new speaker account, type Create speaker_name_password");
     }
 
-    /**
-     * Contains the strings corresponding to successful standard commands
-     * @param event the event which the commands pertain to
-     * @return a string telling the user their command is successful
-     */
-    public String[] standardResultsSuccess(Event event){
+    @Override
+    public String[] standardResultsSuccess(Event event) {
         return new String[]{"Success", "You are now registered for " + event + ".",
                 "You are no longer attending " + event + "."};
     }
 
-    /**
-     * Contains the strings corresponding to unsuccessful standard commands
-     * @param event the event which the commands pertain to
-     * @return a string telling the user their command is unsuccessful
-     */
-    public String[] standardResultsFailure(Event event){
+    @Override
+    public String[] standardResultsFailure(Event event) {
         return new String[]{"Failure", "Sorry, you are unable to attend this event.",
                 "You are already not attending " + event.getEventName()};
     }
 
-    /**
-     * Contains the strings corresponding to successful organizer commands
-     * @param event the event which the commands pertain to
-     * @return a string telling the user their command is successful
-     */
-    public String[] organizerResultsSuccess(Event event){
+    @Override
+    public String[] organizerResultsSuccess(Event event) {
         return new String[]{"Your event has successfully been created.",
                 event.getSpeaker() + " will now be speaking at " + event.getEventName(),
                 "Speaker has successfully been removed.", event.getEventName() + " will now occur at " +
@@ -85,12 +67,8 @@ public class EnglishLanguagePack implements LanguagePack, OrganizerEventLanguage
         };
     }
 
-    /**
-     * Contains the strings corresponding to unsuccessful organizer commands
-     * @param event the event which the commands pertain to
-     * @return a string telling the user their command is successful
-     */
-    public String[] organizerResultsFailure(Event event){
+    @Override
+    public String[] organizerResultsFailure(Event event) {
         return new String[]{"Sorry, your event cannot be created. Please try again",
                 "Sorry, " + event.getSpeaker() + " is not available at that specific time.",
                 "This event already does not have a speaker.",
@@ -100,62 +78,39 @@ public class EnglishLanguagePack implements LanguagePack, OrganizerEventLanguage
         };
     }
 
-    /**
-     * Tells the user that the command inputted cannot be understood
-     * @return a string telling the user that their commands is not recognized
-     */
-    public String unknownCommand(){
+    @Override
+    public String unknownCommand() {
         return "Sorry, that command was not recognized. Please try again.";
     }
 
-    /**
-     * Tells the user cannot modified the selected event
-     * @param event the event that the organizer is attempting to modify
-     * @return a string telling that event cannot be modified
-     */
-    public String eventUnchangeable(Event event){
+    @Override
+    public String eventUnchangeable(Event event) {
         return event.getEventName() + " cannot be modified by you as you are not the organizer.";
     }
 
-    /**
-     * Tells the user that the given event does not exist
-     * @return a string telling that the event does not exist
-     */
-    public String unknownEvent(){
+    @Override
+    public String unknownEvent() {
         return "Event does not exist, please try again.";
     }
 
-    /**
-     * Tells the user that the speaker does not exist
-     * @return a string telling thhe user that the speaker does not exist
-     */
-    public String unknownSpeaker(){
+    @Override
+    public String unknownSpeaker() {
         return "This speaker does not exist. Please try again.";
     }
 
-    /**
-     * Tells the user that the date inputted could not be understood
-     * @return a string telling the user that the date inputted could not be understood
-     */
-    public String unknownDate(){
+    @Override
+    public String unknownDate() {
         return "The date could not be read. Please try again.";
     }
 
-    /**
-     * Contains the string telling the user that a new speaker account has been created
-     * @param speaker the new speaker account
-     * @return a string telling the user that a new speaker account has been created
-     */
-    public String speakerAccountSuccess(Speaker speaker){
+
+    public String speakerAccountSuccess(Speaker speaker) {
         return "Speaker account has been created with username " + speaker.getId() + " and temporary password " +
                 speaker.getPassword();
     }
 
-    /**
-     * Contains the string telling the user that a speaker cannot be created
-     * @return a string telling the user that a new speaker account cannot be created
-     */
-    public String speakerAccountFailure(){
+    @Override
+    public String speakerAccountFailure() {
         return "Sorry, this speaker account cannot be created.";
     }
 }

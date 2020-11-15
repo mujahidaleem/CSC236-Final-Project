@@ -35,8 +35,8 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      * reads the ser file containing all the commands in a specific language so the event menu is in that language
      */
     @Override
-    public void setupLanguagePackage(){
-        try{
+    public void setupLanguagePackage() {
+        try {
             FileInputStream fi = new FileInputStream(new File("D:\\Language\\" + language + ".ser"));
             ObjectInputStream oi = new ObjectInputStream(fi);
 
@@ -46,7 +46,7 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
             oi.close();
             fi.close();
 
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println("File not found.");
         } catch (IOException e) {
             System.out.println("Error initializing stream.");
@@ -61,7 +61,7 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
     @Override
     protected void printCommands() {
         languagePack.printStandardCommands();
-        languagePack.printOrganizerCommands();
+        organizerEventLanguagePack.printOrganizerCommands();
     }
 
     /**

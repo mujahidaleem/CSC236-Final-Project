@@ -2,11 +2,14 @@ package Presenters;
 
 import Controllers.LoginMenuController;
 import UseCases.UserLoginManager;
+import UseCases.UserManager;
 import Entities.User;
 
 //TODO:import the various menus for the different types of users.
 
 public class LoginMenuPresenter{
+    private final LoginMenuController controller;
+
     /**
     LoginMenuPresenter constructor
      controller
@@ -19,10 +22,11 @@ public class LoginMenuPresenter{
     public static void printLoginMenu(String[] command){
         System.out.println("Please enter your username and password, separated by a space");
 
-}
-    public static void login(String[] command) {
+}/** command should follow format of "username password"
+ */
+    public static void login(String command) {
         String username = command.split(" ")[0];
-        String password = command.split(" ")[1];
+        String password = command.substring(username.length()+1);
 
         if (LoginMenuController.username_exists(command)){
             //check if password matches username
@@ -41,13 +45,12 @@ public class LoginMenuPresenter{
                     login();
                 }
         else{
-                    System.out.println("This username does not exist. Please sign up or try again")
-                    //add option to create new account then add to this.
+                    System.out.println("This username does not exist. Would you like to sign up? y/n");
+                    //if user types yes: call UserManager.adduser
+                    //if no, restart this method.
+
                 }
             }
 
 
-        }
-
-        () {
         }

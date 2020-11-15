@@ -1,14 +1,21 @@
 package Presenters;
 
+import Controllers.AttendeeFriendListController;
 import Entities.Attendee;
 import UseCases.AttendeeFriendManager;
 
 import java.util.ArrayList;
 
 public class AttendeeFriendListPresenter extends UserFriendListPresenter {
+    public AttendeeFriendListController AttendeeFriendListController;
+    public AttendeeFriendManager AttendeeFriendManager;
+    public UserFriendManager UserFriendManager;
+    public User currentUser;
+    public MessageReader MessageReader;
 
     public AttendeeFriendListPresenter(User currentUser, UseCases.UserFriendManager UserFriendManager,
-                                       MessageReader MessageReader) {
+                                       MessageReader MessageReader,AttendeeFriendListController
+                                       AttendeeFriendListController) {
         super(currentUser, UserFriendManager, MessageReader);
         if(currentUser instanceof Attendee){
             Attendee currentattendee=(Attendee) currentUser;
@@ -17,6 +24,7 @@ public class AttendeeFriendListPresenter extends UserFriendListPresenter {
         if(UserFriendManager instanceof AttendeeFriendManager){
             AttendeeFriendManager AttendeeFriendManager=(AttendeeFriendManager) UserFriendManager;
             this.AttendeeFriendManager= AttendeeFriendManager;}
+        this.AttendeeFriendListController=AttendeeFriendListController;
     }
 
 
@@ -27,7 +35,7 @@ public class AttendeeFriendListPresenter extends UserFriendListPresenter {
      */
     @Override
     public void DisplayMessageable(){
-       ArrayList<User> messageableList = this.AttendeeFriendListController.get_MessageableList();
+       ArrayList<User> messageableList = this.AttendeeFriendListController.getMessageableList();
        for(User messageable: messageableList){
            System.out.println(messageable.get_name());
        }

@@ -24,13 +24,23 @@ public abstract class UserFriendListPresenter {
     public abstract void DisplayMessageable();
 
     /**
-     * Display the command to add/remove an User from messageable list
+     * Display the command to remove an User from messageable list
      * @param anotherUser The user who will be removed from User's friend list
      */
 
     public void RemoveMessage(User anotherUser){
         String name=anotherUser.get_name();
         System.out.println(name+"is removed from your friend list");
+    }
+
+    /**
+     * Display the command to remove an User from messageable list
+     * @param anotherUser The user who will be removed from User's friend list
+     */
+
+    public void AddMessage(User anotherUser){
+        String name=anotherUser.get_name();
+        System.out.println(name+"is added into your friend list");
     }
 
     /**

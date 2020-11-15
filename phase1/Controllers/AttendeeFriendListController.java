@@ -35,16 +35,16 @@ public class AttendeeFriendListController extends UserFriendListController {
      */
 
     @Override
-        public ArrayList<String> getMessageableList(){
-            ArrayList<String> result= new ArrayList<String>();
+        public ArrayList<User> getMessageableList(){
+            ArrayList<User> result= new ArrayList<String>();
             int i = 0;
             while(i < this.Attendee.get_friendList().length()){
-                result.add(this.Attendee.get_friendList[i].get_name());
+                result.add(this.Attendee.get_friendList[i]);
                 i=i+1; }
             for(Event event: this.Attendee.get_eventList()){
                 result.add(event.getSpeaker());
                 for(User user :event.getUserList()){
-                    result.add(user.get_name());
+                    result.add(user);
                 }
             }
             return result;

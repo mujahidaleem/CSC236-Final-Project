@@ -7,21 +7,21 @@ import Presenters.UserFriendListPresenter;
 import java.util.ArrayList;
 
 public abstract class UserFriendListController {
-    public User TargetUser;
+    public User currentUser;
     public UserFriendListPresenter UserFriendListPresenter;
     public UserFriendManager UserFriendManager;
 
-    public UserFriendListController(User targetUser, UserFriendListPresenter UserFriendListPresenter,
+    public UserFriendListController(User currentUser, UserFriendListPresenter UserFriendListPresenter,
                                     UserFriendManager UserFriendManager){
         this.UserFriendListPresenter=UserFriendListPresenter;
         this.UserFriendManager=UserFriendManager;
-        this.TargetUser=targetUser;
+        this.currentUser=currentUser;
     }
 
     /**
      * @return list of messageable Users（abstract）
      */
-    abstract ArrayList<String> getMessageableList();
+    abstract ArrayList<User> getMessageableList();
 
     /**
      *  @return the chat log of currentUser and another User

@@ -2,18 +2,24 @@
 package Presenters;
 
 
+import Controllers.OrganizerFriendListController;
+import Controllers.UserFriendListController;
 
 public class OrganizerFriendListPresenter extends UserFriendListPresenter {
-    public OrganizerFriendManager OrganizerFriendManager;
+    public OrganizerFriendListController OrganizerFriendListController;
     public MessageReader MessageReader;
     public Organizer currentOrganizer;
     public User currentUser;
-    public UseCases.UserFriendManager UserFriendManager;
+    public UserFriendManager UserFriendManager;
+    public OrganizerFriendManager OrganizerFriendManager;
+
 
 
     public OrganizerFriendListPresenter(User currentUser, UseCases.UserFriendManager UserFriendManager,
-                                      MessageReader MessageReader) {
+                                      MessageReader MessageReader,
+                                        OrganizerFriendListController OrganizerFriendListController) {
         super(currentUser, UserFriendManager, MessageReader);
+        this.OrganizerFriendListController= OrganizerFriendListController;
         if(currentUser instanceof Organizer){
             Organizer currentOrganizer=(Organizer) currentUser;
             this.currentOrganizer=currentOrganizer;
@@ -28,7 +34,7 @@ public class OrganizerFriendListPresenter extends UserFriendListPresenter {
      */
     @Override
     public void DisplayMessageable(){
-        ArrayList<User> messageableList = this.OrganizerFriendManager.get_MessageableList();
+        ArrayList<User> messageableList = this.OrganizerFriendListController.getMessageableList();
         for(User messageable: messageableList){
             System.out.println(messageable.get_name());
         }

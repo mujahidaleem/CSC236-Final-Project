@@ -1,5 +1,6 @@
 package Presenters;
 
+import Controllers.SpeakerFriendListController;
 import UseCases.UserFriendManager;
 import Entities.User;
 
@@ -11,10 +12,12 @@ public class SpeakerFriendListPresenter extends UserFriendListPresenter {
     public Speaker currentSpeaker;
     public User currentUser;
     public UserFriendManager UserFriendManager;
+    public SpeakerFriendListController SpeakerFriendListController;
 
 
     public SpeakerFriendListPresenter(User currentUser, UseCases.UserFriendManager UserFriendManager,
-                                       MessageReader MessageReader) {
+                                       MessageReader MessageReader,
+                                      SpeakerFriendListController SpeakerFriendListController) {
         super(currentUser, UserFriendManager, MessageReader);
         if(currentUser instanceof Speaker){
             Speaker currentspeaker=(Speaker) currentUser;
@@ -23,6 +26,7 @@ public class SpeakerFriendListPresenter extends UserFriendListPresenter {
         if(UserFriendManager instanceof SpeakerFriendManager){
             SpeakerFriendManager SpeakerFriendManager=(SpeakerFriendManager) UserFriendManager;
             this.SpeakerFriendManager= SpeakerFriendManager;}
+        this.SpeakerFriendListController=SpeakerFriendListController;
         }
 
     /**
@@ -30,7 +34,7 @@ public class SpeakerFriendListPresenter extends UserFriendListPresenter {
       */
     @Override
     public void DisplayMessageable(){
-        ArrayList<User> messageableList = this.SpeakerFriendManager.get_MessageableList();
+        ArrayList<User> messageableList = this.SpeakerFriendListController.getMessageableList();
         for(User messageable: messageableList){
             System.out.println(messageable.get_name());
         }

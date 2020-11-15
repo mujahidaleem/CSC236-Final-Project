@@ -20,7 +20,7 @@ public class LoginMenuManager {
 
     //check if user exists
     public boolean check_exists(String username) {
-        if username
+
     }
 }
 

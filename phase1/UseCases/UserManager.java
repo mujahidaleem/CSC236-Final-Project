@@ -135,7 +135,7 @@ public class UserManager implements Serializable {
     */
     public void cannotcontainspace(User user){
         if (user.getName().contains(" ")){
-            throw new Exception("Spaces are not allowed in usernames");
+            throw new Exception("Spaces are not allowed in usernames ");
         }
 
 

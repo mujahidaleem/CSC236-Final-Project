@@ -2,6 +2,7 @@ package Presenters;
 
 import Controllers.LoginMenuController;
 import UseCases.UserLoginManager;
+import UseCases.UserManager;
 import Entities.User;
 
 //TODO:import the various menus for the different types of users.
@@ -44,8 +45,10 @@ public class LoginMenuPresenter{
                     login();
                 }
         else{
-                    System.out.println("This username does not exist. Please sign up or try again");
-                    //add option to create new account then add to this.
+                    System.out.println("This username does not exist. Would you like to sign up? y/n");
+                    //if user types yes: call UserManager.adduser
+                    //if no, restart this method.
+
                 }
             }
 

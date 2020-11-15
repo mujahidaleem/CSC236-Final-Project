@@ -38,12 +38,8 @@ public class  LoginMenuController {
 
     public boolean username_exists(String username) {
         //if (username in database){return True;} else{return False;}
-        for (user in; this.userManager.getusers()) {
-            if (user._name == username) {
-                return true;
-            }
-            return false;
-        }
+        users_list = userManager.getUsers();
+
     }
 
     public static boolean password_matches_username(String username, String password) {

@@ -48,17 +48,6 @@ public class SpeakerFriendListController extends UserFriendListController {
         return result;
     }
 
-    /**
-     * Speakers can send Announcement to all Attendees in his event
-     * @param message the content of announcement
-     * @param event which Event of these attendees are belonged to
-     */
-    public void sendingAnnouncement(String message, Event event){
-        for(User user:event.getAttendees()){
-        this.SpeakerFriendManager.sendingMessageTo(message,user);
-    }
-}
-
 
     /**
      * @param anotherUser

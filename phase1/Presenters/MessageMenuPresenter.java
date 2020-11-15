@@ -8,6 +8,7 @@ public class MessageMenuPresenter {
     public UserFriendListPresenter UserFriendListPresenter;
     public UserFriendListController UserFriendListcontroller;
     public User currentUser;
+    public MessageMenuController MessageMenuController;
 
     public MessageMenuPresenter(UserFriendListController UserFriendListController,
                        UserFriendListPresenter UserFriendListPresenter, User currentUser,
@@ -27,6 +28,7 @@ public class MessageMenuPresenter {
             System.out.println("please select a User and type in his/her User name: ");
             String UserName = userInput.nextLine();
             //match username with User
+            User anotherUser=this.MessageMenuController.matchNameWithUser(UserName);
             System.out.println("please select and type in the command number: ");
             System.out.println(("1. send message"));
             System.out.println("2.add friend");

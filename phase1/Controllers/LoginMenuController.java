@@ -6,6 +6,7 @@ import UseCases.EventManager;
 import Entities.User;
 import UseCases.UserManager;
 import Gateways.UserReader;
+import sun.font.TrueTypeFont;
 
 //import database from gateway?
 
@@ -20,7 +21,7 @@ public class  LoginMenuController {
     public AttendeeMenuController attendeeMenuController;
     public OrganizerMenuController organizerMenuController;
 
-    public LoginMenuController(UserManager userManager;
+    public LoginMenuController(UserManager UserManager;
             UserLoginManager userLoginManager, UserLoginPresenter userLoginPresenter,
                                AttendeeManager attendeeManager, OrganizerManager organizerManager,
                                AttendeeMenuController attendeeMenuController,
@@ -34,27 +35,33 @@ public class  LoginMenuController {
         this.organizerMenuController = organizerMenuController;
     }
 
-    // show login screen to type username and password, ie. show or initialize presenter?
+    /**
+     * command should follow format of "id, password"
+     */
 
-    public boolean username_exists(String username) {
-        //if (username in database){return True;} else{return False;}
-        users_list = userManager.getUsers();
+    public String login(String command) {
+        // read command to see if user exists
+        int id = Integer.parseInt(command.split(" ")[0]);
+        String password = command.substring(id.length() + 1);
 
-    }
+        if (LoginMenuManager.password_matches_id( id, password)){
+            present_menu(id);
+        }
+        else{
+            String e = "incorrect";
+            return e;
+        }
 
-    public static boolean password_matches_username(String username, String password) {
-        //check system to see if password matches username
+        public void present_menu( int id){
+            if (LoginMenuManager.type_of_user(id).equals("Attendee")) {
+                //display attendee event presenter
+            } else if (LoginMenuController.type_of_user(id).equals("Organizer")) {
 
-    }
+            }
+            //display organizer screen
+            else if (LoginMenuManager.type_of_user(id).equals("Speaker")) {
+                //display speaker screen;
+            }
 
-    public String type_of_user(String username) {
-        //check database to return a string of "Attendee", "Organizer" or "Speaker"
-    }
 
-    //exit program (cancel login)
-    public void exit() {
-    }
 
-    //logout
-    public void logout() {
-    }

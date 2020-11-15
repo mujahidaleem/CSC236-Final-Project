@@ -1,56 +1,38 @@
 package Presenters;
 
 import Controllers.LoginMenuController;
-import UseCases.UserLoginManager;
+import UseCases.LoginMenuManager;
 import UseCases.UserManager;
 import Entities.User;
 
 //TODO:import the various menus for the different types of users.
 
-public class LoginMenuPresenter{
+public class LoginMenuPresenter {
     private final LoginMenuController controller;
 
     /**
-    LoginMenuPresenter constructor
-     controller
+     * LoginMenuPresenter constructor
+     * controller
      **/
-    public LoginMenuPresenter(LoginMenuController loginMenuController){
+    public LoginMenuPresenter(LoginMenuController loginMenuController) {
         this.controller = loginMenuController;
     }
-}
 
-    public static void printLoginMenu(String[] command){
-        System.out.println("Please enter your username and password, separated by a space");
 
-}/** command should follow format of "username password"
- */
-    public static void login(String command) {
-        String username = command.split(" ")[0];
-        String password = command.substring(username.length()+1);
+    public static void printLoginMenu(String[] command) {
+        System.out.println("Please enter your id and password, separated by a space");
 
-        if (LoginMenuController.username_exists(command)){
-            //check if password matches username
-            if (LoginMenuController.password_matches_username(username, password)) {
-                //check type of user, then present appropriate screen
-                if (LoginMenuController.type_of_user(username) == "Attendee") {
-                    //display attendee event presenter
-                } else if (LoginMenuController.type_of_user(username) == "Organizer") {
-                }
-                //display organizer screen
-                else if (LoginMenuController.type_of_user(username) == "Speaker") {
-                    //display speaker screen;
-                } else {
-                    System.out.println("Your username or password is incorrect. Please try again");
-                    //restart this process
-                    login();
-                }
-        else{
-                    System.out.println("This username does not exist. Would you like to sign up? y/n");
-                    //if user types yes: call UserManager.adduser
-                    //if no, restart this method.
+    }
 
-                }
-            }
+    /**
+     * command should follow format of "id, password"
+     */
 
+    public static void loginpresenter(String command) {
+        // reads command to LoginMenuController
+        if (LoginMenuController.login(command)).equals("incorrect");
+            System.out.println("Your username or password is incorrect. Please try again");
 
         }
+    }
+}

@@ -17,10 +17,30 @@ public class LoginMenuManager {
     public LoginMenuManager(User user) {
         this.user = user;
     }
-
-    //check if user exists
-    public boolean check_exists(String username) {
-
+    public boolean password_matches_id(int id, String password) {
+        //checks system to see if password matches username
+        User user = UserManager.finduser(id);
+        if (user.getPassword().equals(password)){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
+
+    public String type_of_user(String username) {
+        //check database to return a string of "Attendee", "Organizer" or "Speaker"
+    }
+
+    //exit program (cancel login)
+    public void exit() {
+    }
+
+    //logout
+    public void logout() {
+    }
+
+
+
 }
 

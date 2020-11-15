@@ -2,7 +2,9 @@ package Controllers;
 
 import Entities.Event;
 
-
+/**
+ * Contains the strings displayed on the event manager in a specific manager
+ */
 public interface LanguagePack {
 
     /**

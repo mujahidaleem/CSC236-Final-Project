@@ -4,13 +4,25 @@ import UseCases.UserManager;
 
 import java.io.*;
 
+/**
+ * An instance of this reads files and returns information on users
+ */
 public class UserReader {
     String fileName;
 
+    /**
+     * UserReader constructor
+     * @param fileName the directory of where the ser file of the userManager is stored
+     */
     public UserReader(String fileName){
         this.fileName = fileName;
     }
 
+    /**
+     * Reads the ser file to get the users from the previous session
+     *
+     * @return an instance of UserManager containing all the events
+     */
     public UserManager readFile(){
         try{
             FileInputStream fi = new FileInputStream(new File(fileName));
@@ -26,13 +38,18 @@ public class UserReader {
         } catch (FileNotFoundException e){
             System.out.println("File not found.");
         } catch (IOException e) {
-            System.out.println("Error initializing stream.");
+            System.out.println("Error reading file.");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return new UserManager(null);
     }
 
+    /**
+     * Stores the current userManager will all the users into a ser file
+     *
+     * @param userManager the userManager being stored into a ser file
+     */
     public void saveFile(UserManager userManager){
         try{
             FileOutputStream f = new FileOutputStream(new File(fileName));
@@ -45,7 +62,7 @@ public class UserReader {
         } catch (FileNotFoundException e){
             System.out.println("File not found.");
         } catch (IOException e) {
-            System.out.println("Error initializing stream.");
+            System.out.println("Error saving file.");
         }
     }
 }

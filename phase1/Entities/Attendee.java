@@ -4,6 +4,10 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * An instance of this represents an attendee type user. They can attend
+ * events and remove their spot from events.
+ */
 public class Attendee extends User {
 
     /**

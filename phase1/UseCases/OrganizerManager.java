@@ -7,6 +7,9 @@ import Entities.Speaker;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * An instance of this stores all the organizers
+ */
 public class OrganizerManager extends UserManager {
     private Organizer currentOrganizer;
     public List<Organizer> organizers;

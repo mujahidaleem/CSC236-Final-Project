@@ -4,6 +4,10 @@ import Controllers.SpeakerEventController;
 import UseCases.EventManager;
 import UseCases.SpeakerManager;
 
+/**
+ * Displays the event menu for a speaker and interprets the coomands
+ * inputted by the speaker on this menu
+ */
 public class SpeakerEventPresenter extends EventMenuPresenter {
 
     /**

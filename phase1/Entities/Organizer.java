@@ -4,6 +4,10 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * An instance of this represents an organizer type user. They can create events,
+ * modify events, create speakers,
+ */
 public class Organizer extends User {
     public HashMap<String, LocalDateTime> _eventsOrganizing;
 

@@ -7,7 +7,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-//Time, and users are contained in event
+/**
+ * An instance of this represents an event in the system. The event can
+ * have at most 1 speaker and 2 non-speakers attending the event
+ */
 public class Event {
     String eventName;
     int roomNumber;

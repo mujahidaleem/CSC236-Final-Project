@@ -5,6 +5,9 @@ import Entities.*;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * An instance of this stores all the users
+ */
 public class UserManager implements Serializable {
     private User currentUser;
     public List<User> users;

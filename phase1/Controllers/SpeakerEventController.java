@@ -3,6 +3,9 @@ package Controllers;
 import UseCases.SpeakerManager;
 import UseCases.EventManager;
 
+/**
+ * Performs the commands inputted in the speaker event menu
+ */
 public class SpeakerEventController extends EventMenuController {
     public SpeakerManager speakerManager;
 

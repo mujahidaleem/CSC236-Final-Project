@@ -6,6 +6,9 @@ import Entities.Speaker;
 import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Contains all the strings for the event menu written in english
+ */
 public class EnglishLanguagePack implements LanguagePack, OrganizerEventLanguagePack, Serializable {
     private String language;
     public String directory;

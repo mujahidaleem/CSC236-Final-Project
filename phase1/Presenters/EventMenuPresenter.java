@@ -9,6 +9,9 @@ import UseCases.UserManager;
 import java.io.*;
 import java.util.Scanner;
 
+/**
+ * Displays the event menu and interprets inputs made by the user on this menu
+ */
 public class EventMenuPresenter {
     protected UserManager manager;
     protected EventMenuController controller;

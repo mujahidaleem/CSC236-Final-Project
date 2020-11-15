@@ -4,6 +4,10 @@ import Controllers.EventMenuController;
 import UseCases.AttendeeManager;
 import UseCases.EventManager;
 
+/**
+ * Displays the event menu for an attendee and interprets
+ * the commands inputted by the attendee on this menu
+ */
 public class AttendeeEventPresenter extends EventMenuPresenter {
 
     /**

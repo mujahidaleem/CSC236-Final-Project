@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * An instance of this represents a user in the system
+ */
 public abstract class User {
 
     /**

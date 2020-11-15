@@ -6,6 +6,9 @@ import Entities.Speaker;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * An instance of this stores all of the speakers
+ */
 public class SpeakerManager extends UserManager {
     private Speaker currentSpeaker;
     public List<Speaker> speakers;

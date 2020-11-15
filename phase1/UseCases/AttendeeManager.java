@@ -5,6 +5,9 @@ import Entities.User;
 
 import java.util.List;
 
+/**
+ * An instance of this stores all the attendees
+ */
 public class AttendeeManager extends UserManager {
 
     /**

@@ -4,6 +4,9 @@ import Entities.Event;
 import UseCases.EventManager;
 import UseCases.UserManager;
 
+/**
+ * Performs the commands inputted on the event menu
+ */
 public abstract class EventMenuController {
     public UserManager userManager;
     public EventManager eventManager;

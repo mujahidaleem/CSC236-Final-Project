@@ -13,6 +13,10 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Displays the event menu for an organizer and interprets the
+ * commands inputted by the organizer
+ */
 public class OrganizerEventPresenter extends EventMenuPresenter {
     private OrganizerEventController organizerEventController;
     private OrganizerManager organizerManager;

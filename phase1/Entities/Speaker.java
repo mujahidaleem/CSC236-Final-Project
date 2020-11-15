@@ -4,6 +4,10 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * An instance of this represents a speaker type user. The speaker can
+ * speak at events or attending events like an attendee.
+ */
 public class Speaker extends User {
     public HashMap<String, LocalDateTime> _speakingSchedule;
 

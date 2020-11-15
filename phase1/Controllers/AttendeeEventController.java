@@ -3,6 +3,9 @@ package Controllers;
 import UseCases.AttendeeManager;
 import UseCases.EventManager;
 
+/**
+ * Performs the commands inputted on the attendee event menu
+ */
 public class AttendeeEventController extends EventMenuController {
 
     /**

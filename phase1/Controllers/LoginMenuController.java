@@ -27,24 +27,23 @@ public class  LoginMenuController {
         int id = Integer.parseInt(command.split(" ")[0]);
         String password = command.substring(id.length() + 1);
 
-        if (LoginMenuManager.password_matches_id( id, password)){
-            present_menu(id);
-        }
-        else{
-            String e = "incorrect";
+        if (LoginMenuManager.password_matches_id(id, password)) {
+            String o = "success";
+            return o;
+        } else {
+            String e = "failure";
             return e;
         }
 
-        public void present_menu( int id){
-            if (LoginMenuManager.type_of_user(id).equals("Attendee")) {
-                //display attendee event presenter
-            } else if (LoginMenuController.type_of_user(id).equals("Organizer")) {
 
-            }
-            //display organizer screen
-            else if (LoginMenuManager.type_of_user(id).equals("Speaker")) {
-                //display speaker screen;
-            }
+    public void signup(String name, String password, String type){
+            UserManager.adduser(name, password, type);
+        }
+    }
 
+    public void logout() {
+    }
 
+    }
+}
 

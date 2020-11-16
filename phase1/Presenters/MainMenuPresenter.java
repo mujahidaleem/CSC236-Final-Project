@@ -1,6 +1,7 @@
 package Presenters;
 
 import Controllers.LoginMenuController;
+import UseCases.UserManager;
 
 import java.util.Scanner;
 
@@ -42,7 +43,7 @@ public class MainMenuPresenter {
             case "3":
                 loginMenuController.logout();
             case "4":
-               loginMenuController.changePswd();
+                UserManager.changePassword();
             case "5":
                 System.exit(0);
         }

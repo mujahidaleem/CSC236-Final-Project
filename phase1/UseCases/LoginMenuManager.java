@@ -28,17 +28,13 @@ public class LoginMenuManager {
         }
     }
 
-    public String type_of_user(String username) {
-        //check database to return a string of "Attendee", "Organizer" or "Speaker"
-    }
 
     //exit program (cancel login)
     public void exit() {
     }
 
-    //logout
-    public void logout() {
-    }
+
+
 
 
 

@@ -127,16 +127,4 @@ public class UserManager implements Serializable {
         currentUser.setPassword(password);
     }
 
-
-    /** Use case that ensures there are no spaces in usernames.
-     *
-    if theres a space in username, throw exception
-    */
-    public void cannotcontainspace(User user){
-        if (user.getName().contains(" ")){
-            throw new Exception("Spaces are not allowed in usernames ");
-        }
-
-
-    }
 }

@@ -76,10 +76,6 @@ public class UserManager implements Serializable {
                 Organizer organizer = new Organizer(1000 + users.size(), name, password, null, null, null);
                 users.add(organizer);
                 break;
-            case "Speaker":
-                Speaker speaker = new Speaker(1000 + users.size(), name, password, null, null, null);
-                users.add(speaker);
-                break;
         }
     }
 

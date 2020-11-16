@@ -35,6 +35,14 @@ public class SpeakerManager extends UserManager {
     }
 
     /**
+     * Returns the list of speakers
+     * @return speakers
+     */
+    public List<Speaker> getSpeakers(){
+        return speakers;
+    }
+
+    /**
      * Checks if the a specific speaker is available at a given time
      *
      * @param speaker contains an instance of speaker

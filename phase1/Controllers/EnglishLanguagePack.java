@@ -38,13 +38,14 @@ public class EnglishLanguagePack implements LanguagePack, OrganizerEventLanguage
 
     @Override
     public void printOrganizerCommands() {
-        System.out.println("To create a new event, type Create event_Name_YYYY-MM-DDTHH:mm:ss_roomNumber_id");
-        System.out.println("To assign a speaker to an event, type Assign speaker_Event_SpeakerID");
-        System.out.println("To remove a speaker from an event, type Remove speaker_Event");
-        System.out.println("To delete an event, type Delete_Event");
-        System.out.println("To change the date of an event, type Change date_Event_new date");
-        System.out.println("To change the room of an event, type Change room_Event_roomNumber");
-        System.out.println("To create a new speaker account, type Create speaker_name_password");
+        System.out.println("To create a new event, type 3_Name_YYYY-MM-DDTHH:mm:ss_roomNumber_id");
+        System.out.println("To assign a speaker to an event, type 4_Event_SpeakerID");
+        System.out.println("To remove a speaker from an event, type 5_Event");
+        System.out.println("To delete an event, type 6_Event");
+        System.out.println("To change the date of an event, type 7_Event_new date");
+        System.out.println("To change the room of an event, type 8_Event_roomNumber");
+        System.out.println("To create a new speaker account, type 9_name_password");
+        System.out.println("To see the list of speakers, type 10");
     }
 
     @Override

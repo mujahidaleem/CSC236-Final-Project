@@ -45,10 +45,14 @@ public class OrganizerManager extends UserManager {
      * @return a new speaker account
      */
     public Speaker createSpeaker(String name, String password, SpeakerManager speakerManager, UserManager userManager) {
-        Speaker speaker = new Speaker(userManager.users.size(), name, password, null, null, null);
-        speakerManager.speakers.add(speaker);
-        userManager.users.add(speaker);
-        return speaker;
+        if(password.contains(" ")) {
+            return null;
+        } else {
+            Speaker speaker = new Speaker(userManager.users.size(), name, password, null, null, null);
+            speakerManager.speakers.add(speaker);
+            userManager.users.add(speaker);
+            return speaker;
+        }
     }
 
     /**

@@ -8,6 +8,7 @@ import Entities.Speaker;
 import UseCases.EventManager;
 import UseCases.OrganizerManager;
 import Controllers.OrganizerEventController;
+import UseCases.SpeakerManager;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -20,19 +21,22 @@ import java.time.format.DateTimeParseException;
 public class OrganizerEventPresenter extends EventMenuPresenter {
     private OrganizerEventController organizerEventController;
     private OrganizerManager organizerManager;
+    private SpeakerManager speakerManager;
     private OrganizerEventLanguagePack organizerEventLanguagePack;
 
     /**
      * EventMenuPresenter constructor
      *
      * @param organizerManager         stores the current user
+     * @param speakerManager           stores a list of speakers
      * @param organizerEventController the controller that performs the commands inputted
      * @param language                 decides which language is used in the UI
      */
-    public OrganizerEventPresenter(OrganizerManager organizerManager, OrganizerEventController organizerEventController, EventManager eventManager, String language) {
+    public OrganizerEventPresenter(OrganizerManager organizerManager, SpeakerManager speakerManager, OrganizerEventController organizerEventController, EventManager eventManager, String language) {
         super(organizerManager, organizerEventController, eventManager, language);
         this.organizerEventController = organizerEventController;
         this.organizerManager = organizerManager;
+        this.speakerManager = speakerManager;
     }
 
     /**
@@ -77,7 +81,7 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
         outer:
         try {
             switch (command[0]) {
-                case "Create event":
+                case "3":
                     Event event1 = organizerEventController.createEvent(command[1], LocalDateTime.parse(command[2]), Integer.parseInt(command[3]));
                     if (event1 == null) {
                         createEventResults(false, null);
@@ -85,7 +89,7 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
                         createEventResults(true, event1);
                     }
                     break outer;
-                case "Create speaker":
+                case "9":
                     Speaker speaker = organizerEventController.createSpeaker(command[1], command[2]);
                     if (speaker == null) {
                         createSpeakerAccountResults(false, null);
@@ -99,18 +103,18 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
                 System.out.println(organizerEventLanguagePack.eventUnchangeable(event));
             } else {
                 switch (command[0]) {
-                    case "Assign speaker":
+                    case "4":
                         setSpeakerResults(organizerEventController.assignSpeaker(event, Integer.parseInt(command[2])), event);
                         break;
-                    case "Change date":
+                    case "7":
                         changeEventDateResults(organizerEventController.changeEventDate(event, LocalDateTime.parse(command[2])), event);
                         break;
-                    case "Change room":
+                    case "8":
                         changeEventRoomResults(organizerEventController.changeEventRoom(event, Integer.parseInt(command[2])), event);
-                    case "Delete":
+                    case "6":
                         deleteEvent(organizerEventController.deleteEvent(event), event);
                         break;
-                    case "Remove speaker":
+                    case "5":
                         removeSpeakerResults(organizerEventController.removeSpeaker(event), event);
                     default:
                         System.out.println(organizerEventLanguagePack.unknownCommand());
@@ -222,4 +226,15 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
             System.out.println(organizerEventLanguagePack.speakerAccountFailure());
         }
     }
+
+    /**
+     * Prints the list of speakers
+     */
+    private void printSpeakers(){
+        System.out.println("------------------------------------------------------");
+        for (Speaker speaker: speakerManager.getSpeakers()){
+            System.out.println(speaker);
+        }
+    }
+
 }

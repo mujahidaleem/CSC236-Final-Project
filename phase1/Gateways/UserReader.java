@@ -3,6 +3,7 @@ package Gateways;
 import UseCases.UserManager;
 
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * An instance of this reads files and returns information on users
@@ -19,7 +20,8 @@ public class UserReader {
     }
 
     /**
-     * Reads the ser file to get the users from the previous session
+     * Reads the ser file to get the users from the previous session. If the file is not found, creates a new instance
+     * of UserManager with no users.
      *
      * @return an instance of UserManager containing all the events
      */
@@ -42,7 +44,7 @@ public class UserReader {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return new UserManager(null);
+        return new UserManager(null, new ArrayList<>());
     }
 
     /**

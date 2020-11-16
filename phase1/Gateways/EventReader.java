@@ -3,6 +3,7 @@ package Gateways;
 import UseCases.EventManager;
 
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * An instance of this reads files and returns information on events
@@ -20,7 +21,8 @@ public class EventReader {
     }
 
     /**
-     * Reads the ser file to get the events from the previous session
+     * Reads the ser file to get the events from the previous session. If the file is not found, creates a new instance
+     * of EventManager will no events.
      *
      * @return an instance of EventManager containing all the events
      */
@@ -42,7 +44,7 @@ public class EventReader {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return new EventManager(null);
+        return new EventManager(new ArrayList<>());
     }
 
 

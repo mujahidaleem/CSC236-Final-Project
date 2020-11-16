@@ -21,4 +21,9 @@ public class Main {
         loginMenuPresenter.run();
         //TODO the presenter should take in the userManager, then create everything else
     }
+
+    public void initialize(){
+        Initializer initializer = new Initializer();
+        initializer.initialize();
+    }
 }

@@ -103,6 +103,8 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
                 System.out.println(organizerEventLanguagePack.eventUnchangeable(event));
             } else {
                 switch (command[0]) {
+                    case "10":
+                        printSpeakers();
                     case "4":
                         setSpeakerResults(organizerEventController.assignSpeaker(event, Integer.parseInt(command[2])), event);
                         break;

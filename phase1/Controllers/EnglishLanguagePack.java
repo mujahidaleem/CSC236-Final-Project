@@ -25,7 +25,7 @@ public class EnglishLanguagePack implements LanguagePack, OrganizerEventLanguage
 
     @Override
     public String[] eventMenuHeadings() {
-        return new String[]{"Events Attending", "Events Available"};
+        return new String[]{"Events Attending", "Events Available", "Events Speaking At"};
     }
 
     @Override

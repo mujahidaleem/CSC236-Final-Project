@@ -111,7 +111,8 @@ public class EventMenuPresenter {
     }
 
     /**
-     * Prints the initial menu of the Event Menu, showing the organizer what commands can be used
+     * Prints the initial menu of the Event Menu, showing the user the list of events they are attending, the list
+     * of events they are not attending, and what commands can be used
      */
     public void printMenu() {
         System.out.println(manager.getCurrentUser());

@@ -1,6 +1,6 @@
 package UseCases;
 
-public class SpeakerFriendManager {
+public class SpeakerFriendManager extends UserFriendManager {
 
     /**
      * SpeakerFriendManager constructor

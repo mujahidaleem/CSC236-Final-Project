@@ -1,6 +1,6 @@
 package UseCases;
 
-public class AttendeeFriendManager {
+public class AttendeeFriendManager extends UserFriendManager {
 
     /**
      * AttendeeFriendManager constructor

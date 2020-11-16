@@ -54,6 +54,7 @@ public class LoginMenuPresenter {
                     printTryAgain();
                 }
                 loginMenuController.signup(name, password,scanner.next());
+                //TODO get the id of this new user, and print "This is your id. please remember it for login purposes"
                 mainMenuPresenter.run();
         }
     }
@@ -63,14 +64,7 @@ public class LoginMenuPresenter {
                 " create a new account?\n" +
                 "Please enter "1" to log into your existing account, and "2" to create a new account");
     }
-    public static void printLoginMenu(String[] command) {
-        if (command.equals("1")) {
-            System.out.println("Please enter your id and password, separated by a space");
-        } else if (command.equals("2")) {
-            // ask user to input name, password, and type
-            // assign id and say "your id is _. Please remember it for login purposes!"
-        }
-    }
+
     public static void printTryAgain(){
         System.out.println("Input invalid, please try again.");
     }

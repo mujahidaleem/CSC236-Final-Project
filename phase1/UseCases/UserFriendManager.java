@@ -1,6 +1,6 @@
 package UseCases;
 
-public class UserFriendManager {
+public abstract class UserFriendManager {
 
     /**
      * UserFriendManager constructor
@@ -36,7 +36,7 @@ public class UserFriendManager {
      */
 
     public void sendMessageTo(String messageContent, User otherUser) {
-        Message message = Message(this.user, messageContent)
+        Message message = Message(this.user, messageContent);
 
     }
 

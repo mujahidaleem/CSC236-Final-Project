@@ -13,26 +13,9 @@ import sun.font.TrueTypeFont;
 
 public class  LoginMenuController {
     // initialize login menu
-    public UserManager userManager;
-    public UserLoginManager userLoginManager;
-    public UserLoginPresenter presenter;
-    public AttendeeManager attendeeManager;
-    public OrganizerManager organizerManager;
-    public AttendeeMenuController attendeeMenuController;
-    public OrganizerMenuController organizerMenuController;
 
-    public LoginMenuController(UserManager UserManager;
-            UserLoginManager userLoginManager, UserLoginPresenter userLoginPresenter,
-                               AttendeeManager attendeeManager, OrganizerManager organizerManager,
-                               AttendeeMenuController attendeeMenuController,
-                               OrganizerMenuController organizerMenuController) {
-        this.userManager = userManager;
-        this.userLoginManager = userLoginManager;
-        this.presenter = userLoginPresenter;
-        this.attendeeManager = attendeeManager;
-        this.organizerManager = organizerManager;
-        this.attendeeMenuController = attendeeMenuController;
-        this.organizerMenuController = organizerMenuController;
+    public LoginMenuController(UserManager UserManager;) {
+
     }
 
     /**

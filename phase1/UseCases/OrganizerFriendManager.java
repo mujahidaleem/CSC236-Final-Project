@@ -1,6 +1,6 @@
 package UseCases;
 
-public class OrganizerFriendManager {
+public class OrganizerFriendManager extends UserFriendManager {
 
     /**
      * OrganizerFriendManager constructor

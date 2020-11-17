@@ -1,7 +1,9 @@
 package Presenters;
 
 import Controllers.LoginMenuController;
+import Controllers.MainMenuController;
 import UseCases.UserManager;
+import sun.applet.Main;
 
 import java.util.Scanner;
 
@@ -10,7 +12,7 @@ public class MainMenuPresenter {
     private EventMenuPresenter eventMenuPresenter;
     private MessageMenuPresenter messageMenuPresenter;
     private LoginMenuController loginMenuController;
-
+    private MainMenuController mainMenuController;
     /**
      * MainMenuPresenter constructor
      * @param eventMenuPresenter need to call eventMenuPresenter
@@ -18,10 +20,11 @@ public class MainMenuPresenter {
      * @param loginMenuController need to call loginMenuController
      */
 
-    public MainMenuPresenter(EventMenuPresenter eventMenuPresenter, MessageMenuPresenter messageMenuPresenter, LoginMenuController loginMenuController){
+    public MainMenuPresenter(EventMenuPresenter eventMenuPresenter, MessageMenuPresenter messageMenuPresenter, LoginMenuController loginMenuController, MainMenuController mainMenuController){
         this.eventMenuPresenter = eventMenuPresenter;
         this.messageMenuPresenter = messageMenuPresenter;
         this.loginMenuController = loginMenuController;
+        this.mainMenuController = mainMenuController;
     }
 
     /**
@@ -37,15 +40,16 @@ public class MainMenuPresenter {
         }
         switch (userOption){
             case "1":
-                eventMenuPresenter.run();
+                mainMenuController.printEventMenu();
             case "2":
-                messageMenuPresenter.run();
+                mainMenuController.printMessageMenu();
             case "3":
-                loginMenuController.logout();
+                mainMenuController.logOut();
             case "4":
-                UserManager.changePassword();
+                String userPwChange = takeInput();
+                mainMenuController.changePw(userPwChange);
             case "5":
-                System.exit(0);
+                mainMenuController.sysExit();
         }
     }
 

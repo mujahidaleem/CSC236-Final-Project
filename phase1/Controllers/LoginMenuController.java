@@ -1,5 +1,6 @@
 package Controllers;
 
+import Presenters.MainMenuPresenter;
 import UseCases.LoginMenuManager;
 import Presenters.LoginMenuPresenter;
 import UseCases.EventManager;
@@ -12,10 +13,22 @@ import sun.font.TrueTypeFont;
 
 
 public class  LoginMenuController {
-    // initialize login menu
+    protected LoginMenuManager loginMenuManager;
+    protected MainMenuPresenter mainMenuPresenter;
+    protected LoginMenuPresenter loginMenuPresenter;
+    protected UserManager userManager;
 
-    public LoginMenuController(UserManager UserManager;) {
-
+    /**
+     * LoginMenuPresenter constructor
+     * @param loginMenuManager need to call loginMenuManager
+     * @param loginMenuPresenter need to call loginMenuPresenter
+     */
+    public LoginMenuController(UserManager userManager, LoginMenuManager loginMenuManager, LoginMenuPresenter
+                               loginMenuPresenter, MainMenuPresenter mainMenuPresenter) {
+    this.loginMenuManager = LoginMenuManager;
+    this.mainMenuPresenter = MainMenuPresenter;
+    this.loginMenuPresenter = LoginMenuPresenter;
+    this.userManager = UserManager;
     }
 
     /**
@@ -36,14 +49,19 @@ public class  LoginMenuController {
         }
 
 
-    public void signup(String name, String password, String type){
-            UserManager.adduser(name, password, type);
+
+    public void signUp(String name, String password, String type) {
+        UserManager.addUser(name, password, type);
+    }
+
+    public void logout(){
+            // this method brings us back to the login menu.
+        loginMenuPresenter.run([" "]);
         }
     }
-
-    public void logout() {
+    public void exit(){
+        //TODO: how to close the program
     }
 
-    }
 }
 

@@ -17,7 +17,7 @@ public class LoginMenuManager {
     public LoginMenuManager(User user) {
         this.user = user;
     }
-    public boolean password_matches_id(int id, String password) {
+    public static boolean password_matches_id(int id, String password) {
         //checks system to see if password matches username
         User user = UserManager.finduser(id);
         if (user.getPassword().equals(password)){

@@ -60,4 +60,5 @@ public abstract class UserFriendManager {
     public void removeFromFriendList(User user1, User friend) {
         user1.getFriendList().remove(friend);
     }
+}
 

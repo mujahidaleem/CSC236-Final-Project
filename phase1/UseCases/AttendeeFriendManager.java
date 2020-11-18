@@ -1,5 +1,7 @@
 package UseCases;
 
+import Entities.User;
+
 public class AttendeeFriendManager extends UserFriendManager {
 
     /**
@@ -7,9 +9,9 @@ public class AttendeeFriendManager extends UserFriendManager {
      * @param currentUser - the current user
      */
 
-    User currentUser;
+    HashMap<User, ArrayList<Hashmap<User, ArrayList<Message>>>> userToMessages;
 
-    public AttendeeFriendManager(User currentUser) {
-        super(currentUser);
+    public AttendeeFriendManager(HashMap<User, ArrayList<Hashmap<User, ArrayList<Message>>>> userToMessages) {
+        super(userToMessages);
     }
 }

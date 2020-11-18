@@ -1,5 +1,9 @@
 package UseCases;
 
+import Entities.User;
+import Entities.Event;
+import java.util.ArrayList;
+
 public class SpeakerFriendManager extends UserFriendManager {
 
     /**
@@ -7,8 +11,10 @@ public class SpeakerFriendManager extends UserFriendManager {
      * @param currentUser - the current user
      */
 
-    public SpeakerFriendManager(User currentUser) {
-        super(currentUser);
+    HashMap<User, ArrayList<Hashmap<User, ArrayList<Message>>>> userToMessages;
+
+    public SpeakerFriendManager(HashMap<User, ArrayList<Hashmap<User, ArrayList<Message>>>> userToMessages) {
+        super(userToMessages);
     }
 
 
@@ -18,9 +24,9 @@ public class SpeakerFriendManager extends UserFriendManager {
      * @param event - the Event to which the announcement is being sent
      */
 
-    public void sendingAnnouncement(String message, Event event) {
+    public void sendingAnnouncement(Speaker speaker, Event event, String messageContent) {
         for(User user : event.getAttendees()) {
-            this.SpeakerFriendManager.sendMessageTo(message, user);
+            sendMessageTo(speaker, user, messageContent);
         }
     }
 }

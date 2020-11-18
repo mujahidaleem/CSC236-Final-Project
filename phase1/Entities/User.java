@@ -9,6 +9,13 @@ import java.util.List;
  */
 public abstract class User {
 
+    private String name;
+    private int id;
+    private String password;
+    private HashMap<String, LocalDateTime> personalSchedule;
+    private List<User> friendList;
+
+
     /**
      * User constructor
      * @param id A unique id representing the User
@@ -17,11 +24,6 @@ public abstract class User {
      * @param schedule A list of events that the speaker is attending
      * @param friends A list of manageable users of the speaker
      */
-    private String name;
-    private int id;
-    private String password;
-    private HashMap<String, LocalDateTime> personalSchedule;
-    private List<User> friendList;
 
     public User(int id, String name,
                 String password,
@@ -67,8 +69,8 @@ public abstract class User {
     }
 
     /**
-     * Sets the name of the User
-     * @param _name
+     * Sets the username of the User
+     * @param _name username of the user
      */
     public void setName(String _name) {
         this.name = _name;
@@ -76,7 +78,7 @@ public abstract class User {
 
     /**
      * Sets the password of the User
-     * @param _password
+     * @param _password password of the user
      */
     public void setPassword(String _password) {
         this.password = _password;

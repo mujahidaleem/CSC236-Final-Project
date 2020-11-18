@@ -61,4 +61,3 @@ public abstract class UserFriendManager {
         user1.getFriendList().remove(friend);
     }
 
-}

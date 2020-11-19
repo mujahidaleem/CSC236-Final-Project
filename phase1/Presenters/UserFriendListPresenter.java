@@ -52,7 +52,8 @@ public abstract class UserFriendListPresenter {
         ArrayList<String> Chatlog=this.UserFriendManager.getHistoryMessage(anotherUser);
         for(String message : Chatlog){
         System.out.println(message);
-    }}
+        }
+    }
 
     /**
      * Display the command to send a message to another User

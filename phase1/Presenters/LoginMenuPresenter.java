@@ -43,7 +43,7 @@ public class LoginMenuPresenter {
                 String password = scanner.next();
                 System.out.println("Are you an attendee or an organizer?");
                 String type = scanner.next();
-                while (type.equals("attendee") && type.equals("organizer")){
+                while (!type.equals("attendee") && !type.equals("organizer")){
                     printTryAgain();
                     type = scanner.next();
                 }
@@ -55,7 +55,7 @@ public class LoginMenuPresenter {
     }
 
 
-    public static void logincommand(String command) {
+    public void logincommand(String command) {
         System.out.println("Please enter your id number and password, separated by a space");
         if (loginMenuController.login(command).equals("success")) {
             mainMenuPresenter.run();
@@ -65,16 +65,15 @@ public class LoginMenuPresenter {
 
             }
         }
-    }
 
-    public static void greetingMessage(){
+    public void greetingMessage(){
                 System.out.println("Welcome to the conference! Would you like to log into your existing account or" +
                          " create a new account?\n" +
                          "Please enter '1' to log into your existing account, and '2' to create a new account\n" +
                          "Enter 'exit' at any time to exit the program.");
             }
 
-    public static void printTryAgain(){
+    public void printTryAgain(){
                 System.out.println("Input invalid. Please try again.");
             }
 

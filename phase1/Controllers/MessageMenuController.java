@@ -26,7 +26,7 @@ public class MessageMenuController {
         if(this.UserFriendListController instanceof AttendeeFriendListController){
             AttendeeFriendListController AFC=(AttendeeFriendListController) this.UserFriendListController;
             for(User user:AFC.getMessageableList()){
-                if(user.get_name()==name){
+                if(user.getName()==name){
                     result= user;
                 }
             }
@@ -34,7 +34,7 @@ public class MessageMenuController {
         if(this.UserFriendListController instanceof SpeakerFriendListController){
             SpeakerFriendListController SFC=(SpeakerFriendListController) this.UserFriendListController;
             for(User user:SFC.getMessageableList()){
-                if(user.get_name()==name){
+                if(user.getName()==name){
                     result= user;
                 }
             }
@@ -42,7 +42,7 @@ public class MessageMenuController {
         if(this.UserFriendListController instanceof OrganizerFriendListController){
             OrganizerFriendListController OFC=(OrganizerFriendListController) this.UserFriendListController;
             for(User user:OFC.getMessageableList()){
-                if(user.get_name()==name){
+                if(user.getName()==name){
                     result= user;
                 }
             }

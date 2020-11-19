@@ -3,19 +3,22 @@ package Presenters;
 import Controllers.AttendeeFriendListController;
 import Entities.Attendee;
 import Entities.User;
+import Gateways.MessageReader;
 import UseCases.AttendeeFriendManager;
+import UseCases.UserFriendManager;
 
 import java.util.ArrayList;
 
 public class AttendeeFriendListPresenter extends UserFriendListPresenter {
+    private Attendee currentattendee;
     public AttendeeFriendListController AttendeeFriendListController;
     public AttendeeFriendManager AttendeeFriendManager;
-    public UserFriendManager UserFriendManager;
+    public UseCases.UserFriendManager UserFriendManager;
     public User currentUser;
     public MessageReader MessageReader;
 
     public AttendeeFriendListPresenter(User currentUser, UseCases.UserFriendManager UserFriendManager,
-                                       MessageReader MessageReader,AttendeeFriendListController
+                                       Gateways.MessageReader MessageReader, AttendeeFriendListController
                                        AttendeeFriendListController) {
         super(currentUser, UserFriendManager, MessageReader);
         if(currentUser instanceof Attendee){
@@ -38,7 +41,7 @@ public class AttendeeFriendListPresenter extends UserFriendListPresenter {
     public void DisplayMessageable(){
        ArrayList<User> messageableList = this.AttendeeFriendListController.getMessageableList();
        for(User messageable: messageableList){
-           System.out.println(messageable.get_name());
+           System.out.println(messageable.getName());
        }
     }
 
@@ -47,7 +50,7 @@ public class AttendeeFriendListPresenter extends UserFriendListPresenter {
      */
 
     public void RemoveMessage(User anotherUser){
-        String name=anotherUser.getname();
+        String name=anotherUser.getName();
         System.out.println(name+"is removed from your friend list");
     }
 
@@ -65,7 +68,7 @@ public class AttendeeFriendListPresenter extends UserFriendListPresenter {
          */
 
         public void DisplaySengdingMessage (User anotherUser){
-            String name = anotherUser.get_name();
+            String name = anotherUser.getName();
             System.out.println("you send a message to " + name);
 
         }

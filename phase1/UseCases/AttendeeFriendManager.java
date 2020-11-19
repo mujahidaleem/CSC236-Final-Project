@@ -6,12 +6,12 @@ public class AttendeeFriendManager extends UserFriendManager {
 
     /**
      * AttendeeFriendManager constructor
-     * @param currentUser - the current user
+     * @param userToMessages - a dictionary mapping users to their messages sent and received from friends
      */
 
-    HashMap<User, ArrayList<Hashmap<User, ArrayList<Message>>>> userToMessages;
+    HashMap<User, Hashmap<User, ArrayList<Message>>> userToMessages;
 
-    public AttendeeFriendManager(HashMap<User, ArrayList<Hashmap<User, ArrayList<Message>>>> userToMessages) {
+    public AttendeeFriendManager(HashMap<User, Hashmap<User, ArrayList<Message>>> userToMessages) {
         super(userToMessages);
     }
 }

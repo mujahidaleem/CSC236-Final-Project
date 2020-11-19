@@ -9,12 +9,12 @@ public abstract class UserFriendManager {
 
     /**
      * UserFriendManager constructor
-     * @param userToFriends - a dictionary mapping users to their friends
+     * @param userToMessages - a dictionary mapping users to their messages sent and received from friends
      */
 
-    HashMap<User, ArrayList<Hashmap<User, ArrayList<Message>>>> userToMessages;
+    HashMap<User, Hashmap<User, ArrayList<Message>>> userToMessages;
 
-    public UserFriendManager(HashMap<User, ArrayList<Hashmap<User, ArrayList<Message>>>> userToMessages) {
+    public UserFriendManager(HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages) {
         this.userToMessages = userToMessages;
     }
 
@@ -32,8 +32,14 @@ public abstract class UserFriendManager {
      * @return a list of all messages sent between the current user and otherUser
      */
 
-    public ArrayList<Message> checkHistoryMessage(User user1, User user2) {
+    public ArrayList<String> checkHistoryMessage(User user1, User user2) {
+        ArrayList<String> result = new ArrayList<String>();
 
+        for(Message message : this.userToMessages.get(user1).get(user2)) {
+            String messageString = message.getString();
+            result.add(messageString);
+        }
+        return result
     }
 
     /**
@@ -42,7 +48,8 @@ public abstract class UserFriendManager {
 
     public void sendMessageTo(User sender, User recepient, String messageContent) {
         Message message = Message(sender, recepient, messageContent);
-
+        this.userToMessages.get(sender).get(recepient).add(message);
+        this.userToMessages.get(recepient).get(sender).add(message);
     }
 
     /**

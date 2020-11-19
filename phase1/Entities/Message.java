@@ -44,4 +44,13 @@ public class Message {
     public String getContent() {
         return this.content;
     }
+
+    /**
+     * returns a string representation of the message
+     */
+
+    public String getString() {
+        String result = this.sender.getName() + " to " + this.recepient.getName() + ": " + this.getContent();
+        return result;
+    }
 }

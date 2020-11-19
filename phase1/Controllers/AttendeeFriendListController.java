@@ -9,24 +9,25 @@ import java.util.ArrayList;
 //import UseCases.AttendeeFriendManager;
 
 public class AttendeeFriendListController extends UserFriendListController {
-        public UserFriendListPresenter userFriendListPresenter;
-        public UserFriendManager userFriendManager;
+    public UserFriendListPresenter userFriendListPresenter;
+    public UserFriendManager userFriendManager;
 //        public AttendeeFriendListPresenter attendeeFriendListPresenter;
 //        public AttendeeFriendManager attendeeFriendManager;
 
 
-        public AttendeeFriendListController(UserFriendListPresenter userFriendListPresenter,
-                                            UserFriendManager userFriendManager){
-            super(userFriendListPresenter,userFriendManager);
-            if(userFriendListPresenter instanceof AttendeeFriendListPresenter){
-                AttendeeFriendListPresenter aflp = (AttendeeFriendListPresenter) userFriendListPresenter;
-                this.attendeeFriendListPresenter = aflp;
-            }
-            if(userFriendManager instanceof AttendeeFriendManager){
-                AttendeeFriendManager afm = (AttendeeFriendManager) userFriendManager;
-                this.attendeeFriendManager= afm;
-            }
+    public AttendeeFriendListController(UserFriendListPresenter userFriendListPresenter,
+                                        UserFriendManager userFriendManager) {
+        super(userFriendListPresenter, userFriendManager);
+        if (userFriendListPresenter instanceof AttendeeFriendListPresenter) {
+            AttendeeFriendListPresenter aflp = (AttendeeFriendListPresenter) userFriendListPresenter;
+            this.attendeeFriendListPresenter = aflp;
         }
+        if (userFriendManager instanceof AttendeeFriendManager) {
+            AttendeeFriendManager afm = (AttendeeFriendManager) userFriendManager;
+            this.attendeeFriendManager = afm;
+        }
+    }
+}
 
 //    /**
 //     * For Attendee, messageable Users are All users in FriendList and Other Attendees / Speakers

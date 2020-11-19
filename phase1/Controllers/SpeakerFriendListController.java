@@ -16,17 +16,18 @@ public class SpeakerFriendListController extends UserFriendListController {
 
 
     public SpeakerFriendListController(UserFriendListPresenter userFriendListPresenter,
-                                        UserFriendManager userFriendManager){
+                                       UserFriendManager userFriendManager) {
         super(userFriendListPresenter, userFriendManager);
-        if(userFriendListPresenter instanceof SpeakerFriendListPresenter){
+        if (userFriendListPresenter instanceof SpeakerFriendListPresenter) {
             SpeakerFriendListPresenter sflp = (SpeakerFriendListPresenter) userFriendListPresenter;
             this.speakerFriendListPresenter = sflp;
         }
-        if(userFriendManager instanceof SpeakerFriendManager){
+        if (userFriendManager instanceof SpeakerFriendManager) {
             SpeakerFriendManager sfm = (SpeakerFriendManager) userFriendManager;
-            this.speakerFriendManager= sfm;
+            this.speakerFriendManager = sfm;
         }
     }
+}
 
 //    /**
 //     * Messageable Users for Speakers are all Users in Friendlist and all attendees in each of his event

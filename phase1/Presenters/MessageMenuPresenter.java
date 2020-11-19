@@ -22,7 +22,7 @@ public class MessageMenuPresenter {
 
     public void run() {
         while (true) {
-            System.out.println("do you want to return to main menu? (yes ot no)");
+            System.out.println("do you want to return to main menu? (yes or no)");
             Scanner userInput0 = new Scanner(System.in);
             String answer1 = userInput0.nextLine();
             if (answer1 == "yes") {

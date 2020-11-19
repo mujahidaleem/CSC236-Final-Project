@@ -1,4 +1,4 @@
-package Presenters;
+package Controllers;
 
 import Controllers.AttendeeFriendListController;
 import Controllers.SpeakerFriendListController;

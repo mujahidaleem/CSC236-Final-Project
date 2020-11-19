@@ -7,18 +7,18 @@ import Controllers.UserFriendListController;
 
 public class OrganizerFriendListPresenter extends UserFriendListPresenter {
     public OrganizerFriendListController OrganizerFriendListController;
-    public MessageReader MessageReader;
     public Organizer currentOrganizer;
     public User currentUser;
     public UserFriendManager UserFriendManager;
     public OrganizerFriendManager OrganizerFriendManager;
+    public MessageReader MessageReader;
 
 
 
     public OrganizerFriendListPresenter(User currentUser, UseCases.UserFriendManager UserFriendManager,
-                                      MessageReader MessageReader,
-                                        OrganizerFriendListController OrganizerFriendListController) {
-        super(currentUser, UserFriendManager, MessageReader);
+                                        OrganizerFriendListController OrganizerFriendListController,
+                                        MessageReader MessageReader) {
+        super(currentUser, UserFriendManager,MessageReader);
         this.OrganizerFriendListController= OrganizerFriendListController;
         if(currentUser instanceof Organizer){
             Organizer currentOrganizer=(Organizer) currentUser;

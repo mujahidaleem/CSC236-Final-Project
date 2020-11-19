@@ -24,12 +24,12 @@ public class MessageReader {
      * @return an instance of EventManager containing all the events
      */
 
-    public AttendeeFriendManager readFile() {
+    public UserFriendManager readFile() {
         try {
             FileInputStream fi = new FileInputStream(new File(this.fileName));
             ObjectInputStream oi = new ObjectInputStream(fi);
 
-            AttendeeFriendManager userFriendManager = (AttendeeFriendManager) oi.readObject();
+            UserFriendManager userFriendManager = (UserFriendManager) oi.readObject();
 
             oi.close();
             fi.close();

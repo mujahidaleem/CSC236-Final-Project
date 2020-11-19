@@ -1,6 +1,8 @@
 package Presenters;
 
+import Controllers.MessageMenuController;
 import Controllers.UserFriendListController;
+import Entities.User;
 
 import java.util.Scanner;
 
@@ -8,7 +10,7 @@ public class MessageMenuPresenter {
     public UserFriendListPresenter UserFriendListPresenter;
     public UserFriendListController UserFriendListcontroller;
     public User currentUser;
-    public MessageMenuController MessageMenuController;
+    public MessageMenuController messageMenuController;
 
     public MessageMenuPresenter(UserFriendListController UserFriendListController,
                                 UserFriendListPresenter UserFriendListPresenter, User currentUser,
@@ -16,7 +18,7 @@ public class MessageMenuPresenter {
         this.UserFriendListPresenter = UserFriendListPresenter;
         this.UserFriendListcontroller = UserFriendListController;
         this.currentUser = currentUser;
-        this.MessageMenuController = MessageMenuController;
+        this.messageMenuController = MessageMenuController;
     }
 
 
@@ -33,13 +35,13 @@ public class MessageMenuPresenter {
             } else {
                 System.out.println("input is invalid");
             }
-            this.MessageMenuController.factoryMethod(this.currentUser);
+            this.messageMenuController.factoryMethod(this.currentUser);
             System.out.println("------------------------------------------------------------");
             Scanner userInput = new Scanner(System.in);
             System.out.println("please select a User and type in his/her User name: ");
             String UserName = userInput.nextLine();
             //match username with User
-            User anotherUser = this.MessageMenuController.matchNameWithUser(UserName);
+            User anotherUser = this.messageMenuController.matchNameWithUser(UserName);
             System.out.println("please select and type in the command number: ");
             System.out.println(("1. send message"));
             System.out.println("2. add friend");

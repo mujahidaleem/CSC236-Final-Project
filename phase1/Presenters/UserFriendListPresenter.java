@@ -1,5 +1,7 @@
 package Presenters;
 
+import Entities.User;
+import Gateways.MessageReader;
 import UseCases.UserFriendManager;
 
 
@@ -7,14 +9,14 @@ import java.util.ArrayList;
 
 public abstract class UserFriendListPresenter {
     public User currentUser;
-    public UserFriendManager UserFriendManager;
-    public MessageReader MessageReader;
+    public UserFriendManager userFriendManager;
+    public MessageReader messageReader;
 
     public UserFriendListPresenter(User currentUser, UserFriendManager UserFriendManager,
                                    MessageReader MessageReader){
         this.currentUser=currentUser;
-        this.MessageReader=MessageReader;
-        this.UserFriendManager=UserFriendManager;
+        this.messageReader=MessageReader;
+        this.userFriendManager=UserFriendManager;
     }
 
     /**
@@ -29,7 +31,7 @@ public abstract class UserFriendListPresenter {
      */
 
     public void RemoveMessage(User anotherUser){
-        String name=anotherUser.get_name();
+        String name=anotherUser.getName();
         System.out.println(name+"is removed from your friend list");
     }
 
@@ -39,7 +41,7 @@ public abstract class UserFriendListPresenter {
      */
 
     public void AddMessage(User anotherUser){
-        String name=anotherUser.get_name();
+        String name=anotherUser.getName();
         System.out.println(name+"is added into your friend list");
     }
 
@@ -57,7 +59,7 @@ public abstract class UserFriendListPresenter {
      */
 
     public void DisplaySendingMessage(User anotherUser){
-        String name= anotherUser.get_name();
+        String name= anotherUser.getName();
         System.out.println("you send a message to "+name);
 
     }

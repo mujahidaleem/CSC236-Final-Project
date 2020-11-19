@@ -12,9 +12,9 @@ import sun.font.TrueTypeFont;
 
 
 public class  LoginMenuController {
-    private static MainMenuPresenter mainMenuPresenter;
-    private static LoginMenuPresenter loginMenuPresenter;
-    private static UserManager userManager;
+    private final MainMenuPresenter mainMenuPresenter;
+    private LoginMenuPresenter loginMenuPresenter;
+    private UserManager userManager;
 
     /**
      * LoginMenuPresenter constructor
@@ -23,9 +23,9 @@ public class  LoginMenuController {
      */
     public LoginMenuController(UserManager userManager, LoginMenuPresenter
             loginMenuPresenter, MainMenuPresenter mainMenuPresenter) {
-        this.mainMenuPresenter = MainMenuPresenter;
-        this.loginMenuPresenter = LoginMenuPresenter;
-        this.userManager = UserManager;
+        this.mainMenuPresenter = mainMenuPresenter;
+        this.loginMenuPresenter = loginMenuPresenter;
+        this.userManager = userManager;
     }
 
     /**
@@ -34,15 +34,14 @@ public class  LoginMenuController {
 
     public String login(String command) {
         // read command to see if user exists
-        int id = Integer.parseInt(command.split(" ")[0]);
-        String password = command.substring(id.length() + 1);
+        String strid = command.split(" ")[0];
+        int id = Integer.parseInt(strid);
+        String password = command.substring(strid.length() + 1);
 
         if (password_matches_id(id, password)) {
-            String o = "success";
-            return o;
+            return "success";
         } else {
-            String e = "failure";
-            return e;
+            return "failure";
         }
 
     }
@@ -52,14 +51,10 @@ public class  LoginMenuController {
     }
 
 
-    public static boolean password_matches_id(int id, String password) {
+    public boolean password_matches_id(int id, String password) {
         //checks system to see if password matches username
         User user = UserManager.finduser(id);
-        if (user.getPassword().equals(password)) {
-            return true;
-        } else {
-            return false;
-        }
+        return user.getPassword().equals(password);
     }
 
     public void logout() {
@@ -68,7 +63,7 @@ public class  LoginMenuController {
     }
 
     public void exit(){
-        //TODO: how to close the program
+
     }
 
 

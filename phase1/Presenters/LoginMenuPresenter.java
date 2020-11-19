@@ -9,7 +9,6 @@ import Presenters.MainMenuPresenter;
 
 import sun.lwawt.macosx.CSystemTray;
 
-//TODO:import the various menus for the different types of users.
 
 public class LoginMenuPresenter {
 
@@ -49,6 +48,7 @@ public class LoginMenuPresenter {
 
                 loginMenuController.signUp(name, password, type);
                 //TODO get the id of this new user, and print "This is your id. please remember it for login purposes"
+
                 mainMenuPresenter.run();
         }
     }

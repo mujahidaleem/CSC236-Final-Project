@@ -4,6 +4,10 @@ package Presenters;
 
 import Controllers.OrganizerFriendListController;
 import Controllers.UserFriendListController;
+import Entities.Organizer;
+import Entities.User;
+
+import java.util.ArrayList;
 
 public class OrganizerFriendListPresenter extends UserFriendListPresenter {
     public OrganizerFriendListController OrganizerFriendListController;
@@ -36,7 +40,7 @@ public class OrganizerFriendListPresenter extends UserFriendListPresenter {
     public void DisplayMessageable(){
         ArrayList<User> messageableList = this.OrganizerFriendListController.getMessageableList();
         for(User messageable: messageableList){
-            System.out.println(messageable.get_name());
+            System.out.println(messageable.getName());
         }
     }
 
@@ -45,7 +49,7 @@ public class OrganizerFriendListPresenter extends UserFriendListPresenter {
      */
 
     public void RemoveMessage(User anotherUser){
-        String name=anotherUser.getname();
+        String name=anotherUser.getName();
         System.out.println(name+"is removed from your friend list");
     }
 

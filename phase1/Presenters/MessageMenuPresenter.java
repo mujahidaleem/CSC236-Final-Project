@@ -27,6 +27,9 @@ public class MessageMenuPresenter {
             System.out.println("do you want to return to main menu? (yes or no)");
             Scanner userInput0 = new Scanner(System.in);
             String answer1 = userInput0.nextLine();
+            switch (answer1){
+
+            }
             if (answer1 == "yes") {
                 break;
             }
@@ -67,23 +70,24 @@ public class MessageMenuPresenter {
                     } else {
                         System.out.println("input is invalid");
                     }
-                }}
-                if (num == 2) {
-                    this.UserFriendListcontroller.Add(anotherUser);
-                    this.UserFriendListPresenter.AddMessage(anotherUser);
-                    continue;
                 }
-                if (num == 3) {
-                    this.UserFriendListcontroller.removeFrom(anotherUser);
-                    this.UserFriendListPresenter.RemoveMessage(anotherUser);
-                    continue;
+            }
+            if (num == 2) {
+                this.UserFriendListcontroller.Add(anotherUser);
+                this.UserFriendListPresenter.AddMessage(anotherUser);
+                continue;
+            }
+            if (num == 3) {
+                this.UserFriendListcontroller.removeFrom(anotherUser);
+                this.UserFriendListPresenter.RemoveMessage(anotherUser);
+                continue;
 
-                } else {
-                    System.out.println("input is invalid");
-                }
+            } else {
+                System.out.println("input is invalid");
             }
         }
     }
+}
 
 
 

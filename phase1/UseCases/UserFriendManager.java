@@ -60,8 +60,9 @@ public abstract class UserFriendManager {
 
     /**
      * remove friend from user1's friend list
+     * @param user1 the user that is removing the friend
+     * @param friend the user being removed
      */
-
     public void removeFromFriendList(User user1, User friend) {
         user1.getFriendList().remove(friend);
     }

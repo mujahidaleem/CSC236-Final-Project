@@ -39,7 +39,7 @@ public class AttendeeFriendListPresenter extends UserFriendListPresenter {
      */
     @Override
     public void DisplayMessageable(){
-       ArrayList<User> messageableList = this.AttendeeFriendListController.getMessageableList();
+       ArrayList<User> messageableList = this.AttendeeFriendListController.getManageableList();
        for(User messageable: messageableList){
            System.out.println(messageable.getName());
        }

@@ -1,71 +1,46 @@
 package Controllers;
 
-import Presenters.MainMenuPresenter;
-import Presenters.LoginMenuPresenter;
-import UseCases.EventManager;
 import Entities.User;
 import UseCases.UserManager;
-import Gateways.UserReader;
-import sun.font.TrueTypeFont;
 
-//import database from gateway?
-
-
-public class  LoginMenuController {
-    private final MainMenuPresenter mainMenuPresenter;
-    private LoginMenuPresenter loginMenuPresenter;
-    private UserManager userManager;
+public class LoginMenuController {
+    protected UserManager userManager;
 
     /**
      * LoginMenuPresenter constructor
      *
-     * @param loginMenuPresenter need to call loginMenuPresenter
+     * @param userManager stores the list of users
      */
-    public LoginMenuController(UserManager userManager, LoginMenuPresenter
-            loginMenuPresenter, MainMenuPresenter mainMenuPresenter) {
-        this.mainMenuPresenter = mainMenuPresenter;
-        this.loginMenuPresenter = loginMenuPresenter;
+    public LoginMenuController(UserManager userManager) {
         this.userManager = userManager;
     }
 
     /**
-     * command should follow format of "id, password"
+     * Checks if the login credentials are correct.
+     *
+     * @param command the inputted login credentials
+     * @return The user with those login credentials or nothing if the credentials are wrong
      */
-
-    public String login(String command) {
-        // read command to see if user exists
-        String strid = command.split(" ")[0];
-        int id = Integer.parseInt(strid);
-        String password = command.substring(strid.length() + 1);
-
-        if (password_matches_id(id, password)) {
-            return "success";
-        } else {
-            return "failure";
+    public User login(String command) {
+        int id = Integer.parseInt(command.split("_")[0]);
+        String password = command.split("_")[1];
+        for (User user : userManager.users) {
+            if (user.getId() == id && user.getPassword().equals(password)) {
+                return user;
+            }
         }
-
+        return null;
     }
 
+    /**
+     * Creates a new user.
+     *
+     * @param name     the name of the user
+     * @param password the password of the user
+     * @param type     the type of the user.
+     */
     public void signUp(String name, String password, String type) {
-        UserManager.addUser(name, password, type);
+        userManager.addUser(name, password, type);
     }
-
-
-    public boolean password_matches_id(int id, String password) {
-        //checks system to see if password matches username
-        User user = UserManager.finduser(id);
-        return user.getPassword().equals(password);
-    }
-
-    public void logout() {
-        // this method brings us back to the login menu.
-        loginMenuPresenter.run();
-    }
-
-    public void exit(){
-
-    }
-
-
 }
 

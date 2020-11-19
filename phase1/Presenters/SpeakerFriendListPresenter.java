@@ -1,14 +1,17 @@
 package Presenters;
 
 import Controllers.SpeakerFriendListController;
+import Entities.Speaker;
+import Gateways.MessageReader;
+import UseCases.SpeakerFriendManager;
 import UseCases.UserFriendManager;
 import Entities.User;
 
 import java.util.ArrayList;
 
 public class SpeakerFriendListPresenter extends UserFriendListPresenter {
-    public SpeakerFriendManager SpeakerFriendManager;
-    public MessageReader MessageReader;
+    public SpeakerFriendManager speakerFriendManager;
+    public MessageReader messageReader;
     public Speaker currentSpeaker;
     public User currentUser;
     public UserFriendManager UserFriendManager;

@@ -1,7 +1,7 @@
 package Controllers;
 
+import Entities.User;
 import UseCases.UserFriendManager;
-//import Entities.User;
 import Presenters.UserFriendListPresenter;
 
 import java.util.ArrayList;
@@ -25,56 +25,50 @@ public abstract class UserFriendListController {
     /**
      *  @return the chat log of currentUser and another User
      */
-    public ArrayList<String> showChatLog(User user1, User user2){
+    public void showChatLog(User user1, User user2){
+        userFriendManager.displayChatLog(user1, user2);
         ArrayList<String> result = new ArrayList<String>();
         if(this.userFriendManager.messageable(user1, user2)){
-            result = this.userFriendManager.checkHistoryMessage(user1, user2);
+            result = userFriendManager.checkHistoryMessage(user1, user2);
         }
-        return result;
     }
 
     /**
      * currentUser Send a message to another User
-     * @param anotherUser User who receive the Message
+     * @param recipient User who receive the Message
      * @param messageContent the content of the message
      */
-    public void sendingMessage(User sender, User recepient, String messageContent){
-        if(this.userFriendManager.messageable(sender, recepient)){
-            this.userFriendManager.SendMessageTo(sender, recepient, messageContent);
+    public void sendingMessage(User sender, User recipient, String messageContent){
+        if(this.userFriendManager.messageable(sender, recipient)){
+            this.userFriendManager.sendMessageTo(sender, recipient, messageContent);
         }
     }
 
     /**
      * Remove User from messageable Users
-     * @param anotherUser The user who is removed from the Current User's friend list
+     * @param friend The user who is removed from the Current User's friend list
      */
 
-    public void removeFrom(User user1, User friend){
-       if(this.userFriendManager.messageable(user1, friend)){
-        this.userFriendManager.removeFromFriendlist(user1, friend);
+    public boolean removeFrom(User user1, User friend){
+       if(this.userFriendManager.messageable(user1, friend)) {
+           this.userFriendManager.removeFromFriendList(user1, friend);
+           return true;
+       } else {
+           return false;
        }
     }
 
 
     /**
-     * Add a User to list of messageable Users
-     * @param anotherUser The User who will be added into the friend list of current User
+     * Add a User to list of manageable Users
+     * @param newFriend The User who will be added into the friend list of current User
      */
-    public void Add(User user1, User newFriend){
-        if(this.UserFriendManager.messageable(user1, newFriend) == false){
-            this.UserFriendManager.addNewFriend(anotherUser);
+    public boolean addFriend(User user1, User newFriend){
+        if(!this.userFriendManager.messageable(user1, newFriend)){
+            this.userFriendManager.addNewFriend(user1, newFriend);
+            return true;
+        } else {
+            return false;
         }
     }
-
-    /**
-     * Allow User to return to the menu
-     */
-    public void returnToMenu(){;
-
-        }
-
-
-
-
-
 }

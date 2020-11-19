@@ -1,22 +1,20 @@
 package Controllers;
 
-import Controllers.AttendeeFriendListController;
-import Controllers.SpeakerFriendListController;
-import Controllers.UserFriendListController;
-import Controllers.OrganizerFriendListController;
-import Presenters.AttendeeFriendListPresenter;
-import Presenters.OrganizerFriendListPresenter;
-import Presenters.SpeakerFriendListPresenter;
 import Entities.User;
 import Entities.Speaker;
 import Entities.Attendee;
 import Entities.Organizer;
+import UseCases.UserFriendManager;
+import UseCases.UserManager;
 
 public class MessageMenuController {
+    public UserFriendManager userFriendManager;
+    public UserManager userManager;
     public UserFriendListController UserFriendListController;
 
 
-    public MessageMenuController(UserFriendListController UserFriendListController){
+    public MessageMenuController(UserFriendManager userFriendManager, UserFriendListController UserFriendListController){
+        this.userFriendManager = userFriendManager;
         this.UserFriendListController=UserFriendListController;
     }
 
@@ -25,24 +23,24 @@ public class MessageMenuController {
         User result=new User();
         if(this.UserFriendListController instanceof AttendeeFriendListController){
             AttendeeFriendListController AFC=(AttendeeFriendListController) this.UserFriendListController;
-            for(User user:AFC.getMessageableList()){
-                if(user.get_name()==name){
+            for(User user:AFC.getManageableList()){
+                if(user.getName()==name){
                     result= user;
                 }
             }
         }
         if(this.UserFriendListController instanceof SpeakerFriendListController){
             SpeakerFriendListController SFC=(SpeakerFriendListController) this.UserFriendListController;
-            for(User user:SFC.getMessageableList()){
-                if(user.get_name()==name){
+            for(User user:SFC.getManageableList()){
+                if(user.getName()==name){
                     result= user;
                 }
             }
         }
         if(this.UserFriendListController instanceof OrganizerFriendListController){
             OrganizerFriendListController OFC=(OrganizerFriendListController) this.UserFriendListController;
-            for(User user:OFC.getMessageableList()){
-                if(user.get_name()==name){
+            for(User user:OFC.getManageableList()){
+                if(user.getName()==name){
                     result= user;
                 }
             }

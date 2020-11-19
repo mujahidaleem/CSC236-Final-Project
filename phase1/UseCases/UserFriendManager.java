@@ -6,23 +6,37 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class UserFriendManager {
+    HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages;
+    User currentUser;
 
     /**
      * UserFriendManager constructor
      * @param userToMessages - a dictionary mapping users to their messages sent and received from friends
      */
 
-    HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages;
 
-    public UserFriendManager(HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages) {
+    public UserFriendManager(HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages, User currentUser) {
         this.userToMessages = userToMessages;
+        this.currentUser = currentUser;
+    }
+
+    public void displayFriend(){
+        for (User user: userToMessages.get(currentUser).keySet()){
+            System.out.println(user);
+        }
+    }
+
+    public void displayChatLog(User user, User friend){
+        for(Message message: userToMessages.get(user).get(friend)){
+            System.out.println(message);
+        }
     }
 
     /**
      * @return true iff otherUser is in the friend list of the current user
      */
 
-    public boolean messagable(User user1, User user2) {
+    public boolean messageable(User user1, User user2) {
         return user1.getFriendList().contains(user2);
         }
 
@@ -60,8 +74,9 @@ public abstract class UserFriendManager {
 
     /**
      * remove friend from user1's friend list
+     * @param user1 the user that is removing the friend
+     * @param friend the user being removed
      */
-
     public void removeFromFriendList(User user1, User friend) {
         user1.getFriendList().remove(friend);
     }

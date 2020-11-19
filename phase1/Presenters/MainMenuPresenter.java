@@ -3,7 +3,6 @@ package Presenters;
 import Controllers.LoginMenuController;
 import Controllers.MainMenuController;
 import UseCases.UserManager;
-import sun.applet.Main;
 
 import java.util.Scanner;
 

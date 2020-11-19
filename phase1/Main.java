@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         UserReader userReader = new UserReader("D:\\userManager.ser");
         EventReader eventReader = new EventReader("D:\\eventManager.ser");
-        MessageReader messageReader = new MessageReader(); //TODO input name of file
+        MessageReader messageReader = new MessageReader("D:\\userFriendManager.ser");
 
         UserManager userManager = userReader.readFile();
         EventManager eventManager = eventReader.readFile();

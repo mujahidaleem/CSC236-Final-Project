@@ -48,7 +48,7 @@ public class UserReader {
     }
 
     /**
-     * Stores the current userManager will all the users into a ser file
+     * Stores the current userManager with all the users into a ser file
      *
      * @param userManager the userManager being stored into a ser file
      */

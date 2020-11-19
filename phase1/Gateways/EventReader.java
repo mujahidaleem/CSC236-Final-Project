@@ -49,7 +49,7 @@ public class EventReader {
 
 
     /**
-     * Stores the current eventManager will all the events into a ser file
+     * Stores the current eventManager with all the events into a ser file
      *
      * @param eventManager the eventManager being stored into a ser file
      */

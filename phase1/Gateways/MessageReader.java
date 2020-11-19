@@ -1,5 +1,10 @@
 package Gateways;
 
+import UseCases.AttendeeFriendManager;
+import UseCases.UserFriendManager;
+
+import java.io.*;
+
 public class MessageReader {
 
     /**
@@ -19,23 +24,45 @@ public class MessageReader {
      * @return an instance of EventManager containing all the events
      */
 
-    public UserFriendManager readFile() {
+    public AttendeeFriendManager readFile() {
         try {
             FileInputStream fi = new FileInputStream(new File(this.fileName));
             ObjectInputStream oi = new ObjectInputStream(fi);
 
-            UserFriendListManager userFriendListManager = (UserFriendListManager) oi.readObject();
+            AttendeeFriendManager userFriendManager = (AttendeeFriendManager) oi.readObject();
 
             oi.close();
             fi.close();
 
-            return userFriendListManager;
+            return userFriendManager;
         } catch (FileNotFoundException e) {
             System.out.println("File not found.");
         } catch (IOException e) {
             System.out.println("Error initializing stream.");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        }
+        return new AttendeeFriendManager(null);
+    }
+
+    /**
+     * Stores the current userFriendManager and all the messages into a ser file
+     *
+     * @param userFriendManager the userFriendManager being stored into a ser file
+     */
+    public void saveFile(UserFriendManager userFriendManager){
+        try{
+            FileOutputStream f = new FileOutputStream(new File(fileName));
+            ObjectOutputStream o = new ObjectOutputStream(f);
+
+            o.writeObject(userFriendManager);
+            o.close();
+            f.close();
+
+        } catch (FileNotFoundException e){
+            System.out.println("File not found.");
+        } catch (IOException e) {
+            System.out.println("Error saving file.");
         }
     }
 }

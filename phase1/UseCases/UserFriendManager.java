@@ -12,7 +12,7 @@ public abstract class UserFriendManager {
      * @param userToMessages - a dictionary mapping users to their messages sent and received from friends
      */
 
-    HashMap<User, Hashmap<User, ArrayList<Message>>> userToMessages;
+    HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages;
 
     public UserFriendManager(HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages) {
         this.userToMessages = userToMessages;
@@ -26,8 +26,6 @@ public abstract class UserFriendManager {
         return user1.getFriendList().contains(user2);
         }
 
-    }
-
     /**
      * @return a list of all messages sent between the current user and otherUser
      */
@@ -39,17 +37,17 @@ public abstract class UserFriendManager {
             String messageString = message.getString();
             result.add(messageString);
         }
-        return result
+        return result;
     }
 
     /**
      * send a message containing the messageContent from user1 to user2
      */
 
-    public void sendMessageTo(User sender, User recepient, String messageContent) {
-        Message message = Message(sender, recepient, messageContent);
-        this.userToMessages.get(sender).get(recepient).add(message);
-        this.userToMessages.get(recepient).get(sender).add(message);
+    public void sendMessageTo(User sender, User recipient, String messageContent) {
+        Message message = new Message(sender, recipient, messageContent);
+        this.userToMessages.get(sender).get(recipient).add(message);
+        this.userToMessages.get(recipient).get(sender).add(message);
     }
 
     /**

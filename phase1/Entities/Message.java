@@ -1,23 +1,26 @@
 package Entities;
 
-import Entities.User;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Message {
+    int senderId;
+    String senderName;
+    int recipientId;
+    String recipientName;
+    String content;
 
     /**
      * Message constructor
      * @param sender - the user sending the message
-     * @param recepient - the user receiving the message
+     * @param recipient - the user receiving the message
      * @param content - the content of the message
      */
-
-    User sender;
-    User recepient;
-    String content;
-
-    public Message(User sender, User recepient, String content) {
-        this.sender = sender;
-        this.recepient = recepient;
+    public Message(User sender, User recipient, String content) {
+        this.senderId = sender.getId();
+        this.senderName = sender.getName();
+        this.recipientId = recipient.getId();
         this.content = content;
     }
 
@@ -25,16 +28,16 @@ public class Message {
      * getter for the sender of the message
      */
 
-    public User getSender() {
-        return this.sender;
+    public int getSenderId() {
+        return senderId;
     }
 
     /**
-     * getter for the recepient of the message
+     * getter for the recipient of the message
      */
 
-    public User getRecepient() {
-        return this.recepient;
+    public int getRecipientId() {
+        return recipientId;
     }
 
     /**
@@ -50,7 +53,7 @@ public class Message {
      */
 
     public String getString() {
-        String result = this.sender.getName() + " to " + this.recepient.getName() + ": " + this.getContent();
+        String result = this.senderName + " to " + this.recipientName + ": " + this.getContent();
         return result;
     }
 }

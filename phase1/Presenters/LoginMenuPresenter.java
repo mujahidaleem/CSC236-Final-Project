@@ -24,16 +24,13 @@ public class LoginMenuPresenter {
         this.loginMenuController = loginMenuController;
     }
 
-
-    //public void run()
-    // figure out how to take multiple command line commands without needing arguments for run()
     public void run() {
         while (true) {
             Scanner scanner = new Scanner(System.in);
-            this.greetingMessage();
+            greetingMessage();
             switch (scanner.next()) {
                 case "1":
-                    this.loginCommand(scanner.next());
+                    loginCommand(scanner.next());
                     break;
                 case "2":
                     System.out.println("Please enter your first and last name");
@@ -42,12 +39,18 @@ public class LoginMenuPresenter {
                     String password = scanner.next();
                     System.out.println("Are you an attendee or an organizer?");
                     String type = scanner.next();
+                    if (type != "attendee" || type != "organizer"){
+                        while (type != "attendee" && type != "organizer"){
+
+                        }
+                    }
+                    else
                     while (type != "attendee" && type != "organizer") {
                         printTryAgain();
                         String userType = scanner.next();
                         loginMenuController.signUp(name, password, userType);
                         System.out.println("This is your id. Please remember it!!!");
-                        break;
+                    break;
                     }
             }
         }

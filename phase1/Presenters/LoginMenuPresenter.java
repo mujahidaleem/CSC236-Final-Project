@@ -28,30 +28,31 @@ public class LoginMenuPresenter {
     //public void run()
     // figure out how to take multiple command line commands without needing arguments for run()
     public void run() {
-        Scanner scanner = new Scanner(System.in);
-        greetingMessage();
-        switch (scanner.next()) {
-            case "1":
-                loginCommand(scanner.next());
-            case "2":
-                System.out.println("Please enter your first and last name");
-                String name = scanner.next();
-                System.out.println("Please enter your password");
-                String password = scanner.next();
-                System.out.println("Are you an attendee or an organizer?");
-                String type = scanner.next();
-                while (type != "attendee" && type != "organizer") {
-                    printTryAgain();
-                    String userType = scanner.next();
-            loginMenuController.signUp(name, password, userType);
-            MainMenuPresenter.run();
-                }
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+            this.greetingMessage();
+            switch (scanner.next()) {
+                case "1":
+                    this.loginCommand(scanner.next());
+                    break;
+                case "2":
+                    System.out.println("Please enter your first and last name");
+                    String name = scanner.next();
+                    System.out.println("Please enter your password");
+                    String password = scanner.next();
+                    System.out.println("Are you an attendee or an organizer?");
+                    String type = scanner.next();
+                    while (type != "attendee" && type != "organizer") {
+                        printTryAgain();
+                        String userType = scanner.next();
+                        loginMenuController.signUp(name, password, userType);
+                        System.out.println("This is your id. Please remember it!!!");
+                        break;
+                    }
+            }
         }
 
-
-        //TODO get the id of this new user, and print "This is your id. please remember it for login purposes"
     }
-
 
     public void loginCommand(String command) {
         System.out.println("Please enter your id number and password, separated by a space");
@@ -69,7 +70,7 @@ public class LoginMenuPresenter {
         System.out.println("Welcome to the conference! Would you like to log into your existing account or" +
                 " create a new account?\n" +
                 "Please enter '1' to log into your existing account, and '2' to create a new account\n" +
-                "Enter 'exit' at any time to exit the program.");
+                "Enter 'exit' at to exit the program.");
     }
 
     public static void printTryAgain(){

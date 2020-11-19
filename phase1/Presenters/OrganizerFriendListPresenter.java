@@ -6,6 +6,9 @@ import Controllers.OrganizerFriendListController;
 import Controllers.UserFriendListController;
 import Entities.Organizer;
 import Entities.User;
+import Gateways.MessageReader;
+import UseCases.OrganizerFriendManager;
+import UseCases.UserFriendManager;
 
 import java.util.ArrayList;
 
@@ -13,8 +16,8 @@ public class OrganizerFriendListPresenter extends UserFriendListPresenter {
     public OrganizerFriendListController OrganizerFriendListController;
     public Organizer currentOrganizer;
     public User currentUser;
-    public UserFriendManager UserFriendManager;
-    public OrganizerFriendManager OrganizerFriendManager;
+    public UserFriendManager userFriendManager;
+    public OrganizerFriendManager organizerFriendManager;
     public MessageReader MessageReader;
 
 
@@ -29,8 +32,8 @@ public class OrganizerFriendListPresenter extends UserFriendListPresenter {
             this.currentOrganizer=currentOrganizer;
         }
         if(UserFriendManager instanceof OrganizerFriendManager){
-            OrganizerFriendManager OrganizerFriendManager=(OrganizerFriendManager) UserFriendManager;
-            this.OrganizerFriendManager= OrganizerFriendManager;}
+            OrganizerFriendManager organizerFriendManager=(OrganizerFriendManager) UserFriendManager;
+            this.organizerFriendManager= organizerFriendManager;}
     }
 
     /**
@@ -57,7 +60,7 @@ public class OrganizerFriendListPresenter extends UserFriendListPresenter {
      * * Display the chat log between User and another User
      */
     public void DisplayChatLog(User anotherUser) {
-        ArrayList<String> Chatlog = this.UserFriendManager.checkHistoryMessage(anotherUser);
+        ArrayList<String> Chatlog = this.userFriendManager.checkHistoryMessage(anotherUser);
         for (String message : Chatlog) {
             System.out.println(message);
         }}

@@ -1,5 +1,6 @@
 package UseCases;
 
+import Entities.Attendee;
 import Entities.Message;
 import Entities.User;
 
@@ -12,7 +13,7 @@ public class AttendeeFriendManager extends UserFriendManager {
      * AttendeeFriendManager constructor
      * @param userToMessages - a dictionary mapping users to their messages sent and received from friends
      */
-    public AttendeeFriendManager(HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages) {
-        super(userToMessages);
+    public AttendeeFriendManager(HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages, Attendee attendee) {
+        super(userToMessages, attendee);
     }
 }

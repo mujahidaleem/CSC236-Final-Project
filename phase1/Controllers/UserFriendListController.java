@@ -1,6 +1,7 @@
 package Controllers;
 
 import Entities.User;
+import Presenters.MessageMenuPresenter;
 import UseCases.UserFriendManager;
 import Presenters.UserFriendListPresenter;
 
@@ -8,19 +9,14 @@ import java.util.ArrayList;
 
 public abstract class UserFriendListController {
 
-    public UserFriendListPresenter userFriendListPresenter;
+    public MessageMenuPresenter messageMenuPresenter;
     public UserFriendManager userFriendManager;
 
-    public UserFriendListController(UserFriendListPresenter userFriendListPresenter,
+    public UserFriendListController(MessageMenuPresenter messageMenuPresenter,
                                     UserFriendManager userFriendManager){
-        this.userFriendListPresenter = userFriendListPresenter;
+        this.messageMenuPresenter = messageMenuPresenter;
         this.userFriendManager = userFriendManager;
     }
-
-    /**
-     * @return list of messageable Users（abstract）
-     */
-    abstract ArrayList<User> getMessageableList();
 
     /**
      *  @return the chat log of currentUser and another User

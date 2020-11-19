@@ -2,6 +2,7 @@ package Controllers;
 
 import Entities.User;
 import Presenters.AttendeeFriendListPresenter;
+import Presenters.AttendeeMessagePresenter;
 import Presenters.UserFriendListPresenter;
 import UseCases.AttendeeFriendManager;
 import UseCases.UserFriendManager;
@@ -11,38 +12,14 @@ import java.util.ArrayList;
 //import UseCases.AttendeeFriendManager;
 
 public class AttendeeFriendListController extends UserFriendListController {
-    public AttendeeFriendManager attendeeFriendManager;
+    public AttendeeMessagePresenter attendeeMessagePresenter;
 //        public AttendeeFriendListPresenter attendeeFriendListPresenter;
 //        public AttendeeFriendManager attendeeFriendManager;
 
 
-    public AttendeeFriendListController(UserFriendListPresenter userFriendListPresenter,
-                                        AttendeeFriendManager attendeeFriendManager) {
-        super(userFriendListPresenter, attendeeFriendManager);
-        this.attendeeFriendManager = attendeeFriendManager;
-    }
-
-    /**
-     * For Attendee, messageable Users are All users in FriendList and Other Attendees / Speakers
-     * in the event that he sign up
-     *
-     * @return the messageable users of Attendee
-     */
-    @Override
-    public ArrayList<User> getMessageableList() {
-        ArrayList<User> result = new ArrayList<User>();
-        int i = 0;
-        while (i < this.Attendee.get_friendList().length()) {
-            result.add(this.Attendee.get_friendList[i]);
-            i = i + 1;
-        }
-        for (Event event : this.Attendee.get_eventList()) {
-            result.add(event.getSpeaker());
-            for (User user : event.getUserList()) {
-                result.add(user);
-            }
-        }
-        return result;
+    public AttendeeFriendListController(AttendeeMessagePresenter attendeeMessagePresenter, UserFriendManager userFriendManager) {
+        super(attendeeMessagePresenter, userFriendManager);
+        this.attendeeMessagePresenter = attendeeMessagePresenter;
     }
 }
 

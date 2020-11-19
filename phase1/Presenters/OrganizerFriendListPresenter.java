@@ -3,67 +3,34 @@ package Presenters;
 
 
 import Controllers.OrganizerFriendListController;
-import Controllers.UserFriendListController;
-import Entities.Organizer;
 import Entities.User;
 import Gateways.MessageReader;
 import UseCases.OrganizerFriendManager;
-import UseCases.UserFriendManager;
+import UseCases.OrganizerManager;
+import UseCases.UserManager;
 
 import java.util.ArrayList;
 
-public class OrganizerFriendListPresenter extends UserFriendListPresenter {
-    public OrganizerFriendListController OrganizerFriendListController;
-    public Organizer currentOrganizer;
-    public User currentUser;
-    public UserFriendManager userFriendManager;
+public class OrganizerFriendListPresenter extends MessageMenuPresenter {
+    public OrganizerFriendListController organizerFriendListController;
+    public OrganizerManager organizerManager;
     public OrganizerFriendManager organizerFriendManager;
     public MessageReader MessageReader;
 
-
-
-    public OrganizerFriendListPresenter(User currentUser, UseCases.UserFriendManager UserFriendManager,
-                                        OrganizerFriendListController OrganizerFriendListController,
-                                        MessageReader MessageReader) {
-        super(currentUser, UserFriendManager,MessageReader);
-        this.OrganizerFriendListController= OrganizerFriendListController;
-        if(currentUser instanceof Organizer){
-            Organizer currentOrganizer=(Organizer) currentUser;
-            this.currentOrganizer=currentOrganizer;
-        }
-        if(UserFriendManager instanceof OrganizerFriendManager){
-            OrganizerFriendManager organizerFriendManager=(OrganizerFriendManager) UserFriendManager;
-            this.organizerFriendManager= organizerFriendManager;}
+    public OrganizerFriendListPresenter(OrganizerFriendListController organizerFriendListController, UserManager userManager, OrganizerManager organizerManager, OrganizerFriendManager organizerFriendManager){
+        super(organizerFriendListController, userManager, organizerFriendManager);
+        this.organizerFriendListController= organizerFriendListController;
+        this.organizerManager = organizerManager;
     }
 
     /**
      * Display the messageable Users of Organizer
      */
     @Override
-    public void DisplayMessageable(){
-        ArrayList<User> messageableList = this.OrganizerFriendListController.getMessageableList();
-        for(User messageable: messageableList){
-            System.out.println(messageable.getName());
-        }
+    public void printFriends(){
+        System.out.println("Friend List");
+        organizerFriendManager.displayFriend();
     }
-
-    /**
-     * Display the command to add/remove another User from messageable list
-     */
-
-    public void RemoveMessage(User anotherUser){
-        String name=anotherUser.getName();
-        System.out.println(name+"is removed from your friend list");
-    }
-
-    /**
-     * * Display the chat log between User and another User
-     */
-    public void DisplayChatLog(User anotherUser) {
-        ArrayList<String> Chatlog = this.userFriendManager.checkHistoryMessage(anotherUser);
-        for (String message : Chatlog) {
-            System.out.println(message);
-        }}
 
     /**
      * * Display the command to send a message to another User

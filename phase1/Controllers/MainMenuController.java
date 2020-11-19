@@ -7,12 +7,21 @@ public class MainMenuController {
     private EventMenuPresenter eventMenuPresenter;
     private MessageMenuPresenter messageMenuPresenter;
     private LoginMenuController loginMenuController;
+    private UserManager userManager;
 
+    /**
+     *
+     * @param eventMenuPresenter attribute eventMenuPresenter
+     * @param messageMenuPresenter attribute messageMenuPresenter
+     * @param loginMenuController attribute loginMenuController
+     * @param userManager attribute userManager
+     */
     public MainMenuController(EventMenuPresenter eventMenuPresenter, MessageMenuPresenter messageMenuPresenter,
-                              LoginMenuController loginMenuController){
+                              LoginMenuController loginMenuController, UserManager userManager){
         this.eventMenuPresenter = eventMenuPresenter;
         this.messageMenuPresenter = messageMenuPresenter;
         this.loginMenuController = loginMenuController;
+        this.userManager = userManager;
     }
 
     public void printEventMenu(){
@@ -28,7 +37,7 @@ public class MainMenuController {
     }
 
     public void changePw(String password){
-        UserManager.changePassword(password);
+        userManager.changePassword(password);
     }
 
     public void sysExit(){

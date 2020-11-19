@@ -58,10 +58,11 @@ public class  LoginMenuController {
             // this method brings us back to the login menu.
         loginMenuPresenter.run([" "]);
         }
-    }
+
     public void exit(){
         //TODO: how to close the program
     }
+
 
 }
 

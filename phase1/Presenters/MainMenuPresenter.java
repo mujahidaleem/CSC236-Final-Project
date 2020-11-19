@@ -66,7 +66,7 @@ public class MainMenuPresenter {
         System.out.println("4. Change Password");
         System.out.println("5. Quit");
     }
-
+    
     /**
      * To print try again prompt
      */

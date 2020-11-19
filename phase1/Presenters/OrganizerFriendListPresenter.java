@@ -67,7 +67,7 @@ public class OrganizerFriendListPresenter extends UserFriendListPresenter {
      */
 
     public void DisplaySengdingMessage (User anotherUser){
-        String name = anotherUser.get_name();
+        String name = anotherUser.getName();
         System.out.println("you send a message to " + name);
 
     }

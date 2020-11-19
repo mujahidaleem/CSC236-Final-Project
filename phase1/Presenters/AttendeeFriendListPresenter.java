@@ -2,6 +2,7 @@ package Presenters;
 
 import Controllers.AttendeeFriendListController;
 import Entities.Attendee;
+import Entities.User;
 import UseCases.AttendeeFriendManager;
 
 import java.util.ArrayList;

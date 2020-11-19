@@ -34,6 +34,9 @@ public class LoginMenuPresenter {
     }
 
     public LoginMenuPresenter(LoginMenuController loginMenuController) {
+        this.loginMenuController = loginMenuController;
+
+
     }
 
     //public void run()
@@ -44,18 +47,19 @@ public class LoginMenuPresenter {
         switch (scanner.next()) {
             case "1":
                 logincommand(scanner.next());
+            case "2":
+                System.out.println("Please enter your first and last name");
+                String name = scanner.next();
+                System.out.println("Please enter your password");
+                String password = scanner.next();
+                System.out.println("Are you an attendee or an organizer?");
+                String type = scanner.next();
+                while (type != "attendee" && type != "organizer") {
+                    printTryAgain();
+                    type = scanner.next();
+                }
         }
-        case "2":
-        System.out.println("Please enter your first and last name");
-        String name = scanner.next();
-        System.out.println("Please enter your password");
-        String password = scanner.next();
-        System.out.println("Are you an attendee or an organizer?");
-        String type = scanner.next();
-        while (type != "attendee" && type != "organizer") {
-            printTryAgain();
-            type = scanner.next();
-        }
+
 
         loginMenuController.signUp(name, password, type);
         //TODO get the id of this new user, and print "This is your id. please remember it for login purposes"

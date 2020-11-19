@@ -29,8 +29,7 @@ public class LoginMenuPresenter {
     }
 
     //public void run()
-    // figure out how to take multiple command line commands without needing arguments for run()
-    public void run(String[] args) {
+    public void run() {
         Scanner scanner = new Scanner(System.in);
         greetingMessage();
         switch (scanner.next()) {

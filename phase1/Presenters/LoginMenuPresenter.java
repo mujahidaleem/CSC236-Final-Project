@@ -58,7 +58,8 @@ public class LoginMenuPresenter {
         }
 
         loginMenuController.signUp(name, password, type);
-        //TODO get the id of this new user, and print "This is your id. please remember it for login purposes"
+        String id = Integer.parseInt(UserManager.users.length());
+        System.out.println("Your id is" + id+". Please remember it for the next time you login");
         mainMenuPresenter.run();
     }
 

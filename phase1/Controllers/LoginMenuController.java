@@ -1,7 +1,6 @@
 package Controllers;
 
 import Presenters.MainMenuPresenter;
-import UseCases.LoginMenuManager;
 import Presenters.LoginMenuPresenter;
 import UseCases.EventManager;
 import Entities.User;
@@ -13,22 +12,20 @@ import sun.font.TrueTypeFont;
 
 
 public class  LoginMenuController {
-    protected LoginMenuManager loginMenuManager;
-    protected MainMenuPresenter mainMenuPresenter;
-    protected LoginMenuPresenter loginMenuPresenter;
-    protected UserManager userManager;
+    private static MainMenuPresenter mainMenuPresenter;
+    private static LoginMenuPresenter loginMenuPresenter;
+    private static UserManager userManager;
 
     /**
      * LoginMenuPresenter constructor
-     * @param loginMenuManager need to call loginMenuManager
+     *
      * @param loginMenuPresenter need to call loginMenuPresenter
      */
-    public LoginMenuController(UserManager userManager, LoginMenuManager loginMenuManager, LoginMenuPresenter
-                               loginMenuPresenter, MainMenuPresenter mainMenuPresenter) {
-    this.loginMenuManager = LoginMenuManager;
-    this.mainMenuPresenter = MainMenuPresenter;
-    this.loginMenuPresenter = LoginMenuPresenter;
-    this.userManager = UserManager;
+    public LoginMenuController(UserManager userManager, LoginMenuPresenter
+            loginMenuPresenter, MainMenuPresenter mainMenuPresenter) {
+        this.mainMenuPresenter = MainMenuPresenter;
+        this.loginMenuPresenter = LoginMenuPresenter;
+        this.userManager = UserManager;
     }
 
     /**
@@ -40,7 +37,7 @@ public class  LoginMenuController {
         int id = Integer.parseInt(command.split(" ")[0]);
         String password = command.substring(id.length() + 1);
 
-        if (LoginMenuManager.password_matches_id(id, password)) {
+        if (password_matches_id(id, password)) {
             String o = "success";
             return o;
         } else {
@@ -48,16 +45,27 @@ public class  LoginMenuController {
             return e;
         }
 
-
+    }
 
     public void signUp(String name, String password, String type) {
         UserManager.addUser(name, password, type);
     }
 
-    public void logout(){
-            // this method brings us back to the login menu.
-        loginMenuPresenter.run([" "]);
+
+    public static boolean password_matches_id(int id, String password) {
+        //checks system to see if password matches username
+        User user = UserManager.finduser(id);
+        if (user.getPassword().equals(password)) {
+            return true;
+        } else {
+            return false;
         }
+    }
+
+    public void logout() {
+        // this method brings us back to the login menu.
+        loginMenuPresenter.run();
+    }
 
     public void exit(){
         //TODO: how to close the program

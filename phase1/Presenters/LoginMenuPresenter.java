@@ -1,7 +1,6 @@
 package Presenters;
 
 import Controllers.LoginMenuController;
-import UseCases.LoginMenuManager;
 import UseCases.UserManager;
 import Entities.User;
 import java.util.Scanner;
@@ -15,25 +14,18 @@ import sun.lwawt.macosx.CSystemTray;
 public class LoginMenuPresenter {
 
     private static LoginMenuController loginMenuController;
-    private static LoginMenuPresenter mainMenuPresenter;
-    protected LoginMenuManager loginMenuManager;
-    protected LoginMenuController loginMenuController;
-    protected MainMenuPresenter mainMenuPresenter;
+    private static MainMenuPresenter mainMenuPresenter;
+
 
     /**
-     * LoginMenuPresenter constructor
+     * LoginMenuPresenter  constructor
      *
-     * @param loginMenuManager    need to call loginMenuManager
      * @param loginMenuController need to call loginMenuController
      */
 
-    public LoginMenuPresenter(LoginMenuController loginMenuController, LoginMenuManager loginMenuManager) {
-        this.loginMenuController = loginMenuController;
-        this.loginMenuManager = loginMenuManager;
-        this.mainMenuPresenter = mainMenuPresenter;
-    }
-
     public LoginMenuPresenter(LoginMenuController loginMenuController) {
+        this.loginMenuController = loginMenuController;
+        this.mainMenuPresenter = mainMenuPresenter;
     }
 
     //public void run()
@@ -44,22 +36,22 @@ public class LoginMenuPresenter {
         switch (scanner.next()) {
             case "1":
                 logincommand(scanner.next());
-        }
-        case "2":
-        System.out.println("Please enter your first and last name");
-        String name = scanner.next();
-        System.out.println("Please enter your password");
-        String password = scanner.next();
-        System.out.println("Are you an attendee or an organizer?");
-        String type = scanner.next();
-        while (type != "attendee" && type != "organizer") {
-            printTryAgain();
-            type = scanner.next();
-        }
+            case "2":
+                System.out.println("Please enter your first and last name");
+                String name = scanner.next();
+                System.out.println("Please enter your password");
+                String password = scanner.next();
+                System.out.println("Are you an attendee or an organizer?");
+                String type = scanner.next();
+                while (type.equals("attendee") && type.equals("organizer")){
+                    printTryAgain();
+                    type = scanner.next();
+                }
 
-        loginMenuController.signUp(name, password, type);
-        //TODO get the id of this new user, and print "This is your id. please remember it for login purposes"
-        mainMenuPresenter.run();
+                loginMenuController.signUp(name, password, type);
+                //TODO get the id of this new user, and print "This is your id. please remember it for login purposes"
+                mainMenuPresenter.run();
+        }
     }
 
 

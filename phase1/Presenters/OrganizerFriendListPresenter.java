@@ -6,6 +6,8 @@ import Controllers.OrganizerFriendListController;
 import Controllers.UserFriendListController;
 import Entities.Organizer;
 import Entities.User;
+import Gateways.MessageReader;
+import UseCases.OrganizerFriendManager;
 
 import java.util.ArrayList;
 
@@ -14,7 +16,7 @@ public class OrganizerFriendListPresenter extends UserFriendListPresenter {
     public Organizer currentOrganizer;
     public User currentUser;
     public UserFriendManager UserFriendManager;
-    public OrganizerFriendManager OrganizerFriendManager;
+    public OrganizerFriendManager organizerFriendManager;
     public MessageReader MessageReader;
 
 
@@ -29,8 +31,8 @@ public class OrganizerFriendListPresenter extends UserFriendListPresenter {
             this.currentOrganizer=currentOrganizer;
         }
         if(UserFriendManager instanceof OrganizerFriendManager){
-            OrganizerFriendManager OrganizerFriendManager=(OrganizerFriendManager) UserFriendManager;
-            this.OrganizerFriendManager= OrganizerFriendManager;}
+            OrganizerFriendManager organizerFriendManager=(OrganizerFriendManager) UserFriendManager;
+            this.organizerFriendManager= organizerFriendManager;}
     }
 
     /**

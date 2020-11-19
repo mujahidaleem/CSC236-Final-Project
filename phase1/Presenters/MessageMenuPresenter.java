@@ -1,6 +1,5 @@
 package Presenters;
 
-import Controllers.MessageMenuController;
 import Controllers.UserFriendListController;
 import Entities.User;
 import UseCases.UserFriendManager;
@@ -9,19 +8,14 @@ import UseCases.UserManager;
 import java.util.Scanner;
 
 public class MessageMenuPresenter {
-    public UserFriendListPresenter userFriendListPresenter;
     public UserFriendListController userFriendListcontroller;
     public UserManager userManager;
     public UserFriendManager userFriendManager;
-    public MessageMenuController messageMenuController;
 
-    public MessageMenuPresenter(UserFriendListController UserFriendListController,
-                                UserFriendListPresenter UserFriendListPresenter, UserManager userManager,
-                                MessageMenuController MessageMenuController) {
-        this.userFriendListPresenter = UserFriendListPresenter;
+    public MessageMenuPresenter(UserFriendListController UserFriendListController, UserManager userManager, UserFriendManager userFriendManager) {
         this.userFriendListcontroller = UserFriendListController;
         this.userManager = userManager;
-        this.messageMenuController = MessageMenuController;
+        this.userFriendManager = userFriendManager;
     }
 
     public void run() {
@@ -55,7 +49,6 @@ public class MessageMenuPresenter {
     protected void printFriends(){
         System.out.println("Friend List");
         userFriendManager.displayFriend();
-        messageMenuController.factoryMethod(userManager.getCurrentUser());
     }
 
     protected void sendMessage(User anotherUser) {

@@ -21,17 +21,32 @@ public class MainMenuController {
         this.userManager = userManager;
     }
 
+    /**
+     * Calls the Event menu presenter
+     */
+
     public void printEventMenu(){
         eventMenuPresenter.run();
     }
 
+    /**
+     * Calls the Message menu presenter
+     */
     public void printMessageMenu(){
         messageMenuPresenter.run();
     }
 
+    /**
+     * Changes the password of a given user
+     * @param password password of a given user
+     */
+
     public void changePw(String password){ userManager.changePassword(password);
     }
 
+    /**
+     * Quits the program
+     */
     public void sysExit(){
         System.exit(0);
     }

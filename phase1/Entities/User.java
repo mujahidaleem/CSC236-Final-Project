@@ -40,7 +40,7 @@ public class User implements Serializable {
 
     /**
      * Getter for the name of the User
-     * @return _name
+     * @return name of the user
      */
     public String getName() {
         return name;

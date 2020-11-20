@@ -10,6 +10,7 @@ public class LoginMenuPresenter {
 
     /**
      * LoginMenuPresenter constructor
+     * UI for the login menu
      * @param loginMenuController need to call loginMenuController
      */
 
@@ -17,6 +18,14 @@ public class LoginMenuPresenter {
         this.loginMenuController = loginMenuController;
     }
 
+    /**
+     * Runs a while loop and calls commands in order to switch "states"
+     * First calls the greeting message, then asks for a prompt, you can exit the program, create an account or login
+     * Login information is asked in the form USERID_PASSWORD
+     * Signup with your first or last name, this can be anything technically
+     * Password can be anything
+     * On bad attempt, return a try again message
+     */
     public void run(){
         outer:
         while (true) {
@@ -51,6 +60,11 @@ public class LoginMenuPresenter {
         }
     }
 
+    /**
+     * Login security checkpoint, checks login information entered
+     * if the user types exit, then it'll go back to the login menu
+     * @param command Previously entered input, the USERID_PASSWORD
+     */
     public void loginCommand(String command) {
         if (command.equals("exit")){
             return;
@@ -62,11 +76,14 @@ public class LoginMenuPresenter {
                 System.out.println("Your username or password is incorrect or does not exist. Please try again");
             }
         } catch (Exception e) {
+            e.printStackTrace();
             printTryAgain();
         }
     }
 
-
+    /**
+     * Greets the user upon opening the program
+     */
     public static void greetingMessage(){
         System.out.println("Welcome to the conference! Would you like to log into your existing account or" +
                 " create a new account?\n" +
@@ -74,6 +91,9 @@ public class LoginMenuPresenter {
                 "Enter 'exit' at to exit the program.");
     }
 
+    /**
+     * Generic try again for a failed prompt
+     */
     public static void printTryAgain(){
         System.out.println("Input invalid. Please try again.");
     }

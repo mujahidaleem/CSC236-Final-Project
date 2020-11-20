@@ -25,6 +25,10 @@ public class Organizer extends User {
         _eventsOrganizing = eventsOrganizing;
     }
 
+    /**
+     * Getter for the events the organizer is organizing
+     * @return _eventsOrganizing - the events the organizer is organizer
+     */
     public HashMap<String, LocalDateTime> get_eventsOrganizing(){
         return _eventsOrganizing;
     }

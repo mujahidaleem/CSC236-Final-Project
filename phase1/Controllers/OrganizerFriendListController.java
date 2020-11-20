@@ -2,6 +2,8 @@ package Controllers;
 
 import Entities.User;
 import Presenters.AttendeeFriendListPresenter;
+import Presenters.OrganizerFriendListPresenter;
+import Presenters.OrganizerMessagePresenter;
 import Presenters.UserFriendListPresenter;
 import UseCases.UserFriendManager;
 //import Entities.Event;
@@ -10,42 +12,17 @@ import java.util.ArrayList;
 //import UseCases.AttendeeFriendManager;
 
 public class OrganizerFriendListController extends UserFriendListController {
+    public OrganizerMessagePresenter organizerMessagePresenter;
 
-    public UserFriendListPresenter userFriendListPresenter;
-    public UserFriendManager userFriendManager;
 //    public OrganizerFriendListPresenter organizerFriendListPresenter;
 //    public OrganizerFriendManager organizerFriendManager;
 
 
-    public OrganizerFriendListController(UserFriendListPresenter userFriendListPresenter,
+    public OrganizerFriendListController(OrganizerMessagePresenter organizerFriendListPresenter,
                                          UserFriendManager userFriendManager) {
-        super(userFriendListPresenter, userFriendManager);
-        if (userFriendListPresenter instanceof OrganizerFriendListPresenter) {
-            OrganizerFriendListPresenter oflp = (OrganizerFriendListPresenter) userFriendListPresenter;
-            this.organizerFriendListPresenter = oflp;
-        }
-        if (userFriendManager instanceof OrganizerFriendManager) {
-            OrganizerFriendManager ofm = (OrganizerFriendManager) userFriendManager;
-            this.organizerFriendManager = ofm;
-        }
+        super(organizerFriendListPresenter, userFriendManager);
+        this.organizerMessagePresenter = organizerFriendListPresenter;
     }
-
-    public ArrayList<User> getMessageableList() {
-        ArrayList<User> result = new ArrayList<User>();
-        int i = 0;
-        while (i < this.organizer.get_friendList().length()) {
-            result.add(this.Organizer.get_friendList[i]);
-            i = i + 1;
-        }
-        for (Event event : this.Organizer.get_eventList()) {
-            result.add(event.getSpeaker());
-            for (User user : event.getUserList()) {
-                result.add(user);
-            }
-        }
-        return result;
-    }
-}
 
 //    /**
 //     * for Organizer, the messageable Users are all users in friendlist and all Attendees and Speaker.

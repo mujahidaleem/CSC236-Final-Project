@@ -42,7 +42,7 @@ public class MessageReader {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return new AttendeeFriendManager(null);
+        return new AttendeeFriendManager(null, null);
     }
 
     /**

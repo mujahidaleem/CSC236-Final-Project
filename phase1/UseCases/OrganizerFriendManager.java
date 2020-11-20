@@ -1,21 +1,19 @@
 package UseCases;
 
-import Entities.Event;
-import Entities.Message;
-import Entities.Speaker;
-import Entities.User;
+import Entities.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class OrganizerFriendManager extends UserFriendManager {
+    private Organizer currentOrganizer;
 
     /**
      * OrganizerFriendManager constructor
      * @param userToMessages - a dictionary mapping users to their messages sent and received from friends
      */
-    public OrganizerFriendManager(HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages) {
-        super(userToMessages);
+    public OrganizerFriendManager(HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages, Organizer organizer) {
+        super(userToMessages, organizer);
     }
 
     /**
@@ -31,5 +29,9 @@ public class OrganizerFriendManager extends UserFriendManager {
             User user = userManager.users.get(id - 1000);
             sendMessageTo(speaker, user, messageContent);
         }
+    }
+
+    public Organizer getCurrentOrganizer(){
+        return currentOrganizer;
     }
 }

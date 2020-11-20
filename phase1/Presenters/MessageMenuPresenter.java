@@ -66,7 +66,7 @@ public class MessageMenuPresenter {
     }
 
     protected void addFriend(User anotherUser){
-        if(userFriendListcontroller.addFriend(userManager.getCurrentUser(), anotherUser)){
+        if(userFriendListcontroller.addFriend(anotherUser)){
             System.out.println(anotherUser.getName() + " is now your friend.");
         } else{
             System.out.println("Sorry, this user is already your friend.");
@@ -74,7 +74,7 @@ public class MessageMenuPresenter {
     }
 
     protected void removeFriend(User anotherUser){
-        if(userFriendListcontroller.removeFrom(userManager.getCurrentUser(), anotherUser)){
+        if(userFriendListcontroller.removeFrom(anotherUser)){
             System.out.println(anotherUser.getName() + " is no longer your friend.");
         } else {
             System.out.println("This user is already not your friend.");

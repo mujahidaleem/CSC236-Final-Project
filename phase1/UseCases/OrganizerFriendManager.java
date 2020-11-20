@@ -7,12 +7,13 @@ import java.util.HashMap;
 
 public class OrganizerFriendManager extends UserFriendManager {
     private Organizer currentOrganizer;
+    private EventManager eventManager;
 
     /**
      * OrganizerFriendManager constructor
      * @param userToMessages - a dictionary mapping users to their messages sent and received from friends
      */
-    public OrganizerFriendManager(HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages, Organizer organizer) {
+    public OrganizerFriendManager(HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages, Organizer organizer, EventManager eventManager) {
         super(userToMessages, organizer);
     }
 
@@ -29,6 +30,20 @@ public class OrganizerFriendManager extends UserFriendManager {
             User user = userManager.users.get(id - 1000);
             sendMessageTo(speaker, user, messageContent);
         }
+    }
+
+    @Override
+    public boolean messageable(User user){
+        if(currentOrganizer.getFriendList().contains(user)){
+            return true;
+        } else {
+            for(String event: user.getPersonalSchedule().keySet()){
+                if(currentOrganizer.get_eventsOrganizing().containsKey(event)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public Organizer getCurrentOrganizer(){

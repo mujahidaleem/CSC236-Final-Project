@@ -36,8 +36,8 @@ public abstract class UserFriendManager {
      * @return true iff otherUser is in the friend list of the current user
      */
 
-    public boolean messageable(User user1, User user2) {
-        return user1.getFriendList().contains(user2);
+    public boolean messageable(User user) {
+        return currentUser.getFriendList().contains(user);
         }
 
     /**
@@ -68,17 +68,16 @@ public abstract class UserFriendManager {
      * add newFriend to user1's friend list
      */
 
-    public void addNewFriend(User user1, User newFriend) {
-        user1.getFriendList().add(newFriend);
+    public void addNewFriend(User newFriend) {
+        currentUser.getFriendList().add(newFriend);
     }
 
     /**
      * remove friend from user1's friend list
-     * @param user1 the user that is removing the friend
      * @param friend the user being removed
      */
-    public void removeFromFriendList(User user1, User friend) {
-        user1.getFriendList().remove(friend);
+    public void removeFromFriendList(User friend) {
+        currentUser.getFriendList().remove(friend);
     }
 }
 

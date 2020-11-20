@@ -24,4 +24,8 @@ public class Organizer extends User {
         super(id, name, password, schedule, friends);
         _eventsOrganizing = eventsOrganizing;
     }
+
+    public HashMap<String, LocalDateTime> get_eventsOrganizing(){
+        return _eventsOrganizing;
+    }
 }

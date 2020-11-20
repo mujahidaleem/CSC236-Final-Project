@@ -13,17 +13,16 @@ import Presenters.MainMenuPresenter;
 public class LoginMenuPresenter {
 
     public LoginMenuController loginMenuController;
-    public MainMenuPresenter mainMenuPresenter;
 
     /**
      * LoginMenuPresenter constructor
      *
      * @param loginMenuController need to call loginMenuController
+
      */
 
-    public LoginMenuPresenter(LoginMenuController loginMenuController, MainMenuPresenter mainMenuPresenter) {
+    public LoginMenuPresenter(LoginMenuController loginMenuController) {
         this.loginMenuController = loginMenuController;
-        this.mainMenuPresenter = mainMenuPresenter;
     }
 
     public void run(){
@@ -41,12 +40,12 @@ public class LoginMenuPresenter {
                     String password = scanner.next();
                     System.out.println("Are you an attendee or an organizer?");
                     String type = scanner.next();
-                    if (!type.equals("attendee") || !type.equals("organizer")){
-                        while (type != "attendee" && type != "organizer"){
-                        }
+                    //TODO FIX THIS COMPARISION
+                    if (type.equals("attendee") || type.equals("organizer")){
+
                     }
                     else
-                        while (type != "attendee" && type != "organizer") {
+                        while (type != "attendee" || type != "organizer") {
                             printTryAgain();
                             String userType = scanner.next();
                             loginMenuController.signUp(name, password, userType);

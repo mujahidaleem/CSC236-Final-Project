@@ -19,7 +19,7 @@ public class Main {
         UserFriendManager userFriendManager = messageReader.readFile();
 
         LoginMenuController loginMenuController = new LoginMenuController(userManager, eventManager, userFriendManager);
-        LoginMenuPresenter loginMenuPresenter = new LoginMenuPresenter(loginMenuController, mainMenuPresenter);
+        LoginMenuPresenter loginMenuPresenter = new LoginMenuPresenter(loginMenuController);
         loginMenuPresenter.run();
         //TODO the presenter should take in the userManager, then create everything else
     }

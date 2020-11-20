@@ -42,5 +42,7 @@ public class LoginMenuController {
     public void signUp(String name, String password, String type) {
         userManager.addUser(name, password, type);
     }
+
+
 }
 

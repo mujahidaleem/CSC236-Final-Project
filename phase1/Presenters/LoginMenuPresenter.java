@@ -3,8 +3,8 @@ package Presenters;
 import Controllers.LoginMenuController;
 import java.util.Scanner;
 
-import Controllers.MainMenuController;
 import Presenters.MainMenuPresenter;
+
 
 
 
@@ -41,9 +41,8 @@ public class LoginMenuPresenter {
                     String password = scanner.next();
                     System.out.println("Are you an attendee or an organizer?");
                     String type = scanner.next();
-                    if (type != "attendee" || type != "organizer"){
+                    if (!type.equals("attendee") || !type.equals("organizer")){
                         while (type != "attendee" && type != "organizer"){
-
                         }
                     }
                     else
@@ -51,7 +50,8 @@ public class LoginMenuPresenter {
                             printTryAgain();
                             String userType = scanner.next();
                             loginMenuController.signUp(name, password, userType);
-                            System.out.println("This is your id. Please remember it!!!");
+                            String id = String.valueOf(loginMenuController.return_id());
+                            System.out.println("Your id is"+ id +". Please remember it!!!");
                             break;
                         }
             }
@@ -61,8 +61,9 @@ public class LoginMenuPresenter {
 
     public void loginCommand(String command) {
         System.out.println("Please enter your id number and password, separated by a space");
-        if (loginMenuController.login(command).equals("success")) {
+        if (loginMenuController.login(command) != null) {
             mainMenuPresenter.run();
+
         } else {
             System.out.println("Your username or password is incorrect. Please try again");
             this.run();

@@ -8,6 +8,7 @@ public class MainMenuController {
     private MessageMenuPresenter messageMenuPresenter;
     private LoginMenuController loginMenuController;
     private UserManager userManager;
+    private LoginMenuPresenter loginMenuPresenter;
 
     /**
      *
@@ -22,6 +23,7 @@ public class MainMenuController {
         this.messageMenuPresenter = messageMenuPresenter;
         this.loginMenuController = loginMenuController;
         this.userManager = userManager;
+        this.loginMenuPresenter = loginMenuPresenter;
     }
 
     public void printEventMenu(){
@@ -33,12 +35,11 @@ public class MainMenuController {
     }
 
     public void logOut(){
-        userManager.getCurrentUser() = null;
+        userManager.setCurrentUser(null);
         loginMenuPresenter.run();
     }
 
-    public void changePw(String password){
-        userManager.changePassword(password);
+    public void changePw(String password){ userManager.changePassword(password);
     }
 
     public void sysExit(){

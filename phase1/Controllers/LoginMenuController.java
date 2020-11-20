@@ -26,6 +26,7 @@ public class LoginMenuController {
         String password = command.split("_")[1];
         for (User user : userManager.users) {
             if (user.getId() == id && user.getPassword().equals(password)) {
+                userManager.setCurrentUser(user);
                 return user;
             }
         }
@@ -42,6 +43,13 @@ public class LoginMenuController {
     public void signUp(String name, String password, String type) {
         userManager.addUser(name, password, type);
     }
+    /**
+     *   returns new id after signup 
+     */
+    public int return_id(){
+        return userManager.getUsers().size();
+    }
+  
 
 
 }

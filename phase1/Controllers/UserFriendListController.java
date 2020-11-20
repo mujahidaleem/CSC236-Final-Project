@@ -3,24 +3,11 @@ package Controllers;
 import Entities.User;
 import UseCases.UserFriendManager;
 
-import java.util.ArrayList;
-
 public abstract class UserFriendListController {
     public UserFriendManager userFriendManager;
 
     public UserFriendListController(UserFriendManager userFriendManager){
         this.userFriendManager = userFriendManager;
-    }
-
-    /**
-     *  @return the chat log of currentUser and another User
-     */
-    public void showChatLog(User user1, User user2){
-        userFriendManager.displayChatLog(user1, user2);
-        ArrayList<String> result = new ArrayList<String>();
-        if(this.userFriendManager.messageable(user2)){
-            result = userFriendManager.checkHistoryMessage(user1, user2);
-        }
     }
 
     /**

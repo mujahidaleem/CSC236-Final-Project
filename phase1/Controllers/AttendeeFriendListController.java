@@ -8,9 +8,6 @@ import UseCases.AttendeeFriendManager;
 
 public class AttendeeFriendListController extends UserFriendListController {
     public AttendeeMessagePresenter attendeeMessagePresenter;
-//        public AttendeeFriendListPresenter attendeeFriendListPresenter;
-//        public AttendeeFriendManager attendeeFriendManager;
-
 
     public AttendeeFriendListController(AttendeeFriendManager attendeeFriendManager) {
         super(attendeeFriendManager);

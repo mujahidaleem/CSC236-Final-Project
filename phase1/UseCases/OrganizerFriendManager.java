@@ -13,7 +13,7 @@ public class OrganizerFriendManager extends UserFriendManager {
      * OrganizerFriendManager constructor
      * @param userToMessages - a dictionary mapping users to their messages sent and received from friends
      */
-    public OrganizerFriendManager(HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages, Organizer organizer, EventManager eventManager) {
+    public OrganizerFriendManager(HashMap<ArrayList<User>, ArrayList<Message>> userToMessages, Organizer organizer, EventManager eventManager) {
         super(userToMessages, organizer);
     }
 

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class UserFriendManager {
-    HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages;
+    HashMap<ArrayList<User>, ArrayList<Message>> userToMessages;
     User currentUser;
 
     /**
@@ -15,19 +15,25 @@ public abstract class UserFriendManager {
      */
 
 
-    public UserFriendManager(HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages, User currentUser) {
+    public UserFriendManager(HashMap<ArrayList<User>, ArrayList<Message>> userToMessages, User currentUser) {
         this.userToMessages = userToMessages;
         this.currentUser = currentUser;
     }
 
     public void displayFriend(){
-        for (User user: userToMessages.get(currentUser).keySet()){
-            System.out.println(user);
+        for (ArrayList<User> users: userToMessages.keySet()){
+            if(users.contains(currentUser)){
+                if(users.get(0).equals(currentUser)){
+                    System.out.println(users.get(1));
+                } else {
+                    System.out.println(users.get(0));
+                }
+            }
         }
     }
 
     public void displayChatLog(User user, User friend){
-        for(Message message: userToMessages.get(user).get(friend)){
+        for(Message message: userToMessages.get(createKey(user, friend))){
             System.out.println(message);
         }
     }
@@ -41,27 +47,24 @@ public abstract class UserFriendManager {
         }
 
     /**
-     * @return a list of all messages sent between the current user and otherUser
-     */
-
-    public ArrayList<String> checkHistoryMessage(User user1, User user2) {
-        ArrayList<String> result = new ArrayList<String>();
-
-        for(Message message : this.userToMessages.get(user1).get(user2)) {
-            String messageString = message.getString();
-            result.add(messageString);
-        }
-        return result;
-    }
-
-    /**
      * send a message containing the messageContent from user1 to user2
      */
 
     public void sendMessageTo(User sender, User recipient, String messageContent) {
         Message message = new Message(sender, recipient, messageContent);
-        this.userToMessages.get(sender).get(recipient).add(message);
-        this.userToMessages.get(recipient).get(sender).add(message);
+        userToMessages.get(createKey(sender, recipient)).add(message);
+    }
+
+    private ArrayList<User> createKey(User user, User friend){
+        ArrayList<User> users = new ArrayList<User>();
+        if(user.getId()<friend.getId()){
+            users.add(user);
+            users.add(friend);
+        } else{
+            users.add(friend);
+            users.add(user);
+        }
+        return users;
     }
 
     /**
@@ -70,6 +73,7 @@ public abstract class UserFriendManager {
 
     public void addNewFriend(User newFriend) {
         currentUser.getFriendList().add(newFriend);
+        userToMessages.put(createKey(currentUser, newFriend), new ArrayList<Message>());
     }
 
     /**
@@ -78,10 +82,15 @@ public abstract class UserFriendManager {
      */
     public void removeFromFriendList(User friend) {
         currentUser.getFriendList().remove(friend);
+        userToMessages.remove(createKey(currentUser, friend));
     }
 
     public void setCurrentUser(User currentUser){
         this.currentUser = currentUser;
+    }
+
+    public HashMap<ArrayList<User>, ArrayList<Message>> getUserToMessages() {
+        return userToMessages;
     }
 }
 

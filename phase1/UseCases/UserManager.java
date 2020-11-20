@@ -32,8 +32,6 @@ public class UserManager implements Serializable {
         this.currentUser = currentUser;
     }
 
-
-
     /**
      * Getter for currentUser
      *
@@ -117,7 +115,7 @@ public class UserManager implements Serializable {
      * @return the speaker with this id
      */
 
-    public User finduser(int id) {
+    public User findUser(int id) {
         return users.get(id - 1000);
     }
 

@@ -21,6 +21,12 @@ public class Main {
         LoginMenuController loginMenuController = new LoginMenuController(userManager, eventManager, userFriendManager);
         LoginMenuPresenter loginMenuPresenter = new LoginMenuPresenter(loginMenuController);
         loginMenuPresenter.run();
+
+        userFriendManager.setCurrentUser(null);
+        userManager.setCurrentUser(null);
+        userReader.saveFile(userManager);
+        eventReader.saveFile(eventManager);
+        messageReader.saveFile(userFriendManager);
     }
 
     public static void initialize() {

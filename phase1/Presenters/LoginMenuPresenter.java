@@ -10,9 +10,7 @@ public class LoginMenuPresenter {
 
     /**
      * LoginMenuPresenter constructor
-     *
      * @param loginMenuController need to call loginMenuController
-
      */
 
     public LoginMenuPresenter(LoginMenuController loginMenuController) {
@@ -58,7 +56,6 @@ public class LoginMenuPresenter {
             return;
         }
         try {
-            System.out.println(loginMenuController.checkLogin(command));
             if (loginMenuController.checkLogin(command) != null) {
                 loginMenuController.login().run();
             } else {

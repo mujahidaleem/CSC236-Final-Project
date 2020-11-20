@@ -49,7 +49,7 @@ public class MenuFactory{
         } else if(userManager.getCurrentUser().getClass().equals(Organizer.class)){
             OrganizerFriendManager organizerFriendManager = new OrganizerFriendManager(userFriendManager.userToMessages, null, eventManager);
             organizerFriendManager.setCurrentUser(userManager.getCurrentUser());
-            OrganizerFriendListController organizerFriendListController = new OrganizerFriendListController(organizerFriendManager);
+            OrganizerFriendListController organizerFriendListController = new OrganizerFriendListController(organizerFriendManager,userManager);
             OrganizerManager organizerManager = createOrganizerManager();
             organizerManager.setCurrentUser(userManager.getCurrentUser());
             return new OrganizerMessagePresenter(organizerFriendListController, userManager, organizerManager, organizerFriendManager);

@@ -31,8 +31,6 @@ public class MainMenuPresenter {
         while (true){
             printMenu();
             String userOption = takeInput();
-            MainMenuPresenter.printTryAgain();
-            MainMenuPresenter.takeInput();
             if (userOption.equals("3")){
                 break;
             } else {
@@ -52,6 +50,7 @@ public class MainMenuPresenter {
                         break;
                 }
             }
+            printTryAgain();
         }
     }
 

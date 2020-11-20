@@ -27,23 +27,33 @@ public class MessageMenuPresenter {
             String[] answer1 = userInput0.nextLine().split("_");
             if (answer1[0].equals("0")) {
                 break;
-            }
-            User user = userManager.users.get(Integer.parseInt(answer1[1]) - 1000);
-            switch (answer1[0]) {
-                case "1":
-                    sendMessage(user);
-                    break;
-                case "2":
-                    addFriend(user);
-                    break;
-                case "3":
-                    removeFriend(user);
-                    break;
-                default:
-                    System.out.println("input is invalid");
-                    break;
+            } else {
+                if(!standardCommands(answer1)){
+                    extraCommands(answer1);
+                }
             }
         }
+    }
+
+    public boolean standardCommands(String[] answer){
+        User user = userManager.users.get(Integer.parseInt(answer[1]) - 1000);
+        switch (answer[0]) {
+            case "1":
+                sendMessage(user);
+                return true;
+            case "2":
+                addFriend(user);
+                return true;
+            case "3":
+                removeFriend(user);
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public void extraCommands(String[] answer){
+        System.out.println("Input is invalid.");
     }
 
     //TODO: have a sign showing if there are new messages from that friend

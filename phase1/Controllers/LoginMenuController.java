@@ -1,16 +1,9 @@
 package Controllers;
 
-import Entities.Attendee;
-import Entities.Event;
-import Entities.Organizer;
 import Entities.User;
-import Presenters.AttendeeEventPresenter;
-import Presenters.EventMenuPresenter;
 import Presenters.MainMenuPresenter;
-import Presenters.OrganizerMessagePresenter;
 import UseCases.*;
 
-import java.util.ArrayList;
 
 public class LoginMenuController {
     protected UserManager userManager;

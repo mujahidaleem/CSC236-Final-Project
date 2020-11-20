@@ -1,8 +1,6 @@
 package Presenters;
 
-import Controllers.LoginMenuController;
 import Controllers.MainMenuController;
-import UseCases.UserManager;
 
 import java.util.Scanner;
 

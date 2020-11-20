@@ -51,14 +51,14 @@ public abstract class UserFriendManager implements Serializable {
         if (userToMessages.containsKey(createKey(sender, recipient))){
             userToMessages.get(createKey(sender, recipient)).add(message);
         } else {
-            ArrayList<Message> messages = new ArrayList<Message>();
+            ArrayList<Message> messages = new ArrayList<>();
             messages.add(message);
             userToMessages.put(createKey(sender, recipient), messages);
         }
     }
 
     private ArrayList<User> createKey(User user, User friend){
-        ArrayList<User> users = new ArrayList<User>();
+        ArrayList<User> users = new ArrayList<>();
         if(user.getId()<friend.getId()){
             users.add(user);
             users.add(friend);
@@ -75,7 +75,7 @@ public abstract class UserFriendManager implements Serializable {
 
     public void addNewFriend(User newFriend) {
         currentUser.getFriendList().add(newFriend);
-        userToMessages.put(createKey(currentUser, newFriend), new ArrayList<Message>());
+        userToMessages.put(createKey(currentUser, newFriend), new ArrayList<>());
     }
 
     /**

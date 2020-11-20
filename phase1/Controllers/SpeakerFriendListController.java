@@ -6,14 +6,10 @@ import Entities.User;
 import UseCases.SpeakerFriendManager;
 import UseCases.SpeakerManager;
 import UseCases.UserFriendManager;
-import UseCases.UserManager;
-//import Entities.Event;
 
-//import UseCases.AttendeeFriendManager;
 
 public class SpeakerFriendListController extends UserFriendListController {
     public UserFriendManager userFriendManager;
-//    public SpeakerFriendListPresenter speakerFriendListPresenter;
     public SpeakerFriendManager speakerFriendManager;
     public SpeakerManager speakerManager;
 

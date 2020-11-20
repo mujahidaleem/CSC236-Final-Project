@@ -4,7 +4,6 @@ import Entities.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * An instance of this stores all the users

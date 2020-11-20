@@ -1,13 +1,11 @@
 package Controllers;
 
-import Entities.Attendee;
 import Presenters.*;
 import UseCases.UserManager;
 
 public class MainMenuController {
     private EventMenuPresenter eventMenuPresenter;
     private MessageMenuPresenter messageMenuPresenter;
-    private LoginMenuController loginMenuController;
     private UserManager userManager;
 
     /**
@@ -29,10 +27,6 @@ public class MainMenuController {
 
     public void printMessageMenu(){
         messageMenuPresenter.run();
-    }
-
-    public void logOut(){
-        userManager.setCurrentUser(null);
     }
 
     public void changePw(String password){ userManager.changePassword(password);

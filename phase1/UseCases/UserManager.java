@@ -70,11 +70,11 @@ public class UserManager implements Serializable {
      */
     public void addUser(String name, String password, String type) {
         switch (type) {
-            case "Attendee":
+            case "attendee":
                 Attendee attendee = new Attendee(1000 + users.size(), name, password, null, null);
                 users.add(attendee);
                 break;
-            case "Organizer":
+            case "organizer":
                 Organizer organizer = new Organizer(1000 + users.size(), name, password, null, null, null);
                 users.add(organizer);
                 break;

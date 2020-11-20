@@ -33,17 +33,19 @@ public class LoginMenuPresenter {
                     String name = scanner.next();
                     System.out.println("Please enter your password");
                     String password = scanner.next();
-                    System.out.println("Are you an attendee or an organizer?");
+                    System.out.println("Are you an attendee or an organizer? Please input \"attendee\" or \"organizer\" in lower case.");
                     while (true) {
                         String type = scanner.next();
                         if (type.equals("attendee") || type.equals("organizer")){
                             loginMenuController.signUp(name, password, type);
                             String id = String.valueOf(loginMenuController.return_id());
-                            System.out.println("Your id is"+ id +". Please remember it for logging in.");
+                            System.out.println("Your id is "+ id +". Please remember it for logging in.");
                             break;
                         }
+
                         printTryAgain();
                     }
+                    break;
             }
         }
 
@@ -62,7 +64,6 @@ public class LoginMenuPresenter {
         } catch (Exception e) {
             printTryAgain();
         }
-        //TODO fix this part
     }
 
 

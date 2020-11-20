@@ -18,6 +18,14 @@ public class OrganizerFriendManager extends UserFriendManager {
     }
 
     /**
+     * Sets a new currentOrganizer
+     * @param currentOrganizer the new currentOrganizer
+     */
+    public void setCurrentOrganizer(Organizer currentOrganizer) {
+        this.currentOrganizer = currentOrganizer;
+    }
+
+    /**
      * Organizers can send an Announcement to all Attendees in an event
      * @param speaker - the Speaker sending the announcement
      * @param event - the Event to which the announcement is being sent

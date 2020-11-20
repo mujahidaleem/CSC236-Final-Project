@@ -46,10 +46,11 @@ public class MenuFactory{
             AttendeeFriendManager attendeeFriendManager = new AttendeeFriendManager(userFriendManager.userToMessages, null);
             attendeeFriendManager.setCurrentUser(userManager.getCurrentUser());
             AttendeeFriendListController attendeeFriendListController = new AttendeeFriendListController(attendeeFriendManager);
-            return new AttendeeMessagePresenter(attendeeFriendListController, userManager,userFriendManager);
+            return new AttendeeMessagePresenter(attendeeFriendListController, userManager,attendeeFriendManager);
         } else if(userManager.getCurrentUser().getClass().equals(Organizer.class)){
             OrganizerFriendManager organizerFriendManager = new OrganizerFriendManager(userFriendManager.userToMessages, null, eventManager);
             organizerFriendManager.setCurrentUser(userManager.getCurrentUser());
+            organizerFriendManager.setCurrentOrganizer((Organizer) userManager.getCurrentUser());
             OrganizerFriendListController organizerFriendListController = new OrganizerFriendListController(organizerFriendManager,userManager);
             OrganizerManager organizerManager = createOrganizerManager();
             organizerManager.setCurrentUser(userManager.getCurrentUser());
@@ -73,13 +74,13 @@ public class MenuFactory{
     }
 
     private SpeakerManager createSpeakerManager(){
-        SpeakerManager organizerManager = new SpeakerManager(null, new ArrayList<>());
+        SpeakerManager speakerManager = new SpeakerManager(null, new ArrayList<>());
         for (User user:userManager.users){
             if(user.getClass().equals(Speaker.class)){
-                organizerManager.users.add(user);
+                speakerManager.speakers.add((Speaker) user);
             }
         }
-        return organizerManager;
+        return speakerManager;
     }
 
     private AttendeeManager createAttendeeManager(){

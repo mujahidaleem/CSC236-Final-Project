@@ -47,9 +47,10 @@ public class MainMenuPresenter {
                     case "5":
                         mainMenuController.sysExit();
                         break;
+                    default:
+                        printTryAgain();
                 }
             }
-            printTryAgain();
         }
     }
 

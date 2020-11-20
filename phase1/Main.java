@@ -9,7 +9,7 @@ import UseCases.UserManager;
 
 public class Main {
     public static void main(String[] args) {
-        //initialize();
+        initialize();
         UserReader userReader = new UserReader("D:\\userManager.ser");
         EventReader eventReader = new EventReader("D:\\eventManager.ser");
         MessageReader messageReader = new MessageReader("D:\\userFriendManager.ser");

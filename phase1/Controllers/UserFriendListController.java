@@ -42,7 +42,7 @@ public abstract class UserFriendListController {
      * @param newFriend The User who will be added into the friend list of current User
      */
     public boolean addFriend(User newFriend){
-        if(!this.userFriendManager.messageable(newFriend) && newFriend.getClass().equals(Organizer.class)){
+        if(!this.userFriendManager.messageable(newFriend) && !newFriend.getClass().equals(Organizer.class)){
             this.userFriendManager.addNewFriend(newFriend);
             return true;
         } else {

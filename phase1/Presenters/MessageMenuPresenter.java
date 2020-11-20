@@ -22,7 +22,6 @@ public class MessageMenuPresenter {
         while (true) {
             printFriends();
             printCommands();
-            System.out.println("do you want to return to main menu? (yes or no)");
             Scanner userInput0 = new Scanner(System.in);
             String[] answer1 = userInput0.nextLine().split("_");
             if (answer1[0].equals("0")) {
@@ -36,16 +35,15 @@ public class MessageMenuPresenter {
     }
 
     public boolean standardCommands(String[] answer){
-        User user = userManager.users.get(Integer.parseInt(answer[1]) - 1000);
         switch (answer[0]) {
             case "1":
-                sendMessage(user);
+                sendMessage(userManager.users.get(Integer.parseInt(answer[1]) - 1000));
                 return true;
             case "2":
-                addFriend(user);
+                addFriend(userManager.users.get(Integer.parseInt(answer[1]) - 1000));
                 return true;
             case "3":
-                removeFriend(user);
+                removeFriend(userManager.users.get(Integer.parseInt(answer[1]) - 1000));
                 return true;
             default:
                 return false;

@@ -94,4 +94,13 @@ public class User implements Serializable {
         return id;
     }
 
+    /**
+     * Represents how User is printed as a string
+     * @return a string representing a User
+     */
+    @Override
+    public String toString(){
+        return getId() + " " + getName();
+    }
+
 }

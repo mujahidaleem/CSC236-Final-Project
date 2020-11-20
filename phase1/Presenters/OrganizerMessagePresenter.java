@@ -18,15 +18,6 @@ public class OrganizerMessagePresenter extends MessageMenuPresenter{
         this.organizerManager = organizerManager;
     }
 
-    /**
-     * Display the messageable Users of Organizer
-     */
-    @Override
-    public void printFriends(){
-        System.out.println("Friend List");
-        organizerFriendManager.displayFriend();
-    }
-
     @Override
     public void extraCommands(String[] answer){
         Scanner message = new Scanner(System.in);
@@ -36,11 +27,13 @@ public class OrganizerMessagePresenter extends MessageMenuPresenter{
                 String messageContent = message.nextLine();
                 organizerFriendListController.messageAllAttendees(messageContent);
                 System.out.println("Message has been sent.");
+                break;
             case "5":
                 System.out.println("Please type the message you want to send to all Speakers.");
                 messageContent = message.nextLine();
                 organizerFriendListController.messageAllSpeakers(messageContent);
                 System.out.println("Message has been sent.");
+                break;
         }
     }
 

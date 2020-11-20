@@ -18,6 +18,7 @@ public class Message {
         this.senderId = sender.getId();
         this.senderName = sender.getName();
         this.recipientId = recipient.getId();
+        this.recipientName = recipient.getName();
         this.content = content;
     }
 
@@ -49,7 +50,8 @@ public class Message {
      * returns a string representation of the message
      */
 
-    public String getString() {
+    @Override
+    public String toString() {
         return this.senderName + " to " + this.recipientName + ": " + this.getContent();
     }
 }

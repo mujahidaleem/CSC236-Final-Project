@@ -97,14 +97,15 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
                         createSpeakerAccountResults(true, speaker);
                     }
                     break outer;
+                case "10":
+                    printSpeakers();
+                    break outer;
             }
             Event event = eventManager.findEvent(command[1]);
             if (!organizerEventController.eventModifiable(event)) {
                 System.out.println(organizerEventLanguagePack.eventUnchangeable(event));
             } else {
                 switch (command[0]) {
-                    case "10":
-                        printSpeakers();
                     case "4":
                         setSpeakerResults(organizerEventController.assignSpeaker(event, Integer.parseInt(command[2])), event);
                         break;
@@ -118,6 +119,7 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
                         break;
                     case "5":
                         removeSpeakerResults(organizerEventController.removeSpeaker(event), event);
+                        break;
                     default:
                         System.out.println(organizerEventLanguagePack.unknownCommand());
                 }

@@ -1,8 +1,8 @@
 package Entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * An instance of this represents an attendee type user. They can attend
@@ -18,7 +18,7 @@ public class Attendee extends User {
      * @param schedule A list of events that the speaker is attending
      * @param friends A list of manageable Attendees of the speaker
      */
-    public Attendee(int id, String name, String password, HashMap<String, LocalDateTime> schedule, List<User> friends){
+    public Attendee(int id, String name, String password, HashMap<String, LocalDateTime> schedule, ArrayList<User> friends){
         super(id, name, password, schedule, friends);
     }
 

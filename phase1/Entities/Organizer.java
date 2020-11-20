@@ -1,8 +1,8 @@
 package Entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * An instance of this represents an organizer type user. They can create events,
@@ -20,7 +20,7 @@ public class Organizer extends User {
      * @param friends A list of manageable Organizers of the speaker
      */
     public Organizer(int id, String name, String password, HashMap<String, LocalDateTime> schedule,
-                     List<User> friends, HashMap<String, LocalDateTime> eventsOrganizing) {
+                     ArrayList<User> friends, HashMap<String, LocalDateTime> eventsOrganizing) {
         super(id, name, password, schedule, friends);
         _eventsOrganizing = eventsOrganizing;
     }

@@ -1,8 +1,8 @@
 package Entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * An instance of this represents a speaker type user. The speaker can
@@ -20,7 +20,7 @@ public class Speaker extends User {
      * @param speakingSchedule A list of events that the speaker will be speaking at
      */
     public Speaker(int id, String name, String password, HashMap<String, LocalDateTime> schedule,
-                   List<User> friends, HashMap<String, LocalDateTime> speakingSchedule){
+                   ArrayList<User> friends, HashMap<String, LocalDateTime> speakingSchedule){
         super(id, name, password, schedule, friends);
         _speakingSchedule = speakingSchedule;
     }

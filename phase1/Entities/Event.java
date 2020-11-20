@@ -3,6 +3,7 @@ package Entities;
 import Entities.Attendee;
 import Entities.Organizer;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +12,14 @@ import java.util.List;
  * An instance of this represents an event in the system. The event can
  * have at most 1 speaker and 2 non-speakers attending the event
  */
-public class Event {
-    String eventName;
-    int roomNumber;
-    int id;
-    LocalDateTime eventTime;
-    ArrayList<Integer> attendees;
-    int organizer;
-    int speaker;
+public class Event implements Serializable {
+    private String eventName;
+    private int roomNumber;
+    private int id;
+    private LocalDateTime eventTime;
+    public ArrayList<Integer> attendees;
+    private int organizer;
+    private int speaker;
 
     public Event(int id, String name, int num, LocalDateTime time,
                  int event_organizer){

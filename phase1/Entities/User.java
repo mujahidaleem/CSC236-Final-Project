@@ -1,19 +1,21 @@
 package Entities;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 /**
  * An instance of this represents a user in the system
  */
-public abstract class User {
+public class User implements Serializable {
 
     private String name;
     private int id;
     private String password;
     private HashMap<String, LocalDateTime> personalSchedule;
-    private List<User> friendList;
+    private ArrayList<User> friendList;
 
 
     /**
@@ -28,7 +30,7 @@ public abstract class User {
     public User(int id, String name,
                 String password,
                 HashMap<String, LocalDateTime> schedule,
-                List<User> friends){
+                ArrayList<User> friends){
         this.id = id;
         this.name = name;
         this.password = password;

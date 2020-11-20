@@ -3,6 +3,7 @@ package UseCases;
 import Entities.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public class UserManager implements Serializable {
     private User currentUser;
-    public List<User> users;
+    public ArrayList<User> users;
 
     /**
      * UserManager constructor
@@ -18,7 +19,7 @@ public class UserManager implements Serializable {
      * @param currentUser the user using the current session
      * @param users       the list of all users
      */
-    public UserManager(User currentUser, List<User> users) {
+    public UserManager(User currentUser, ArrayList<User> users) {
         this.currentUser = currentUser;
         this.users = users;
     }

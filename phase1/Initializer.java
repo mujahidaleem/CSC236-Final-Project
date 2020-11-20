@@ -24,11 +24,11 @@ public class Initializer {
      * Generates a ser file of previously created users and events.
      */
     public void initialize(){
-        Attendee james = new Attendee(10000, "James", "password", new HashMap<String, LocalDateTime>(), new ArrayList<>());
-        Attendee jason = new Attendee(10003, "jason", "whyNot", new HashMap<String, LocalDateTime>(), new ArrayList<>());
-        Attendee job = new Attendee(10004, "job", "whyNot", new HashMap<String, LocalDateTime>(), new ArrayList<>());
-        Organizer john = new Organizer(10001, "john", "wordPass", new HashMap<String, LocalDateTime>(), new ArrayList<>(), new HashMap<>());
-        Speaker will = new Speaker(10002, "will", "CSC", new HashMap<String, LocalDateTime>(), new ArrayList<>(), new HashMap<String, LocalDateTime>());
+        Attendee james = new Attendee(1000, "James", "password", new HashMap<String, LocalDateTime>(), new ArrayList<>());
+        Attendee jason = new Attendee(1003, "jason", "whyNot", new HashMap<String, LocalDateTime>(), new ArrayList<>());
+        Attendee job = new Attendee(1004, "job", "whyNot", new HashMap<String, LocalDateTime>(), new ArrayList<>());
+        Organizer john = new Organizer(1001, "john", "wordPass", new HashMap<String, LocalDateTime>(), new ArrayList<>(), new HashMap<>());
+        Speaker will = new Speaker(1002, "will", "CSC", new HashMap<String, LocalDateTime>(), new ArrayList<>(), new HashMap<String, LocalDateTime>());
 
         UserManager userManager = new UserManager(null, new ArrayList<>());
         userManager.users.add(james);

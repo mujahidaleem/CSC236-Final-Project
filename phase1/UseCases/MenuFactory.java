@@ -52,12 +52,12 @@ public class MenuFactory{
             OrganizerFriendListController organizerFriendListController = new OrganizerFriendListController(organizerFriendManager);
             OrganizerManager organizerManager = createOrganizerManager();
             organizerManager.setCurrentUser(userManager.getCurrentUser());
-            return new OrganizerFriendListPresenter(organizerFriendListController, userManager, organizerManager, organizerFriendManager);
+            return new OrganizerMessagePresenter(organizerFriendListController, userManager, organizerManager, organizerFriendManager);
         } else {
             SpeakerFriendManager speakerFriendManager = new SpeakerFriendManager(userFriendManager.userToMessages, null);
             speakerFriendManager.setCurrentUser(userManager.getCurrentUser());
             SpeakerFriendListController speakerFriendListController = new SpeakerFriendListController(speakerFriendManager);
-            return new SpeakerFriendListPresenter(speakerFriendListController, userManager, speakerFriendManager);
+            return new SpeakerMessagePresenter(speakerFriendListController, userManager, speakerFriendManager);
         }
     }
 

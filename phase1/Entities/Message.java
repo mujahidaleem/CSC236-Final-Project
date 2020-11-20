@@ -53,7 +53,6 @@ public class Message {
      */
 
     public String getString() {
-        String result = this.senderName + " to " + this.recipientName + ": " + this.getContent();
-        return result;
+        return this.senderName + " to " + this.recipientName + ": " + this.getContent();
     }
 }

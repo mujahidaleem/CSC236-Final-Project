@@ -1,6 +1,12 @@
 package Controllers;
 
+import Entities.Event;
+import Entities.Speaker;
+import Entities.User;
+import UseCases.SpeakerFriendManager;
+import UseCases.SpeakerManager;
 import UseCases.UserFriendManager;
+import UseCases.UserManager;
 //import Entities.Event;
 
 //import UseCases.AttendeeFriendManager;
@@ -8,11 +14,19 @@ import UseCases.UserFriendManager;
 public class SpeakerFriendListController extends UserFriendListController {
     public UserFriendManager userFriendManager;
 //    public SpeakerFriendListPresenter speakerFriendListPresenter;
-//    public SpeakerFriendManager speakerFriendManager;
+    public SpeakerFriendManager speakerFriendManager;
+    public SpeakerManager speakerManager;
 
 
-    public SpeakerFriendListController(UserFriendManager userFriendManager) {
-        super(userFriendManager);
+    public SpeakerFriendListController(SpeakerFriendManager speakerFriendManager, SpeakerManager speakerManager) {
+        super(speakerFriendManager);
+        this.speakerManager = speakerManager;
+    }
+
+    public void sendingAnnouncement(Event event, String messageContent){
+        Speaker speaker = speakerManager.getCurrentSpeaker();
+
+        speakerFriendManager.sendingAnnouncement(speaker, event, messageContent, speakerManager);
     }
 }
 

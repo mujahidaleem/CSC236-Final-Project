@@ -39,20 +39,18 @@ public class LoginMenuPresenter {
                     System.out.println("Please enter your password");
                     String password = scanner.next();
                     System.out.println("Are you an attendee or an organizer?");
-                    String type = scanner.next();
-                    //TODO FIX THIS COMPARISION
-                    if (type.equals("attendee") || type.equals("organizer")){
-
-                    }
-                    else
-                        while (type != "attendee" || type != "organizer") {
-                            printTryAgain();
-                            String userType = scanner.next();
-                            loginMenuController.signUp(name, password, userType);
+                    while (true) {
+                        String type = scanner.next();
+                        if (type.equals("attendee") || type.equals("organizer")){
+                            loginMenuController.signUp(name, password, type);
                             String id = String.valueOf(loginMenuController.return_id());
                             System.out.println("Your id is"+ id +". Please remember it!!!");
                             break;
                         }
+                        printTryAgain();
+                    }
+                    break;
+
             }
         }
 

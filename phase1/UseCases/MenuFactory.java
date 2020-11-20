@@ -58,8 +58,9 @@ public class MenuFactory{
         } else {
             SpeakerFriendManager speakerFriendManager = new SpeakerFriendManager(userFriendManager.userToMessages, null);
             speakerFriendManager.setCurrentUser(userManager.getCurrentUser());
+            speakerFriendManager.setCurrentSpeaker((Speaker) userManager.getCurrentUser());
             SpeakerFriendListController speakerFriendListController = new SpeakerFriendListController(speakerFriendManager, speakerManager);
-            return new SpeakerMessagePresenter(speakerFriendListController, userManager, speakerFriendManager);
+            return new SpeakerMessagePresenter(speakerFriendListController, userManager, speakerFriendManager, eventManager);
         }
     }
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SpeakerFriendManager extends UserFriendManager {
-
+    private Speaker currentSpeaker;
     /**
      * SpeakerFriendManager constructor
      * @param userToMessages - a dictionary mapping users to their messages sent and received from friends
@@ -16,6 +16,7 @@ public class SpeakerFriendManager extends UserFriendManager {
 
     public SpeakerFriendManager(HashMap<ArrayList<User>, ArrayList<Message>> userToMessages, Speaker speaker) {
         super(userToMessages, speaker);
+        this.currentSpeaker = speaker;
     }
 
 
@@ -32,5 +33,13 @@ public class SpeakerFriendManager extends UserFriendManager {
             User user = userManager.users.get(id - 1000);
             sendMessageTo(speaker, user, messageContent);
         }
+    }
+
+    public Speaker getCurrentSpeaker(){
+        return currentSpeaker;
+    }
+
+    public void setCurrentSpeaker(Speaker speaker){
+        this.currentSpeaker = speaker;
     }
 }

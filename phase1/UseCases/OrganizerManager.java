@@ -48,7 +48,7 @@ public class OrganizerManager extends UserManager {
         if(password.contains(" ")) {
             return null;
         } else {
-            Speaker speaker = new Speaker(userManager.users.size(), name, password, null, null, null);
+            Speaker speaker = new Speaker(userManager.users.size() + 1000, name, password, null, null, null);
             speakerManager.speakers.add(speaker);
             userManager.users.add(speaker);
             return speaker;

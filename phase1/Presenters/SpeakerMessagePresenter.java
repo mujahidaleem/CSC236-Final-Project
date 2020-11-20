@@ -1,7 +1,6 @@
 package Presenters;
 
 import Controllers.SpeakerFriendListController;
-import Entities.Event;
 import UseCases.EventManager;
 import UseCases.SpeakerFriendManager;
 import UseCases.UserManager;

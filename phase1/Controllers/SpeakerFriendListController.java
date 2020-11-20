@@ -4,7 +4,6 @@ import Entities.Event;
 import Entities.Speaker;
 import UseCases.SpeakerFriendManager;
 import UseCases.SpeakerManager;
-import UseCases.UserFriendManager;
 import UseCases.UserManager;
 
 

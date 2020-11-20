@@ -17,6 +17,15 @@ public class LoginMenuPresenter {
         this.loginMenuController = loginMenuController;
     }
 
+    /**
+     * First, calls the greeting message with the commands available to the user
+     * The user can create an account or login
+     * Depending on the command, a switch case will be triggered
+     * Logging in command will push the user to the loginCommand method
+     * The user can exit by typing "exit"
+     * The create account is done by inputting a name (it can be anything) and then password, the id is given at the end
+     * The id is used to login, to allow for users who have the same name
+     */
     public void run(){
         outer:
         while (true) {
@@ -51,6 +60,12 @@ public class LoginMenuPresenter {
         }
     }
 
+    /**
+     * The login security checkpoint
+     * Inputted USERID_PASSWORD is checked. If correct the user moves to their main menu
+     * Otherwise, go back to run()
+     * @param command inputted USERID_PASSWORD from run method
+     */
     public void loginCommand(String command) {
         if (command.equals("exit")){
             return;
@@ -62,7 +77,9 @@ public class LoginMenuPresenter {
             }
     }
 
-
+    /**
+     * Generic Greeting message
+     */
     public static void greetingMessage(){
         System.out.println("Welcome to the conference! Would you like to log into your existing account or" +
                 " create a new account?\n" +
@@ -70,6 +87,9 @@ public class LoginMenuPresenter {
                 "Enter 'exit' at to exit the program.");
     }
 
+    /**
+     * Generic try again message for invalid inputs
+     */
     public static void printTryAgain(){
         System.out.println("Input invalid. Please try again.");
     }

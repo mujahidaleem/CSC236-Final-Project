@@ -56,6 +56,7 @@ public class LoginMenuPresenter {
             return;
         }
         try {
+            System.out.println(loginMenuController.checkLogin(command));
             if (loginMenuController.checkLogin(command) != null) {
                 loginMenuController.login().run();
             } else {

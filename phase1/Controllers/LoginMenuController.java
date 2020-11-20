@@ -67,6 +67,6 @@ public class LoginMenuController {
      *   returns new id after signup 
      */
     public int return_id(){
-        return userManager.getUsers().size();
+        return userManager.getUsers().size() + 1000 - 1;
     }
 }

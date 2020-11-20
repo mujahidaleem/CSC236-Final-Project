@@ -18,6 +18,9 @@ public class SpeakerFriendListPresenter extends UserFriendListPresenter {
     public SpeakerFriendListController SpeakerFriendListController;
 
 
+    //TODO: make this a subclass of MessageMenuPresenter, allow speakers to message all attendees of an event, or a specific attendee
+
+
     public SpeakerFriendListPresenter(User currentUser, UseCases.UserFriendManager UserFriendManager,
                                        MessageReader MessageReader,
                                       SpeakerFriendListController SpeakerFriendListController) {

@@ -46,6 +46,7 @@ public class MessageMenuPresenter {
         }
     }
 
+    //TODO: have a sign showing if there are new messages from that friend
     protected void printFriends(){
         System.out.println("Friend List");
         userFriendManager.displayFriend();

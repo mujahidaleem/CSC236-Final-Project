@@ -65,7 +65,7 @@ public class MenuFactory{
         OrganizerManager organizerManager = new OrganizerManager(null, new ArrayList<>());
         for (User user:userManager.users){
             if(user.getClass().equals(Organizer.class)){
-                organizerManager.users.add(user);
+                organizerManager.organizers.add((Organizer) user);
             }
         }
         return organizerManager;

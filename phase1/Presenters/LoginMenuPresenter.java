@@ -32,7 +32,7 @@ public class LoginMenuPresenter {
                     loginCommand(scanner.next());
                     break;
                 case "2":
-                    System.out.println("Please enter your first and last name");
+                    System.out.println("Please enter your first and last name separated by _");
                     String name = scanner.next();
                     System.out.println("Please enter your password");
                     String password = scanner.next();

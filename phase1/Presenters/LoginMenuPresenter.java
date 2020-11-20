@@ -13,6 +13,7 @@ import Presenters.MainMenuPresenter;
 public class LoginMenuPresenter {
 
     public LoginMenuController loginMenuController;
+    public MainMenuPresenter mainMenuPresenter;
 
     /**
      * LoginMenuPresenter constructor
@@ -20,8 +21,9 @@ public class LoginMenuPresenter {
      * @param loginMenuController need to call loginMenuController
      */
 
-    public LoginMenuPresenter(LoginMenuController loginMenuController) {
+    public LoginMenuPresenter(LoginMenuController loginMenuController, MainMenuPresenter mainMenuPresenter) {
         this.loginMenuController = loginMenuController;
+        this.mainMenuPresenter = mainMenuPresenter;
     }
 
     public void run(){
@@ -60,7 +62,7 @@ public class LoginMenuPresenter {
     public void loginCommand(String command) {
         System.out.println("Please enter your id number and password, separated by a space");
         if (loginMenuController.login(command).equals("success")) {
-            MainMenuPresenter.run();
+            mainMenuPresenter.run();
         } else {
             System.out.println("Your username or password is incorrect. Please try again");
             this.run();

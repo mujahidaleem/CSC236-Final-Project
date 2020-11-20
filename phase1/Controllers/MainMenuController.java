@@ -33,7 +33,7 @@ public class MainMenuController {
     }
 
     public void logOut(){
-        userManager.currentUser = null;
+        userManager.getCurrentUser() = null;
         loginMenuPresenter.run();
     }
 

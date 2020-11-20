@@ -34,16 +34,11 @@ public class OrganizerFriendManager extends UserFriendManager {
 
     @Override
     public boolean messageable(User user){
-        if(currentOrganizer.getFriendList().contains(user)){
+        if(user.getClass().equals(Attendee.class) || user.getClass().equals(Speaker.class)){
             return true;
         } else {
-            for(String event: user.getPersonalSchedule().keySet()){
-                if(currentOrganizer.get_eventsOrganizing().containsKey(event)){
-                    return true;
-                }
-            }
+            return currentOrganizer.getFriendList().contains(user);
         }
-        return false;
     }
 
     public Organizer getCurrentOrganizer(){

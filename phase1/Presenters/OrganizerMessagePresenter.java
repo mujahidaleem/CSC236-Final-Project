@@ -25,4 +25,14 @@ public class OrganizerMessagePresenter extends MessageMenuPresenter{
         organizerFriendManager.displayFriend();
     }
 
+    @Override
+    protected void printCommands(){
+        System.out.println("------------------------------------------------------------");
+        System.out.println("To return to the main menu, type 0");
+        System.out.println(("To send a message to a user, type 1_userID"));
+        System.out.println("To add a user, type 2_userID");
+        System.out.println("To remove a user, type 3_userID");
+        System.out.println("To message all the attendees of an event, type 4_userID");
+    }
+
 }

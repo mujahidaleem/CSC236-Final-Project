@@ -79,5 +79,9 @@ public abstract class UserFriendManager {
     public void removeFromFriendList(User friend) {
         currentUser.getFriendList().remove(friend);
     }
+
+    public void setCurrentUser(User currentUser){
+        this.currentUser = currentUser;
+    }
 }
 

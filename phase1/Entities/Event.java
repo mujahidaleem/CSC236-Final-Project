@@ -81,7 +81,12 @@ public class Event implements Serializable {
         if (!attendees.contains(attendee.getId())){
             return false;
         }
-        attendees.remove(attendee.getId());
+        attendees.remove(new Integer(attendee.getId()));
         return true;
+    }
+
+    @Override
+    public String toString(){
+        return eventName + " " + eventTime + " with speaker " + speaker;
     }
 }

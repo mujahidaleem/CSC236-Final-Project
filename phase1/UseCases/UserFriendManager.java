@@ -2,10 +2,12 @@ package UseCases;
 
 import Entities.User;
 import Entities.Message;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class UserFriendManager {
+public abstract class UserFriendManager implements Serializable {
     HashMap<ArrayList<User>, ArrayList<Message>> userToMessages;
     User currentUser;
 

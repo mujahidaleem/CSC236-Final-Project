@@ -56,7 +56,7 @@ public class UserManager implements Serializable {
      *
      * @return the list of users
      */
-    public List<User> getUsers() {
+    public ArrayList<User> getUsers() {
         return users;
     }
 

@@ -78,7 +78,7 @@ public class EventManager implements Serializable {
 
     public boolean removeUser(User user, Event event){
         if(event.getAttendees().contains(user.getId())){
-            event.getAttendees().remove(user.getId());
+            event.getAttendees().remove(new Integer(user.getId()));
             return true;
         } else{
             return false;

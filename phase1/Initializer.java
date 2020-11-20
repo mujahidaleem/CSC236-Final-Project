@@ -3,8 +3,11 @@ import Entities.Event;
 import Entities.Organizer;
 import Entities.Speaker;
 import Gateways.EventReader;
+import Gateways.MessageReader;
 import Gateways.UserReader;
+import UseCases.AttendeeFriendManager;
 import UseCases.EventManager;
+import UseCases.UserFriendManager;
 import UseCases.UserManager;
 
 import java.time.LocalDateTime;
@@ -52,10 +55,14 @@ public class Initializer {
         christmas.add(james);
         james.getPersonalSchedule().put(christmas.getEventName(), christmas.getEventTime());
 
-        UserReader userReader = new UserReader("D:\\userManagers.ser");
+        UserReader userReader = new UserReader("D:\\userManager.ser");
         EventReader eventReader = new EventReader("D:\\eventManager.ser");
+        MessageReader messageReader = new MessageReader("D:\\userFriendManager.ser");
+
+        AttendeeFriendManager attendeeFriendManager = new AttendeeFriendManager(new HashMap<>(), null);
 
         userReader.saveFile(userManager);
         eventReader.saveFile(eventManager);
+        messageReader.saveFile(attendeeFriendManager);
     }
 }

@@ -32,7 +32,8 @@ public class OrganizerMessagePresenter extends MessageMenuPresenter{
         System.out.println(("To send a message to a user, type 1_userID"));
         System.out.println("To add a user, type 2_userID");
         System.out.println("To remove a user, type 3_userID");
-        System.out.println("To message all the attendees of an event, type 4_userID");
+        System.out.println("To send a message to all the attendees, type 4_\"message content\"");
+        System.out.println("To send a message to all the speakers, type 5_\"message content\"");
     }
 
 }

@@ -14,8 +14,8 @@ public class SpeakerFriendManager extends UserFriendManager {
      * @param userToMessages - a dictionary mapping users to their messages sent and received from friends
      */
 
-    public SpeakerFriendManager(HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages) {
-        super(userToMessages);
+    public SpeakerFriendManager(HashMap<User, HashMap<User, ArrayList<Message>>> userToMessages, Speaker speaker) {
+        super(userToMessages, speaker);
     }
 
 

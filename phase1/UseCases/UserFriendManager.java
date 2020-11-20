@@ -16,18 +16,25 @@ public abstract class UserFriendManager implements Serializable {
      * @param userToMessages - a dictionary mapping users to their messages sent and received from friends
      */
 
-
     public UserFriendManager(HashMap<ArrayList<User>, ArrayList<Message>> userToMessages, User currentUser) {
         this.userToMessages = userToMessages;
         this.currentUser = currentUser;
     }
 
+    /**
+     * Prints out the friends of the user
+     */
     public void displayFriend(){
         for(User user: currentUser.getFriendList()){
             System.out.println(user);
         }
     }
 
+    /**
+     * Prints out the chats between one user and another
+     * @param user The current user
+     * @param friend Friend of the user
+     */
     public void displayChatLog(User user, User friend){
         for(Message message: userToMessages.get(createKey(user, friend))){
             System.out.println(message);
@@ -57,6 +64,13 @@ public abstract class UserFriendManager implements Serializable {
         }
     }
 
+    /**
+     * Create a key of users and friends (like a dictionary)
+     * Helper method
+     * @param user Current user
+     * @param friend Friend of the user
+     * @return A list of users
+     */
     private ArrayList<User> createKey(User user, User friend){
         ArrayList<User> users = new ArrayList<>();
         if(user.getId()<friend.getId()){
@@ -87,10 +101,19 @@ public abstract class UserFriendManager implements Serializable {
         userToMessages.remove(createKey(currentUser, friend));
     }
 
+    /**
+     * Sets the current user for the manager to manage
+     * @param currentUser current user of the manager
+     */
     public void setCurrentUser(User currentUser){
         this.currentUser = currentUser;
     }
 
+    /**
+     * Get a list of messages by a user
+     * @return A list of messages by a user
+     * For extension purposes, not used right now
+     */
     public HashMap<ArrayList<User>, ArrayList<Message>> getUserToMessages() {
         return userToMessages;
     }

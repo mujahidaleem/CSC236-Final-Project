@@ -12,12 +12,25 @@ public class OrganizerMessagePresenter extends MessageMenuPresenter{
     public OrganizerManager organizerManager;
     public OrganizerFriendManager organizerFriendManager;
 
+    /**
+     * Constructor of OrganizerMessagePresenter
+     * OrganizerMessagePresenter presents the organizer's message menu (friend list, messages etc.)
+     * @param organizerFriendListController Controller for the friend list of the organizer
+     * @param userManager Use case for the functions of the user
+     * @param organizerManager Use case for the functions of the organizer
+     * @param organizerFriendManager Use case for the functions of the organizer's friend list
+     */
     public OrganizerMessagePresenter(OrganizerFriendListController organizerFriendListController, UserManager userManager, OrganizerManager organizerManager, OrganizerFriendManager organizerFriendManager){
         super(organizerFriendListController, userManager, organizerFriendManager);
         this.organizerFriendListController= organizerFriendListController;
         this.organizerManager = organizerManager;
     }
 
+    /**
+     * Additional wwitch cases for the commands the organizer can enter in the message menu
+     * You can message all attendees or all speakers
+     * @param answer Inputted command by the user
+     */
     @Override
     public void extraCommands(String[] answer){
         Scanner message = new Scanner(System.in);
@@ -37,6 +50,9 @@ public class OrganizerMessagePresenter extends MessageMenuPresenter{
         }
     }
 
+    /**
+     * Generic commands for the friend list of a user, with specific commands for the organizer at type 4 and 5
+     */
     @Override
     protected void printCommands(){
         System.out.println("------------------------------------------------------------");

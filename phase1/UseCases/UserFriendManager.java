@@ -21,14 +21,8 @@ public abstract class UserFriendManager {
     }
 
     public void displayFriend(){
-        for (ArrayList<User> users: userToMessages.keySet()){
-            if(users.contains(currentUser)){
-                if(users.get(0).equals(currentUser)){
-                    System.out.println(users.get(1));
-                } else {
-                    System.out.println(users.get(0));
-                }
-            }
+        for(User user: currentUser.getFriendList()){
+            System.out.println(user);
         }
     }
 
@@ -52,7 +46,13 @@ public abstract class UserFriendManager {
 
     public void sendMessageTo(User sender, User recipient, String messageContent) {
         Message message = new Message(sender, recipient, messageContent);
-        userToMessages.get(createKey(sender, recipient)).add(message);
+        if (userToMessages.containsKey(createKey(sender, recipient))){
+            userToMessages.get(createKey(sender, recipient)).add(message);
+        } else {
+            ArrayList<Message> messages = new ArrayList<Message>();
+            messages.add(message);
+            userToMessages.put(createKey(sender, recipient), messages);
+        }
     }
 
     private ArrayList<User> createKey(User user, User friend){

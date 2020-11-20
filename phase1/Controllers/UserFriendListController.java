@@ -1,5 +1,6 @@
 package Controllers;
 
+import Entities.Organizer;
 import Entities.User;
 import UseCases.UserFriendManager;
 
@@ -37,11 +38,11 @@ public abstract class UserFriendListController {
 
 
     /**
-     * Add a User to list of manageable Users
+     * Add a User to list of manageable Users if the User is not an Organizer
      * @param newFriend The User who will be added into the friend list of current User
      */
     public boolean addFriend(User newFriend){
-        if(!this.userFriendManager.messageable(newFriend)){
+        if(!this.userFriendManager.messageable(newFriend) && newFriend.getClass().equals(Organizer.class)){
             this.userFriendManager.addNewFriend(newFriend);
             return true;
         } else {

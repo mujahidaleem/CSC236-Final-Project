@@ -24,6 +24,6 @@ public class Main {
 
     public void initialize(){
         Initializer initializer = new Initializer();
-        initializer.initialize();
+         initializer.initialize();
     }
 }

@@ -22,16 +22,14 @@ public class SpeakerFriendListPresenter extends UserFriendListPresenter {
 
 
     public SpeakerFriendListPresenter(User currentUser, UseCases.UserFriendManager UserFriendManager,
-                                       MessageReader MessageReader,
+                                       MessageReader messageReader,
                                       SpeakerFriendListController SpeakerFriendListController) {
-        super(currentUser, UserFriendManager, MessageReader);
+        super(currentUser, UserFriendManager, messageReader);
         if(currentUser instanceof Speaker){
-            Speaker currentspeaker=(Speaker) currentUser;
-            this.currentSpeaker=currentspeaker;
+            this.currentSpeaker= (Speaker) currentUser;
         }
         if(UserFriendManager instanceof SpeakerFriendManager){
-            SpeakerFriendManager SpeakerFriendManager=(SpeakerFriendManager) UserFriendManager;
-            this.SpeakerFriendManager= SpeakerFriendManager;}
+            this.speakerFriendManager= (SpeakerFriendManager) UserFriendManager;}
         this.SpeakerFriendListController=SpeakerFriendListController;
         }
 
@@ -41,46 +39,13 @@ public class SpeakerFriendListPresenter extends UserFriendListPresenter {
     @Override
     public void DisplayMessageable(){
         ArrayList<User> messageableList = this.SpeakerFriendListController.getMessageableList();
-        for(User messageable: messageableList){
-            System.out.println(messageable.getName());
+        for(User messagable: messageableList){
+            System.out.println(messagable.getName());
         }
     }
 
-    /**
-     * Display the command to add/remove an User from messageable list
-     */
 
-    public void DisplayRemove(User anotherUser){
-        String name=anotherUser.getName();
-        System.out.println(name+"is removed from your friend list");
-    }
 
-    /**
-     * * Display the chat log between User and another User
-     */
-    public void DisplayChatLog(User anotherUser) {
-        ArrayList<String> Chatlog = this.UserFriendManager.getHistoryMessage(anotherUser);
-        for (String message : Chatlog) {
-            System.out.println(message);
-        }}
-
-    /**
-     * * Display the command to send a message to another User
-     */
-
-    public void DisplaySendingMessage (User anotherUser){
-        String name = anotherUser.getName();
-        System.out.println("you send a message to " + name);
-
-    }
-
-    /**
-     * * Display the command to return to the menu
-     */
-
-    public void DisplayReturningMenu(){
-        System.out.println("return to menu");
-    }
 }
 
 

@@ -18,7 +18,7 @@ public class Main {
         //TODO create messages
 
         LoginMenuController loginMenuController = new LoginMenuController(userManager);
-        LoginMenuPresenter loginMenuPresenter = new LoginMenuPresenter(loginMenuController);
+        LoginMenuPresenter loginMenuPresenter = new LoginMenuPresenter(loginMenuController, mainMenuPresenter);
         loginMenuPresenter.run();
         //TODO the presenter should take in the userManager, then create everything else
     }

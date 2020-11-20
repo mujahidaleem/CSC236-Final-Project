@@ -31,23 +31,12 @@ public class OrganizerFriendListPresenter extends MessageMenuPresenter {
         System.out.println("Friend List");
         organizerFriendManager.displayFriend();
     }
+    /*public void DisplayMessageable(){
+        ArrayList<User> messageableList = this.SpeakerFriendListController.getMessageableList();
+        for(User messagable: messageableList){
+            System.out.println(messagable.getName());
+        }
+    }*/
 
-    /**
-     * * Display the command to send a message to another User
-     */
-
-    public void DisplaySengdingMessage (User anotherUser){
-        String name = anotherUser.getName();
-        System.out.println("you send a message to " + name);
-
-    }
-
-    /**
-     * * Display the command to return to the menu
-     */
-
-    public void DisplayReturningMenu(){
-        System.out.println("return to menu");
-    }
 }
 

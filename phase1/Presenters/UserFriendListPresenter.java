@@ -11,6 +11,7 @@ public abstract class UserFriendListPresenter {
     public User currentUser;
     public UserFriendManager userFriendManager;
     public MessageReader messageReader;
+    public UseCases.UserFriendManager UserFriendManager;
 
     public UserFriendListPresenter(User currentUser, UserFriendManager UserFriendManager,
                                    MessageReader MessageReader){
@@ -49,10 +50,10 @@ public abstract class UserFriendListPresenter {
      *  Display the chat log between User and another User
      */
     public void DisplayChatLog(User anotherUser){
-        //ArrayList<String> Chatlog=this.UserFriendManager.getHistoryMessage(anotherUser);
-        //for(String message : Chatlog){
-        //System.out.println(message);
-        //}
+        ArrayList<String> chatLog = this.UserFriendManager.checkHistoryMessage(currentUser, anotherUser);
+        for (String message : chatLog) {
+            System.out.println(message);
+        }
     }
 
     /**

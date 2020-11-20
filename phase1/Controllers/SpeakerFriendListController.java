@@ -11,23 +11,13 @@ import java.util.ArrayList;
 //import UseCases.AttendeeFriendManager;
 
 public class SpeakerFriendListController extends UserFriendListController {
-    public UserFriendListPresenter userFriendListPresenter;
     public UserFriendManager userFriendManager;
 //    public SpeakerFriendListPresenter speakerFriendListPresenter;
 //    public SpeakerFriendManager speakerFriendManager;
 
 
-    public SpeakerFriendListController(UserFriendListPresenter userFriendListPresenter,
-                                       UserFriendManager userFriendManager) {
-        super(userFriendListPresenter, userFriendManager);
-        if (userFriendListPresenter instanceof SpeakerFriendListPresenter) {
-            SpeakerFriendListPresenter sflp = (SpeakerFriendListPresenter) userFriendListPresenter;
-            this.speakerFriendListPresenter = sflp;
-        }
-        if (userFriendManager instanceof SpeakerFriendManager) {
-            SpeakerFriendManager sfm = (SpeakerFriendManager) userFriendManager;
-            this.speakerFriendManager = sfm;
-        }
+    public SpeakerFriendListController(UserFriendManager userFriendManager) {
+        super(userFriendManager);
     }
 }
 

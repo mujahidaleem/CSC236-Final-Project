@@ -12,16 +12,13 @@ import java.util.ArrayList;
 //import UseCases.AttendeeFriendManager;
 
 public class OrganizerFriendListController extends UserFriendListController {
-    public OrganizerMessagePresenter organizerMessagePresenter;
 
 //    public OrganizerFriendListPresenter organizerFriendListPresenter;
 //    public OrganizerFriendManager organizerFriendManager;
 
 
-    public OrganizerFriendListController(OrganizerMessagePresenter organizerFriendListPresenter,
-                                         UserFriendManager userFriendManager) {
-        super(organizerFriendListPresenter, userFriendManager);
-        this.organizerMessagePresenter = organizerFriendListPresenter;
+    public OrganizerFriendListController(UserFriendManager userFriendManager) {
+        super(userFriendManager);
     }
 
 //    /**

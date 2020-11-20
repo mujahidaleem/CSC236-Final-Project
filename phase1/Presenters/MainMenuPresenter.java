@@ -10,19 +10,16 @@ public class MainMenuPresenter {
 
     private EventMenuPresenter eventMenuPresenter;
     private MessageMenuPresenter messageMenuPresenter;
-    private LoginMenuController loginMenuController;
     private MainMenuController mainMenuController;
     /**
      * MainMenuPresenter constructor
      * @param eventMenuPresenter need to call eventMenuPresenter
      * @param messageMenuPresenter need to call messageMenuPresenter
-     * @param loginMenuController need to call loginMenuController
      */
 
-    public MainMenuPresenter(EventMenuPresenter eventMenuPresenter, MessageMenuPresenter messageMenuPresenter, LoginMenuController loginMenuController, MainMenuController mainMenuController){
+    public MainMenuPresenter(EventMenuPresenter eventMenuPresenter, MessageMenuPresenter messageMenuPresenter, MainMenuController mainMenuController){
         this.eventMenuPresenter = eventMenuPresenter;
         this.messageMenuPresenter = messageMenuPresenter;
-        this.loginMenuController = loginMenuController;
         this.mainMenuController = mainMenuController;
     }
 
@@ -31,24 +28,30 @@ public class MainMenuPresenter {
      */
 
     public void run() {
-        printMenu();
-        String userOption = takeInput();
-        while (!userOption.equals("1") && !userOption.equals("2") && !userOption.equals("3") && !userOption.equals("4")){
+        while (true){
+            printMenu();
+            String userOption = takeInput();
             MainMenuPresenter.printTryAgain();
             MainMenuPresenter.takeInput();
-        }
-        switch (userOption){
-            case "1":
-                mainMenuController.printEventMenu();
-            case "2":
-                mainMenuController.printMessageMenu();
-            case "3":
-                mainMenuController.logOut();
-            case "4":
-                String userPwChange = takeInput();
-                mainMenuController.changePw(userPwChange);
-            case "5":
-                mainMenuController.sysExit();
+            if (userOption.equals("3")){
+                break;
+            } else {
+                switch (userOption){
+                    case "1":
+                        mainMenuController.printEventMenu();
+                        break;
+                    case "2":
+                        mainMenuController.printMessageMenu();
+                        break;
+                    case "4":
+                        String userPwChange = takeInput();
+                        mainMenuController.changePw(userPwChange);
+                        break;
+                    case "5":
+                        mainMenuController.sysExit();
+                        break;
+                }
+            }
         }
     }
 
@@ -82,7 +85,5 @@ public class MainMenuPresenter {
         Scanner userInput = new Scanner(System.in);
         return userInput.nextLine();
     }
-
-
 
 }

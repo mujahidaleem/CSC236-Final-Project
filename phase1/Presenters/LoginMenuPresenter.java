@@ -60,14 +60,11 @@ public class LoginMenuPresenter {
     }
 
     public void loginCommand(String command) {
-        System.out.println("Please enter your id number and password, separated by a space");
-        if (loginMenuController.login(command) != null) {
-            mainMenuPresenter.run();
-
+        System.out.println("Please enter your id number and password, separated by a _");
+        if (loginMenuController.checkLogin(command) != null) {
+            loginMenuController.login().run();
         } else {
             System.out.println("Your username or password is incorrect. Please try again");
-            this.run();
-
         }
     }
 

@@ -1,18 +1,33 @@
 package Controllers;
 
+import Entities.Attendee;
+import Entities.Event;
+import Entities.Organizer;
 import Entities.User;
-import UseCases.UserManager;
+import Presenters.AttendeeEventPresenter;
+import Presenters.EventMenuPresenter;
+import Presenters.MainMenuPresenter;
+import Presenters.OrganizerMessagePresenter;
+import UseCases.*;
+
+import java.util.ArrayList;
 
 public class LoginMenuController {
     protected UserManager userManager;
+    protected EventManager eventManager;
+    protected UserFriendManager userFriendManager;
+    private MenuFactory menuFactory;
 
     /**
      * LoginMenuPresenter constructor
      *
      * @param userManager stores the list of users
      */
-    public LoginMenuController(UserManager userManager) {
+    public LoginMenuController(UserManager userManager, EventManager eventManager, UserFriendManager userFriendManager) {
         this.userManager = userManager;
+        this.eventManager = eventManager;
+        this.userFriendManager = userFriendManager;
+        this.menuFactory = new MenuFactory(userManager, eventManager, userFriendManager);
     }
 
     /**
@@ -21,7 +36,7 @@ public class LoginMenuController {
      * @param command the inputted login credentials
      * @return The user with those login credentials or nothing if the credentials are wrong
      */
-    public User login(String command) {
+    public User checkLogin(String command) {
         int id = Integer.parseInt(command.split("_")[0]);
         String password = command.split("_")[1];
         for (User user : userManager.users) {
@@ -31,6 +46,11 @@ public class LoginMenuController {
             }
         }
         return null;
+    }
+
+    public MainMenuPresenter login(){
+        MainMenuController mainMenuController = new MainMenuController(menuFactory.createEventMenu(), menuFactory.createMessageMenu(),userManager);
+        return new MainMenuPresenter(menuFactory.createEventMenu(), menuFactory.createMessageMenu(),mainMenuController);
     }
 
     /**
@@ -49,8 +69,4 @@ public class LoginMenuController {
     public int return_id(){
         return userManager.getUsers().size();
     }
-  
-
-
 }
-

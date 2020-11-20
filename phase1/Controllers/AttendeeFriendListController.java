@@ -17,9 +17,8 @@ public class AttendeeFriendListController extends UserFriendListController {
 //        public AttendeeFriendManager attendeeFriendManager;
 
 
-    public AttendeeFriendListController(AttendeeMessagePresenter attendeeMessagePresenter, UserFriendManager userFriendManager) {
-        super(attendeeMessagePresenter, userFriendManager);
-        this.attendeeMessagePresenter = attendeeMessagePresenter;
+    public AttendeeFriendListController(AttendeeFriendManager attendeeFriendManager) {
+        super(attendeeFriendManager);
     }
 }
 

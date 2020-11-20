@@ -1,15 +1,17 @@
 package Presenters;
 
 import Controllers.SpeakerFriendListController;
+import Controllers.UserFriendListController;
 import Entities.Speaker;
 import Gateways.MessageReader;
 import UseCases.SpeakerFriendManager;
 import UseCases.UserFriendManager;
 import Entities.User;
+import UseCases.UserManager;
 
 import java.util.ArrayList;
 
-public class SpeakerFriendListPresenter extends UserFriendListPresenter {
+public class SpeakerFriendListPresenter extends MessageMenuPresenter {
     public SpeakerFriendManager speakerFriendManager;
     public MessageReader messageReader;
     public Speaker currentSpeaker;
@@ -21,17 +23,9 @@ public class SpeakerFriendListPresenter extends UserFriendListPresenter {
     //TODO: make this a subclass of MessageMenuPresenter, allow speakers to message all attendees of an event, or a specific attendee
 
 
-    public SpeakerFriendListPresenter(User currentUser, UseCases.UserFriendManager UserFriendManager,
-                                       MessageReader messageReader,
-                                      SpeakerFriendListController SpeakerFriendListController) {
-        super(currentUser, UserFriendManager, messageReader);
-        if(currentUser instanceof Speaker){
-            this.currentSpeaker= (Speaker) currentUser;
-        }
-        if(UserFriendManager instanceof SpeakerFriendManager){
-            this.speakerFriendManager= (SpeakerFriendManager) UserFriendManager;}
-        this.SpeakerFriendListController=SpeakerFriendListController;
-        }
+    public SpeakerFriendListPresenter(SpeakerFriendListController speakerFriendListController, UserManager userManager, SpeakerFriendManager speakerFriendManager) {
+        super(speakerFriendListController, userManager, speakerFriendManager);
+    }
 
     /**
      * Display the messageable Users of speaker

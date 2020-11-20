@@ -1,5 +1,6 @@
 package Controllers;
 
+import Entities.Attendee;
 import Presenters.*;
 import UseCases.UserManager;
 
@@ -8,22 +9,18 @@ public class MainMenuController {
     private MessageMenuPresenter messageMenuPresenter;
     private LoginMenuController loginMenuController;
     private UserManager userManager;
-    private LoginMenuPresenter loginMenuPresenter;
 
     /**
      *
      * @param eventMenuPresenter attribute eventMenuPresenter
      * @param messageMenuPresenter attribute messageMenuPresenter
-     * @param loginMenuController attribute loginMenuController
      * @param userManager attribute userManager
      */
     public MainMenuController(EventMenuPresenter eventMenuPresenter, MessageMenuPresenter messageMenuPresenter,
-                              LoginMenuController loginMenuController, UserManager userManager){
+                              UserManager userManager){
         this.eventMenuPresenter = eventMenuPresenter;
         this.messageMenuPresenter = messageMenuPresenter;
-        this.loginMenuController = loginMenuController;
         this.userManager = userManager;
-        this.loginMenuPresenter = loginMenuPresenter;
     }
 
     public void printEventMenu(){
@@ -36,7 +33,6 @@ public class MainMenuController {
 
     public void logOut(){
         userManager.setCurrentUser(null);
-        loginMenuPresenter.run();
     }
 
     public void changePw(String password){ userManager.changePassword(password);
@@ -46,4 +42,5 @@ public class MainMenuController {
         System.exit(0);
     }
 }
+
 

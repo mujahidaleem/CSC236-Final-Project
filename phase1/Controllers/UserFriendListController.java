@@ -1,19 +1,14 @@
 package Controllers;
 
 import Entities.User;
-import Presenters.MessageMenuPresenter;
 import UseCases.UserFriendManager;
 
 import java.util.ArrayList;
 
 public abstract class UserFriendListController {
-
-    public MessageMenuPresenter messageMenuPresenter;
     public UserFriendManager userFriendManager;
 
-    public UserFriendListController(MessageMenuPresenter messageMenuPresenter,
-                                    UserFriendManager userFriendManager){
-        this.messageMenuPresenter = messageMenuPresenter;
+    public UserFriendListController(UserFriendManager userFriendManager){
         this.userFriendManager = userFriendManager;
     }
 

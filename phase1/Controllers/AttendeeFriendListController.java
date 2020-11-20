@@ -1,14 +1,9 @@
 package Controllers;
 
-import Entities.User;
-import Presenters.AttendeeFriendListPresenter;
 import Presenters.AttendeeMessagePresenter;
-import Presenters.UserFriendListPresenter;
 import UseCases.AttendeeFriendManager;
-import UseCases.UserFriendManager;
 //import Entities.Event;
 
-import java.util.ArrayList;
 //import UseCases.AttendeeFriendManager;
 
 public class AttendeeFriendListController extends UserFriendListController {

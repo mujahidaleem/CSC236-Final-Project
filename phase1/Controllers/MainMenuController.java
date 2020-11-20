@@ -45,12 +45,6 @@ public class MainMenuController {
         userManager.changePassword(password);
     }
 
-    /**
-     * Quits the program
-     */
-    public void sysExit() {
-        System.exit(0);
-    }
 }
 
 

@@ -4,6 +4,7 @@ import Entities.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * An instance of this stores all the users
@@ -69,11 +70,11 @@ public class UserManager implements Serializable {
     public void addUser(String name, String password, String type) {
         switch (type) {
             case "attendee":
-                Attendee attendee = new Attendee(1000 + users.size(), name, password, null, null);
+                Attendee attendee = new Attendee(1000 + users.size(), name, password, new HashMap<>(), new ArrayList<>());
                 users.add(attendee);
                 break;
             case "organizer":
-                Organizer organizer = new Organizer(1000 + users.size(), name, password, null, null, null);
+                Organizer organizer = new Organizer(1000 + users.size(), name, password, new HashMap<>(), new ArrayList<>(), new HashMap<>());
                 users.add(organizer);
                 break;
         }

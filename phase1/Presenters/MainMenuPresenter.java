@@ -28,6 +28,7 @@ public class MainMenuPresenter {
      */
 
     public void run() {
+        outer:
         while (true) {
             printMenu();
             String userOption = takeInput();
@@ -47,8 +48,7 @@ public class MainMenuPresenter {
                         mainMenuController.changePw(userPwChange);
                         break;
                     case "5":
-                        mainMenuController.sysExit();
-                        break;
+                        break outer;
                     default:
                         printTryAgain();
                 }

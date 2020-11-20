@@ -56,6 +56,15 @@ public class OrganizerManager extends UserManager {
     }
 
     /**
+     * Setter for currentOrganizer
+     *
+     * @param organizer the new currentOrganizer
+     */
+    public void setCurrentOrganizer(Organizer organizer){
+        this.currentOrganizer = organizer;
+    }
+
+    /**
      * If the event is organized by the current organizer, remove the event from the list of events and from all
      * attendee's schedule.
      *

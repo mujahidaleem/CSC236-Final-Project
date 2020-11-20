@@ -43,6 +43,7 @@ public class MenuFactory {
         } else if (userManager.getCurrentUser().getClass().equals(Organizer.class)) {
             OrganizerManager organizerManager = createOrganizerManager();
             organizerManager.setCurrentUser(userManager.getCurrentUser());
+            organizerManager.setCurrentOrganizer((Organizer) userManager.getCurrentUser());
             SpeakerManager speakerManager = createSpeakerManager();
             OrganizerEventController organizerEventController = new OrganizerEventController(organizerManager, eventManager, userManager, speakerManager);
             return new OrganizerEventPresenter(organizerManager, speakerManager, organizerEventController, eventManager, "english");

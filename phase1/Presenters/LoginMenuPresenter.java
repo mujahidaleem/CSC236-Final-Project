@@ -3,12 +3,6 @@ package Presenters;
 import Controllers.LoginMenuController;
 import java.util.Scanner;
 
-import Presenters.MainMenuPresenter;
-
-
-
-
-//TODO:import the various menus for the different types of users.
 
 public class LoginMenuPresenter {
 
@@ -50,7 +44,6 @@ public class LoginMenuPresenter {
                         printTryAgain();
                     }
                     break;
-
             }
         }
 

@@ -20,11 +20,12 @@ public class LoginMenuPresenter {
     }
 
     public void run(){
+        greetingMessage();
         while (true) {
             Scanner scanner = new Scanner(System.in);
-            greetingMessage();
             switch (scanner.next()) {
                 case "1":
+                    System.out.println("Please enter your ID NUMBER and PASSWORD, separated by a _");
                     loginCommand(scanner.next());
                     break;
                 case "2":
@@ -38,24 +39,29 @@ public class LoginMenuPresenter {
                         if (type.equals("attendee") || type.equals("organizer")){
                             loginMenuController.signUp(name, password, type);
                             String id = String.valueOf(loginMenuController.return_id());
-                            System.out.println("Your id is"+ id +". Please remember it!!!");
+                            System.out.println("Your id is"+ id +". Please remember it for logging in.");
+                            System.out.println("Please enter '1' to log into your existing account, and '2' to create a new account\n" +
+                                    "Enter 'exit' at to exit the program.");
                             break;
                         }
                         printTryAgain();
                     }
-                    break;
             }
         }
 
     }
 
     public void loginCommand(String command) {
-        System.out.println("Please enter your id number and password, separated by a _");
-        if (loginMenuController.checkLogin(command) != null) {
-            loginMenuController.login().run();
-        } else {
-            System.out.println("Your username or password is incorrect. Please try again");
+        try {
+            if (loginMenuController.checkLogin(command) != null) {
+                loginMenuController.login().run();
+            } else {
+                System.out.println("Your username or password is incorrect or does not exist. Please try again");
+            }
+        } catch (Exception e) {
+            printTryAgain();
         }
+        //TODO fix this part
     }
 
 

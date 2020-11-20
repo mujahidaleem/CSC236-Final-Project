@@ -10,6 +10,7 @@ import UseCases.UserManager;
 public class Main {
     public static void main(String[] args) {
         //initialize();
+        setUpLanguage();
         UserReader userReader = new UserReader("D:\\userManager.ser");
         EventReader eventReader = new EventReader("D:\\eventManager.ser");
         MessageReader messageReader = new MessageReader("D:\\userFriendManager.ser");
@@ -32,5 +33,9 @@ public class Main {
     public static void initialize() {
         Initializer initializer = new Initializer();
         initializer.initialize();
+    }
+    public static void setUpLanguage(){
+        Initializer initializer = new Initializer();
+        initializer.setUpLanguage();
     }
 }

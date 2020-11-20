@@ -1,3 +1,5 @@
+import Controllers.EnglishLanguagePack;
+import Controllers.LanguagePack;
 import Entities.Attendee;
 import Entities.Event;
 import Entities.Organizer;
@@ -10,6 +12,7 @@ import UseCases.EventManager;
 import UseCases.UserFriendManager;
 import UseCases.UserManager;
 
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,5 +67,23 @@ public class Initializer {
         userReader.saveFile(userManager);
         eventReader.saveFile(eventManager);
         messageReader.saveFile(attendeeFriendManager);
+    }
+
+    public void setUpLanguage(){
+        EnglishLanguagePack englishLanguagePack = new EnglishLanguagePack("english");
+        try {
+            FileOutputStream fi = new FileOutputStream(new File("D:\\english.ser"));
+            ObjectOutputStream oi = new ObjectOutputStream(fi);
+
+            oi.writeObject(englishLanguagePack);
+
+            oi.close();
+            fi.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        } catch (IOException e) {
+            System.out.println("Error initializing stream.");
+        }
     }
 }

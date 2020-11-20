@@ -35,10 +35,18 @@ public class SpeakerFriendManager extends UserFriendManager {
         }
     }
 
+    /**
+     * Getter for current speaker
+     * @return currentSpeaker
+     */
     public Speaker getCurrentSpeaker(){
         return currentSpeaker;
     }
 
+    /**
+     * Sets the current speaker of the manager
+     * @param speaker given speaker
+     */
     public void setCurrentSpeaker(Speaker speaker){
         this.currentSpeaker = speaker;
     }

@@ -41,6 +41,10 @@ public class LoginMenuController {
         return null;
     }
 
+    /**
+     * Creates a main menu presenter in the event of a login
+     * @return MainMenuPresenter
+     */
     public MainMenuPresenter login(){
         MainMenuController mainMenuController = new MainMenuController(menuFactory.createEventMenu(), menuFactory.createMessageMenu(),userManager);
         return new MainMenuPresenter(menuFactory.createEventMenu(), menuFactory.createMessageMenu(),mainMenuController);
@@ -56,6 +60,7 @@ public class LoginMenuController {
     public void signUp(String name, String password, String type) {
         userManager.addUser(name, password, type);
     }
+
     /**
      *   returns new id after signup 
      */

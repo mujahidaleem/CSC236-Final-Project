@@ -40,6 +40,11 @@ public class OrganizerFriendManager extends UserFriendManager {
         }
     }
 
+    /**
+     * Checks what users are messageable
+     * @param user given user
+     * @return Return if the user is in the friends list or an attendee/speaker
+     */
     @Override
     public boolean messageable(User user){
         if(user.getClass().equals(Attendee.class) || user.getClass().equals(Speaker.class)){
@@ -49,6 +54,10 @@ public class OrganizerFriendManager extends UserFriendManager {
         }
     }
 
+    /**
+     * Getter for the current organizer
+     * @return currentOrganizer
+     */
     public Organizer getCurrentOrganizer(){
         return currentOrganizer;
     }

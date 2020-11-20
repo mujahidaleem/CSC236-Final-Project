@@ -20,10 +20,13 @@ public class LoginMenuPresenter {
     }
 
     public void run(){
+        outer:
         while (true) {
             greetingMessage();
             Scanner scanner = new Scanner(System.in);
             switch (scanner.next()) {
+                case "exit":
+                    break outer;
                 case "1":
                     System.out.println("Please enter your ID NUMBER and PASSWORD, separated by a _ \n or input \"exit\" to go back.");
                     loginCommand(scanner.next());
@@ -48,7 +51,6 @@ public class LoginMenuPresenter {
                     break;
             }
         }
-
     }
 
     public void loginCommand(String command) {

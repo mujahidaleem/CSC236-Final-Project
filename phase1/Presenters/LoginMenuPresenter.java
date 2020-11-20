@@ -20,12 +20,12 @@ public class LoginMenuPresenter {
     }
 
     public void run(){
-        greetingMessage();
         while (true) {
+            greetingMessage();
             Scanner scanner = new Scanner(System.in);
             switch (scanner.next()) {
                 case "1":
-                    System.out.println("Please enter your ID NUMBER and PASSWORD, separated by a _");
+                    System.out.println("Please enter your ID NUMBER and PASSWORD, separated by a _ \n or input \"exit\" to go back.");
                     loginCommand(scanner.next());
                     break;
                 case "2":
@@ -40,8 +40,6 @@ public class LoginMenuPresenter {
                             loginMenuController.signUp(name, password, type);
                             String id = String.valueOf(loginMenuController.return_id());
                             System.out.println("Your id is"+ id +". Please remember it for logging in.");
-                            System.out.println("Please enter '1' to log into your existing account, and '2' to create a new account\n" +
-                                    "Enter 'exit' at to exit the program.");
                             break;
                         }
                         printTryAgain();
@@ -52,6 +50,9 @@ public class LoginMenuPresenter {
     }
 
     public void loginCommand(String command) {
+        if (command.equals("exit")){
+            return;
+        }
         try {
             if (loginMenuController.checkLogin(command) != null) {
                 loginMenuController.login().run();

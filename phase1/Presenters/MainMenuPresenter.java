@@ -42,6 +42,7 @@ public class MainMenuPresenter {
                         mainMenuController.printMessageMenu();
                         break;
                     case "4":
+                        System.out.println("Please enter your new password:\n");
                         String userPwChange = takeInput();
                         mainMenuController.changePw(userPwChange);
                         break;

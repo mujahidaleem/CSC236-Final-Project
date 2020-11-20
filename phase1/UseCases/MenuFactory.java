@@ -15,12 +15,23 @@ public class MenuFactory{
     private EventManager eventManager;
     private UserFriendManager userFriendManager;
 
+    /**
+     * A factory for creating the use case managers and menus needed to run the program
+     * @param userManager Use case functions for a user
+     * @param eventManager Use case functions of an event
+     * @param userFriendManager Use case functions of a friend list
+     */
     public MenuFactory(UserManager userManager, EventManager eventManager, UserFriendManager userFriendManager){
         this.userManager = userManager;
         this.eventManager = eventManager;
         this.userFriendManager = userFriendManager;
     }
 
+    /**
+     * Creates specifc managers, event controllers, and presenters
+     * depending on if the user is an attendee, organizer, or speaker
+     * @return A new event presenter depending on if the user is an attendee, organizer, or speaker
+     */
     public EventMenuPresenter createEventMenu(){
         if(userManager.getCurrentUser().getClass().equals(Attendee.class)){
             AttendeeManager attendeeManager = createAttendeeManager();
@@ -40,7 +51,11 @@ public class MenuFactory{
             return new SpeakerEventPresenter(speakerManager, speakerEventController, eventManager, "english");
         }
     }
-
+    /**
+     * Creates specific message managers, friend list controllers, and presenters
+     * depending on if the user is an attendee, organizer, or speaker
+     * @return A new message presenter depending on if the user is an attendee, organizer, or speaker
+     */
     public MessageMenuPresenter createMessageMenu(){
         if (userManager.getCurrentUser().getClass().equals(Attendee.class)){
             AttendeeFriendManager attendeeFriendManager = new AttendeeFriendManager(userFriendManager.userToMessages, null);
@@ -64,6 +79,10 @@ public class MenuFactory{
         }
     }
 
+    /**
+     * Create an organizer manager
+     * @return organizer manager
+     */
     private OrganizerManager createOrganizerManager(){
         OrganizerManager organizerManager = new OrganizerManager(null, new ArrayList<>());
         for (User user:userManager.users){
@@ -73,7 +92,10 @@ public class MenuFactory{
         }
         return organizerManager;
     }
-
+    /**
+     * Create an speaker manager
+     * @return speaker manager
+     */
     private SpeakerManager createSpeakerManager(){
         SpeakerManager speakerManager = new SpeakerManager(null, new ArrayList<>());
         for (User user:userManager.users){
@@ -83,7 +105,10 @@ public class MenuFactory{
         }
         return speakerManager;
     }
-
+    /**
+     * Create an attendee manager
+     * @return attendee manager
+     */
     private AttendeeManager createAttendeeManager(){
         AttendeeManager attendeeManager = new AttendeeManager(null, new ArrayList<>());
         for (User user:userManager.users){

@@ -38,7 +38,7 @@ public class EventMenuPresenter {
      */
     public void setupLanguagePackage() {
         try {
-            FileInputStream fi = new FileInputStream(new File("D:\\Language\\" + language + ".ser"));
+            FileInputStream fi = new FileInputStream(new File("D:\\" + language + ".ser"));
             ObjectInputStream oi = new ObjectInputStream(fi);
 
             this.languagePack = (LanguagePack) oi.readObject();

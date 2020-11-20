@@ -1,6 +1,7 @@
 CSC207 Phase1 README
 
 Running the program.
+    First, please run setupLanguage to set up the ser file for language. You can comment it out after running it once.
 	To run the program, please create an account after running the main pvsm method in Main.java.
 Please follow the instructions on the string and make sure that all inputted text are spelled and formatted corectly. 
 After creating an account, please remember the ID of your account to login. Once you have logged in, commands to 

@@ -39,7 +39,7 @@ public class SpeakerFriendListPresenter extends UserFriendListPresenter {
     public void DisplayMessageable(){
         ArrayList<User> messageableList = this.SpeakerFriendListController.getMessageableList();
         for(User messageable: messageableList){
-            System.out.println(messageable.get_name());
+            System.out.println(messageable.getName());
         }
     }
 
@@ -48,7 +48,7 @@ public class SpeakerFriendListPresenter extends UserFriendListPresenter {
      */
 
     public void DisplayRemove(User anotherUser){
-        String name=anotherUser.get_name();
+        String name=anotherUser.getName();
         System.out.println(name+"is removed from your friend list");
     }
 
@@ -66,7 +66,7 @@ public class SpeakerFriendListPresenter extends UserFriendListPresenter {
      */
 
     public void DisplaySendingMessage (User anotherUser){
-        String name = anotherUser.get_name();
+        String name = anotherUser.getName();
         System.out.println("you send a message to " + name);
 
     }

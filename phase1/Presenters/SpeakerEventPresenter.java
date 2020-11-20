@@ -40,8 +40,8 @@ public class SpeakerEventPresenter extends EventMenuPresenter {
         }
         System.out.println("---------------------------------------------------------------------------------");
         System.out.println(languagePack.eventMenuHeadings()[2]);
-        for (Event event: eventManager.getEvents()){
-            if (speakerManager.getCurrentSpeaker().getSpeakingSchedule().containsKey(event.getEventName())){
+        for (Event event : eventManager.getEvents()) {
+            if (speakerManager.getCurrentSpeaker().getSpeakingSchedule().containsKey(event.getEventName())) {
                 System.out.println(event);
             }
         }

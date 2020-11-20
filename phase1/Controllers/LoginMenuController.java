@@ -43,11 +43,12 @@ public class LoginMenuController {
 
     /**
      * Creates a main menu presenter in the event of a login
+     *
      * @return MainMenuPresenter
      */
-    public MainMenuPresenter login(){
-        MainMenuController mainMenuController = new MainMenuController(menuFactory.createEventMenu(), menuFactory.createMessageMenu(),userManager);
-        return new MainMenuPresenter(menuFactory.createEventMenu(), menuFactory.createMessageMenu(),mainMenuController);
+    public MainMenuPresenter login() {
+        MainMenuController mainMenuController = new MainMenuController(menuFactory.createEventMenu(), menuFactory.createMessageMenu(), userManager);
+        return new MainMenuPresenter(menuFactory.createEventMenu(), menuFactory.createMessageMenu(), mainMenuController);
     }
 
     /**
@@ -62,9 +63,9 @@ public class LoginMenuController {
     }
 
     /**
-     *   returns new id after signup 
+     * returns new id after signup
      */
-    public int return_id(){
+    public int return_id() {
         return userManager.getUsers().size() + 1000 - 1;
     }
 }

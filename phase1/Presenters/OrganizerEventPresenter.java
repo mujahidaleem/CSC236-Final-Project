@@ -234,9 +234,9 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
     /**
      * Prints the list of speakers
      */
-    private void printSpeakers(){
+    private void printSpeakers() {
         System.out.println("------------------------------------------------------");
-        for (Speaker speaker: speakerManager.getSpeakers()){
+        for (Speaker speaker : speakerManager.getSpeakers()) {
             System.out.println(speaker);
         }
     }

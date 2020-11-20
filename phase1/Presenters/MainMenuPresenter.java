@@ -9,13 +9,15 @@ public class MainMenuPresenter {
     private EventMenuPresenter eventMenuPresenter;
     private MessageMenuPresenter messageMenuPresenter;
     private MainMenuController mainMenuController;
+
     /**
      * MainMenuPresenter constructor
-     * @param eventMenuPresenter need to call eventMenuPresenter
+     *
+     * @param eventMenuPresenter   need to call eventMenuPresenter
      * @param messageMenuPresenter need to call messageMenuPresenter
      */
 
-    public MainMenuPresenter(EventMenuPresenter eventMenuPresenter, MessageMenuPresenter messageMenuPresenter, MainMenuController mainMenuController){
+    public MainMenuPresenter(EventMenuPresenter eventMenuPresenter, MessageMenuPresenter messageMenuPresenter, MainMenuController mainMenuController) {
         this.eventMenuPresenter = eventMenuPresenter;
         this.messageMenuPresenter = messageMenuPresenter;
         this.mainMenuController = mainMenuController;
@@ -26,13 +28,13 @@ public class MainMenuPresenter {
      */
 
     public void run() {
-        while (true){
+        while (true) {
             printMenu();
             String userOption = takeInput();
-            if (userOption.equals("3")){
+            if (userOption.equals("3")) {
                 break;
             } else {
-                switch (userOption){
+                switch (userOption) {
                     case "1":
                         mainMenuController.printEventMenu();
                         break;
@@ -58,7 +60,7 @@ public class MainMenuPresenter {
      * To print command line menu
      */
 
-    public static void printMenu(){
+    public static void printMenu() {
         System.out.println("---------------------------------------------------------------------------------");
         System.out.println("Please select a sub menu. Type the number and press enter:");
         System.out.println("1. Event Manager");
@@ -67,20 +69,21 @@ public class MainMenuPresenter {
         System.out.println("4. Change Password");
         System.out.println("5. Quit");
     }
-    
+
     /**
      * To print try again prompt
      */
 
-    public static void printTryAgain(){
+    public static void printTryAgain() {
         System.out.println("Please enter a valid option:");
     }
 
     /**
      * To return user's input
+     *
      * @return user's input value
      */
-    public static String takeInput(){
+    public static String takeInput() {
         Scanner userInput = new Scanner(System.in);
         return userInput.nextLine();
     }

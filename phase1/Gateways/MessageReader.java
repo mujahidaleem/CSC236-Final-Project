@@ -9,6 +9,7 @@ public class MessageReader {
 
     /**
      * MessageReader constructor
+     *
      * @param fileName - name of the saved file
      */
 
@@ -50,8 +51,8 @@ public class MessageReader {
      *
      * @param userFriendManager the userFriendManager being stored into a ser file
      */
-    public void saveFile(UserFriendManager userFriendManager){
-        try{
+    public void saveFile(UserFriendManager userFriendManager) {
+        try {
             FileOutputStream f = new FileOutputStream(new File(fileName));
             ObjectOutputStream o = new ObjectOutputStream(f);
 
@@ -59,7 +60,7 @@ public class MessageReader {
             o.close();
             f.close();
 
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println("File not found.");
         } catch (IOException e) {
             System.out.println("Error saving file.");

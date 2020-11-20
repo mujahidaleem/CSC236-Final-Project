@@ -13,8 +13,9 @@ public class OrganizerFriendListController extends UserFriendListController {
     /**
      * OrganizerFriendList Constructor
      * Controls the organizer's friend list, as well as allows the organizer to message all speakers/attendees
+     *
      * @param organizerFriendManager Use case for the friends of an organizer
-     * @param userManager Use case for a user's options
+     * @param userManager            Use case for a user's options
      */
 
     public OrganizerFriendListController(OrganizerFriendManager organizerFriendManager, UserManager userManager) {
@@ -25,24 +26,26 @@ public class OrganizerFriendListController extends UserFriendListController {
 
     /**
      * Message all attendees
+     *
      * @param messageContent Content of the message
      */
-    public void messageAllAttendees(String messageContent){
-        for (User user:userManager.users){
-            if(user.getClass().equals(Attendee.class)){
-                organizerFriendManager.sendMessageTo(organizerFriendManager.getCurrentOrganizer(),user, messageContent);
+    public void messageAllAttendees(String messageContent) {
+        for (User user : userManager.users) {
+            if (user.getClass().equals(Attendee.class)) {
+                organizerFriendManager.sendMessageTo(organizerFriendManager.getCurrentOrganizer(), user, messageContent);
             }
         }
     }
 
     /**
      * Message all speakers
+     *
      * @param messageContent Content of the message
      */
-    public void messageAllSpeakers(String messageContent){
-        for (User user:userManager.users){
-            if(user.getClass().equals(Speaker.class)){
-                organizerFriendManager.sendMessageTo(organizerFriendManager.getCurrentOrganizer(),user, messageContent);
+    public void messageAllSpeakers(String messageContent) {
+        for (User user : userManager.users) {
+            if (user.getClass().equals(Speaker.class)) {
+                organizerFriendManager.sendMessageTo(organizerFriendManager.getCurrentOrganizer(), user, messageContent);
             }
         }
     }

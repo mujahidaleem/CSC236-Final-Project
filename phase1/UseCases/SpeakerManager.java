@@ -36,9 +36,10 @@ public class SpeakerManager extends UserManager {
 
     /**
      * Returns the list of speakers
+     *
      * @return speakers
      */
-    public List<Speaker> getSpeakers(){
+    public List<Speaker> getSpeakers() {
         return speakers;
     }
 

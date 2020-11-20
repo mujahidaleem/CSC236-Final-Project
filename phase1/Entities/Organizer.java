@@ -13,11 +13,12 @@ public class Organizer extends User {
 
     /**
      * Organizer constructor
-     * @param id A unique id representing the
-     * @param name A string representing the name of the Organizer
+     *
+     * @param id       A unique id representing the
+     * @param name     A string representing the name of the Organizer
      * @param password A string representing the password of the Organizer
      * @param schedule A list of events that the speaker is attending
-     * @param friends A list of manageable Organizers of the speaker
+     * @param friends  A list of manageable Organizers of the speaker
      */
     public Organizer(int id, String name, String password, HashMap<String, LocalDateTime> schedule,
                      ArrayList<User> friends, HashMap<String, LocalDateTime> eventsOrganizing) {
@@ -27,9 +28,10 @@ public class Organizer extends User {
 
     /**
      * Getter for the events the organizer is organizing
+     *
      * @return _eventsOrganizing - the events the organizer is organizer
      */
-    public HashMap<String, LocalDateTime> get_eventsOrganizing(){
+    public HashMap<String, LocalDateTime> get_eventsOrganizing() {
         return _eventsOrganizing;
     }
 }

@@ -10,9 +10,11 @@ import UseCases.UserManager;
 public abstract class EventMenuController {
     public UserManager userManager;
     public EventManager eventManager;
+
     /**
      * AttendeeEventController constructor
-     * @param userManager contains the attendee using the current session
+     *
+     * @param userManager  contains the attendee using the current session
      * @param eventManager contains the list of events
      */
     public EventMenuController(UserManager userManager, EventManager eventManager) {
@@ -22,11 +24,12 @@ public abstract class EventMenuController {
 
     /**
      * Checks if the current user can sign up for an event and signs them up if they can
+     *
      * @param event the event the user is trying to attend
      * @return whether the user has signed up for the event
      */
     public boolean signUpForEvent(Event event) {
-        if (eventManager.addAttendee(event, userManager.getCurrentUser())){
+        if (eventManager.addAttendee(event, userManager.getCurrentUser())) {
             userManager.attendEvent(event);
             return true;
         } else {
@@ -36,6 +39,7 @@ public abstract class EventMenuController {
 
     /**
      * Checks if the user is currently attending an event and removes their spot if they are
+     *
      * @param event the event the user is trying to cancel their spot from
      * @return whether the user's spot has been removed from the event
      */

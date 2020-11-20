@@ -45,7 +45,7 @@ public class OrganizerManager extends UserManager {
      * @return a new speaker account
      */
     public Speaker createSpeaker(String name, String password, SpeakerManager speakerManager, UserManager userManager) {
-        if(password.contains(" ")) {
+        if (password.contains(" ")) {
             return null;
         } else {
             Speaker speaker = new Speaker(userManager.users.size() + 1000, name, password, null, null, null);

@@ -20,17 +20,18 @@ public class User implements Serializable {
 
     /**
      * User constructor
-     * @param id A unique id representing the User
-     * @param name A string representing the name of the User
+     *
+     * @param id       A unique id representing the User
+     * @param name     A string representing the name of the User
      * @param password A string representing the password of the User
      * @param schedule A list of events that the speaker is attending
-     * @param friends A list of manageable users of the speaker
+     * @param friends  A list of manageable users of the speaker
      */
 
     public User(int id, String name,
                 String password,
                 HashMap<String, LocalDateTime> schedule,
-                ArrayList<User> friends){
+                ArrayList<User> friends) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -40,6 +41,7 @@ public class User implements Serializable {
 
     /**
      * Getter for the name of the User
+     *
      * @return name of the user
      */
     public String getName() {
@@ -48,6 +50,7 @@ public class User implements Serializable {
 
     /**
      * Getter for the password of the User
+     *
      * @return _password
      */
     public String getPassword() {
@@ -56,6 +59,7 @@ public class User implements Serializable {
 
     /**
      * Getter for the schedule of the user
+     *
      * @return _personalSchedule
      */
     public HashMap<String, LocalDateTime> getPersonalSchedule() {
@@ -64,6 +68,7 @@ public class User implements Serializable {
 
     /**
      * Getter for the friend list of the User
+     *
      * @return _friendList
      */
     public List<User> getFriendList() {
@@ -72,6 +77,7 @@ public class User implements Serializable {
 
     /**
      * Sets the username of the User
+     *
      * @param _name username of the user
      */
     public void setName(String _name) {
@@ -80,6 +86,7 @@ public class User implements Serializable {
 
     /**
      * Sets the password of the User
+     *
      * @param _password password of the user
      */
     public void setPassword(String _password) {
@@ -88,6 +95,7 @@ public class User implements Serializable {
 
     /**
      * Getter for the personal ID of the user
+     *
      * @return _id
      */
     public int getId() {
@@ -96,10 +104,11 @@ public class User implements Serializable {
 
     /**
      * Represents how User is printed as a string
+     *
      * @return a string representing a User
      */
     @Override
-    public String toString(){
+    public String toString() {
         return getId() + " " + getName();
     }
 

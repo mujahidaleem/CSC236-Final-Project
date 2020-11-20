@@ -23,8 +23,8 @@ public class Main {
         loginMenuPresenter.run();
     }
 
-    public static void initialize(){
+    public static void initialize() {
         Initializer initializer = new Initializer();
-         initializer.initialize();
+        initializer.initialize();
     }
 }

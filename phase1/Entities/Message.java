@@ -10,9 +10,10 @@ public class Message {
 
     /**
      * Message constructor
-     * @param sender - the user sending the message
+     *
+     * @param sender    - the user sending the message
      * @param recipient - the user receiving the message
-     * @param content - the content of the message
+     * @param content   - the content of the message
      */
     public Message(User sender, User recipient, String content) {
         this.senderId = sender.getId();

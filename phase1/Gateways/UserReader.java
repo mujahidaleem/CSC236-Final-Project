@@ -13,9 +13,10 @@ public class UserReader {
 
     /**
      * UserReader constructor
+     *
      * @param fileName the directory of where the ser file of the userManager is stored
      */
-    public UserReader(String fileName){
+    public UserReader(String fileName) {
         this.fileName = fileName;
     }
 
@@ -25,8 +26,8 @@ public class UserReader {
      *
      * @return an instance of UserManager containing all the events
      */
-    public UserManager readFile(){
-        try{
+    public UserManager readFile() {
+        try {
             FileInputStream fi = new FileInputStream(new File(fileName));
             ObjectInputStream oi = new ObjectInputStream(fi);
 
@@ -37,7 +38,7 @@ public class UserReader {
 
             return userManager;
 
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println("File not found.");
         } catch (IOException e) {
             System.out.println("Error reading file.");
@@ -52,8 +53,8 @@ public class UserReader {
      *
      * @param userManager the userManager being stored into a ser file
      */
-    public void saveFile(UserManager userManager){
-        try{
+    public void saveFile(UserManager userManager) {
+        try {
             FileOutputStream f = new FileOutputStream(new File(fileName));
             ObjectOutputStream o = new ObjectOutputStream(f);
 
@@ -61,7 +62,7 @@ public class UserReader {
             o.close();
             f.close();
 
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println("File not found.");
         } catch (IOException e) {
             System.out.println("Error saving file.");

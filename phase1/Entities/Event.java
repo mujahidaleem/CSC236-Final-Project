@@ -20,14 +20,15 @@ public class Event implements Serializable {
     /**
      * Event Constructor
      * An event carries a unique id, name, room number, time, attendee list and organizer
-     * @param id id of the event
-     * @param name name of the event
-     * @param num room number of the event
-     * @param time time of the event
+     *
+     * @param id              id of the event
+     * @param name            name of the event
+     * @param num             room number of the event
+     * @param time            time of the event
      * @param event_organizer organizer of the event
      */
     public Event(int id, String name, int num, LocalDateTime time,
-                 int event_organizer){
+                 int event_organizer) {
         this.id = id;
         this.eventName = name;
         this.roomNumber = num;
@@ -38,6 +39,7 @@ public class Event implements Serializable {
 
     /**
      * Get id of the event
+     *
      * @return id of the event
      */
     public int getId() {
@@ -46,30 +48,34 @@ public class Event implements Serializable {
 
     /**
      * Returns the name of the event
+     *
      * @return eventName
      */
-    public String getEventName(){
+    public String getEventName() {
         return eventName;
     }
 
     /**
      * Returns the event's room number
+     *
      * @return roomNumber
      */
-    public int getRoomNumber(){
+    public int getRoomNumber() {
         return roomNumber;
     }
 
     /**
      * Returns the time of the event
+     *
      * @return eventTime
      */
-    public LocalDateTime getEventTime(){
+    public LocalDateTime getEventTime() {
         return eventTime;
     }
 
     /**
      * Change the room number of the event
+     *
      * @param roomNumber A roomnumber for the event
      */
     public void setRoomNumber(int roomNumber) {
@@ -78,6 +84,7 @@ public class Event implements Serializable {
 
     /**
      * Change the time of the event
+     *
      * @param event_time A time for the event
      */
     public void setEventTime(LocalDateTime event_time) {
@@ -86,28 +93,34 @@ public class Event implements Serializable {
 
     /**
      * Return the attendees signed up for this event
+     *
      * @return attendees
      */
-    public ArrayList<Integer> getAttendees(){
+    public ArrayList<Integer> getAttendees() {
         return attendees;
     }
 
     /**
      * Return the organizer of the event
+     *
      * @return organizer of the event
      */
-    public int getOrganizer(){
+    public int getOrganizer() {
         return organizer;
     }
 
     /**
      * Checks if the event has a speaker
+     *
      * @return boolean of if the speaker is in the event
      */
-    public boolean hasSpeaker(){return !(speaker == 0);}
+    public boolean hasSpeaker() {
+        return !(speaker == 0);
+    }
 
     /**
      * Return the speaker of the event
+     *
      * @return speaker of the event
      */
     public int getSpeaker() {
@@ -116,6 +129,7 @@ public class Event implements Serializable {
 
     /**
      * Change the speaker of the event
+     *
      * @param speaker speaker of the event
      */
     public void setSpeaker(int speaker) {
@@ -124,11 +138,12 @@ public class Event implements Serializable {
 
     /**
      * Add an attendee to the event, checks if the attendee is already signed up first
+     *
      * @param attendee Attendee user class
      * @return boolean, check if the attendee is in the event or not
      */
-    public boolean add(User attendee){
-        if (attendees.contains(attendee.getId())){
+    public boolean add(User attendee) {
+        if (attendees.contains(attendee.getId())) {
             return false;
         }
         attendees.add(attendee.getId());
@@ -137,11 +152,12 @@ public class Event implements Serializable {
 
     /**
      * Remove an attendee from the event
+     *
      * @param attendee Attendee user class
      * @return boolean, check if the attendee is in the event or not
      */
-    public boolean remove(User attendee){
-        if (!attendees.contains(attendee.getId())){
+    public boolean remove(User attendee) {
+        if (!attendees.contains(attendee.getId())) {
             return false;
         }
         attendees.remove(Integer.valueOf(attendee.getId()));
@@ -150,10 +166,11 @@ public class Event implements Serializable {
 
     /**
      * Returns the name, time, and speaker for the event
+     *
      * @return Return the event name with the time and speaker in a string
      */
     @Override
-    public String toString(){
+    public String toString() {
         return eventName + " " + eventTime + " with speaker " + speaker;
     }
 }

@@ -1,6 +1,7 @@
 package Presenters;
 
 import Controllers.LoginMenuController;
+
 import java.util.Scanner;
 
 
@@ -10,6 +11,7 @@ public class LoginMenuPresenter {
 
     /**
      * LoginMenuPresenter constructor
+     *
      * @param loginMenuController need to call loginMenuController
      */
 
@@ -26,7 +28,7 @@ public class LoginMenuPresenter {
      * The create account is done by inputting a name (it can be anything) and then password, the id is given at the end
      * The id is used to login, to allow for users who have the same name
      */
-    public void run(){
+    public void run() {
         outer:
         while (true) {
             greetingMessage();
@@ -46,10 +48,10 @@ public class LoginMenuPresenter {
                     System.out.println("Are you an attendee or an organizer? Please input \"attendee\" or \"organizer\" in lower case.");
                     while (true) {
                         String type = scanner.next();
-                        if (type.equals("attendee") || type.equals("organizer")){
+                        if (type.equals("attendee") || type.equals("organizer")) {
                             loginMenuController.signUp(name, password, type);
                             String id = String.valueOf(loginMenuController.return_id());
-                            System.out.println("Your id is "+ id +". Please remember it for logging in.");
+                            System.out.println("Your id is " + id + ". Please remember it for logging in.");
                             break;
                         }
 
@@ -64,23 +66,24 @@ public class LoginMenuPresenter {
      * The login security checkpoint
      * Inputted USERID_PASSWORD is checked. If correct the user moves to their main menu
      * Otherwise, go back to run()
+     *
      * @param command inputted USERID_PASSWORD from run method
      */
     public void loginCommand(String command) {
-        if (command.equals("exit")){
+        if (command.equals("exit")) {
             return;
         }
-            if (loginMenuController.checkLogin(command) != null) {
-                loginMenuController.login().run();
-            } else {
-                System.out.println("Your username or password is incorrect or does not exist. Please try again");
-            }
+        if (loginMenuController.checkLogin(command) != null) {
+            loginMenuController.login().run();
+        } else {
+            System.out.println("Your username or password is incorrect or does not exist. Please try again");
+        }
     }
 
     /**
      * Generic Greeting message
      */
-    public static void greetingMessage(){
+    public static void greetingMessage() {
         System.out.println("Welcome to the conference! Would you like to log into your existing account or" +
                 " create a new account?\n" +
                 "Please enter '1' to log into your existing account, and '2' to create a new account\n" +
@@ -90,7 +93,7 @@ public class LoginMenuPresenter {
     /**
      * Generic try again message for invalid inputs
      */
-    public static void printTryAgain(){
+    public static void printTryAgain() {
         System.out.println("Input invalid. Please try again.");
     }
 }

@@ -97,8 +97,8 @@ public class OrganizerEventController extends EventMenuController {
     /**
      * Checks if the room of an event can be changed and if so, changes the event room
      *
-     * @param event the event that the organizer is trying to change the date
-     * @param roomNumber  the new room for the event
+     * @param event      the event that the organizer is trying to change the date
+     * @param roomNumber the new room for the event
      * @return whether or not the room of the event has been changed
      */
     public boolean changeEventRoom(Event event, int roomNumber) {

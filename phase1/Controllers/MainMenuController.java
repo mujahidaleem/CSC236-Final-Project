@@ -9,13 +9,12 @@ public class MainMenuController {
     private UserManager userManager;
 
     /**
-     *
-     * @param eventMenuPresenter attribute eventMenuPresenter
+     * @param eventMenuPresenter   attribute eventMenuPresenter
      * @param messageMenuPresenter attribute messageMenuPresenter
-     * @param userManager attribute userManager
+     * @param userManager          attribute userManager
      */
     public MainMenuController(EventMenuPresenter eventMenuPresenter, MessageMenuPresenter messageMenuPresenter,
-                              UserManager userManager){
+                              UserManager userManager) {
         this.eventMenuPresenter = eventMenuPresenter;
         this.messageMenuPresenter = messageMenuPresenter;
         this.userManager = userManager;
@@ -25,29 +24,31 @@ public class MainMenuController {
      * Calls the Event menu presenter
      */
 
-    public void printEventMenu(){
+    public void printEventMenu() {
         eventMenuPresenter.run();
     }
 
     /**
      * Calls the Message menu presenter
      */
-    public void printMessageMenu(){
+    public void printMessageMenu() {
         messageMenuPresenter.run();
     }
 
     /**
      * Changes the password of a given user
+     *
      * @param password password of a given user
      */
 
-    public void changePw(String password){ userManager.changePassword(password);
+    public void changePw(String password) {
+        userManager.changePassword(password);
     }
 
     /**
      * Quits the program
      */
-    public void sysExit(){
+    public void sysExit() {
         System.exit(0);
     }
 }

@@ -15,9 +15,10 @@ public class MessageMenuPresenter {
     /**
      * MessageMenuPresenter Constructor
      * Presents the message menu of the user
+     *
      * @param UserFriendListController Friend list controller for users
-     * @param userManager Use case for user functions
-     * @param userFriendManager Use case for user friend list functions
+     * @param userManager              Use case for user functions
+     * @param userFriendManager        Use case for user friend list functions
      */
     public MessageMenuPresenter(UserFriendListController UserFriendListController, UserManager userManager, UserFriendManager userFriendManager) {
         this.userFriendListcontroller = UserFriendListController;
@@ -40,7 +41,7 @@ public class MessageMenuPresenter {
             if (answer1[0].equals("0")) {
                 break;
             } else {
-                if(!standardCommands(answer1)){
+                if (!standardCommands(answer1)) {
                     extraCommands(answer1);
                 }
             }
@@ -53,10 +54,11 @@ public class MessageMenuPresenter {
      * Send message: Send a message to a user
      * Add friend: Add a friend to the user's friend list
      * Remove friend: Remove a friend from the user's friend list
+     *
      * @param answer Inputted command by the user
      * @return Returns if the command went through
      */
-    public boolean standardCommands(String[] answer){
+    public boolean standardCommands(String[] answer) {
         switch (answer[0]) {
             case "1":
                 sendMessage(userManager.users.get(Integer.parseInt(answer[1]) - 1000));
@@ -74,9 +76,10 @@ public class MessageMenuPresenter {
 
     /**
      * Prints back if the input is invalid
+     *
      * @param answer Inputted command by the user
      */
-    public void extraCommands(String[] answer){
+    public void extraCommands(String[] answer) {
         System.out.println("Input is invalid.");
     }
 
@@ -84,13 +87,14 @@ public class MessageMenuPresenter {
      * Print the friend list of the user
      */
     //TODO: have a sign showing if there are new messages from that friend
-    protected void printFriends(){
+    protected void printFriends() {
         System.out.println("Friend List");
         userFriendManager.displayFriend();
     }
 
     /**
      * Send a message to a user
+     *
      * @param anotherUser The user that the current user wants to send a message to
      */
     protected void sendMessage(User anotherUser) {
@@ -109,22 +113,24 @@ public class MessageMenuPresenter {
 
     /**
      * Add a friend to the current user's friend list
+     *
      * @param anotherUser the wanted user friend
      */
-    protected void addFriend(User anotherUser){
-        if(userFriendListcontroller.addFriend(anotherUser)){
+    protected void addFriend(User anotherUser) {
+        if (userFriendListcontroller.addFriend(anotherUser)) {
             System.out.println(anotherUser.getName() + " is now your friend.");
-        } else{
+        } else {
             System.out.println("Sorry, this user is already your friend.");
         }
     }
 
     /**
      * Remove a friend from the current user's friend list
+     *
      * @param anotherUser the unwanted user
      */
-    protected void removeFriend(User anotherUser){
-        if(userFriendListcontroller.removeFrom(anotherUser)){
+    protected void removeFriend(User anotherUser) {
+        if (userFriendListcontroller.removeFrom(anotherUser)) {
             System.out.println(anotherUser.getName() + " is no longer your friend.");
         } else {
             System.out.println("This user is already not your friend.");
@@ -134,7 +140,7 @@ public class MessageMenuPresenter {
     /**
      * Print's the command prompts that the user will see
      */
-    protected void printCommands(){
+    protected void printCommands() {
         System.out.println("------------------------------------------------------------");
         System.out.println("To return to the main menu, type 0");
         System.out.println(("To send a message to a user, type 1_userID"));

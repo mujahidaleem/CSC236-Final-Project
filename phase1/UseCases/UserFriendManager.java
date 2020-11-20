@@ -13,6 +13,7 @@ public abstract class UserFriendManager implements Serializable {
 
     /**
      * UserFriendManager constructor
+     *
      * @param userToMessages - a dictionary mapping users to their messages sent and received from friends
      */
 
@@ -24,19 +25,20 @@ public abstract class UserFriendManager implements Serializable {
     /**
      * Prints out the friends of the user
      */
-    public void displayFriend(){
-        for(User user: currentUser.getFriendList()){
+    public void displayFriend() {
+        for (User user : currentUser.getFriendList()) {
             System.out.println(user);
         }
     }
 
     /**
      * Prints out the chats between one user and another
-     * @param user The current user
+     *
+     * @param user   The current user
      * @param friend Friend of the user
      */
-    public void displayChatLog(User user, User friend){
-        for(Message message: userToMessages.get(createKey(user, friend))){
+    public void displayChatLog(User user, User friend) {
+        for (Message message : userToMessages.get(createKey(user, friend))) {
             System.out.println(message);
         }
     }
@@ -47,7 +49,7 @@ public abstract class UserFriendManager implements Serializable {
 
     public boolean messageable(User user) {
         return currentUser.getFriendList().contains(user);
-        }
+    }
 
     /**
      * send a message containing the messageContent from user1 to user2
@@ -55,7 +57,7 @@ public abstract class UserFriendManager implements Serializable {
 
     public void sendMessageTo(User sender, User recipient, String messageContent) {
         Message message = new Message(sender, recipient, messageContent);
-        if (userToMessages.containsKey(createKey(sender, recipient))){
+        if (userToMessages.containsKey(createKey(sender, recipient))) {
             userToMessages.get(createKey(sender, recipient)).add(message);
         } else {
             ArrayList<Message> messages = new ArrayList<>();
@@ -67,16 +69,17 @@ public abstract class UserFriendManager implements Serializable {
     /**
      * Create a key of users and friends (like a dictionary)
      * Helper method
-     * @param user Current user
+     *
+     * @param user   Current user
      * @param friend Friend of the user
      * @return A list of users
      */
-    private ArrayList<User> createKey(User user, User friend){
+    private ArrayList<User> createKey(User user, User friend) {
         ArrayList<User> users = new ArrayList<>();
-        if(user.getId()<friend.getId()){
+        if (user.getId() < friend.getId()) {
             users.add(user);
             users.add(friend);
-        } else{
+        } else {
             users.add(friend);
             users.add(user);
         }
@@ -94,6 +97,7 @@ public abstract class UserFriendManager implements Serializable {
 
     /**
      * remove friend from user1's friend list
+     *
      * @param friend the user being removed
      */
     public void removeFromFriendList(User friend) {
@@ -103,14 +107,16 @@ public abstract class UserFriendManager implements Serializable {
 
     /**
      * Sets the current user for the manager to manage
+     *
      * @param currentUser current user of the manager
      */
-    public void setCurrentUser(User currentUser){
+    public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
     }
 
     /**
      * Get a list of messages by a user
+     *
      * @return A list of messages by a user
      * For extension purposes, not used right now
      */

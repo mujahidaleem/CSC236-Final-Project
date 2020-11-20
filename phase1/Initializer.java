@@ -19,14 +19,14 @@ public class Initializer {
     /**
      * Initializer constructor
      */
-    public Initializer(){
+    public Initializer() {
 
     }
 
     /**
      * Generates a ser file of previously created users and events.
      */
-    public void initialize(){
+    public void initialize() {
         Attendee james = new Attendee(1000, "James", "password", new HashMap<String, LocalDateTime>(), new ArrayList<>());
         Attendee jason = new Attendee(1003, "jason", "whyNot", new HashMap<String, LocalDateTime>(), new ArrayList<>());
         Attendee job = new Attendee(1004, "job", "whyNot", new HashMap<String, LocalDateTime>(), new ArrayList<>());

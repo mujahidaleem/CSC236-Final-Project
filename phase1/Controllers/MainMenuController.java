@@ -33,7 +33,8 @@ public class MainMenuController {
     }
 
     public void logOut(){
-        loginMenuController.logout();
+        userManager.currentUser = null;
+        loginMenuPresenter.run();
     }
 
     public void changePw(String password){

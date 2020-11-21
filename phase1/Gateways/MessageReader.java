@@ -4,6 +4,7 @@ import UseCases.AttendeeFriendManager;
 import UseCases.UserFriendManager;
 
 import java.io.*;
+import java.util.HashMap;
 
 public class MessageReader {
 
@@ -43,7 +44,7 @@ public class MessageReader {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return new AttendeeFriendManager(null, null);
+        return new AttendeeFriendManager(new HashMap<>(), null);
     }
 
     /**

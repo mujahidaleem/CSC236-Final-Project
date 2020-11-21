@@ -142,10 +142,11 @@ public class MessageMenuPresenter {
      */
     protected void printCommands() {
         System.out.println("------------------------------------------------------------");
-        System.out.println("To return to the main menu, type 0");
-        System.out.println(("To send a message to a user, type 1_userID"));
-        System.out.println("To add a user, type 2_userID");
-        System.out.println("TO remove a user, type 3_userID");
+        System.out.println("To return to the main menu, type '0'");
+        System.out.println(("To send a message to a user, type '1_' followed by their userID"));
+        System.out.println("To add a user, type '2_' followed by their userID");
+        System.out.println("TO remove a user, type '3_' followed by their userID");
+        System.out.println("For example: '1_0000' to send a message to user 0000");
     }
 }
 

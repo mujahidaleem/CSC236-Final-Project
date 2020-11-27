@@ -9,11 +9,11 @@ import UseCases.UserManager;
 
 public class Main {
     public static void main(String[] args) {
-        //initialize();
+        initialize();
         setUpLanguage();
-        UserReader userReader = new UserReader("D:\\userManager.ser");
-        EventReader eventReader = new EventReader("D:\\eventManager.ser");
-        MessageReader messageReader = new MessageReader("D:\\userFriendManager.ser");
+        UserReader userReader = new UserReader("userManager.ser");
+        EventReader eventReader = new EventReader("eventManager.ser");
+        MessageReader messageReader = new MessageReader("userFriendManager.ser");
 
         UserManager userManager = userReader.readFile();
         EventManager eventManager = eventReader.readFile();

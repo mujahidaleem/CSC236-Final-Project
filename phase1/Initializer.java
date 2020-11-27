@@ -1,5 +1,4 @@
-import Controllers.EnglishLanguagePack;
-import Controllers.LanguagePack;
+import Presenters.EnglishLanguagePack;
 import Entities.Attendee;
 import Entities.Event;
 import Entities.Organizer;
@@ -9,7 +8,6 @@ import Gateways.MessageReader;
 import Gateways.UserReader;
 import UseCases.AttendeeFriendManager;
 import UseCases.EventManager;
-import UseCases.UserFriendManager;
 import UseCases.UserManager;
 
 import java.io.*;
@@ -58,9 +56,9 @@ public class Initializer {
         christmas.add(james);
         james.getPersonalSchedule().put(christmas.getEventName(), christmas.getEventTime());
 
-        UserReader userReader = new UserReader("D:\\userManager.ser");
-        EventReader eventReader = new EventReader("D:\\eventManager.ser");
-        MessageReader messageReader = new MessageReader("D:\\userFriendManager.ser");
+        UserReader userReader = new UserReader("userManager.ser");
+        EventReader eventReader = new EventReader("eventManager.ser");
+        MessageReader messageReader = new MessageReader("userFriendManager.ser");
 
         AttendeeFriendManager attendeeFriendManager = new AttendeeFriendManager(new HashMap<>(), null);
 
@@ -72,7 +70,7 @@ public class Initializer {
     public void setUpLanguage(){
         EnglishLanguagePack englishLanguagePack = new EnglishLanguagePack("english");
         try {
-            FileOutputStream fi = new FileOutputStream(new File("D:\\english.ser"));
+            FileOutputStream fi = new FileOutputStream(new File("english.ser"));
             ObjectOutputStream oi = new ObjectOutputStream(fi);
 
             oi.writeObject(englishLanguagePack);

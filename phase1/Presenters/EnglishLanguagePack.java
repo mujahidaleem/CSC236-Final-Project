@@ -1,7 +1,9 @@
-package Controllers;
+package Presenters;
 
 import Entities.Event;
 import Entities.Speaker;
+import Presenters.LanguagePack;
+import Presenters.OrganizerEventLanguagePack;
 
 import java.io.Serializable;
 import java.time.format.DateTimeFormatter;

@@ -1,7 +1,6 @@
 package Presenters;
 
 import Controllers.EventMenuController;
-import Controllers.LanguagePack;
 import Entities.Event;
 import UseCases.EventManager;
 import UseCases.UserManager;
@@ -38,7 +37,7 @@ public class EventMenuPresenter {
      */
     public void setupLanguagePackage() {
         try {
-            FileInputStream fi = new FileInputStream(new File("D:\\" + language + ".ser"));
+            FileInputStream fi = new FileInputStream(new File(language + ".ser"));
             ObjectInputStream oi = new ObjectInputStream(fi);
 
             this.languagePack = (LanguagePack) oi.readObject();

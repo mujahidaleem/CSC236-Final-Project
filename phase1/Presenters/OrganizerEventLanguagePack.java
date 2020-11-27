@@ -1,7 +1,8 @@
-package Controllers;
+package Presenters;
 
 import Entities.Event;
 import Entities.Speaker;
+import Presenters.LanguagePack;
 
 public interface OrganizerEventLanguagePack extends LanguagePack {
 

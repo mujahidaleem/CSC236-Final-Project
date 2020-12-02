@@ -14,7 +14,7 @@ public class RoomManager {
     }
 
     public boolean hasRoom(int roomNum){
-        return rooms.contains(roomNum);
+        return this.roomsToRoomNums().contains(roomNum);
     }
 
     public Room findRoom(int roomNum){

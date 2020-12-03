@@ -1,8 +1,9 @@
 package Controllers;
 
+import Controllers.Factories.EventMenuFactory;
+import Controllers.Factories.MessageMenuFactory;
 import Entities.Users.User;
 import Presenters.MainMenuPresenter;
-import Presenters.MenuFactory;
 import UseCases.Events.EventManager;
 import UseCases.Language.LanguageManager;
 import UseCases.Message.UserFriendManager;
@@ -13,7 +14,8 @@ public class LoginMenuController {
     protected UserManager userManager;
     protected EventManager eventManager;
     protected UserFriendManager userFriendManager;
-    private MenuFactory menuFactory;
+    private EventMenuFactory eventMenuFactory;
+    private MessageMenuFactory messageMenuFactory;
 
     /**
      * LoginMenuPresenter constructor
@@ -24,7 +26,8 @@ public class LoginMenuController {
         this.userManager = userManager;
         this.eventManager = eventManager;
         this.userFriendManager = userFriendManager;
-        this.menuFactory = new MenuFactory(userManager, eventManager, userFriendManager, languageManager);
+        this.eventMenuFactory = new EventMenuFactory(userManager, eventManager, userFriendManager, languageManager);
+        this.messageMenuFactory = new MessageMenuFactory(userManager, eventManager, userFriendManager, languageManager);
     }
 
     /**
@@ -51,8 +54,8 @@ public class LoginMenuController {
      * @return MainMenuPresenter
      */
     public MainMenuPresenter login(LanguageManager languageManager) {
-        MainMenuController mainMenuController = new MainMenuController(menuFactory.createEventMenu(), menuFactory.createMessageMenu(), userManager);
-        return new MainMenuPresenter(menuFactory.createEventMenu(), menuFactory.createMessageMenu(), mainMenuController, languageManager);
+        MainMenuController mainMenuController = new MainMenuController(eventMenuFactory.getEventMenu(), messageMenuFactory.createMessageMenu(), userManager);
+        return new MainMenuPresenter(eventMenuFactory.getEventMenu(), messageMenuFactory.createMessageMenu(), mainMenuController, languageManager);
     }
 
     /**

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class Event implements Serializable {
     private String eventName;
     private int roomNumber;
-    private int id;
     private LocalDateTime eventTime;
     public ArrayList<Integer> attendees;
     private int organizer;
@@ -25,15 +24,13 @@ public class Event implements Serializable {
      * Event Constructor
      * An event carries a unique id, name, room number, time, attendee list and organizer
      *
-     * @param id              id of the event
      * @param name            name of the event
      * @param num             room number of the event
      * @param time            time of the event
      * @param event_organizer organizer of the event
      */
-    public Event(int id, String name, int num, int maxCapacity, LocalDateTime time, int duration,
+    public Event(String name, int num, int maxCapacity, LocalDateTime time, int duration,
                  int event_organizer) {
-        this.id = id;
         this.eventName = name;
         this.roomNumber = num;
         this.eventTime = time;

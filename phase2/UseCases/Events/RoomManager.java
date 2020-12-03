@@ -1,5 +1,6 @@
 package UseCases.Events;
 
+import Entities.Events.Event;
 import Entities.Room;
 
 import java.time.LocalDateTime;
@@ -54,10 +55,8 @@ public class RoomManager {
         return false;
     }
 
-
-
-    public void scheduleEvent(Room room, LocalDateTime dateTime, int duration, int eventId){
-        room.scheduleEvent(dateTime, dateTime.plusMinutes(duration), eventId);
+    public void scheduleEvent(Room room, LocalDateTime dateTime, int duration, Event event){
+        room.scheduleEvent(dateTime, dateTime.plusMinutes(duration), event);
     }
 
     public HashMap<ArrayList<LocalDateTime>, Integer> getRoomScheduleCopy(Room room){
@@ -77,8 +76,8 @@ public class RoomManager {
     }
 
 
-    public boolean removeEvent(Room room, int eventId){
-        room.removeEvent(eventId);
+    public boolean removeEvent(Room room, Event event){
+        room.removeEvent(event);
         return true;
     }
 

@@ -19,7 +19,6 @@ import UseCases.Users.UserManager;
 
 public class EventMenuFactory {
     private UserManager userManager;
-    private SpeakerManager speakerManager;
     private EventManager eventManager;
     private UserFriendManager userFriendManager;
     private LanguageManager languageManager;
@@ -57,7 +56,7 @@ public class EventMenuFactory {
             OrganizerManager organizerManager = factoryUseCaseHelper.createOrganizerManager();
             organizerManager.setCurrentUser(userManager.getCurrentUser());
             SpeakerManager speakerManager = factoryUseCaseHelper.createSpeakerManager();
-            OrganizerEventController organizerEventController = new OrganizerEventController(organizerManager, speakerManager, eventManager, userManager, languageManager);
+            OrganizerEventController organizerEventController = new OrganizerEventController(organizerManager, eventManager, userManager, speakerManager);
             return new OrganizerEventPresenter(organizerManager, speakerManager, organizerEventController, eventManager, languageManager);
         } else {
             SpeakerManager speakerManager = factoryUseCaseHelper.createSpeakerManager();

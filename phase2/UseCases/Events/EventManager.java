@@ -1,6 +1,6 @@
 package UseCases.Events;
 
-import Entities.Events.*;
+import Entities.Events.Event;
 import Entities.Users.Attendee;
 import Entities.Users.Organizer;
 import Entities.Users.Speaker;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class EventManager implements Serializable {
     private ArrayList<Event> events;
-    private ArrayList<SpeakerModifiable> speakerModifiables;
+    private EventFactory eventFactory;
 
     /**
      * Event manager constructor, sets the events for the manager to manage
@@ -22,15 +22,7 @@ public class EventManager implements Serializable {
      */
     public EventManager(ArrayList<Event> events) {
         this.events = events;
-        this.speakerModifiables = new ArrayList<>();
-    }
-
-    public void addEvent(Event event){
-        events.add(event);
-    }
-
-    public void addSpeakerModifiables(SpeakerModifiable speakerModifiable){
-        speakerModifiables.add(speakerModifiable);
+        this.eventFactory = new EventFactory();
     }
 
     /**
@@ -40,18 +32,12 @@ public class EventManager implements Serializable {
      * @param attendee given attendee
      * @return boolean - if the attendee was added
      */
-
-    public void addAttendee(Event event, User attendee) {
-        event.add(attendee);
+    public boolean addAttendee(Event event, User attendee) {
+        if (event.getTotalNum() < event.getMaxCapacity()) {
+            return event.add(attendee);
+        }
+        return false;
     }
-
-//    public boolean attendeeAddable(Event event, User attendee) {
-//        int totalNum = event.getAttendees().size() + event.getSpeaker().size();
-//        if (totalNum < event.getMaxCapacity()){
-//            return !event.getAttendees().contains(attendee.getId());
-//        }
-//        return false;
-//    }
 
     /**
      * Remove an attendee from an event
@@ -64,10 +50,6 @@ public class EventManager implements Serializable {
         return event.remove(attendee);
     }
 
-    public int getRoom(Event event){
-        return event.getRoomNumber();
-    }
-
     /**
      * Remove an event
      *
@@ -75,10 +57,6 @@ public class EventManager implements Serializable {
      */
     public void removeEvent(Event event) {
         events.remove(event);
-    }
-
-    public void setMaxCapacity(Event event, int maxCapacity){
-        event.setMaxCapacity(maxCapacity);
     }
 
     /**
@@ -91,51 +69,29 @@ public class EventManager implements Serializable {
         return event.getOrganizer();
     }
 
-    public boolean nameAvailable(String name){
-        for (Event event: events){
-            if (name.equals(event.getEventName())){
-                return false;
-            }
-        }
-        return true;
-    }
-
     /**
      * Create an event (used by organizer)
      *
      * @param name       name of the event
-     * @param dateTime       date of the event
+     * @param date       date of the event
      * @param organizer  organizer of the event
      * @param roomNumber room number of the event
      * @return newEvent - a new event
      */
-    public OneSpeakerEvent createOneSpeakerEvent(String name, LocalDateTime dateTime, int duration, Organizer organizer,
-                                                 int roomNumber, int maxCapacity) {
-
-        int eventId = events.size();
-        int organizerId = organizer.getId();
-        return new OneSpeakerEvent(eventId, name, roomNumber, maxCapacity, dateTime, duration, organizerId);
-
+    public Event createEvent(String name, LocalDateTime date, Organizer organizer, int roomNumber, int duration, int maxCapacity, String type) throws SameEventNameException {
+        for (Event event : events) {
+            if (event.getEventName().equals(name)){
+                throw new SameEventNameException();
+            }
+            if(event.getEventTime().isEqual(date) && event.getRoomNumber() == roomNumber){
+                return null;
+            }
+        }
+        Event newEvent = eventFactory.createEvent(name, roomNumber, maxCapacity, date, duration, organizer.getId(), type);
+        events.add(newEvent);
+        organizer._eventsOrganizing.put(name, date);
+        return newEvent;
     }
-
-    public MultiSpeakerEvent createMultiSpeakerEvent(String name, LocalDateTime dateTime, int duration, Organizer organizer,
-                                                     int roomNumber, int maxCapacity){
-        int eventId = events.size();
-        int organizerId = organizer.getId();
-        return new MultiSpeakerEvent(eventId, name, roomNumber, maxCapacity, dateTime, duration, organizerId);
-    }
-
-    public AttendeeOnlyEvent createAttendeeOnlyEvent(String name, LocalDateTime dateTime, int duration, Organizer organizer,
-                                                     int roomNumber, int maxCapacity){
-        int eventId = events.size();
-        int organizerId = organizer.getId();
-        return new AttendeeOnlyEvent(eventId, name, roomNumber, maxCapacity, dateTime, duration, organizerId);
-    }
-
-//    public Event createEvent(String type, String name, int roomNumber, int maxCapacity, LocalDateTime dateTime,
-//                             int duration, Organizer organizer){
-//        return new Event(type, events.size(), name, roomNumber, maxCapacity, dateTime, duration, organizer.getId());
-//    }
 
     /**
      * Get events that the manager is managing
@@ -146,27 +102,29 @@ public class EventManager implements Serializable {
         return events;
     }
 
+    /**
+     * Remove the speaker from an event
+     *
+     * @param event given event
+     */
+    public void removeSpeaker(Event event, int speaker) {
+        event.addSpeaker(0);
+    }
 
     /**
      * Change the date of an event
      *
      * @param event given event
-     * @param dateTime  new date
+     * @param date  new date
      * @return returns if the date was changed
      */
-    public void changeDate(Event event, LocalDateTime dateTime) {
-//        if (event.getEventTime().isAfter(LocalDateTime.now()) && !date.isBefore(LocalDateTime.now())) {
-//            event.setEventTime(date);
-//            return true;
-//        } else {
-//            return false;
-//        }
-        event.setEventTime(dateTime);
-        event.setEventTime(dateTime);
-    }
-
-    public void setDuration(Event event, int duration){
-        event.setDuration(duration);
+    public boolean changeDate(Event event, LocalDateTime date) {
+        if (event.getEventTime().isAfter(LocalDateTime.now()) && !date.isBefore(LocalDateTime.now())) {
+            event.setEventTime(date);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -211,41 +169,14 @@ public class EventManager implements Serializable {
     }
 
     /**
-     * Checks if the user can sign up for an event
-     *
-     * @param user  given user
-     * @param event given event
-     * @return returns if the user can sign up for the event
-     */
-    public boolean userCanSignUp(User user, Event event) {
-        if (event.getAttendees().size() >= 2) {
-            return false;
-        } else {
-            return !event.getAttendees().contains(user.getId());
-        }
-    }
-
-    /**
-     * Checks if the user can leave the event
-     *
-     * @param user  given user
-     * @param event given event
-     * @return boolean - if the user can leave the event
-     */
-    public boolean userCanLeave(User user, Event event) {
-        return event.getAttendees().contains(user.getId());
-    }
-
-    /**
      * Sets the speaker of the event
      *
      * @param speaker given speaker of the event
      * @param event   given event
      */
     public void setSpeaker(Speaker speaker, Event event) {
-        event.setSpeaker(speaker.getId());
+        event.addSpeaker(speaker.getId());
     }
-
 
     /**
      * Checks if the event has a speaker
@@ -257,42 +188,6 @@ public class EventManager implements Serializable {
         return event.hasSpeaker();
     }
 
-
-    public boolean addSpeaker(Speaker speaker, Event event){
-
-        if (speakerModifiables.contains(event)){
-            SpeakerModifiable e = (SpeakerModifiable) event;
-            e.addSpeaker(speaker.getId());
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Remove the speaker from an event
-     *
-     * @param event given event
-     * @return
-     */
-    public boolean removeSpeaker(Event event, Speaker speaker) {
-//        event.removeSpeaker(speaker.getId());
-//        if (!event.hasSpeaker() || !event.getSpeaker().contains(speaker.getId())){
-//            return false;
-//        }
-//        else{
-//            event.removeSpeaker(speaker.getId());
-//            return true;
-//        }
-        if (speakerModifiables.contains(event) && event.hasSpeaker()){
-            SpeakerModifiable e = (SpeakerModifiable) event;
-            e.removeSpeaker(speaker.getId());
-            return true;
-        }
-        return false;
-
-    }
-
-
     /**
      * Change the room number of an event
      *
@@ -301,16 +196,12 @@ public class EventManager implements Serializable {
      * @return boolean - if the event was moved
      */
     public boolean changeRoom(Event event, int roomNumber) {
-//        for (Event e : events) {
-//            if (e.getRoomNumber() == roomNumber && e.getEventTime().isEqual(event.getEventTime())) {
-//                return false;
-//            }
-//        }
-//        event.setRoomNumber(roomNumber);
-//        return true;
+        for (Event e : events) {
+            if (e.getRoomNumber() == roomNumber && e.getEventTime().isEqual(event.getEventTime())) {
+                return false;
+            }
+        }
         event.setRoomNumber(roomNumber);
         return true;
     }
-
-
 }

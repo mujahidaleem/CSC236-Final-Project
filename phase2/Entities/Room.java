@@ -1,5 +1,7 @@
 package Entities;
 
+import Entities.Events.Event;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,12 +9,12 @@ import java.util.HashMap;
 public class Room {
     private int roomNumber;
     private int roomCapacity;
-    private HashMap<ArrayList<LocalDateTime>, Integer> roomSchedule; // mapping (start time to end time) to event_id
+    private HashMap<ArrayList<LocalDateTime>, String> roomSchedule; // mapping (start time to end time) to event_id
 
     public Room(int roomNumber, int roomCapacity){
         this.roomNumber = roomNumber;
         this.roomCapacity = roomCapacity;
-        this.roomSchedule = new HashMap();
+        this.roomSchedule = new HashMap<>();
     }
 
     public int getRoomNumber() {
@@ -31,11 +33,11 @@ public class Room {
         return false;
     }
 
-    public void scheduleEvent(LocalDateTime startTime, LocalDateTime endTime, int eventId){
+    public void scheduleEvent(LocalDateTime startTime, LocalDateTime endTime, Event event){
         ArrayList<LocalDateTime> start_to_end = new ArrayList<>();
         start_to_end.add(startTime);
         start_to_end.add(endTime);
-        roomSchedule.put(start_to_end, eventId);
+        roomSchedule.put(start_to_end, event.getEventName());
     }
 
 
@@ -51,17 +53,15 @@ public class Room {
         return true;
     }
 
-    public HashMap<ArrayList<LocalDateTime>, Integer> getRoomSchedule() {
+    public HashMap<ArrayList<LocalDateTime>, String> getRoomSchedule() {
         return roomSchedule;
     }
 
-    public void removeEvent(int eventId){
-        this.roomSchedule.values().remove(eventId);
+    public void removeEvent(Event event){
+        this.roomSchedule.values().remove(event.getEventName());
     }
 
     public HashMap<ArrayList<LocalDateTime>, Integer> getRoomScheduleCopy(){
-        HashMap<ArrayList<LocalDateTime>, Integer> copy = (HashMap<ArrayList<LocalDateTime>, Integer>) this.getRoomSchedule().clone();
-        return copy;
+        return (HashMap<ArrayList<LocalDateTime>, Integer>) roomSchedule.clone();
     }
-
 }

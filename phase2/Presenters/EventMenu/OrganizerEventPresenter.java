@@ -58,7 +58,7 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
         try {
             switch (command[0]) {
                 case "3":
-                    Event event1 = organizerEventController.createEvent(command[1], LocalDateTime.parse(command[2]), Integer.parseInt(command[3]), Integer.parseInt(command[4]));
+                    Event event1 = organizerEventController.createEvent(command[1], LocalDateTime.parse(command[2]), Integer.parseInt(command[3]), Integer.parseInt(command[4]), Integer.parseInt(command[5]), command[6]);
                     if (event1 == null) {
                         createEventResults(false, null);
                     } else {
@@ -83,7 +83,7 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
             } else {
                 switch (command[0]) {
                     case "4":
-                        setSpeakerResults(organizerEventController.assignSpeaker(event, Integer.parseInt(command[2])), event);
+                        setSpeakerResults(organizerEventController.addSpeaker(event, Integer.parseInt(command[2])), event);
                         break;
                     case "7":
                         changeEventDateResults(organizerEventController.changeEventDate(event, LocalDateTime.parse(command[2])), event);
@@ -94,7 +94,7 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
                         deleteEvent(organizerEventController.deleteEvent(event), event);
                         break;
                     case "5":
-                        removeSpeakerResults(organizerEventController.removeSpeaker(event), event);
+                        removeSpeakerResults(organizerEventController.removeSpeaker(event, Integer.parseInt(command[2])), event);
                         break;
                     default:
                         System.out.println(languageManager.languagePack.unknownCommand());

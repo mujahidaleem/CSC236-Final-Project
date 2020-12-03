@@ -17,6 +17,6 @@ public class AttendeeOnlyEvent extends Event{
      * @param event_organizer organizer of the event
      */
     public AttendeeOnlyEvent(int id, String name, int num, int maxCapacity, LocalDateTime time, int duration, int event_organizer) {
-        super(id, name, num, maxCapacity, time, duration, event_organizer);
+        super(name, num, maxCapacity, time, duration, event_organizer);
     }
 }

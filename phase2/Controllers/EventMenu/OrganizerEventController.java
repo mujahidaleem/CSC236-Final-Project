@@ -1,6 +1,9 @@
 package Controllers.EventMenu;
 
 import Entities.Events.Event;
+import Entities.Users.Admin;
+import Entities.Users.Attendee;
+import Entities.Users.Organizer;
 import Entities.Users.Speaker;
 import UseCases.Events.EventManager;
 import UseCases.Events.SameEventNameException;
@@ -141,5 +144,37 @@ public class OrganizerEventController extends EventMenuController {
      */
     public Speaker createSpeaker(String name, String password) {
         return organizerManager.createSpeaker(name, password, speakerManager, userManager);
+    }
+    /**
+     * Checks if an Organizer account is creatable and if so, creates a Organizer account
+     *
+     * @param name     the name of the new Organizer account
+     * @param password the password of the new Organizer account
+     * @return null if the Organizer cannot be created, otherwise it returns the new Organizer account
+     */
+    public Organizer createOrganizer(String name, String password){
+        return organizerManager.createOrganizer(name, password, organizerManager, userManager);
+    }
+
+    /**
+     * Checks if an Attendee account is creatable and if so, creates a Attendee account
+     *
+     * @param name     the name of the new Attendee account
+     * @param password the password of the new Attendee account
+     * @return null if the Attendee cannot be created, otherwise it returns the new Attendee account
+     */
+    public Attendee createAttendee(String name, String password){
+        return organizerManager.createAttendee(name, password, attendeeManager, userManager);
+    }
+    /**
+     * Checks if an Admin account is creatable and if so, creates a Admin account
+     *
+     * @param name     the name of the new Admin account
+     * @param password the password of the new Admin account
+     * @return null if the Admin cannot be created, otherwise it returns the new Admin account
+     */
+    public Admin createAdmin(String name, String password){
+        return organizerManager.createAdmin(name, password, adminManager, userManager);
+
     }
 }

@@ -1,10 +1,8 @@
 package Controllers.EventMenu;
 
+import Controllers.Factories.OrganizerAccountCreatorFactory;
 import Entities.Events.Event;
-import Entities.Users.Admin;
-import Entities.Users.Attendee;
-import Entities.Users.Organizer;
-import Entities.Users.Speaker;
+import Entities.Users.*;
 import UseCases.Events.EventManager;
 import UseCases.Events.SameEventNameException;
 import UseCases.Users.*;
@@ -14,8 +12,7 @@ import java.time.LocalDateTime;
 public class OrganizerEventController extends EventMenuController {
     private OrganizerManager organizerManager;
     private SpeakerManager speakerManager;
-    private AttendeeManager attendeeManager;
-    private AdminManager adminManager;
+    private OrganizerAccountCreatorFactory organizerAccountCreatorFactory;
 
     /**
      * OrganizerEventController constructor
@@ -27,12 +24,11 @@ public class OrganizerEventController extends EventMenuController {
      */
     public OrganizerEventController(OrganizerManager manager,
                                     EventManager eventManager, UserManager userManager, SpeakerManager speakerManager,
-                                    AttendeeManager attendeeManager, AdminManager adminManager) {
+                                    OrganizerAccountCreatorFactory organizerAccountCreatorFactory){
         super(userManager, eventManager);
         this.organizerManager = manager;
         this.speakerManager = speakerManager;
-        this.attendeeManager = attendeeManager;
-        this.adminManager = adminManager;
+        this.organizerAccountCreatorFactory = organizerAccountCreatorFactory;
     }
 
     /**
@@ -139,45 +135,14 @@ public class OrganizerEventController extends EventMenuController {
     }
 
     /**
-     * Checks if a speaker account is creatable and if so, creates a speaker account
-     *
-     * @param name     the name of the new speaker account
-     * @param password the password of the new speaker account
-     * @return null if the speaker cannot be created, otherwise it returns the new speaker account
+     * Creates an account depending on accountType, returns null if accountType password is nothing or accountype DNE
+     * @param name name of account
+     * @param password password of account
+     * @param accountType type of account (admin, attendee, organizer, speaker)
+     * @return User account
      */
-    public Speaker createSpeaker(String name, String password) {
-        return organizerManager.createSpeaker(name, password, speakerManager, userManager);
-    }
-    /**
-     * Checks if an Organizer account is creatable and if so, creates a Organizer account
-     *
-     * @param name     the name of the new Organizer account
-     * @param password the password of the new Organizer account
-     * @return null if the Organizer cannot be created, otherwise it returns the new Organizer account
-     */
-    public Organizer createOrganizer(String name, String password){
-        return organizerManager.createOrganizer(name, password, organizerManager, userManager);
+    public User createAccount(String name, String password, String accountType) {
+        return organizerAccountCreatorFactory.createAccountFactory(name, password, accountType);
     }
 
-    /**
-     * Checks if an Attendee account is creatable and if so, creates a Attendee account
-     *
-     * @param name     the name of the new Attendee account
-     * @param password the password of the new Attendee account
-     * @return null if the Attendee cannot be created, otherwise it returns the new Attendee account
-     */
-    public Attendee createAttendee(String name, String password){
-        return organizerManager.createAttendee(name, password, attendeeManager, userManager);
-    }
-    /**
-     * Checks if an Admin account is creatable and if so, creates a Admin account
-     *
-     * @param name     the name of the new Admin account
-     * @param password the password of the new Admin account
-     * @return null if the Admin cannot be created, otherwise it returns the new Admin account
-     */
-    public Admin createAdmin(String name, String password){
-        return organizerManager.createAdmin(name, password, adminManager, userManager);
-
-    }
 }

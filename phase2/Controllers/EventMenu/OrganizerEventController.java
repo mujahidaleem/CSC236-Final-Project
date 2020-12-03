@@ -7,15 +7,15 @@ import Entities.Users.Organizer;
 import Entities.Users.Speaker;
 import UseCases.Events.EventManager;
 import UseCases.Events.SameEventNameException;
-import UseCases.Users.OrganizerManager;
-import UseCases.Users.SpeakerManager;
-import UseCases.Users.UserManager;
+import UseCases.Users.*;
 
 import java.time.LocalDateTime;
 
 public class OrganizerEventController extends EventMenuController {
     private OrganizerManager organizerManager;
     private SpeakerManager speakerManager;
+    private AttendeeManager attendeeManager;
+    private AdminManager adminManager;
 
     /**
      * OrganizerEventController constructor
@@ -26,10 +26,13 @@ public class OrganizerEventController extends EventMenuController {
      * @param speakerManager contains the list of speakers
      */
     public OrganizerEventController(OrganizerManager manager,
-                                    EventManager eventManager, UserManager userManager, SpeakerManager speakerManager) {
+                                    EventManager eventManager, UserManager userManager, SpeakerManager speakerManager,
+                                    AttendeeManager attendeeManager, AdminManager adminManager) {
         super(userManager, eventManager);
         this.organizerManager = manager;
         this.speakerManager = speakerManager;
+        this.attendeeManager = attendeeManager;
+        this.adminManager = adminManager;
     }
 
     /**

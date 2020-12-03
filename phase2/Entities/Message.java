@@ -1,6 +1,8 @@
 package Entities;
 
 
+import Entities.Users.User;
+
 public class Message {
     int senderId;
     String senderName;

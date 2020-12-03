@@ -1,10 +1,12 @@
 package Controllers;
 
-import Entities.User;
+import Entities.Users.User;
 import Presenters.MainMenuPresenter;
 import Presenters.MenuFactory;
-import UseCases.*;
+import UseCases.Events.EventManager;
 import UseCases.Language.LanguageManager;
+import UseCases.Message.UserFriendManager;
+import UseCases.Users.UserManager;
 
 
 public class LoginMenuController {

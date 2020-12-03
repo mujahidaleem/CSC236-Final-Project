@@ -1,8 +1,8 @@
 package UseCases.Language;
 
-import Entities.Event;
-import Entities.Speaker;
-import Entities.User;
+import Entities.Events.Event;
+import Entities.Users.Speaker;
+import Entities.Users.User;
 
 import java.io.Serializable;
 import java.time.format.DateTimeFormatter;

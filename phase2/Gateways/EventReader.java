@@ -1,6 +1,6 @@
 package Gateways;
 
-import UseCases.EventManager;
+import UseCases.Events.EventManager;
 
 import java.io.*;
 import java.util.ArrayList;

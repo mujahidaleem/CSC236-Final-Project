@@ -1,15 +1,15 @@
-import Entities.Attendee;
-import Entities.Event;
-import Entities.Organizer;
-import Entities.Speaker;
+import Entities.Users.Attendee;
+import Entities.Events.Event;
+import Entities.Users.Organizer;
+import Entities.Users.Speaker;
 import Gateways.EventReader;
 import Gateways.MessageReader;
 import Gateways.UserReader;
 import UseCases.Language.EnglishLanguagePack;
-import UseCases.AttendeeFriendManager;
-import UseCases.EventManager;
+import UseCases.Message.AttendeeFriendManager;
+import UseCases.Events.EventManager;
 import UseCases.Language.FrenchLanguagePack;
-import UseCases.UserManager;
+import UseCases.Users.UserManager;
 
 import java.io.*;
 import java.time.LocalDateTime;

@@ -3,15 +3,14 @@ import Gateways.UserReader;
 import Gateways.EventReader;
 import Gateways.MessageReader;
 import Presenters.LoginMenuPresenter;
-import UseCases.EventManager;
+import UseCases.Events.EventManager;
 import UseCases.Language.LanguageManager;
-import UseCases.UserFriendManager;
-import UseCases.UserManager;
+import UseCases.Message.UserFriendManager;
+import UseCases.Users.UserManager;
 
 
 public class Main {
     public static void main(String[] args) {
-
 
 
 

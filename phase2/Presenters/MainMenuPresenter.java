@@ -1,6 +1,8 @@
 package Presenters;
 
 import Controllers.MainMenuController;
+import Presenters.EventMenu.EventMenuPresenter;
+import Presenters.MessageMenu.MessageMenuPresenter;
 import UseCases.Language.LanguageManager;
 
 import java.util.Scanner;

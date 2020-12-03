@@ -1,6 +1,7 @@
 package UseCases;
 
-import Entities.Event;
+import Entities.Events.Event;
+import UseCases.Events.EventManager;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

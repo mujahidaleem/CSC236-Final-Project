@@ -1,7 +1,8 @@
 package Controllers;
 
-import Presenters.*;
-import UseCases.UserManager;
+import Presenters.EventMenu.EventMenuPresenter;
+import Presenters.MessageMenu.MessageMenuPresenter;
+import UseCases.Users.UserManager;
 
 public class MainMenuController {
     private EventMenuPresenter eventMenuPresenter;

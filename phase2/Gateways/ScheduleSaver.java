@@ -1,13 +1,12 @@
 package Gateways;
 
-import Entities.Event;
-import UseCases.EventManager;
+import Entities.Events.Event;
+import UseCases.Events.EventManager;
 import UseCases.PdfGenerator;
 import com.itextpdf.text.*;
 import com.itextpdf.text.html.WebColors;
 import com.itextpdf.text.pdf.*;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.DayOfWeek;

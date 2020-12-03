@@ -1,6 +1,6 @@
 package Gateways;
 
-import UseCases.UserManager;
+import UseCases.Users.UserManager;
 
 import java.io.*;
 import java.util.ArrayList;

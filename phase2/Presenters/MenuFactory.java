@@ -1,12 +1,33 @@
 package Presenters;
 
-import Controllers.*;
-import Entities.Attendee;
-import Entities.Organizer;
-import Entities.Speaker;
-import Entities.User;
-import UseCases.*;
+import Controllers.EventMenu.AttendeeEventController;
+import Controllers.EventMenu.OrganizerEventController;
+import Controllers.EventMenu.SpeakerEventController;
+import Controllers.MessageMenu.AttendeeFriendListController;
+import Controllers.MessageMenu.OrganizerFriendListController;
+import Controllers.MessageMenu.SpeakerFriendListController;
+import Entities.Users.Attendee;
+import Entities.Users.Organizer;
+import Entities.Users.Speaker;
+import Entities.Users.User;
+import Presenters.EventMenu.AttendeeEventPresenter;
+import Presenters.EventMenu.EventMenuPresenter;
+import Presenters.EventMenu.OrganizerEventPresenter;
+import Presenters.EventMenu.SpeakerEventPresenter;
+import Presenters.MessageMenu.AttendeeMessagePresenter;
+import Presenters.MessageMenu.MessageMenuPresenter;
+import Presenters.MessageMenu.OrganizerMessagePresenter;
+import Presenters.MessageMenu.SpeakerMessagePresenter;
+import UseCases.Events.EventManager;
 import UseCases.Language.LanguageManager;
+import UseCases.Message.AttendeeFriendManager;
+import UseCases.Message.OrganizerFriendManager;
+import UseCases.Message.SpeakerFriendManager;
+import UseCases.Message.UserFriendManager;
+import UseCases.Users.AttendeeManager;
+import UseCases.Users.OrganizerManager;
+import UseCases.Users.SpeakerManager;
+import UseCases.Users.UserManager;
 
 import java.util.ArrayList;
 

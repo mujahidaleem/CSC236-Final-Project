@@ -1,7 +1,7 @@
 package Gateways;
 
-import UseCases.AttendeeFriendManager;
-import UseCases.UserFriendManager;
+import UseCases.Message.AttendeeFriendManager;
+import UseCases.Message.UserFriendManager;
 
 import java.io.*;
 import java.util.HashMap;

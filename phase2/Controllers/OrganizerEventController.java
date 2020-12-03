@@ -88,7 +88,7 @@ public class OrganizerEventController extends EventMenuController {
      * @param speaker the speaker that the organizer is trying to assign to an event
      * @return whether or not the speaker can be assigned to the event
      */
-    public boolean assignSpeaker(Event event, int speaker) {
+    public boolean addSpeaker(Event event, int speaker) {
         Speaker speaker1 = speakerManager.findSpeaker(speaker);
         if (speaker1 == null) {
             throw new NullSpeakerException("Speaker does not exist");
@@ -118,29 +118,40 @@ public class OrganizerEventController extends EventMenuController {
     }
 
 
-    /**
-     * Checks if the date of an event can be changed and if so, changes the event
-     *
-     * @param event the event that the organizer is trying to change the date
-     * @param date  the new date of the event
-     * @return whether or not the date of the event has been changed
-     */
-//    public boolean changeEventDate(Event event, LocalDateTime date) {
-//        if (speakerManager.dateChangeable(event, date) && eventManager.changeDate(event, date)) {
-//            speakerManager.changeDate(event, date);
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
+///*    *//**
+//     * Checks if the date of an event can be changed and if so, changes the event
+//     *
+//     * @param event the event that the organizer is trying to change the date
+//     * @param date  the new date of the event
+//     * @return whether or not the date of the event has been changed
+//     *//*
+////    public boolean changeEventDate(Event event, LocalDateTime date) {
+////        if (speakerManager.dateChangeable(event, date) && eventManager.changeDate(event, date)) {
+////            speakerManager.changeDate(event, date);
+////            return true;
+////        } else {
+////            return false;
+////        }
+////    }*/
 
-    public boolean changeEventDateTime(Event event, LocalDateTime dateTime){
-        int roomNum = eventManager.getRoom(event);
-        Room currentRoom = roomManager.findRoom(roomNum);
 
-        HashMap<ArrayList<LocalDateTime>, Integer> roomScheduleCopy = currentRoom.getRoomSchedule().clone();
 
+    public boolean changeEventTime(Event event, LocalDateTime newEventTime){
+        Room currentRoom = roomManager.findRoom(event.getRoomNumber());       // current room the event is in
+
+        roomManager.removeEvent(currentRoom, event.getId());
+
+        if (roomManager.bookable(event.getRoomNumber(), newEventTime, event.getDuration())){
+            roomManager.scheduleEvent(currentRoom, newEventTime, event.getDuration(), event.getId());
+            eventManager.changeDate(event, newEventTime);
+            return true;
+        }
+        else{
+            roomManager.scheduleEvent(currentRoom, event.getEventTime(), event.getDuration(), event.getId());
+            return false;
+        }
     }
+
 
     /**
      * Checks if the room of an event can be changed and if so, changes the event room
@@ -150,7 +161,18 @@ public class OrganizerEventController extends EventMenuController {
      * @return whether or not the room of the event has been changed
      */
     public boolean changeEventRoom(Event event, int roomNumber) {
-        return eventManager.changeRoom(event, roomNumber);
+        Room currentRoom = roomManager.findRoom(event.getRoomNumber());
+        Room newRoom = roomManager.findRoom(roomNumber);
+        if (currentRoom.getRoomNumber() == roomNumber){                     // enter a different room number
+            return false;
+        }
+        else if(roomManager.bookable(roomNumber, event.getEventTime(), event.getDuration())){
+            roomManager.removeEvent(currentRoom, event.getId());
+            roomManager.scheduleEvent(newRoom, event.getEventTime(), event.getDuration(), event.getId());
+            eventManager.changeRoom(event, roomNumber);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -167,6 +189,15 @@ public class OrganizerEventController extends EventMenuController {
         } else {
             return false;
         }
+    }
+
+
+    public boolean setEventMaxCapacity(Event event, int newMax){
+        if (newMax < event.getTotalNum()){
+            return false;
+        }
+        eventManager.setMaxCapacity(event, newMax);
+        return true;
     }
 
     /**

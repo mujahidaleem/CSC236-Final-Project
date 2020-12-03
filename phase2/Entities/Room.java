@@ -55,9 +55,13 @@ public class Room {
         return roomSchedule;
     }
 
-    public HashMap<ArrayList<LocalDateTime>, Integer> getShallowCopyRoomSchedule(){
-        return (HashMap<ArrayList<LocalDateTime>, Integer>) this.roomSchedule.clone();
+    public void removeEvent(int eventId){
+        this.roomSchedule.values().remove(eventId);
     }
 
+    public HashMap<ArrayList<LocalDateTime>, Integer> getRoomScheduleCopy(){
+        HashMap<ArrayList<LocalDateTime>, Integer> copy = (HashMap<ArrayList<LocalDateTime>, Integer>) this.getRoomSchedule().clone();
+        return copy;
+    }
 
 }

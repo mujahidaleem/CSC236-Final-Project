@@ -87,6 +87,17 @@ public class Event implements Serializable {
         return eventTime;
     }
 
+    public LocalDateTime getEndEventTime(){
+        return eventTime.plusMinutes(duration);
+    }
+
+    public ArrayList<LocalDateTime> getEventTimeRange(){
+        ArrayList<LocalDateTime> t = new ArrayList<>();
+        t.add(getEventTime());
+        t.add(getEndEventTime());
+        return t;
+    }
+
     /**
      * Change the room number of the event
      *
@@ -122,6 +133,10 @@ public class Event implements Serializable {
      */
     public int getOrganizer() {
         return organizer;
+    }
+
+    public int getTotalNum(){
+        return speakers.size() + attendees.size();
     }
 
     /**

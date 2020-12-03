@@ -5,12 +5,13 @@ import Entities.Event;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RoomManager {
     ArrayList<Room> rooms;
 
-    public RoomManager(ArrayList<Room> rooms){
-        this.rooms = rooms;
+    public RoomManager(){
+        this.rooms = new ArrayList<>();
     }
 
     public boolean hasRoom(int roomNum){
@@ -18,7 +19,7 @@ public class RoomManager {
     }
 
     public Room findRoom(int roomNum){
-        for (Room r: rooms){
+        for (Room r: this.rooms){
             if (roomNum == r.getRoomNumber()){
                 return r;
             }
@@ -54,13 +55,32 @@ public class RoomManager {
         return false;
     }
 
+
+
     public void scheduleEvent(Room room, LocalDateTime dateTime, int duration, int eventId){
         room.scheduleEvent(dateTime, dateTime.plusMinutes(duration), eventId);
     }
 
-    public boolean bookable(int roomNum, LocalDateTime dateTime, int duration){
+    public HashMap<ArrayList<LocalDateTime>, Integer> getRoomScheduleCopy(Room room){
+        return room.getRoomScheduleCopy();
+    }
+
+    /**
+     * for changing room of event or placing an event in a room
+     * @param roomNum
+     * @param dateTime
+     * @param duration
+     * @return
+     */
+    public boolean bookable(int roomNum, LocalDateTime dateTime, int duration){ // checks if a room is available for booking from dateTime to dateTime + duration
         Room room = findRoom(roomNum);
         return room.slotAvailable(dateTime, duration);
+    }
+
+
+    public boolean removeEvent(Room room, int eventId){
+        room.removeEvent(eventId);
+        return true;
     }
 
 }

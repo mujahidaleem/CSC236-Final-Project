@@ -10,6 +10,14 @@ public class OrganizerAccountCreatorFactory {
     private AdminManager adminManager;
     private UserManager userManager;
 
+    /**
+     * Constructor for the OrganizerAccountCreatorFactory
+     * @param organizerManager use case functions of an organizer
+     * @param speakerManager use case functions of a speaker
+     * @param attendeeManager use case functions of an attendee
+     * @param adminManager use case functions of an admin
+     * @param userManager use case functions of a user
+     */
     public OrganizerAccountCreatorFactory(OrganizerManager organizerManager,
                                           SpeakerManager speakerManager,
                                           AttendeeManager attendeeManager,
@@ -20,6 +28,14 @@ public class OrganizerAccountCreatorFactory {
         this.adminManager = adminManager;
         this.userManager = userManager;
     }
+
+    /**
+     * Returns a user depending on the accountType given
+     * @param name name of the user
+     * @param password password of the user
+     * @param accountType type of account
+     * @return returns the type of account given by accountType, otherwise returns null if the input is wrong
+     */
     public User createAccountFactory(String name, String password, String accountType){
         if (accountType.equals("Speaker") || accountType.equals("speaker")){
             if (password.contains(" ")) {

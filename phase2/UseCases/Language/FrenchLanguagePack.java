@@ -36,7 +36,7 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public void printOrganizerCommands() {
-        System.out.println("Pour créer un nouvel événement, tapez 3_Nom_YYYY-MM-DDTHH:mm:ss_numéro de chambre_id_la durée");
+        System.out.println("Pour créer un nouvel événement, tapez 3_Nom_YYYY-MM-DDTHH:mm:ss_numéro de chambre_id_la durée_capacité maximale");
         System.out.println("Pour affecter un orateur à un événement, tapez 4_événement_OrateurID");
         System.out.println("Pour supprimer un orateur d'un événement, tapez 5_événement");
         System.out.println("Pour supprimer un événement, tapez 6_événement");
@@ -104,10 +104,10 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
         return "La date n'a pas pu être lue. Veuillez réessayer.";
     }
 
-
-    public String speakerAccountSuccess(Speaker speaker) {
-        return "Le compte du conférencier a été créé avec le nom d'utilisateur " + speaker.getId() + " et le mot de passe temporaire " +
-                speaker.getPassword();
+    @Override
+    public String organizerAccountCreationSuccess(User user) {
+        return "Le compte du conférencier a été créé avec le nom d'utilisateur " + user.getId() + " et le mot de passe temporaire " +
+                user.getPassword();
     }
 
     @Override

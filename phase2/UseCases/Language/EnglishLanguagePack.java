@@ -1,7 +1,6 @@
 package UseCases.Language;
 
 import Entities.Events.Event;
-import Entities.Users.Speaker;
 import Entities.Users.User;
 
 import java.io.Serializable;
@@ -39,7 +38,7 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public void printOrganizerCommands() {
-        System.out.println("To create a new event, type 3_Name_YYYY-MM-DDTHH:mm:ss_roomNumber_id_duration");
+        System.out.println("To create a new event, type 3_Name_YYYY-MM-DDTHH:mm:ss_roomNumber_id_duration_max capacity");
         System.out.println("To assign a speaker to an event, type 4_Event_SpeakerID");
         System.out.println("To remove a speaker from an event, type 5_Event");
         System.out.println("To delete an event, type 6_Event");
@@ -108,10 +107,10 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
         return "The date could not be read. Please try again.";
     }
 
-
-    public String speakerAccountSuccess(Speaker speaker) {
-        return "Speaker account has been created with username " + speaker.getId() + " and temporary password " +
-                speaker.getPassword();
+    @Override
+    public String organizerAccountCreationSuccess(User user) {
+        return "Speaker account has been created with username " + user.getId() + " and temporary password " +
+                user.getPassword();
     }
 
     @Override

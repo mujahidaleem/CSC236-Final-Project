@@ -4,6 +4,7 @@ import Controllers.EventMenu.NullSpeakerException;
 import Entities.Events.Event;
 import Entities.Users.Speaker;
 import Controllers.EventMenu.OrganizerEventController;
+import Entities.Users.User;
 import UseCases.Events.EventManager;
 import UseCases.Events.SameEventNameException;
 import UseCases.Language.LanguageManager;
@@ -66,11 +67,11 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
                     }
                     break outer;
                 case "9":
-                    Speaker speaker = organizerEventController.createSpeaker(command[1], command[2]);
-                    if (speaker == null) {
-                        createSpeakerAccountResults(false, null);
+                    User user = organizerEventController.createAccount(command[1], command[2], command[3]);
+                    if (user == null) {
+                        createUserAccountResults(false, null);
                     } else {
-                        createSpeakerAccountResults(true, speaker);
+                        createUserAccountResults(true, user);
                     }
                     break outer;
                 case "10":
@@ -199,11 +200,11 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      * Prints the result of trying to create a speaker account
      *
      * @param i       determines whether the command was successful or not
-     * @param speaker the new speaker account that has been created
+     * @param user    the new user account that has been created
      */
-    public void createSpeakerAccountResults(boolean i, Speaker speaker) {
+    public void createUserAccountResults(boolean i, User user) {
         if (i) {
-            System.out.println(languageManager.languagePack.speakerAccountSuccess(speaker));
+            System.out.println(languageManager.languagePack.organizerAccountCreationSuccess(user));
         } else {
             System.out.println(languageManager.languagePack.speakerAccountFailure());
         }

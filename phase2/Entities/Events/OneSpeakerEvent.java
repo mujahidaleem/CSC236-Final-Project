@@ -24,31 +24,31 @@ public class OneSpeakerEvent extends Event {
 
     @Override
     public int getTotalNum() {
-        //TODO:
-        return 0;
+        return attendees.size() + 1;
     }
 
     @Override
-    public boolean addSpeaker(int speaker) {
-        //TODO:
+    public boolean addSpeaker(int speakerId) {
+        speaker = speakerId;
         return true;
     }
 
     @Override
-    public boolean removeSpeaker(int speaker){
-        //TODO:
-        return true;
+    public boolean removeSpeaker(int speakerId){
+        if (speakerId == speaker){
+            speaker = 0;
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean hasSpeaker() {
-        //TODO:
-        return true;
+        return speaker != 0;
     }
 
     @Override
     public int getSpeaker() {
-        //TODO:
-        return 0;
+        return speaker;
     }
 }

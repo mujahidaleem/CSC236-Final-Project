@@ -24,8 +24,7 @@ public class MultiSpeakerEvent extends Event {
 
     @Override
     public int getTotalNum() {
-        //TODO:
-        return 0;
+        return this.speakers.size() + this.attendees.size();
     }
 
     @Override
@@ -54,13 +53,19 @@ public class MultiSpeakerEvent extends Event {
 
     @Override
     public boolean hasSpeaker() {
-        //TODO:
-        return true;
+        if(!speakers.isEmpty()) {
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public int getSpeaker() {
-        //TODO:
+    public int getSpeaker(int speakerId) {
+        for (int i:speakers){
+            if (i == speakerId){
+                return i;
+            }
+        }
         return 0;
     }
 }

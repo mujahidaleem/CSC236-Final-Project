@@ -33,16 +33,6 @@ public class Admin extends User {
                     HashMap<String, LocalDateTime> schedule,
                     ArrayList<User> friends,ArrayList<int> attendees, ArrayList<int> speakers) {
             super(id, name, password, schedule, friends);
-            this.attendee=attendee;
-            this.speaker=speaker;
-        }
-
-        public int getAttendee(){
-            return this.attendee;
-        }
-
-        public int getSpeaker(){
-            return this.speaker;
         }
 }
 

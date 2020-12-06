@@ -1,13 +1,7 @@
 package Controllers.Factories;
 
-import Entities.Users.Attendee;
-import Entities.Users.Organizer;
-import Entities.Users.Speaker;
-import Entities.Users.User;
-import UseCases.Users.AttendeeManager;
-import UseCases.Users.OrganizerManager;
-import UseCases.Users.SpeakerManager;
-import UseCases.Users.UserManager;
+import Entities.Users.*;
+import UseCases.Users.*;
 
 import java.util.ArrayList;
 
@@ -61,5 +55,20 @@ public class FactoryUseCaseHelper {
             }
         }
         return attendeeManager;
+    }
+
+    /**
+     * Create an admin manager
+     *
+     * @return admin manager
+     */
+    AdminManager createAdminManager() {
+        AdminManager adminManager = new AdminManager(null, new ArrayList<>());
+        for (User user : userManager.users) {
+            if (user.getClass().equals(Admin.class)) {
+                adminManager.users.add(user);
+            }
+        }
+        return adminManager;
     }
 }

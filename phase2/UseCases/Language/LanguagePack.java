@@ -62,7 +62,7 @@ public interface LanguagePack {
      *
      * @return commands to login in
      */
-    String loggingInPrompt();
+    String[] loggingInPrompt();
 
     /**
      * Contains the strings that tell the user how to create an account
@@ -235,4 +235,10 @@ public interface LanguagePack {
      * @return a string telling the user their command is successful
      */
     String messageAllAttendeeForOneEventPrompt();
+
+    /**
+     * Contains the prompts related to saving the schedule as a pdf
+     * @return as tring telling the user how to save the schedule
+     */
+    String saveScheduleAsPdf();
 }

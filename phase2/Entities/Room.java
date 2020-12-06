@@ -2,11 +2,12 @@ package Entities;
 
 import Entities.Events.Event;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Room {
+public class Room implements Serializable {
     private int roomNumber;
     private int roomCapacity;
     private HashMap<ArrayList<LocalDateTime>, String> roomSchedule; // mapping (start time to end time) to event name

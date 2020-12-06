@@ -1,5 +1,6 @@
 package Controllers.EventMenu;
 
+import UseCases.Events.RoomManager;
 import UseCases.Users.SpeakerManager;
 import UseCases.Events.EventManager;
 
@@ -15,8 +16,8 @@ public class SpeakerEventController extends EventMenuController {
      * @param manager      contains the current speaker
      * @param eventManager contains the list of events
      */
-    public SpeakerEventController(SpeakerManager manager, EventManager eventManager) {
-        super(manager, eventManager);
+    public SpeakerEventController(SpeakerManager manager, EventManager eventManager, RoomManager roomManager) {
+        super(manager, eventManager, roomManager);
         this.speakerManager = manager;
     }
 }

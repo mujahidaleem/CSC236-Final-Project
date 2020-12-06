@@ -10,7 +10,6 @@ import java.time.format.DateTimeFormatter;
  * Contains all the strings for the event menu written in english
  */
 public class EnglishLanguagePack implements LanguagePack, Serializable {
-    private String language;
     public String directory;
 
     /**
@@ -19,7 +18,6 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
      * @param language the language of the strings
      */
     public EnglishLanguagePack(String language) {
-        this.language = language;
         this.directory = language + ".ser";
     }
 
@@ -120,22 +118,24 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String loginMenuGreeting(){
-        return "Welcome to the conference! Would you like to log into your existing account or" +
-                " create a new account?\n" +
-                "Please enter '1' to log into your existing account, and '2' to create a new account\n" +
-                "Enter 'exit' to exit the program.";
+        return "Welcome to the conference!";
+
+//        return "Welcome to the conference! Would you like to log into your existing account or" +
+//                " create a new account?\n" +
+//                "Please enter '1' to log into your existing account, and '2' to create a new account\n" +
+//                "Enter 'exit' to exit the program.";
     }
 
     @Override
-    public String loggingInPrompt(){
-        return "Please enter your ID NUMBER and PASSWORD, separated by a _ \nor input \"exit\" to go back.";
+    public String[] loggingInPrompt(){
+        return new String[] {"Username", "Password", "Create New Account", "Login"};
+
+        //return "Please enter your ID NUMBER and PASSWORD, separated by a _ \nor input \"exit\" to go back.";
     }
 
     @Override
     public String[] userCreationPrompt(){
-        return new String[]{"Please enter your first and last name separated by _",
-                "Please enter your password",
-                "Are you an attendee or an organizer? Please input \"attendee\" or \"organizer\" in lower case."};
+        return new String[]{"Creating a new account", "Name", "Password", "Attendee", "Organizer", "Create Account"};
     }
 
     @Override
@@ -152,7 +152,7 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
     public String mainMenuCommands(){
         return "---------------------------------------------------------------------------------\n" +
                 "Please select a sub menu. Type the number and press enter:\n" +
-                "1. Event Manager\n2. Messages\n3. Log out\n4. Change Password";
+                "1. Event Manager\n2. Messages\n3. Log out\n4. Change Password\n5. Save schedule";
     }
 
     @Override
@@ -231,5 +231,10 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
     @Override
     public String messageAllAttendeeForOneEventPrompt() {
         return "Please type the message you want to sent to all Attendees of this event.";
+    }
+
+    @Override
+    public String saveScheduleAsPdf() {
+        return "Please input where you want to save the file.";
     }
 }

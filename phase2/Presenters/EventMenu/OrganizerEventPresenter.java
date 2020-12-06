@@ -107,8 +107,6 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
             System.out.println(languageManager.languagePack.unknownSpeaker());
         } catch (DateTimeParseException e) {
             System.out.println(languageManager.languagePack.unknownDate());
-        } catch (SameEventNameException e) {
-            System.out.println(languageManager.languagePack.organizerEventResultsFailure(null)[0]);
         }
     }
 

@@ -59,7 +59,6 @@ public class MultiSpeakerEvent extends Event {
         return false;
     }
 
-    @Override
     public int getSpeaker(int speakerId) {
         for (int i:speakers){
             if (i == speakerId){

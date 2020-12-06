@@ -5,6 +5,7 @@ import Controllers.Factories.MessageMenuFactory;
 import Entities.Users.User;
 import Presenters.MainMenuPresenter;
 import UseCases.Events.EventManager;
+import UseCases.Events.RoomManager;
 import UseCases.Language.LanguageManager;
 import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
@@ -22,23 +23,22 @@ public class LoginMenuController {
      *
      * @param userManager stores the list of users
      */
-    public LoginMenuController(UserManager userManager, EventManager eventManager, UserFriendManager userFriendManager, LanguageManager languageManager) {
+    public LoginMenuController(UserManager userManager, EventManager eventManager, UserFriendManager userFriendManager, LanguageManager languageManager, RoomManager roomManager) {
         this.userManager = userManager;
         this.eventManager = eventManager;
         this.userFriendManager = userFriendManager;
-        this.eventMenuFactory = new EventMenuFactory(userManager, eventManager, userFriendManager, languageManager);
+        this.eventMenuFactory = new EventMenuFactory(userManager, eventManager, userFriendManager, languageManager, roomManager);
         this.messageMenuFactory = new MessageMenuFactory(userManager, eventManager, userFriendManager, languageManager);
     }
 
     /**
      * Checks if the login credentials are correct.
      *
-     * @param command the inputted login credentials
+     * @param id the inputted username
+     * @param password the inputted password
      * @return The user with those login credentials or nothing if the credentials are wrong
      */
-    public User checkLogin(String command) {
-        int id = Integer.parseInt(command.split("_")[0]);
-        String password = command.split("_")[1];
+    public User checkLogin(int id, String password) {
         for (User user : userManager.users) {
             if (user.getId() == id && user.getPassword().equals(password)) {
                 userManager.setCurrentUser(user);

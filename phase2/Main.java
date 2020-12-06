@@ -1,9 +1,11 @@
 import Controllers.LoginMenuController;
+import GUI.LoginMenuFrame;
+import Gateways.RoomReader;
 import Gateways.UserReader;
 import Gateways.EventReader;
 import Gateways.MessageReader;
-import Presenters.LoginMenuPresenter;
 import UseCases.Events.EventManager;
+import UseCases.Events.RoomManager;
 import UseCases.Language.LanguageManager;
 import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
@@ -12,27 +14,33 @@ import UseCases.Users.UserManager;
 public class Main {
     public static void main(String[] args) {
 
-
-
-//        initialize();
+        initialize();
         UserReader userReader = new UserReader("userManager.ser");
         EventReader eventReader = new EventReader("eventManager.ser");
         MessageReader messageReader = new MessageReader("userFriendManager.ser");
+        RoomReader roomReader = new RoomReader("roomManager.ser");
 
         UserManager userManager = userReader.readFile();
         EventManager eventManager = eventReader.readFile();
         UserFriendManager userFriendManager = messageReader.readFile();
-        LanguageManager languageManager = new LanguageManager("french");
+        LanguageManager languageManager = new LanguageManager("english");
+        RoomManager roomManager = roomReader.readFile();
+//
+        LoginMenuController loginMenuController = new LoginMenuController(userManager, eventManager, userFriendManager, languageManager, roomManager);
+//        LoginMenuPresenter loginMenuPresenter = new LoginMenuPresenter(loginMenuController, languageManager);
+//        loginMenuPresenter.run();
+//
+//        userFriendManager.setCurrentUser(null);
+//        userManager.setCurrentUser(null);
+//        userReader.saveFile(userManager);
+//        eventReader.saveFile(eventManager);
+//        messageReader.saveFile(userFriendManager);
 
-        LoginMenuController loginMenuController = new LoginMenuController(userManager, eventManager, userFriendManager, languageManager);
-        LoginMenuPresenter loginMenuPresenter = new LoginMenuPresenter(loginMenuController, languageManager);
-        loginMenuPresenter.run();
+        LoginMenuFrame loginMenuFrame = new LoginMenuFrame(languageManager, loginMenuController, userManager);
+        loginMenuFrame.showMenu();
 
-        userFriendManager.setCurrentUser(null);
-        userManager.setCurrentUser(null);
-        userReader.saveFile(userManager);
-        eventReader.saveFile(eventManager);
-        messageReader.saveFile(userFriendManager);
+//        MainMenuGUI mainMenuGUI = new MainMenuGUI();
+//        mainMenuGUI.showMenu();
     }
 
     public static void initialize() {

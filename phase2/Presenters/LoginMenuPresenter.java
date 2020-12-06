@@ -45,7 +45,7 @@ public class LoginMenuPresenter {
                     break outer;
                 case "1":
                     System.out.println(languageManager.languagePack.loggingInPrompt());
-                    loginCommand(scanner.next());
+                    //loginCommand(scanner.next());
                     break;
                 case "2":
                     System.out.println(languageManager.languagePack.userCreationPrompt()[0]);
@@ -68,23 +68,23 @@ public class LoginMenuPresenter {
         }
     }
 
-    /**
-     * The login security checkpoint
-     * Inputted USERID_PASSWORD is checked. If correct the user moves to their main menu
-     * Otherwise, go back to run()
-     *
-     * @param command inputted USERID_PASSWORD from run method
-     */
-    public void loginCommand(String command) {
-        if (command.equals("exit")) {
-            return;
-        }
-        if (loginMenuController.checkLogin(command) != null) {
-            loginMenuController.login(languageManager).run();
-        } else {
-            System.out.println(languageManager.languagePack.incorrectLoginCredentials());
-        }
-    }
+//    /**
+//     * The login security checkpoint
+//     * Inputted USERID_PASSWORD is checked. If correct the user moves to their main menu
+//     * Otherwise, go back to run()
+//     *
+//     * @param command inputted USERID_PASSWORD from run method
+//     */
+//    public void loginCommand(String command) {
+//        if (command.equals("exit")) {
+//            return;
+//        }
+//        if (loginMenuController.checkLogin(command) != null) {
+//            loginMenuController.login(languageManager).run();
+//        } else {
+//            System.out.println(languageManager.languagePack.incorrectLoginCredentials());
+//        }
+//    }
 
     /**
      * Generic Greeting message

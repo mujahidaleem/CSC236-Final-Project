@@ -1,14 +1,12 @@
 package UseCases.Language;
 
 import Entities.Events.Event;
-import Entities.Users.Speaker;
 import Entities.Users.User;
 
 import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
 
 public class FrenchLanguagePack implements LanguagePack, Serializable {
-    private String language;
     public String directory;
 
     /**
@@ -17,7 +15,6 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
      * @param language the language of the strings
      */
     public FrenchLanguagePack(String language) {
-        this.language = language;
         this.directory = language + ".ser";
     }
 
@@ -124,8 +121,9 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     }
 
     @Override
-    public String loggingInPrompt(){
-        return "Veuillez saisir votre identifiant et votre mot de passe, séparés par un _ \nou tapez 'exit' pour revenir en arrière.";
+    public String[] loggingInPrompt(){
+        return new String[]{"a", "b", "c", "d"}; //TODO
+        //return "Veuillez saisir votre identifiant et votre mot de passe, séparés par un _ \nou tapez 'exit' pour revenir en arrière.";
     }
 
     @Override
@@ -229,5 +227,10 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     @Override
     public String messageAllAttendeeForOneEventPrompt() {
         return "Veuillez saisir le message que vous souhaitez envoyer à tous les Attendees à cet événement.";
+    }
+
+    @Override
+    public String saveScheduleAsPdf() {
+        return "veuillez saisir où vous souhaitez enregistrer le fichier.";
     }
 }

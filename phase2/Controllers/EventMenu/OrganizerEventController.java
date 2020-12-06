@@ -6,6 +6,7 @@ import Entities.Events.MultiSpeakerEvent;
 import Entities.Events.OneSpeakerEvent;
 import Entities.Room;
 import Entities.Users.*;
+import UseCases.Events.EventFactory;
 import UseCases.Events.EventManager;
 import UseCases.Events.RoomManager;
 import UseCases.Events.SameEventNameException;
@@ -15,9 +16,9 @@ import java.time.LocalDateTime;
 
 public class OrganizerEventController extends EventMenuController {
     private OrganizerManager organizerManager;
-    private RoomManager roomManager;
     private SpeakerManager speakerManager;
     private OrganizerAccountCreatorFactory organizerAccountCreatorFactory;
+    private EventFactory eventFactory;
 
     /**
      * OrganizerEventController constructor
@@ -30,11 +31,20 @@ public class OrganizerEventController extends EventMenuController {
     public OrganizerEventController(OrganizerManager manager, RoomManager roomManager,
                                     EventManager eventManager, UserManager userManager, SpeakerManager speakerManager,
                                     OrganizerAccountCreatorFactory organizerAccountCreatorFactory){
-        super(userManager, eventManager);
+        super(userManager, eventManager, roomManager);
         this.organizerManager = manager;
-        this.roomManager = roomManager;
         this.speakerManager = speakerManager;
         this.organizerAccountCreatorFactory = organizerAccountCreatorFactory;
+        this.eventFactory = new EventFactory();
+    }
+
+    public Event createEvent(String name, LocalDateTime dateTime, int roomNumber, int maxCapacity, int duration, String type){
+        if (dateTime.isAfter(LocalDateTime.now()) && eventManager.nameAvailable(name) && roomManager.hasRoom(roomNumber)
+                && roomManager.bookable(roomNumber, dateTime, duration)) {
+            return eventFactory.createEvent(name,roomNumber,maxCapacity,dateTime, duration, organizerManager.getCurrentOrganizer().getId(), type);
+        } else {
+            return null;
+        }
     }
 
     /**

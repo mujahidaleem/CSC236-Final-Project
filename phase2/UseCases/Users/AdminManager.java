@@ -55,29 +55,11 @@ public class AdminManager extends UserManager {
 
 
     /**
-     * get Attendees of a event
-     */
-    public ArrayList<Integer> getEventAttendees(Event event){
-        return event.getAttendees();
-    }
-
-    /**
-     * get Speaker of a event
-     */
-    public Speaker getEventSpeakers(Event event){
-        Speaker result=null;
-        if(event.hasSpeaker()==true){
-            result = event.getSpeaker();
-        }
-        return result;
-    }
-
-    /**
-     * cancel a event
+     * cancel a event if there is no attendee
      */
     public void cancelEventWithoutAttendee(Event event){
-       if(length(event.getAttendees)==0){
-           this.currentAdmin.getSpeaker()
+       if(length(event.getAttendees)==0 && (event.getEventTime().isAfter(LocalDateTime.now()))){
+           event.removeEvent();
        }
 
     }

@@ -31,7 +31,7 @@ public class Admin extends User {
         public Admin(int id, String name,
                     String password,
                     HashMap<String, LocalDateTime> schedule,
-                    ArrayList<User> friends,int attendee, int speaker) {
+                    ArrayList<User> friends,ArrayList<int> attendees, ArrayList<int> speakers) {
             super(id, name, password, schedule, friends);
             this.attendee=attendee;
             this.speaker=speaker;

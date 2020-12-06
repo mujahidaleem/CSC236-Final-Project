@@ -14,6 +14,11 @@ public class RoomManager {
         this.rooms = new ArrayList<>();
     }
 
+    public Room addRoom(int capacity){
+        Room newRoom = new Room(rooms.size(), capacity);
+        return newRoom;
+    }
+
     public boolean hasRoom(int roomNum){
         return this.roomsToRoomNums().contains(roomNum);
     }
@@ -35,13 +40,9 @@ public class RoomManager {
         return roomNums;
     }
 
-    public boolean addRoom(int roomNum, int capacity){
-        ArrayList<Integer> roomNums = this.roomsToRoomNums();
-        if (roomNums.contains(roomNum)){
-            return false;
-        }
-        rooms.add(new Room(roomNum, capacity));
-        return true;
+    public int getRoomCapacity(int roomNum){
+        Room r = this.findRoom(roomNum);
+        return r.getRoomCapacity();
     }
 
     public boolean removeRoom(int roomNum){
@@ -57,10 +58,6 @@ public class RoomManager {
 
     public void scheduleEvent(Room room, LocalDateTime dateTime, int duration, Event event){
         room.scheduleEvent(dateTime, dateTime.plusMinutes(duration), event);
-    }
-
-    public HashMap<ArrayList<LocalDateTime>, Integer> getRoomScheduleCopy(Room room){
-        return room.getRoomScheduleCopy();
     }
 
     /**

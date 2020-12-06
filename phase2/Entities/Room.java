@@ -9,8 +9,8 @@ import java.util.HashMap;
 public class Room {
     private int roomNumber;
     private int roomCapacity;
-    private HashMap<ArrayList<LocalDateTime>, String> roomSchedule; // mapping (start time to end time) to event_id
-
+    private HashMap<ArrayList<LocalDateTime>, String> roomSchedule; // mapping (start time to end time) to event name
+                                                                    // eg. {[9:30am, 10:30am]:"Christmas", [11:00am, 12:30pm]:"Halloween"}
     public Room(int roomNumber, int roomCapacity){
         this.roomNumber = roomNumber;
         this.roomCapacity = roomCapacity;
@@ -25,13 +25,13 @@ public class Room {
         return roomCapacity;
     }
 
-    public boolean setRoomCapacity(int newRoomCapacity){
-        if (newRoomCapacity > 0){
-            roomCapacity = newRoomCapacity;
-            return true;
-        }
-        return false;
-    }
+//    public boolean setRoomCapacity(int newRoomCapacity){
+//        if (newRoomCapacity > 0){
+//            roomCapacity = newRoomCapacity;
+//            return true;
+//        }
+//        return false;
+//    }
 
     public void scheduleEvent(LocalDateTime startTime, LocalDateTime endTime, Event event){
         ArrayList<LocalDateTime> start_to_end = new ArrayList<>();
@@ -61,7 +61,4 @@ public class Room {
         this.roomSchedule.values().remove(event.getEventName());
     }
 
-    public HashMap<ArrayList<LocalDateTime>, Integer> getRoomScheduleCopy(){
-        return (HashMap<ArrayList<LocalDateTime>, Integer>) roomSchedule.clone();
-    }
 }

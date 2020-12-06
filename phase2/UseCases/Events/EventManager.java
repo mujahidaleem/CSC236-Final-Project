@@ -1,6 +1,8 @@
 package UseCases.Events;
 
 import Entities.Events.Event;
+import Entities.Events.MultiSpeakerEvent;
+import Entities.Events.OneSpeakerEvent;
 import Entities.Users.Attendee;
 import Entities.Users.Organizer;
 import Entities.Users.Speaker;
@@ -25,6 +27,13 @@ public class EventManager implements Serializable {
         this.eventFactory = new EventFactory();
     }
 
+    public boolean spaceAvailable(Event event){
+        if (event.getTotalNum() < event.getMaxCapacity()){
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Add an attendee to an event
      *
@@ -32,11 +41,8 @@ public class EventManager implements Serializable {
      * @param attendee given attendee
      * @return boolean - if the attendee was added
      */
-    public boolean addAttendee(Event event, User attendee) {
-        if (event.getTotalNum() < event.getMaxCapacity()) {
-            return event.add(attendee);
-        }
-        return false;
+    public void addAttendee(Event event, User attendee) {
+        event.add(attendee);
     }
 
     /**
@@ -46,8 +52,8 @@ public class EventManager implements Serializable {
      * @param attendee given attendee
      * @return return if the attendee was removed or not
      */
-    public boolean removeAttendee(Event event, Attendee attendee) {
-        return event.remove(attendee);
+    public void removeAttendee(Event event, Attendee attendee) {
+        event.remove(attendee);
     }
 
     /**
@@ -69,28 +75,53 @@ public class EventManager implements Serializable {
         return event.getOrganizer();
     }
 
+
     /**
-     * Create an event (used by organizer)
+     * Creates an event with no speakers (used by organizer)
      *
      * @param name       name of the event
-     * @param date       date of the event
+     * @param dateTime       date of the event
      * @param organizer  organizer of the event
      * @param roomNumber room number of the event
      * @return newEvent - a new event
      */
-    public Event createEvent(String name, LocalDateTime date, Organizer organizer, int roomNumber, int duration, int maxCapacity, String type) throws SameEventNameException {
-        for (Event event : events) {
-            if (event.getEventName().equals(name)){
-                throw new SameEventNameException();
-            }
-            if(event.getEventTime().isEqual(date) && event.getRoomNumber() == roomNumber){
-                return null;
-            }
-        }
-        Event newEvent = eventFactory.createEvent(name, roomNumber, maxCapacity, date, duration, organizer.getId(), type);
-        events.add(newEvent);
-        organizer._eventsOrganizing.put(name, date);
-        return newEvent;
+
+    public Event createAttendeeOnlyEvent(String name, LocalDateTime dateTime, int duration, Organizer organizer,
+                                                     int roomNumber, int maxCapacity){
+        int organizerId = organizer.getId();
+        return new Event(name, roomNumber, maxCapacity, dateTime, duration, organizerId);
+    }
+
+    /**
+     * Creates an event with multiple speakers (used by organizer)
+     *
+     * @param name       name of the event
+     * @param dateTime       date of the event
+     * @param organizer  organizer of the event
+     * @param roomNumber room number of the event
+     * @return newEvent - a new event
+     */
+
+    public MultiSpeakerEvent createMultiSpeakerEvent(String name, LocalDateTime dateTime, int duration, Organizer organizer,
+                                                     int roomNumber, int maxCapacity){
+        int organizerId = organizer.getId();
+        return new MultiSpeakerEvent(name, roomNumber, maxCapacity, dateTime, duration, organizerId);
+    }
+
+    /**
+     * Creates an event with multiple speakers (used by organizer)
+     *
+     * @param name       name of the event
+     * @param dateTime       date of the event
+     * @param organizer  organizer of the event
+     * @param roomNumber room number of the event
+     * @return newEvent - a new event
+     */
+
+    public OneSpeakerEvent createOneSpeakerEvent(String name, LocalDateTime dateTime, int duration, Organizer organizer,
+                                                     int roomNumber, int maxCapacity){
+        int organizerId = organizer.getId();
+        return new OneSpeakerEvent(name, roomNumber, maxCapacity, dateTime, duration, organizerId);
     }
 
     /**
@@ -108,7 +139,7 @@ public class EventManager implements Serializable {
      * @param event given event
      */
     public void removeSpeaker(Event event, int speaker) {
-        event.addSpeaker(0);
+        event.removeSpeaker(speaker);
     }
 
     /**
@@ -148,8 +179,8 @@ public class EventManager implements Serializable {
      * @param event given event
      * @param user  given user
      */
-    public void addUser(Event event, User user) {
-        event.getAttendees().add(user.getId());
+    public boolean addUser(Event event, User user) {
+        return event.getAttendees().add(user.getId());
     }
 
     /**
@@ -174,7 +205,7 @@ public class EventManager implements Serializable {
      * @param speaker given speaker of the event
      * @param event   given event
      */
-    public void setSpeaker(Speaker speaker, Event event) {
+    public void addSpeaker(Speaker speaker, Event event) {
         event.addSpeaker(speaker.getId());
     }
 
@@ -188,20 +219,38 @@ public class EventManager implements Serializable {
         return event.hasSpeaker();
     }
 
-    /**
-     * Change the room number of an event
-     *
-     * @param event      given event
-     * @param roomNumber room number of an event
-     * @return boolean - if the event was moved
-     */
-    public boolean changeRoom(Event event, int roomNumber) {
-        for (Event e : events) {
-            if (e.getRoomNumber() == roomNumber && e.getEventTime().isEqual(event.getEventTime())) {
+//    /**
+//     * Change the room number of an event
+//     *
+//     * @param event      given event
+//     * @param roomNumber room number of an event
+//     * @return boolean - if the event was moved
+//     */
+//    public boolean changeRoom(Event event, int roomNumber) {
+//        for (Event e : events) {
+//            if (e.getRoomNumber() == roomNumber && e.getEventTime().isEqual(event.getEventTime())) {
+//                return false;
+//            }
+//        }
+//        event.setRoomNumber(roomNumber);
+//        return true;
+//    }
+
+    public void setDuration(Event event, int duration){
+        event.setDuration(duration);
+    }
+
+    public void setMaxCapacity(Event event, int newMax){
+        event.setMaxCapacity(newMax);
+    }
+
+
+    public boolean nameAvailable(String name) {
+        for (Event e:events){
+            if (e.getEventName().equals(name)){
                 return false;
             }
         }
-        event.setRoomNumber(roomNumber);
         return true;
     }
 }

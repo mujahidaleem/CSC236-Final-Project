@@ -2,6 +2,7 @@ package Controllers.EventMenu;
 
 import Entities.Events.Event;
 import UseCases.Events.EventManager;
+import UseCases.Events.RoomManager;
 import UseCases.Users.UserManager;
 
 /**
@@ -10,6 +11,7 @@ import UseCases.Users.UserManager;
 public abstract class EventMenuController {
     public UserManager userManager;
     public EventManager eventManager;
+    public RoomManager roomManager;
 
     /**
      * AttendeeEventController constructor
@@ -17,9 +19,10 @@ public abstract class EventMenuController {
      * @param userManager  contains the attendee using the current session
      * @param eventManager contains the list of events
      */
-    public EventMenuController(UserManager userManager, EventManager eventManager) {
+    public EventMenuController(UserManager userManager, EventManager eventManager, RoomManager roomManager) {
         this.userManager = userManager;
         this.eventManager = eventManager;
+        this.roomManager = roomManager;
     }
 
     /**
@@ -29,7 +32,11 @@ public abstract class EventMenuController {
      * @return whether the user has signed up for the event
      */
     public boolean signUpForEvent(Event event) {
-        if (eventManager.addAttendee(event, userManager.getCurrentUser())) {
+
+        boolean canBook = eventManager.spaceAvailable(event) &&                                     // if event still Event and Room still has space
+                roomManager.getRoomCapacity(event.getRoomNumber()) >= event.getTotalNum() + 1;
+
+        if (canBook && eventManager.addUser(event, userManager.getCurrentUser())) {
             userManager.attendEvent(event);
             return true;
         } else {

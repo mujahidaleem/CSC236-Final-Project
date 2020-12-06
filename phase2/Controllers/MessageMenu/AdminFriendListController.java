@@ -6,14 +6,22 @@ public class AdminFriendListController extends UserFriendListController {
     /**
      * AttendeeFriendList constructor
      *
-     * @param attendeeFriendManager The friend list manager use case,
+     * @param adminFriendManager The friend list manager use case,
      *                              holds methods relevant to manipulating attendee friend lists
      */
-    public AdminFriendListController(AdminFriendListController userFriendManager) {
-        super(UserFriendManager);
-        AdminFriendManager adminFriendManager = (AdminFriendManager)  userFriendManager;
-        this.Admin
+    public AdminFriendListController(AdminFriendManager adminFriendManager,AdminMessagePresenter adminMessagePresenter) {
+        super(adminFriendManager);
+        this.adminMessagePresenter=adminMessagePresenter;
+    }
 
+    /**
+     * getter fot AdminMessagePresenter
+     * @return
+     */
+
+    public AdminMessagePresenter getAdminMessagePresenter() {
+        return adminMessagePresenter;
     }
 }
+
 

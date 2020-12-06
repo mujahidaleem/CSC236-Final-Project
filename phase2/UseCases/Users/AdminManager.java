@@ -53,6 +53,7 @@ public class AdminManager extends UserManager {
         }
     }
 
+
     /**
      * get Attendees of a event
      */
@@ -72,22 +73,16 @@ public class AdminManager extends UserManager {
     }
 
     /**
-     * get eventTime
+     * cancel a event
      */
-    public LocalDateTime getTime(Event event){
-        return event.getEventTime();
-    }
+    public void cancelEventWithoutAttendee(Event event){
+       if(length(event.getAttendees)==0){
+           this.currentAdmin.getSpeaker()
+       }
 
-    /**
-     * check attendency
-     */
-    public int ckeckSpeakerAttendency(Speaker speaker){
-        return speaker.getAbsent();
-    }
-
-    public int ckeckAttendeeAttendency(Attendee attendee){
-        return attendee.getAbsent();
     }
 
 }
+
+
 

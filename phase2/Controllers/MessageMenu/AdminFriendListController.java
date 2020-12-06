@@ -3,8 +3,9 @@ package Controllers.MessageMenu;
 public class AdminFriendListController extends UserFriendListController {
     public AdminMessagePresenter adminMessagePresenter;
 
+
     /**
-     * AttendeeFriendList constructor
+     * AdminFriendList constructor
      *
      * @param adminFriendManager The friend list manager use case,
      *                              holds methods relevant to manipulating attendee friend lists
@@ -15,13 +16,14 @@ public class AdminFriendListController extends UserFriendListController {
     }
 
     /**
-     * getter fot AdminMessagePresenter
+     * getter for AdminMessagePresenter
      * @return
      */
 
     public AdminMessagePresenter getAdminMessagePresenter() {
         return adminMessagePresenter;
     }
+
 }
 
 

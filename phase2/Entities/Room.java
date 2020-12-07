@@ -26,14 +26,6 @@ public class Room implements Serializable {
         return roomCapacity;
     }
 
-//    public boolean setRoomCapacity(int newRoomCapacity){
-//        if (newRoomCapacity > 0){
-//            roomCapacity = newRoomCapacity;
-//            return true;
-//        }
-//        return false;
-//    }
-
     public void scheduleEvent(LocalDateTime startTime, LocalDateTime endTime, Event event){
         ArrayList<LocalDateTime> start_to_end = new ArrayList<>();
         start_to_end.add(startTime);

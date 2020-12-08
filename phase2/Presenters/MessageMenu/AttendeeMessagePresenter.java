@@ -7,7 +7,6 @@ import UseCases.Users.UserManager;
 
 public class AttendeeMessagePresenter extends MessageMenuPresenter {
     AttendeeFriendListController attendeeFriendListController;
-    public AdminManager adminManager;
 
     /**
      * AttendeeMessagePresenter constructor
@@ -19,16 +18,8 @@ public class AttendeeMessagePresenter extends MessageMenuPresenter {
      */
 
     public AttendeeMessagePresenter(AttendeeFriendListController attendeeFriendListController, UserManager userManager,
-                                    UserFriendManager userFriendManager, LanguageManager languageManager,
-                                    AdminManager adminManager) {
+                                    UserFriendManager userFriendManager, LanguageManager languageManager) {
         super(attendeeFriendListController, userManager, userFriendManager, languageManager);
         this.attendeeFriendListController = attendeeFriendListController;
-        this.adminManager=adminManager;
-    }
-
-    public void displayCancleEventWithoutAttendee(){
-        if(this.adminManager.cancleEventWithoutAttendee()==true){
-            System.out.println("you have canceled this event");
-        }
     }
 }

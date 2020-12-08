@@ -18,12 +18,12 @@ import java.util.HashMap;
 public class ScheduleSaver {
     private EventManager eventManager;
     private PdfGenerator pdfGenerator;
-    private float tableX = 36;
-    private float tableY = 36;
-    private float tableWidth = 500;
-    private float tableHeight = 750;
-    private float tableCellWidth = 63.5f;
-    private float tableCellHeight = 30f;
+    private int tableX = 36;
+    private int tableY = 36;
+    private int tableWidth = 500;
+    private int tableHeight = 750;
+    private int tableCellWidth = tableWidth/8;
+    private int tableCellHeight = tableHeight/25;
 
     /**
      * Constructor for Gateways.ScheduleSaver
@@ -44,7 +44,7 @@ public class ScheduleSaver {
      * @param under  fills in the colour of the block
      * @param over   draws the block
      */
-    protected void drawBlock(Event event, int order, int number, PdfContentByte under, PdfContentByte over) {
+    private void drawBlock(Event event, int order, int number, PdfContentByte under, PdfContentByte over) {
         under.saveState();
         BaseColor colour = WebColors.getRGBColor("CYAN");
         under.setColorFill(colour);
@@ -65,7 +65,7 @@ public class ScheduleSaver {
      * @param directContent writes the String
      * @throws DocumentException tells the program if the document cannot be accessed
      */
-    protected void writeEventInfo(Event event, int order, int number, PdfContentByte directContent) throws DocumentException {
+    private void writeEventInfo(Event event, int order, int number, PdfContentByte directContent) throws DocumentException {
         Rectangle rectangle = getPosition(event, order, number);
         ColumnText columnText = new ColumnText(directContent);
         columnText.setSimpleColumn(new Phrase(event.getEventName() + "\n" + event.getRoomNumber()), rectangle.getLeft(), rectangle.getBottom(), rectangle.getLeft() + rectangle.getWidth(), rectangle.getBottom() + rectangle.getHeight(), 10, Element.ALIGN_CENTER);
@@ -78,7 +78,7 @@ public class ScheduleSaver {
      * @throws IOException       tells the user that the file could not be saved
      * @throws DocumentException tells the user that the document cannot be accessed
      */
-    public void generatePDF() throws DocumentException, IOException {
+    public void generatePDF(LocalDateTime date) throws DocumentException, IOException {
         Document doc = new Document();
 
         PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("Schedule.pdf"));
@@ -93,7 +93,7 @@ public class ScheduleSaver {
 
         PdfContentByte under = writer.getDirectContentUnder();
         PdfContentByte over = writer.getDirectContent();
-        addEvents(over, under);
+        addEvents(over, under, date);
 
         doc.close();
     }
@@ -105,12 +105,12 @@ public class ScheduleSaver {
      * @param under fills in the colour of the rectangles
      * @throws DocumentException tells the user that the document could not be accessed
      */
-    private void addEvents(PdfContentByte over, PdfContentByte under) throws DocumentException {
+    private void addEvents(PdfContentByte over, PdfContentByte under, LocalDateTime date) throws DocumentException {
         HashMap<LocalDateTime, ArrayList<Integer>> orders = new HashMap<LocalDateTime, ArrayList<Integer>>();
-        HashMap<LocalDateTime, Integer> number = pdfGenerator.eventsOnHour(getStartOfWeek());
+        HashMap<LocalDateTime, Integer> number = pdfGenerator.eventsOnHour(pdfGenerator.getStartOfWeek(date));
 
         for (Event event : pdfGenerator.sortEvents()) {
-            if (event.getEventTime().isAfter(getStartOfWeek()) && event.getEventTime().isBefore(getStartOfWeek().plusDays(7))) {
+            if (event.getEventTime().isAfter(pdfGenerator.getStartOfWeek(date)) && event.getEventTime().isBefore(pdfGenerator.getStartOfWeek(date).plusDays(7))) {
                 int order = 0;
                 try {
                     while (orders.get(event.getEventTime()).contains(order)) {
@@ -138,7 +138,7 @@ public class ScheduleSaver {
      *
      * @param directContent draws the lines
      */
-    protected void drawTimeTable(PdfContentByte directContent) {
+    private void drawTimeTable(PdfContentByte directContent) {
         directContent.saveState();
         directContent.setLineWidth(1.2f);
         float llx, lly, urx, ury;
@@ -160,7 +160,7 @@ public class ScheduleSaver {
      *
      * @param directContent draws the dotted lines
      */
-    protected void drawTimeSlots(PdfContentByte directContent) {
+    private void drawTimeSlots(PdfContentByte directContent) {
         directContent.saveState();
         float x;
         x = tableX + tableCellWidth - 8;
@@ -209,21 +209,6 @@ public class ScheduleSaver {
     }
 
     /**
-     * Gets the date of the start of the week (the sunday of the current week)
-     *
-     * @return the date of the start of the week
-     */
-    public LocalDateTime getStartOfWeek() {
-        LocalDateTime date = LocalDateTime.now();
-        while (!date.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
-            date = date.minusDays(1);
-        }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String now = date.format(formatter) + "T00:00:00";
-        return LocalDateTime.parse(now);
-    }
-
-    /**
      * Returns the position and size of the rectangle corresponding to an event on the time table
      *
      * @param event  the event whose block is being drawn
@@ -231,17 +216,9 @@ public class ScheduleSaver {
      * @param number the total number of blocks in a time block
      * @return the block representing the event on the time table
      */
-    private Rectangle getPosition(Event event, int order, int number) {
-        DayOfWeek[] days = new DayOfWeek[]{DayOfWeek.SUNDAY, DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY};
-        float x = 0;
-        float y = 0;
-        int i = 0;
-        while (!event.getEventTime().getDayOfWeek().equals(days[i])) {
-            i++;
-        }
-        x = tableX + (i * tableCellWidth) - 8 + order * (tableCellWidth / number);
-        y = tableY + ((24 - event.getEventTime().getHour()) * tableCellHeight);
-        return new Rectangle(x, y - tableCellHeight, x + (tableCellWidth) / number, y - tableCellHeight - (event.getDuration() / 60f) * tableCellHeight);
+    public Rectangle getPosition(Event event, int order, int number) {
+        Integer[] coordinates = pdfGenerator.getPosition(event, order, number, tableX, tableY, tableCellWidth, tableCellHeight, "pdf");
+        return new Rectangle(coordinates[0], coordinates[1], coordinates[2], coordinates[3]);
     }
 
     /**
@@ -251,7 +228,7 @@ public class ScheduleSaver {
      * @param event the event in question
      * @return the largest number of blocks present in one of the time blocks that the current event is part of
      */
-    private int getLargestNumber(HashMap<LocalDateTime, Integer> map, Event event) {
+    public int getLargestNumber(HashMap<LocalDateTime, Integer> map, Event event) {
         int i = 0;
         for (int j = 0; j < event.getDuration() / 60; j++) {
             if (i < map.get(event.getEventTime().plusHours(j))) {

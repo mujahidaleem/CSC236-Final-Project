@@ -3,7 +3,10 @@ package UseCases;
 import Entities.Events.Event;
 import UseCases.Events.EventManager;
 
+import java.awt.*;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -71,5 +74,32 @@ public class PdfGenerator {
             }
         }
         return map;
+    }
+
+    public Integer[] getPosition(Event event, int order, int number, int tableX, int tableY, int tableCellWidth, int tableCellHeight, String type) {
+        DayOfWeek[] days = new DayOfWeek[]{DayOfWeek.SUNDAY, DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY};
+        int x = 0;
+        int y = 0;
+        int i = 0;
+        while (!event.getEventTime().getDayOfWeek().equals(days[i])) {
+            i++;
+        }
+        x = tableX + (i * tableCellWidth) - 8 + order * (tableCellWidth / number);
+        if (type.equals("swing")) {
+            y = tableY - (24 - event.getEventTime().getHour() * tableCellHeight);
+            return new Integer[]{x, y, x + (tableCellWidth) / number, y + (event.getDuration() / 60) * tableCellHeight};
+        } else {
+            y = tableY + (24 - event.getEventTime().getHour()) * tableCellHeight;
+            return new Integer[]{x, y, x + (tableCellWidth / number), y - (event.getDuration() / 60) * tableCellHeight};
+        }
+    }
+
+    public LocalDateTime getStartOfWeek(LocalDateTime date) {
+        while (!date.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+            date = date.minusDays(1);
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String now = date.format(formatter) + "T00:00:00";
+        return LocalDateTime.parse(now);
     }
 }

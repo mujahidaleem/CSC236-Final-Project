@@ -1,4 +1,7 @@
 import Controllers.LoginMenuController;
+import Entities.Events.Event;
+import Entities.Users.Attendee;
+import Entities.Users.User;
 import GUI.LoginMenuFrame;
 import Gateways.RoomReader;
 import Gateways.UserReader;
@@ -13,20 +16,24 @@ import UseCases.Users.UserManager;
 
 public class Main {
     public static void main(String[] args) {
-
+//
         initialize();
         UserReader userReader = new UserReader("userManager.ser");
         EventReader eventReader = new EventReader("eventManager.ser");
-        MessageReader messageReader = new MessageReader("userFriendManager.ser");
+//        MessageReader messageReader = new MessageReader("userFriendManager.ser");
         RoomReader roomReader = new RoomReader("roomManager.ser");
-
-        UserManager userManager = userReader.readFile();
-        EventManager eventManager = eventReader.readFile();
-        UserFriendManager userFriendManager = messageReader.readFile();
-        LanguageManager languageManager = new LanguageManager("english");
-        RoomManager roomManager = roomReader.readFile();
+        roomReader.createTable();
 //
-        LoginMenuController loginMenuController = new LoginMenuController(userManager, eventManager, userFriendManager, languageManager, roomManager);
+//        UserManager userManager = userReader.readFile();
+//        EventManager eventManager = eventReader.readFile();
+//        eventReader.saveEventManager(eventManager);
+//        EventManager eventManager1 = eventReader.readData();
+
+//        UserFriendManager userFriendManager = messageReader.readFile();
+//        LanguageManager languageManager = new LanguageManager("english");
+//        RoomManager roomManager = roomReader.readFile();
+//
+//        LoginMenuController loginMenuController = new LoginMenuController(userManager, eventManager, userFriendManager, languageManager, roomManager);
 //        LoginMenuPresenter loginMenuPresenter = new LoginMenuPresenter(loginMenuController, languageManager);
 //        loginMenuPresenter.run();
 //
@@ -36,8 +43,8 @@ public class Main {
 //        eventReader.saveFile(eventManager);
 //        messageReader.saveFile(userFriendManager);
 
-        LoginMenuFrame loginMenuFrame = new LoginMenuFrame(languageManager, loginMenuController, userManager);
-        loginMenuFrame.showMenu();
+//        LoginMenuFrame loginMenuFrame = new LoginMenuFrame(languageManager, loginMenuController, userManager);
+//        loginMenuFrame.showMenu();
 
 //        MainMenuGUI mainMenuGUI = new MainMenuGUI();
 //        mainMenuGUI.showMenu();

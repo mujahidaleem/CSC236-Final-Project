@@ -15,7 +15,7 @@ public class User implements Serializable {
     private int id;
     private String password;
     private HashMap<String, LocalDateTime> personalSchedule;
-    private ArrayList<User> friendList;
+    private ArrayList<Integer> friendList;
 
 
     /**
@@ -31,7 +31,7 @@ public class User implements Serializable {
     public User(int id, String name,
                 String password,
                 HashMap<String, LocalDateTime> schedule,
-                ArrayList<User> friends) {
+                ArrayList<Integer> friends) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -71,7 +71,7 @@ public class User implements Serializable {
      *
      * @return _friendList
      */
-    public List<User> getFriendList() {
+    public ArrayList<Integer> getFriendList() {
         return friendList;
     }
 

@@ -1,14 +1,23 @@
 package Gateways;
 
+import Entities.Events.AttendeeOnlyEvent;
+import Entities.Events.Event;
+import Entities.Events.MultiSpeakerEvent;
+import Entities.Events.OneSpeakerEvent;
+import Entities.Users.User;
 import UseCases.Events.EventManager;
+import UseCases.Users.UserManager;
 
 import java.io.*;
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
  * An instance of this reads files and returns information on events
  */
-public class EventReader {
+public class EventReader extends MySQLReader {
     String fileName;
 
     /**
@@ -67,5 +76,105 @@ public class EventReader {
         } catch (IOException e) {
             System.out.println("Error initializing stream.");
         }
+    }
+
+    public void createTable() {
+        String myTableName = "CREATE TABLE IF NOT EXISTS events(" +
+                "eventName VARCHAR(64) NOT NULL," +
+                "eventType VARCHAR(64)," +
+                "roomNumber INT(64)," +
+                "date DATETIME," +
+                "organizer INT(64)," +
+                "maxCapacity INT(64)," +
+                "duration INT(64)," +
+                "speakers VARCHAR(64)," +
+                "attendees VARCHAR(64))";
+        try {
+            Class.forName(jdbcDriver);
+            Connection conn = DriverManager.getConnection(url, userName, password);
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(myTableName);
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public EventManager readData() {
+        EventManager eventManager = new EventManager(new ArrayList<>());
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(url, userName, password);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from events");
+            while (rs.next()) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime date = LocalDateTime.parse(rs.getString("date"), formatter);
+                System.out.println(date);
+                eventManager.createEvent(rs.getString("eventType"), rs.getString("eventName"),
+                        date, rs.getInt("duration"), rs.getInt("organizer"), rs.getInt("roomNumber"),
+                        rs.getInt("maxCapacity"), turnStringIntoArrayList(rs.getString("attendees")), turnStringIntoArrayList(rs.getString("speakers")));
+
+            }
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return eventManager;
+    }
+
+    public void saveEventManager(EventManager eventManager) {
+        cleanTable("events");
+        for (Event event : eventManager.getEvents()) {
+            try {
+                Class.forName(jdbcDriver);
+                Connection conn = DriverManager.getConnection(url, userName, password);
+                Statement stmt = conn.createStatement();
+                stmt.executeUpdate(generateInformation(event));
+                conn.close();
+            } catch (ClassNotFoundException | SQLException e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    private String generateInformation(Event event) {
+        if (event.getClass() == AttendeeOnlyEvent.class) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            Date date = Date.valueOf(event.getEventTime().format(formatter));
+            return "INSERT INTO events(eventName, eventType, roomNumber, date, organizer, maxCapacity, duration, attendees) " +
+                    "VALUES('" + event.getEventName() + "', 'attendeeOnlyEvent', " + event.getRoomNumber() + "', '" + date + "', '" + event.getOrganizer() +
+                    "', '" + event.getMaxCapacity() + "', '" + event.getDuration() + "', '" + turnArrayIntoString(event.attendees) + "')";
+        } else if (event.getClass() == OneSpeakerEvent.class) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            Date date = Date.valueOf(event.getEventTime().format(formatter));
+            return "INSERT INTO events(eventName, eventType, roomNumber, date, organizer, maxCapacity, duration, speakers, attendees) " +
+                    "VALUES('" + event.getEventName() + "', 'oneSpeakerEvent', " + event.getRoomNumber() + "', '" + date + "', '" + event.getOrganizer() +
+                    "', '" + event.getMaxCapacity() + "', '" + event.getDuration() + "', '" + event.getSpeaker() + "', '" + turnArrayIntoString(event.attendees) + "')";
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            Date date = Date.valueOf(event.getEventTime().format(formatter));
+            return "INSERT INTO events(eventName, eventType, roomNumber, date, organizer, maxCapacity, duration, speakers, attendees) " +
+                    "VALUES('" + event.getEventName() + "', 'multipleSpeakerEvent', " + event.getRoomNumber() + "', '" + date + "', '" + event.getOrganizer() +
+                    "', '" + event.getMaxCapacity() + "', '" + event.getDuration() + "', '" +
+                    ((MultiSpeakerEvent) event).getSpeakers() + "', '" + turnArrayIntoString(event.attendees) + "')";
+        }
+    }
+
+    private String turnArrayIntoString(ArrayList<Integer> arrayList) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i : arrayList) {
+            stringBuilder.append(i).append("_");
+        }
+        return stringBuilder.toString();
+    }
+
+    private ArrayList<Integer> turnStringIntoArrayList(String string){
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        String[] strings = string.split("_");
+        for(String s: strings){
+            arrayList.add(Integer.parseInt(s));
+        }
+        return arrayList;
     }
 }

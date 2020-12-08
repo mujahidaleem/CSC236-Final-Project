@@ -5,6 +5,7 @@ import Entities.Events.MultiSpeakerEvent;
 import Entities.Events.OneSpeakerEvent;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class EventFactory {
 
@@ -24,15 +25,16 @@ public class EventFactory {
      * @param type the type of the event
      * @return the new event
      */
-    public Event createEvent(String name, int roomNumber, int maxCapacity, LocalDateTime time, int duration, int organizer, String type){
-        if (type.equals("no speakers")){
-            return new Event(name, roomNumber, maxCapacity, time, duration, organizer);
-        } else if (type.equals("one speaker")){
-            return new OneSpeakerEvent(name, roomNumber, maxCapacity, time, duration, organizer);
-        } else if (type.equals("multiple speakers")){
-            return new MultiSpeakerEvent(name, roomNumber, maxCapacity, time, duration, organizer);
-        } else {
-            return null;
+    public Event createEvent(String name, int roomNumber, int maxCapacity, LocalDateTime time, int duration, int organizer, String type, ArrayList<Integer> attendees,ArrayList<Integer> speakers){
+        switch (type) {
+            case "no speakers":
+                return new Event(name, roomNumber, maxCapacity, time, duration, organizer, attendees);
+            case "one speaker":
+                return new OneSpeakerEvent(name, roomNumber, maxCapacity, time, duration, organizer, attendees, speakers.get(0));
+            case "multiple speakers":
+                return new MultiSpeakerEvent(name, roomNumber, maxCapacity, time, duration, organizer, attendees, speakers);
+            default:
+                return null;
         }
     }
 }

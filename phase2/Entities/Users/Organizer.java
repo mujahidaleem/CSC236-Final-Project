@@ -14,14 +14,14 @@ public class Organizer extends User {
     /**
      * Organizer constructor
      *
-     * @param id       A unique id representing the
+     * @param id       A unique id representing the Organizer
      * @param name     A string representing the name of the Organizer
      * @param password A string representing the password of the Organizer
-     * @param schedule A list of events that the speaker is attending
-     * @param friends  A list of manageable Organizers of the speaker
+     * @param schedule A list of events that the Organizer is attending
+     * @param friends  A list of messageable users of the Organizer
      */
     public Organizer(int id, String name, String password, HashMap<String, LocalDateTime> schedule,
-                     ArrayList<User> friends, HashMap<String, LocalDateTime> eventsOrganizing) {
+                     ArrayList<Integer> friends, HashMap<String, LocalDateTime> eventsOrganizing) {
         super(id, name, password, schedule, friends);
         _eventsOrganizing = eventsOrganizing;
     }

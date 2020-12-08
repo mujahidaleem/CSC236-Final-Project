@@ -1,26 +1,20 @@
 package Gateways;
 
-import Entities.Users.Attendee;
-import Entities.Users.Organizer;
-import Entities.Users.Speaker;
-import Entities.Users.User;
+import Entities.Users.*;
 import UseCases.Users.UserManager;
 
 import java.io.*;
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * An instance of this reads files and returns information on users
  */
-public class UserReader {
-    String jdbcDriver = "com.mysql.jdbc.Driver";
-    String url ="jdbc:mysql://localhost:3306/phase2";
-    String userName ="root";
-    String password = "csc207group0700";
-
+public class UserReader extends MySQLReader{
+    private AccountCreatorFactory factory;
     String fileName;
 
     /**
@@ -30,6 +24,7 @@ public class UserReader {
      */
     public UserReader(String fileName) {
         this.fileName = fileName;
+        this.factory = new AccountCreatorFactory();
     }
 
     /**
@@ -81,16 +76,39 @@ public class UserReader {
         }
     }
 
+    public void createTable(){
+        String myTableName = "CREATE TABLE IF NOT EXISTS Users(" +
+                "id INT(64) NOT NULL," +
+                "password VARCHAR(20)," +
+                "fullName VARCHAR (64)," +
+                "accountType VARCHAR (64)," +
+                "eventsAttending VARCHAR(64)," +
+                "friends VARCHAR(64),"+
+                "eventsOrganizing VARCHAR(64)," +
+                "eventsSpeaking VARCHAR(64))";
+        try{
+            Class.forName(jdbcDriver);
+            Connection conn = DriverManager.getConnection(url, userName, password);
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(myTableName);
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e){
+            System.out.println(e);
+        }
+    }
+
     public UserManager readData(){
         UserManager userManager = new UserManager(null, new ArrayList<>());
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(url,userName,password);
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from users ORder BY id ");
+            ResultSet rs = stmt.executeQuery("select * from users ORDER BY id ");
             while (rs.next()){
-                userManager.addUser(rs.getString(3), rs.getString(2),rs.getString(4));
-                System.out.println(rs.getInt(1)+" " + rs.getString(3) + " "+ rs.getString(2)+" " +rs.getString(4));
+                userManager.addUser(rs.getInt("id"), rs.getString("fullName"),
+                        rs.getString("password"), rs.getString("accountType"),
+                        turnStringIntoHashMap(rs.getString("eventsAttending")), turnStringToArrayList(rs.getString("friends")),
+                        turnStringIntoHashMap(rs.getString("eventsOrganizing")), turnStringIntoHashMap(rs.getString("eventsSpeaking")));
             }
             conn.close();
         } catch (Exception e){
@@ -100,7 +118,7 @@ public class UserReader {
     }
 
     public void saveUserManager(UserManager userManager) {
-        cleanTable();
+        cleanTable("users");
         for (User user : userManager.getUsers()) {
             try {
                 Class.forName(jdbcDriver);
@@ -116,25 +134,24 @@ public class UserReader {
 
     private String generateInformation(User user){
         if(user.getClass() == Attendee.class){
-            return "INSERT INTO users(id, fullName, password, accountType, eventsAttending) " +
+            return "INSERT INTO users(id, fullName, password, accountType, eventsAttending, friends) " +
                     "VALUES('" + user.getId() + "', '" + user.getName() + "', '" + user.getPassword() + "', 'attendee', '"
-                    + turnArrayIntoString(user.getPersonalSchedule())+"')";
+                    + turnHashMapIntoString(user.getPersonalSchedule())+"', '" + turnArrayListIntoString(user.getFriendList())+"')";
         } else if (user.getClass() == Organizer.class){
-            return "INSERT INTO users(id, fullName, password, accountType, eventsAttending, eventsOrganizing) " +
+            return "INSERT INTO users(id, fullName, password, accountType, eventsAttending, friends, eventsOrganizing) " +
                     "VALUES('" + user.getId() + "', '" + user.getName() + "', '" + user.getPassword() + "', 'organizer', '"
-                    +turnArrayIntoString(user.getPersonalSchedule())+
-                    "', '"+turnArrayIntoString(((Organizer)user).get_eventsOrganizing())+"')";
+                    + turnHashMapIntoString(user.getPersonalSchedule())+ "', '" + turnArrayListIntoString(user.getFriendList())+
+                    "', '"+ turnHashMapIntoString(((Organizer)user).get_eventsOrganizing())+"')";
         } else if (user.getClass() == Speaker.class){
-            return "INSERT INTO users(id, fullName, password, accountType, eventsAttending, eventsSpeaking) " +
+            return "INSERT INTO users(id, fullName, password, accountType, eventsAttending, friends, eventsSpeaking) " +
                     "VALUES('" + user.getId() + "', '" + user.getName() + "', '" + user.getPassword() + "', 'speaker', '"
-                    +turnArrayIntoString(user.getPersonalSchedule())+
-                    "', '"+ turnArrayIntoString(((Speaker) user).getSpeakingSchedule())+"')";
+                    + turnHashMapIntoString(user.getPersonalSchedule())+ "', '" + turnArrayListIntoString(user.getFriendList())+
+                    "', '"+ turnHashMapIntoString(((Speaker) user).getSpeakingSchedule())+"')";
         } else {
             return ""; //TODO
         }
     }
-
-    private String turnArrayIntoString(HashMap<String, LocalDateTime> arrayList){
+    private String turnHashMapIntoString(HashMap<String, LocalDateTime> arrayList){
         StringBuilder string = new StringBuilder();
         for (String s: arrayList.keySet()){
             string.append(s).append(":").append(arrayList.get(s)).append("_");
@@ -142,15 +159,34 @@ public class UserReader {
         return string.toString();
     }
 
-    private void cleanTable(){
-        try {
-            Class.forName(jdbcDriver);
-            Connection conn = DriverManager.getConnection(url, userName, password);
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate("DELETE FROM users");
-            conn.close();
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e);
+    private HashMap<String, LocalDateTime> turnStringIntoHashMap(String string){
+        HashMap<String, LocalDateTime> map = new HashMap<>();
+        String[] strings = string.split("_");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        for(String s:strings){
+            String[] s1 = s.split(":");
+            String event = s1[0];
+            LocalDateTime date = LocalDateTime.parse(s1[1], formatter);
+            map.put(event, date);
         }
+        return map;
     }
+
+    private String turnArrayListIntoString(ArrayList<Integer> arrayList){
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i:arrayList){
+            stringBuilder.append(i).append("_");
+        }
+        return stringBuilder.toString();
+    }
+
+    private ArrayList<Integer> turnStringToArrayList(String string){
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        String[] strings = string.split("_");
+        for(String s:strings){
+            arrayList.add(Integer.parseInt(s));
+        }
+        return arrayList;
+    }
+
 }

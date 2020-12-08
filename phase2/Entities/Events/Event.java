@@ -5,6 +5,8 @@ import Entities.Users.User;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 
 /**
@@ -30,13 +32,13 @@ public class Event implements Serializable {
      * @param event_organizer organizer of the event
      */
     public Event(String name, int num, int maxCapacity, LocalDateTime time, int duration,
-                 int event_organizer) {
+                 int event_organizer, ArrayList<Integer> attendees) {
         this.eventName = name;
         this.roomNumber = num;
         this.eventTime = time;
         this.duration = duration;
         this.maxCapacity = maxCapacity;
-        this.attendees = new ArrayList<>();
+        this.attendees = attendees;
         this.organizer = event_organizer;
     }
 
@@ -218,7 +220,8 @@ public class Event implements Serializable {
      */
     @Override
     public String toString() {
-        return eventName + " " + eventTime;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return eventName + " " + eventTime.format(formatter);
     }
 
 }

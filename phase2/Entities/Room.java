@@ -11,11 +11,11 @@ public class Room implements Serializable {
     private int roomNumber;
     private int roomCapacity;
     private HashMap<ArrayList<LocalDateTime>, String> roomSchedule; // mapping (start time to end time) to event name
-                                                                    // eg. {[9:30am, 10:30am]:"Christmas", [11:00am, 12:30pm]:"Halloween"}
-    public Room(int roomNumber, int roomCapacity){
+    // eg. {[9:30am, 10:30am]:"Christmas", [11:00am, 12:30pm]:"Halloween"}
+    public Room(int roomNumber, int roomCapacity, HashMap<ArrayList<LocalDateTime>, String> map){
         this.roomNumber = roomNumber;
         this.roomCapacity = roomCapacity;
-        this.roomSchedule = new HashMap<>();
+        this.roomSchedule = map;
     }
 
     public int getRoomNumber() {
@@ -25,6 +25,14 @@ public class Room implements Serializable {
     public int getRoomCapacity() {
         return roomCapacity;
     }
+
+//    public boolean setRoomCapacity(int newRoomCapacity){
+//        if (newRoomCapacity > 0){
+//            roomCapacity = newRoomCapacity;
+//            return true;
+//        }
+//        return false;
+//    }
 
     public void scheduleEvent(LocalDateTime startTime, LocalDateTime endTime, Event event){
         ArrayList<LocalDateTime> start_to_end = new ArrayList<>();

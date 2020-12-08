@@ -75,54 +75,60 @@ public class EventManager implements Serializable {
         return event.getOrganizer();
     }
 
-
-    /**
-     * Creates an event with no speakers (used by organizer)
-     *
-     * @param name       name of the event
-     * @param dateTime       date of the event
-     * @param organizer  organizer of the event
-     * @param roomNumber room number of the event
-     * @return newEvent - a new event
-     */
-
-    public Event createAttendeeOnlyEvent(String name, LocalDateTime dateTime, int duration, Organizer organizer,
-                                                     int roomNumber, int maxCapacity){
-        int organizerId = organizer.getId();
-        return new Event(name, roomNumber, maxCapacity, dateTime, duration, organizerId);
+    public Event createEvent(String type, String name, LocalDateTime dateTime, int duration, int organizerID, int roomNumber,
+                             int maxCapacity, ArrayList<Integer> attendees, ArrayList<Integer> speakers){
+        Event event = eventFactory.createEvent(name, roomNumber, maxCapacity, dateTime, duration, organizerID, type, attendees, speakers);
+        events.add(event);
+        return event;
     }
 
-    /**
-     * Creates an event with multiple speakers (used by organizer)
-     *
-     * @param name       name of the event
-     * @param dateTime       date of the event
-     * @param organizer  organizer of the event
-     * @param roomNumber room number of the event
-     * @return newEvent - a new event
-     */
-
-    public MultiSpeakerEvent createMultiSpeakerEvent(String name, LocalDateTime dateTime, int duration, Organizer organizer,
-                                                     int roomNumber, int maxCapacity){
-        int organizerId = organizer.getId();
-        return new MultiSpeakerEvent(name, roomNumber, maxCapacity, dateTime, duration, organizerId);
-    }
-
-    /**
-     * Creates an event with multiple speakers (used by organizer)
-     *
-     * @param name       name of the event
-     * @param dateTime       date of the event
-     * @param organizer  organizer of the event
-     * @param roomNumber room number of the event
-     * @return newEvent - a new event
-     */
-
-    public OneSpeakerEvent createOneSpeakerEvent(String name, LocalDateTime dateTime, int duration, Organizer organizer,
-                                                     int roomNumber, int maxCapacity){
-        int organizerId = organizer.getId();
-        return new OneSpeakerEvent(name, roomNumber, maxCapacity, dateTime, duration, organizerId);
-    }
+//    /**
+//     * Creates an event with no speakers (used by organizer)
+//     *
+//     * @param name       name of the event
+//     * @param dateTime       date of the event
+//     * @param organizer  organizer of the event
+//     * @param roomNumber room number of the event
+//     * @return newEvent - a new event
+//     */
+//
+//    public Event createAttendeeOnlyEvent(String name, LocalDateTime dateTime, int duration, Organizer organizer,
+//                                                     int roomNumber, int maxCapacity){
+//        int organizerId = organizer.getId();
+//        return new Event(name, roomNumber, maxCapacity, dateTime, duration, organizerId, new ArrayList<>());
+//    }
+//
+//    /**
+//     * Creates an event with multiple speakers (used by organizer)
+//     *
+//     * @param name       name of the event
+//     * @param dateTime       date of the event
+//     * @param organizer  organizer of the event
+//     * @param roomNumber room number of the event
+//     * @return newEvent - a new event
+//     */
+//
+//    public MultiSpeakerEvent createMultiSpeakerEvent(String name, LocalDateTime dateTime, int duration, Organizer organizer,
+//                                                     int roomNumber, int maxCapacity){
+//        int organizerId = organizer.getId();
+//        return new MultiSpeakerEvent(name, roomNumber, maxCapacity, dateTime, duration, organizerId);
+//    }
+//
+//    /**
+//     * Creates an event with multiple speakers (used by organizer)
+//     *
+//     * @param name       name of the event
+//     * @param dateTime       date of the event
+//     * @param organizer  organizer of the event
+//     * @param roomNumber room number of the event
+//     * @return newEvent - a new event
+//     */
+//
+//    public OneSpeakerEvent createOneSpeakerEvent(String name, LocalDateTime dateTime, int duration, Organizer organizer,
+//                                                     int roomNumber, int maxCapacity){
+//        int organizerId = organizer.getId();
+//        return new OneSpeakerEvent(name, roomNumber, maxCapacity, dateTime, duration, organizerId);
+//    }
 
     /**
      * Get events that the manager is managing

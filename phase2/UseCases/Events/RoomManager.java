@@ -15,7 +15,7 @@ public class RoomManager {
     }
 
     public Room addRoom(int capacity){
-        Room newRoom = new Room(rooms.size(), capacity);
+        Room newRoom = new Room(rooms.size(), capacity, new HashMap<>());
         return newRoom;
     }
 
@@ -76,6 +76,14 @@ public class RoomManager {
     public boolean removeEvent(Room room, Event event){
         room.removeEvent(event);
         return true;
+    }
+
+    public ArrayList<Room> getRooms(){
+        return rooms;
+    }
+
+    public void addRoom(Room room){
+        rooms.add(room);
     }
 
 }

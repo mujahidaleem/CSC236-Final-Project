@@ -9,7 +9,7 @@ import java.util.HashMap;
  * speak at events or attending events like an attendee.
  */
 public class Speaker extends User {
-    public HashMap<String, LocalDateTime> _speakingSchedule;
+    public HashMap<String, LocalDateTime> speakingSchedule;
 
     /**
      * Speaker constructor
@@ -21,9 +21,9 @@ public class Speaker extends User {
      * @param speakingSchedule A list of events that the speaker will be speaking at
      */
     public Speaker(int id, String name, String password, HashMap<String, LocalDateTime> schedule,
-                   ArrayList<User> friends, HashMap<String, LocalDateTime> speakingSchedule) {
+                   ArrayList<Integer> friends, HashMap<String, LocalDateTime> speakingSchedule) {
         super(id, name, password, schedule, friends);
-        _speakingSchedule = speakingSchedule;
+        this.speakingSchedule = speakingSchedule;
     }
 
     /**
@@ -32,6 +32,6 @@ public class Speaker extends User {
      * @return returns a Hashmap of event names corresponding to the date and time in which the event is happening
      */
     public HashMap<String, LocalDateTime> getSpeakingSchedule() {
-        return _speakingSchedule;
+        return speakingSchedule;
     }
 }

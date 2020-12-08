@@ -1,6 +1,7 @@
 package Entities.Events;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class AttendeeOnlyEvent extends Event{
     /**
@@ -16,7 +17,7 @@ public class AttendeeOnlyEvent extends Event{
      * @param duration
      * @param event_organizer organizer of the event
      */
-    public AttendeeOnlyEvent(int id, String name, int num, int maxCapacity, LocalDateTime time, int duration, int event_organizer) {
-        super(name, num, maxCapacity, time, duration, event_organizer);
+    public AttendeeOnlyEvent(int id, String name, int num, int maxCapacity, LocalDateTime time, int duration, int event_organizer, ArrayList<Integer> attendees) {
+        super(name, num, maxCapacity, time, duration, event_organizer, attendees);
     }
 }

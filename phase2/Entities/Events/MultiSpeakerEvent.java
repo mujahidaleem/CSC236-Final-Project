@@ -17,9 +17,10 @@ public class MultiSpeakerEvent extends Event {
      * @param duration
      * @param eventOrganizer organizer of the event
      */
-    public MultiSpeakerEvent(String name, int num, int maxCapacity, LocalDateTime time, int duration, int eventOrganizer) {
-        super(name, num, maxCapacity, time, duration, eventOrganizer);
-        this.speakers = new ArrayList<>();
+    public MultiSpeakerEvent(String name, int num, int maxCapacity, LocalDateTime time, int duration,
+                             int eventOrganizer, ArrayList<Integer> attendees, ArrayList<Integer> speakers) {
+        super(name, num, maxCapacity, time, duration, eventOrganizer, attendees);
+        this.speakers = speakers;
     }
 
     @Override

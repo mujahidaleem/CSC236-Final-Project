@@ -10,6 +10,10 @@ import UseCases.Language.LanguageManager;
 import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class LoginMenuController {
     protected UserManager userManager;
@@ -66,7 +70,8 @@ public class LoginMenuController {
      * @param type     the type of the user.
      */
     public void signUp(String name, String password, String type) {
-        userManager.addUser(name, password, type);
+        userManager.addUser(userManager.getUsers().size() + 1000, name, password, type,
+                new HashMap<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
     }
 
     /**

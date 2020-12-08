@@ -42,9 +42,9 @@ public class Initializer {
         userManager.users.add(jason);
         userManager.users.add(job);
 
-        Event christmas = new Event("Christmas", 100, 3, LocalDateTime.parse("2020-11-27T18:00:00"), 1001, 60);
-        Event halloween = new Event("Halloween", 101, 3, LocalDateTime.parse("2020-11-28T18:00:00"), 1001, 120);
-        Event birthday = new Event("Birthday", 102, 3, LocalDateTime.parse("2020-11-27T19:00:00"),1001,120);
+        Event christmas = new Event("Christmas", 100, 3, LocalDateTime.parse("2020-11-27T18:00:00"), 1001, 60, new ArrayList<>());
+        Event halloween = new Event("Halloween", 101, 3, LocalDateTime.parse("2020-11-28T18:00:00"), 1001, 120, new ArrayList<>());
+        Event birthday = new Event("Birthday", 102, 3, LocalDateTime.parse("2020-11-27T19:00:00"),1001,120, new ArrayList<>());
 
         EventManager eventManager = new EventManager(new ArrayList<>());
         eventManager.getEvents().add(christmas);

@@ -1,6 +1,5 @@
 package Entities.Events;
 
-import Entities.Users.Speaker;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,8 +17,10 @@ public class OneSpeakerEvent extends Event {
      * @param duration
      * @param eventOrganizer organizer of the event
      */
-    public OneSpeakerEvent(String name, int num, int maxCapacity, LocalDateTime time, int duration, int eventOrganizer) {
-        super(name, num, maxCapacity, time, duration, eventOrganizer);
+    public OneSpeakerEvent(String name, int num, int maxCapacity, LocalDateTime time, int duration, int eventOrganizer,
+                           ArrayList<Integer> attendees, int speaker) {
+        super(name, num, maxCapacity, time, duration, eventOrganizer, attendees);
+        this.speaker = speaker;
     }
 
     @Override

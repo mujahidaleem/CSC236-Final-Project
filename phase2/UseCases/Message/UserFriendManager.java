@@ -2,6 +2,7 @@ package UseCases.Message;
 
 import Entities.Users.User;
 import Entities.Message;
+import UseCases.Users.UserManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,17 +18,17 @@ public abstract class UserFriendManager implements Serializable {
      * @param userToMessages - a dictionary mapping users to their messages sent and received from friends
      */
 
-    public UserFriendManager(HashMap<ArrayList<User>, ArrayList<Message>> userToMessages, User currentUser) {
+    public UserFriendManager(HashMap<ArrayList<User>, ArrayList<Message>> userToMessages, User user) {
         this.userToMessages = userToMessages;
-        this.currentUser = currentUser;
+        this.currentUser = user;
     }
 
     /**
      * Prints out the friends of the user
      */
-    public void displayFriend() {
-        for (User user : currentUser.getFriendList()) {
-            System.out.println(user);
+    public void displayFriend(UserManager userManager) {
+        for (int userId : currentUser.getFriendList()) {
+            System.out.println(userManager.getUsers().get(userId-1000));
         }
     }
 
@@ -91,7 +92,7 @@ public abstract class UserFriendManager implements Serializable {
      */
 
     public void addNewFriend(User newFriend) {
-        currentUser.getFriendList().add(newFriend);
+        currentUser.getFriendList().add(newFriend.getId());
         userToMessages.put(createKey(currentUser, newFriend), new ArrayList<>());
     }
 

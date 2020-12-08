@@ -5,6 +5,7 @@ import Controllers.EventMenu.OrganizerEventController;
 import Controllers.EventMenu.SpeakerEventController;
 import Entities.Users.Attendee;
 import Entities.Users.Organizer;
+import Entities.Users.AccountCreatorFactory;
 import Presenters.EventMenu.AttendeeEventPresenter;
 import Presenters.EventMenu.EventMenuPresenter;
 import Presenters.EventMenu.OrganizerEventPresenter;
@@ -54,10 +55,8 @@ public class EventMenuFactory {
             OrganizerManager organizerManager = factoryUseCaseHelper.createOrganizerManager();
             organizerManager.setCurrentUser(userManager.getCurrentUser());
             SpeakerManager speakerManager = factoryUseCaseHelper.createSpeakerManager();
-            AttendeeManager attendeeManager = factoryUseCaseHelper.createAttendeeManager();
-            AdminManager adminManager = factoryUseCaseHelper.createAdminManager();
-            OrganizerAccountCreatorFactory organizerAccountCreatorFactory = new OrganizerAccountCreatorFactory(organizerManager, speakerManager, attendeeManager, adminManager, userManager);
-            OrganizerEventController organizerEventController = new OrganizerEventController(organizerManager, roomManager, eventManager, userManager, speakerManager, organizerAccountCreatorFactory);
+            AccountCreatorFactory accountCreatorFactory = new AccountCreatorFactory();
+            OrganizerEventController organizerEventController = new OrganizerEventController(organizerManager, roomManager, eventManager, userManager, speakerManager, accountCreatorFactory);
             return new OrganizerEventPresenter(organizerManager, speakerManager, organizerEventController, eventManager, languageManager);
         } else {
             SpeakerManager speakerManager = factoryUseCaseHelper.createSpeakerManager();

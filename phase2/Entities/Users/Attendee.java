@@ -19,7 +19,7 @@ public class Attendee extends User {
      * @param schedule A list of events that the speaker is attending
      * @param friends  A list of manageable Attendees of the speaker
      */
-    public Attendee(int id, String name, String password, HashMap<String, LocalDateTime> schedule, ArrayList<User> friends) {
+    public Attendee(int id, String name, String password, HashMap<String, LocalDateTime> schedule, ArrayList<Integer> friends) {
         super(id, name, password, schedule, friends);
     }
 

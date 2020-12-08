@@ -1,6 +1,6 @@
 package Controllers.EventMenu;
 
-import Controllers.Factories.OrganizerAccountCreatorFactory;
+import Entities.Users.AccountCreatorFactory;
 import Entities.Events.Event;
 import Entities.Events.MultiSpeakerEvent;
 import Entities.Events.OneSpeakerEvent;
@@ -9,15 +9,16 @@ import Entities.Users.*;
 import UseCases.Events.EventFactory;
 import UseCases.Events.EventManager;
 import UseCases.Events.RoomManager;
-import UseCases.Events.SameEventNameException;
 import UseCases.Users.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class OrganizerEventController extends EventMenuController {
     private OrganizerManager organizerManager;
     private SpeakerManager speakerManager;
-    private OrganizerAccountCreatorFactory organizerAccountCreatorFactory;
+    private AccountCreatorFactory accountCreatorFactory;
     private EventFactory eventFactory;
 
     /**
@@ -30,88 +31,90 @@ public class OrganizerEventController extends EventMenuController {
      */
     public OrganizerEventController(OrganizerManager manager, RoomManager roomManager,
                                     EventManager eventManager, UserManager userManager, SpeakerManager speakerManager,
-                                    OrganizerAccountCreatorFactory organizerAccountCreatorFactory){
+                                    AccountCreatorFactory accountCreatorFactory){
         super(userManager, eventManager, roomManager);
         this.organizerManager = manager;
         this.speakerManager = speakerManager;
-        this.organizerAccountCreatorFactory = organizerAccountCreatorFactory;
+        this.accountCreatorFactory = accountCreatorFactory;
         this.eventFactory = new EventFactory();
     }
 
     public Event createEvent(String name, LocalDateTime dateTime, int roomNumber, int maxCapacity, int duration, String type){
         if (dateTime.isAfter(LocalDateTime.now()) && eventManager.nameAvailable(name) && roomManager.hasRoom(roomNumber)
                 && roomManager.bookable(roomNumber, dateTime, duration)) {
-            return eventFactory.createEvent(name,roomNumber,maxCapacity,dateTime, duration, organizerManager.getCurrentOrganizer().getId(), type);
+            ArrayList<Integer> speakers = new ArrayList<>();
+            speakers.add(0);
+            return eventManager.createEvent(type, name,dateTime,duration,organizerManager.getCurrentOrganizer().getId(), roomNumber, maxCapacity, new ArrayList<>(), speakers);
         } else {
             return null;
         }
     }
 
-    /**
-     * Tries to create an event with no speakers and add it to the list of events if event name is available and
-     * if the event created does not create double booking.
-     *
-     * @param name       the name of the new event
-     * @param dateTime       when the new event will happen
-     * @param roomNum where the new event will happen
-     * @return whether or not the event can be created
-     */
-
-    public Event createAttendeeOnlyEvent(String name, int roomNum, int maxCapacity, LocalDateTime dateTime,
-                                                     int duration) {
-        Event eventCreated = eventManager.createAttendeeOnlyEvent(name, dateTime, duration,
-                organizerManager.getCurrentOrganizer(), roomNum, maxCapacity);
-
-        if (dateTime.isAfter(LocalDateTime.now()) && eventManager.nameAvailable(name) && roomManager.hasRoom(roomNum)
-                && roomManager.bookable(roomNum, dateTime, duration)) {
-            return eventCreated;
-        }
-        return null;
-    }
-
-    /**
-     * Tries to create an event with more than 1 speaker and add it to the list of events if event name is available and
-     * if the event created does not create double booking.
-     *
-     * @param name       the name of the new event
-     * @param dateTime       when the new event will happen
-     * @param roomNum where the new event will happen
-     * @return whether or not the event can be created
-     */
-
-    public MultiSpeakerEvent createMultiSpeakerEvent(String name, int roomNum, int maxCapacity, LocalDateTime dateTime,
-                                         int duration) {
-        MultiSpeakerEvent eventCreated = eventManager.createMultiSpeakerEvent(name, dateTime, duration,
-                organizerManager.getCurrentOrganizer(), roomNum, maxCapacity);
-
-        if (dateTime.isAfter(LocalDateTime.now()) && eventManager.nameAvailable(name) && roomManager.hasRoom(roomNum)
-                && roomManager.bookable(roomNum, dateTime, duration)) {
-            return eventCreated;
-        }
-        return null;
-    }
-
-    /**
-     * Tries to create an event with 1 speaker and add it to the list of events if event name is available and
-     * if the event created does not create double booking.
-     *
-     * @param name       the name of the new event
-     * @param dateTime       when the new event will happen
-     * @param roomNum where the new event will happen
-     * @return whether or not the event can be created
-     */
-
-    public OneSpeakerEvent createOneSpeakerEvent(String name, int roomNum, int maxCapacity, LocalDateTime dateTime,
-                                                     int duration) {
-        OneSpeakerEvent eventCreated = eventManager.createOneSpeakerEvent(name, dateTime, duration,
-                organizerManager.getCurrentOrganizer(), roomNum, maxCapacity);
-
-        if (dateTime.isAfter(LocalDateTime.now()) && eventManager.nameAvailable(name) && roomManager.hasRoom(roomNum)
-                && roomManager.bookable(roomNum, dateTime, duration)) {
-            return eventCreated;
-        }
-        return null;
-    }
+//    /**
+//     * Tries to create an event with no speakers and add it to the list of events if event name is available and
+//     * if the event created does not create double booking.
+//     *
+//     * @param name       the name of the new event
+//     * @param dateTime       when the new event will happen
+//     * @param roomNum where the new event will happen
+//     * @return whether or not the event can be created
+//     */
+//
+//    public Event createAttendeeOnlyEvent(String name, int roomNum, int maxCapacity, LocalDateTime dateTime,
+//                                                     int duration) {
+//        Event eventCreated = eventManager.createAttendeeOnlyEvent(name, dateTime, duration,
+//                organizerManager.getCurrentOrganizer(), roomNum, maxCapacity);
+//
+//        if (dateTime.isAfter(LocalDateTime.now()) && eventManager.nameAvailable(name) && roomManager.hasRoom(roomNum)
+//                && roomManager.bookable(roomNum, dateTime, duration)) {
+//            return eventCreated;
+//        }
+//        return null;
+//    }
+//
+//    /**
+//     * Tries to create an event with more than 1 speaker and add it to the list of events if event name is available and
+//     * if the event created does not create double booking.
+//     *
+//     * @param name       the name of the new event
+//     * @param dateTime       when the new event will happen
+//     * @param roomNum where the new event will happen
+//     * @return whether or not the event can be created
+//     */
+//
+//    public MultiSpeakerEvent createMultiSpeakerEvent(String name, int roomNum, int maxCapacity, LocalDateTime dateTime,
+//                                         int duration) {
+//        MultiSpeakerEvent eventCreated = eventManager.createMultiSpeakerEvent(name, dateTime, duration,
+//                organizerManager.getCurrentOrganizer(), roomNum, maxCapacity);
+//
+//        if (dateTime.isAfter(LocalDateTime.now()) && eventManager.nameAvailable(name) && roomManager.hasRoom(roomNum)
+//                && roomManager.bookable(roomNum, dateTime, duration)) {
+//            return eventCreated;
+//        }
+//        return null;
+//    }
+//
+//    /**
+//     * Tries to create an event with 1 speaker and add it to the list of events if event name is available and
+//     * if the event created does not create double booking.
+//     *
+//     * @param name       the name of the new event
+//     * @param dateTime       when the new event will happen
+//     * @param roomNum where the new event will happen
+//     * @return whether or not the event can be created
+//     */
+//
+//    public OneSpeakerEvent createOneSpeakerEvent(String name, int roomNum, int maxCapacity, LocalDateTime dateTime,
+//                                                     int duration) {
+//        OneSpeakerEvent eventCreated = eventManager.createOneSpeakerEvent(name, dateTime, duration,
+//                organizerManager.getCurrentOrganizer(), roomNum, maxCapacity);
+//
+//        if (dateTime.isAfter(LocalDateTime.now()) && eventManager.nameAvailable(name) && roomManager.hasRoom(roomNum)
+//                && roomManager.bookable(roomNum, dateTime, duration)) {
+//            return eventCreated;
+//        }
+//        return null;
+//    }
 
     public Room createRoom(int roomCapacity){
         return roomManager.addRoom(roomCapacity);
@@ -259,7 +262,10 @@ public class OrganizerEventController extends EventMenuController {
      * @return User account
      */
     public User createAccount(String name, String password, String accountType) {
-        return organizerAccountCreatorFactory.createAccountFactory(name, password, accountType);
+        User user = accountCreatorFactory.createAccountFactory(userManager.getUsers().size() + 1000, name, password,
+                accountType, new HashMap<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
+        this.userManager.getUsers().add(user);
+        return user;
     }
 
 }

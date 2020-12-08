@@ -1,11 +1,13 @@
 package UseCases.Users;
 
 import Entities.Events.Event;
+import Entities.Users.AccountCreatorFactory;
 import Entities.Users.Attendee;
 import Entities.Users.Organizer;
 import Entities.Users.User;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,6 +17,7 @@ import java.util.HashMap;
 public class UserManager implements Serializable {
     private User currentUser;
     public ArrayList<User> users;
+    private AccountCreatorFactory factory;
 
     /**
      * UserManager constructor
@@ -25,6 +28,7 @@ public class UserManager implements Serializable {
     public UserManager(User currentUser, ArrayList<User> users) {
         this.currentUser = currentUser;
         this.users = users;
+        this.factory = new AccountCreatorFactory();
     }
 
     /**
@@ -70,17 +74,9 @@ public class UserManager implements Serializable {
      * @param password the password of the new user
      * @param type     the type of the new user
      */
-    public void addUser(String name, String password, String type) {
-        switch (type) {
-            case "attendee":
-                Attendee attendee = new Attendee(1000 + users.size(), name, password, new HashMap<>(), new ArrayList<>());
-                users.add(attendee);
-                break;
-            case "organizer":
-                Organizer organizer = new Organizer(1000 + users.size(), name, password, new HashMap<>(), new ArrayList<>(), new HashMap<>());
-                users.add(organizer);
-                break;
-        }
+    public void addUser(int id, String name, String password, String type, HashMap<String, LocalDateTime> schedule,
+                        ArrayList<Integer> friends, HashMap<String, LocalDateTime> eventsOrganizing, HashMap<String, LocalDateTime> speakingSchedule){
+        users.add(factory.createAccountFactory(id, name, password, type, schedule, friends, eventsOrganizing, speakingSchedule));
     }
 
     /**

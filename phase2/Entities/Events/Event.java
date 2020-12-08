@@ -1,12 +1,10 @@
 package Entities.Events;
 
-import Entities.Users.Speaker;
 import Entities.Users.User;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 
 /**
@@ -168,8 +166,8 @@ public class Event implements Serializable {
      *
      * @return speaker of the event
      */
-    public int getSpeaker() {
-        return 0;
+    public ArrayList<Integer> getSpeakers() {
+        return null;
     }
 
     /**

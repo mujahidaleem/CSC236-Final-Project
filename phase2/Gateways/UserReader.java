@@ -14,7 +14,6 @@ import java.util.HashMap;
  * An instance of this reads files and returns information on users
  */
 public class UserReader extends MySQLReader{
-    private AccountCreatorFactory factory;
     String fileName;
 
     /**
@@ -24,7 +23,6 @@ public class UserReader extends MySQLReader{
      */
     public UserReader(String fileName) {
         this.fileName = fileName;
-        this.factory = new AccountCreatorFactory();
     }
 
     /**

@@ -6,6 +6,7 @@ import UseCases.Language.LanguageManager;
 import UseCases.Message.SpeakerFriendManager;
 import UseCases.Users.UserManager;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class SpeakerMessagePresenter extends MessageMenuPresenter {
@@ -36,12 +37,12 @@ public class SpeakerMessagePresenter extends MessageMenuPresenter {
             if (speakerFriendManager.getCurrentSpeaker().getSpeakingSchedule().containsKey(answer[1])) {
                 System.out.println(languageManager.languagePack.messageAllAttendeeForOneEventPrompt());
                 String messageContent = message.nextLine();
-                speakerFriendListController.sendingAnnouncement(eventManager.findEvent(answer[1]), messageContent);
+                speakerFriendListController.sendingAnnouncement(eventManager.findEvent(answer[1]), messageContent, LocalDateTime.now());
                 System.out.println(languageManager.languagePack.messageSuccessful());
             } else if ("5".equals(answer[0])) {
                 System.out.println(languageManager.languagePack.messageAllAttendeePrompt());
                 String messageContent = message.nextLine();
-                speakerFriendListController.sendAnnouncementToAll(messageContent);
+                speakerFriendListController.sendAnnouncementToAll(messageContent, LocalDateTime.now());
                 System.out.println(languageManager.languagePack.messageSuccessful());
             } else {
                 System.out.println(languageManager.languagePack.notSpeakerAtEvent());

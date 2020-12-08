@@ -3,12 +3,16 @@ package Entities;
 
 import Entities.Users.User;
 
-public class Message {
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+public class Message implements Serializable {
     int senderId;
     String senderName;
     int recipientId;
     String recipientName;
     String content;
+    LocalDateTime timeSent;
 
     /**
      * Message constructor
@@ -17,12 +21,13 @@ public class Message {
      * @param recipient - the user receiving the message
      * @param content   - the content of the message
      */
-    public Message(User sender, User recipient, String content) {
+    public Message(User sender, User recipient, String content, LocalDateTime dateTime) {
         this.senderId = sender.getId();
         this.senderName = sender.getName();
         this.recipientId = recipient.getId();
         this.recipientName = recipient.getName();
         this.content = content;
+        this.timeSent = dateTime;
     }
 
     /**
@@ -56,5 +61,10 @@ public class Message {
     @Override
     public String toString() {
         return this.senderName + " to " + this.recipientName + ": " + this.getContent();
+    }
+
+
+    public LocalDateTime getTimeSent(){
+        return timeSent;
     }
 }

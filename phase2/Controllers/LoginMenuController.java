@@ -18,7 +18,6 @@ import java.util.HashMap;
 public class LoginMenuController {
     protected UserManager userManager;
     protected EventManager eventManager;
-    protected UserFriendManager userFriendManager;
     private EventMenuFactory eventMenuFactory;
     private MessageMenuFactory messageMenuFactory;
 
@@ -27,12 +26,11 @@ public class LoginMenuController {
      *
      * @param userManager stores the list of users
      */
-    public LoginMenuController(UserManager userManager, EventManager eventManager, UserFriendManager userFriendManager, LanguageManager languageManager, RoomManager roomManager) {
+    public LoginMenuController(UserManager userManager, EventManager eventManager, LanguageManager languageManager, RoomManager roomManager) {
         this.userManager = userManager;
         this.eventManager = eventManager;
-        this.userFriendManager = userFriendManager;
-        this.eventMenuFactory = new EventMenuFactory(userManager, eventManager, userFriendManager, languageManager, roomManager);
-        this.messageMenuFactory = new MessageMenuFactory(userManager, eventManager, userFriendManager, languageManager);
+        this.eventMenuFactory = new EventMenuFactory(userManager, eventManager, languageManager, roomManager);
+        this.messageMenuFactory = new MessageMenuFactory(userManager, eventManager, languageManager);
     }
 
     /**

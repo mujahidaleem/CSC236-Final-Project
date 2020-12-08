@@ -57,7 +57,7 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     @Override
     public String[] organizerEventResultsSuccess(Event event) {
         return new String[]{"Votre événement a été créé avec succès.",
-                event.getSpeaker() + " parlera maintenant à " + event.getEventName(),
+                event.getSpeakers() + " parlera maintenant à " + event.getEventName(),
                 "L'enceinte a bien été supprimée.", "les " + event.getEventName() + " aura maintenant lieu à " +
                 event.getEventTime().format(DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm:ss")),
                 event.getEventName() + " a été annulé",
@@ -68,7 +68,7 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     @Override
     public String[] organizerEventResultsFailure(Event event) {
         return new String[]{"Désolé, un événement portant ce nom existe déjà",
-                "Désolé, " + event.getSpeaker() +" n'est pas disponible à ce moment précis.",
+                "Désolé, " + event.getSpeakers() +" n'est pas disponible à ce moment précis.",
                 "Cet événement n'a déjà pas de conférencier.",
                 "Désolé, l'heure de l'événement ne peut pas être modifiée.",
                 event.getEventName() + " ne peut pas être annulé.",

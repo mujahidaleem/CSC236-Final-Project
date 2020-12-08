@@ -6,6 +6,8 @@ import Entities.Users.User;
 import UseCases.Message.OrganizerFriendManager;
 import UseCases.Users.UserManager;
 
+import java.time.LocalDateTime;
+
 public class OrganizerFriendListController extends UserFriendListController {
     public UserManager userManager;
     public OrganizerFriendManager organizerFriendManager;
@@ -29,10 +31,10 @@ public class OrganizerFriendListController extends UserFriendListController {
      *
      * @param messageContent Content of the message
      */
-    public void messageAllAttendees(String messageContent) {
+    public void messageAllAttendees(String messageContent, LocalDateTime dateTime) {
         for (User user : userManager.users) {
             if (user.getClass().equals(Attendee.class)) {
-                organizerFriendManager.sendMessageTo(organizerFriendManager.getCurrentOrganizer(), user, messageContent);
+                organizerFriendManager.sendMessageTo(organizerFriendManager.getCurrentOrganizer(), user, messageContent, dateTime);
             }
         }
     }
@@ -42,10 +44,10 @@ public class OrganizerFriendListController extends UserFriendListController {
      *
      * @param messageContent Content of the message
      */
-    public void messageAllSpeakers(String messageContent) {
+    public void messageAllSpeakers(String messageContent, LocalDateTime dateTime) {
         for (User user : userManager.users) {
             if (user.getClass().equals(Speaker.class)) {
-                organizerFriendManager.sendMessageTo(organizerFriendManager.getCurrentOrganizer(), user, messageContent);
+                organizerFriendManager.sendMessageTo(organizerFriendManager.getCurrentOrganizer(), user, messageContent, dateTime);
             }
         }
     }

@@ -7,11 +7,14 @@ import Gateways.RoomReader;
 import Gateways.UserReader;
 import Gateways.EventReader;
 import Gateways.MessageReader;
+import Presenters.LoginMenuPresenter;
 import UseCases.Events.EventManager;
 import UseCases.Events.RoomManager;
 import UseCases.Language.LanguageManager;
 import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
+
+import java.time.LocalDateTime;
 
 
 public class Main {
@@ -20,22 +23,18 @@ public class Main {
         initialize();
         UserReader userReader = new UserReader("userManager.ser");
         EventReader eventReader = new EventReader("eventManager.ser");
-//        MessageReader messageReader = new MessageReader("userFriendManager.ser");
+        MessageReader messageReader = new MessageReader("userFriendManager.ser");
         RoomReader roomReader = new RoomReader("roomManager.ser");
-        roomReader.createTable();
-//
-//        UserManager userManager = userReader.readFile();
-//        EventManager eventManager = eventReader.readFile();
-//        eventReader.saveEventManager(eventManager);
-//        EventManager eventManager1 = eventReader.readData();
 
-//        UserFriendManager userFriendManager = messageReader.readFile();
-//        LanguageManager languageManager = new LanguageManager("english");
-//        RoomManager roomManager = roomReader.readFile();
-//
-//        LoginMenuController loginMenuController = new LoginMenuController(userManager, eventManager, userFriendManager, languageManager, roomManager);
-//        LoginMenuPresenter loginMenuPresenter = new LoginMenuPresenter(loginMenuController, languageManager);
-//        loginMenuPresenter.run();
+        UserManager userManager = userReader.readData();
+        EventManager eventManager = eventReader.readData();
+        RoomManager roomManager = roomReader.readData();
+
+        LanguageManager languageManager = new LanguageManager("english");
+
+        LoginMenuController loginMenuController = new LoginMenuController(userManager, eventManager, languageManager, roomManager);
+        LoginMenuPresenter loginMenuPresenter = new LoginMenuPresenter(loginMenuController, languageManager);
+        loginMenuPresenter.run();
 //
 //        userFriendManager.setCurrentUser(null);
 //        userManager.setCurrentUser(null);

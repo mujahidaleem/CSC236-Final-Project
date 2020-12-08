@@ -6,6 +6,8 @@ import UseCases.Message.SpeakerFriendManager;
 import UseCases.Users.SpeakerManager;
 import UseCases.Users.UserManager;
 
+import java.time.LocalDateTime;
+
 
 public class SpeakerFriendListController extends UserFriendListController {
     public SpeakerFriendManager speakerFriendManager;
@@ -34,9 +36,9 @@ public class SpeakerFriendListController extends UserFriendListController {
      * @param event          Event of the speaker
      * @param messageContent Content of the message
      */
-    public void sendingAnnouncement(Event event, String messageContent) {
+    public void sendingAnnouncement(Event event, String messageContent, LocalDateTime dateTime) {
         Speaker speaker = speakerManager.getCurrentSpeaker();
-        speakerFriendManager.sendingAnnouncement(speaker, event, messageContent, speakerManager);
+        speakerFriendManager.sendingAnnouncement(speaker, event, messageContent, speakerManager, dateTime);
     }
 
     /**
@@ -44,7 +46,7 @@ public class SpeakerFriendListController extends UserFriendListController {
      *
      * @param messageContent Content of the message
      */
-    public void sendAnnouncementToAll(String messageContent) {
-        speakerFriendManager.sendingAnnouncementToAll(speakerManager.getCurrentSpeaker(), messageContent, userManager);
+    public void sendAnnouncementToAll(String messageContent, LocalDateTime dateTime) {
+        speakerFriendManager.sendingAnnouncementToAll(speakerManager.getCurrentSpeaker(), messageContent, userManager, dateTime);
     }
 }

@@ -105,6 +105,9 @@ public class UserManager implements Serializable {
     public void deleteEvent(Event event) {
         for (User user : users) {
             user.getPersonalSchedule().remove(event.getEventName());
+            if (user.getId() == event.getOrganizer()){
+                ((Organizer) user).get_eventsOrganizing().remove(event.getEventName());
+            }
         }
     }
 

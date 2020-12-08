@@ -5,11 +5,12 @@ import Entities.Message;
 import UseCases.Users.UserManager;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class UserFriendManager implements Serializable {
-    HashMap<ArrayList<User>, ArrayList<Message>> userToMessages;
+    HashMap<ArrayList<Integer>, ArrayList<Message>> userToMessages;
     User currentUser;
 
     /**
@@ -18,7 +19,7 @@ public abstract class UserFriendManager implements Serializable {
      * @param userToMessages - a dictionary mapping users to their messages sent and received from friends
      */
 
-    public UserFriendManager(HashMap<ArrayList<User>, ArrayList<Message>> userToMessages, User user) {
+    public UserFriendManager(HashMap<ArrayList<Integer>, ArrayList<Message>> userToMessages, User user) {
         this.userToMessages = userToMessages;
         this.currentUser = user;
     }
@@ -49,15 +50,15 @@ public abstract class UserFriendManager implements Serializable {
      */
 
     public boolean messageable(User user) {
-        return currentUser.getFriendList().contains(user);
+        return currentUser.getFriendList().contains(user.getId());
     }
 
     /**
      * send a message containing the messageContent from user1 to user2
      */
 
-    public void sendMessageTo(User sender, User recipient, String messageContent) {
-        Message message = new Message(sender, recipient, messageContent);
+    public void sendMessageTo(User sender, User recipient, String messageContent, LocalDateTime dateTime) {
+        Message message = new Message(sender, recipient, messageContent, dateTime);
         if (userToMessages.containsKey(createKey(sender, recipient))) {
             userToMessages.get(createKey(sender, recipient)).add(message);
         } else {
@@ -75,14 +76,14 @@ public abstract class UserFriendManager implements Serializable {
      * @param friend Friend of the user
      * @return A list of users
      */
-    private ArrayList<User> createKey(User user, User friend) {
-        ArrayList<User> users = new ArrayList<>();
+    private ArrayList<Integer> createKey(User user, User friend) {
+        ArrayList<Integer> users = new ArrayList<>();
         if (user.getId() < friend.getId()) {
-            users.add(user);
-            users.add(friend);
+            users.add(user.getId());
+            users.add(friend.getId());
         } else {
-            users.add(friend);
-            users.add(user);
+            users.add(friend.getId());
+            users.add(user.getId());
         }
         return users;
     }
@@ -102,7 +103,7 @@ public abstract class UserFriendManager implements Serializable {
      * @param friend the user being removed
      */
     public void removeFromFriendList(User friend) {
-        currentUser.getFriendList().remove(friend);
+        currentUser.getFriendList().remove(friend.getId());
         userToMessages.remove(createKey(currentUser, friend));
     }
 
@@ -121,7 +122,7 @@ public abstract class UserFriendManager implements Serializable {
      * @return A list of messages by a user
      * For extension purposes, not used right now
      */
-    public HashMap<ArrayList<User>, ArrayList<Message>> getUserToMessages() {
+    public HashMap<ArrayList<Integer>, ArrayList<Message>> getUserToMessages() {
         return userToMessages;
     }
 }

@@ -4,6 +4,7 @@ import Entities.Events.Event;
 import Entities.Users.Speaker;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,12 +47,18 @@ public class SpeakerManager extends UserManager {
     /**
      * Checks if the a specific speaker is available at a given time
      *
-     * @param speaker contains an instance of speaker
+     * @param speakers contains the speakers of an event
      * @param date    contains the specified time
      * @return returns if the speaker is free during the given time
      */
-    public boolean available(Speaker speaker, LocalDateTime date) {
-        return !speaker.getSpeakingSchedule().containsValue(date) || !speaker.getPersonalSchedule().containsValue(date);
+    public boolean available(ArrayList<Integer> speakers, LocalDateTime date) {
+        for(int id:speakers){
+            Speaker speaker = findSpeaker(id);
+            if(speaker.getSpeakingSchedule().containsValue(date) || speaker.getPersonalSchedule().containsValue(date)){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -63,7 +70,7 @@ public class SpeakerManager extends UserManager {
      */
     public boolean dateChangeable(Event event, LocalDateTime date) {
         if (event.hasSpeaker()) {
-            return available(findSpeaker(event.getSpeaker()), date);
+            return available(event.getSpeakers(), date);
         } else {
             return true;
         }
@@ -76,8 +83,10 @@ public class SpeakerManager extends UserManager {
      * @param date  the new date of the event
      */
     public void changeDate(Event event, LocalDateTime date) {
-        Speaker speaker = findSpeaker(event.getSpeaker());
-        speaker.speakingSchedule.replace(event.getEventName(), date);
+        for(int id: event.getSpeakers()){
+            Speaker speaker = findSpeaker(id);
+            speaker.speakingSchedule.replace(event.getEventName(), date);
+        }
     }
 
     /**
@@ -96,7 +105,9 @@ public class SpeakerManager extends UserManager {
      * @param event the event that is being removed
      */
     public void removeEvent(Event event) {
-        findSpeaker(event.getSpeaker()).speakingSchedule.remove(event.getEventName());
+        for(int id:event.getSpeakers()){
+            findSpeaker(id).speakingSchedule.remove(event.getEventName());
+        }
     }
 
     /**

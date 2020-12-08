@@ -6,6 +6,7 @@ import UseCases.Language.LanguageManager;
 import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class MessageMenuPresenter {
@@ -93,7 +94,7 @@ public class MessageMenuPresenter {
     //TODO: have a sign showing if there are new messages from that friend
     protected void printFriends() {
         System.out.println(languageManager.languagePack.messageMenuHeadings()[0]);
-        userFriendManager.displayFriend();
+        userFriendManager.displayFriend(userManager);
     }
 
     /**
@@ -111,7 +112,7 @@ public class MessageMenuPresenter {
                 if (messageContent.equals("0")) {
                     break;
                 } else {
-                    userFriendListcontroller.sendingMessage(userManager.getCurrentUser(), anotherUser, messageContent);
+                    userFriendListcontroller.sendingMessage(userManager.getCurrentUser(), anotherUser, messageContent, LocalDateTime.now());
                 }
             }
         } else {

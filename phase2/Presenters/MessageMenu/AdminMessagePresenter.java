@@ -1,7 +1,12 @@
 package Presenters.MessageMenu;
 
+import Controllers.MessageMenu.AdminFriendListController;
+import Controllers.MessageMenu.AttendeeFriendListController;
+import UseCases.Language.LanguageManager;
+import UseCases.Message.UserFriendManager;
+import UseCases.Users.UserManager;
+
 public class AdminMessagePresenter extends MessageMenuPresenter {
-    AdminFriendListController adminFriendListController;
 
     /**
      * AdminMessagePresenter constructor
@@ -13,11 +18,7 @@ public class AdminMessagePresenter extends MessageMenuPresenter {
      */
 
     public AdminMessagePresenter(AdminFriendListController adminFriendListController, UserManager userManager,
-                                    UserFriendManager userFriendManager, LanguageManager languageManager) {
+                                 UserFriendManager userFriendManager, LanguageManager languageManager) {
         super(adminFriendListController, userManager, userFriendManager, languageManager);
-        this.adminFriendListController = adminFriendListController;
-    }
-    public displayCancelEventWithoutAttendee(){
-        if
     }
 }

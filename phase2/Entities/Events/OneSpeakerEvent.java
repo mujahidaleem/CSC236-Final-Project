@@ -49,7 +49,9 @@ public class OneSpeakerEvent extends Event {
     }
 
     @Override
-    public int getSpeaker() {
-        return speaker;
+    public ArrayList<Integer> getSpeakers() {
+        ArrayList<Integer> speakers = new ArrayList<>();
+        speakers.add(speaker);
+        return speakers;
     }
 }

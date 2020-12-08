@@ -4,10 +4,11 @@ import Entities.Events.Event;
 import Entities.Events.MultiSpeakerEvent;
 import Entities.Events.OneSpeakerEvent;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class EventFactory {
+public class EventFactory implements Serializable {
 
     /**
      * Constructor for EventFactory

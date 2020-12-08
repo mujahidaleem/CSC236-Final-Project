@@ -4,6 +4,8 @@ import Entities.Users.Organizer;
 import Entities.Users.User;
 import UseCases.Message.UserFriendManager;
 
+import java.time.LocalDateTime;
+
 public abstract class UserFriendListController {
     public UserFriendManager userFriendManager;
 
@@ -17,9 +19,9 @@ public abstract class UserFriendListController {
      * @param recipient      User who receive the Message
      * @param messageContent the content of the message
      */
-    public void sendingMessage(User sender, User recipient, String messageContent) {
+    public void sendingMessage(User sender, User recipient, String messageContent, LocalDateTime dateTime) {
         if (this.userFriendManager.messageable(recipient)) {
-            this.userFriendManager.sendMessageTo(sender, recipient, messageContent);
+            this.userFriendManager.sendMessageTo(sender, recipient, messageContent, dateTime);
         }
     }
 

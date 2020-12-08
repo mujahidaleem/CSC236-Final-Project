@@ -6,12 +6,12 @@ import UseCases.Message.OrganizerFriendManager;
 import UseCases.Users.OrganizerManager;
 import UseCases.Users.UserManager;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class OrganizerMessagePresenter extends MessageMenuPresenter {
     public OrganizerFriendListController organizerFriendListController;
     public OrganizerManager organizerManager;
-    public OrganizerFriendManager organizerFriendManager;
 
     /**
      * Constructor of OrganizerMessagePresenter
@@ -42,13 +42,13 @@ public class OrganizerMessagePresenter extends MessageMenuPresenter {
             case "4":
                 System.out.println(languageManager.languagePack.messageAllAttendeePrompt());
                 String messageContent = message.nextLine();
-                organizerFriendListController.messageAllAttendees(messageContent);
+                organizerFriendListController.messageAllAttendees(messageContent, LocalDateTime.now());
                 System.out.println(languageManager.languagePack.messageSuccessful());
                 break;
             case "5":
                 System.out.println(languageManager.languagePack.messageAllSpeakerPrompt());
                 messageContent = message.nextLine();
-                organizerFriendListController.messageAllSpeakers(messageContent);
+                organizerFriendListController.messageAllSpeakers(messageContent, LocalDateTime.now());
                 System.out.println(languageManager.languagePack.messageSuccessful());
                 break;
         }

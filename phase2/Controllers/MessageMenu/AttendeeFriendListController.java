@@ -1,13 +1,11 @@
 package Controllers.MessageMenu;
 
-import Presenters.MessageMenu.AttendeeMessagePresenter;
 import UseCases.Message.AttendeeFriendManager;
 
 /**
  * Controls data specifically for attendees' friend lists.
  */
 public class AttendeeFriendListController extends UserFriendListController {
-    public AttendeeMessagePresenter attendeeMessagePresenter;
 
     /**
      * AttendeeFriendList constructor

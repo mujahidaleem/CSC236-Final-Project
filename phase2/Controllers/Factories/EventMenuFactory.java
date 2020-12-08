@@ -1,19 +1,17 @@
 package Controllers.Factories;
 
+import Controllers.EventMenu.AdminEventController;
 import Controllers.EventMenu.AttendeeEventController;
 import Controllers.EventMenu.OrganizerEventController;
 import Controllers.EventMenu.SpeakerEventController;
 import Entities.Users.Attendee;
 import Entities.Users.Organizer;
 import Entities.Users.AccountCreatorFactory;
-import Presenters.EventMenu.AttendeeEventPresenter;
-import Presenters.EventMenu.EventMenuPresenter;
-import Presenters.EventMenu.OrganizerEventPresenter;
-import Presenters.EventMenu.SpeakerEventPresenter;
+import Entities.Users.Speaker;
+import Presenters.EventMenu.*;
 import UseCases.Events.EventManager;
 import UseCases.Events.RoomManager;
 import UseCases.Language.LanguageManager;
-import UseCases.Message.UserFriendManager;
 import UseCases.Users.*;
 
 public class EventMenuFactory {
@@ -28,9 +26,8 @@ public class EventMenuFactory {
      *
      * @param userManager       Use case functions for a user
      * @param eventManager      Use case functions of an event
-     * @param userFriendManager Use case functions of a friend list
      */
-    public EventMenuFactory(UserManager userManager, EventManager eventManager, UserFriendManager userFriendManager, LanguageManager languageManager, RoomManager roomManager) {
+    public EventMenuFactory(UserManager userManager, EventManager eventManager, LanguageManager languageManager, RoomManager roomManager) {
         this.userManager = userManager;
         this.eventManager = eventManager;
         this.languageManager = languageManager;
@@ -58,11 +55,16 @@ public class EventMenuFactory {
             AccountCreatorFactory accountCreatorFactory = new AccountCreatorFactory();
             OrganizerEventController organizerEventController = new OrganizerEventController(organizerManager, roomManager, eventManager, userManager, speakerManager, accountCreatorFactory);
             return new OrganizerEventPresenter(organizerManager, speakerManager, organizerEventController, eventManager, languageManager);
-        } else {
+        } else if(userManager.getCurrentUser().getClass().equals(Speaker.class)){
             SpeakerManager speakerManager = factoryUseCaseHelper.createSpeakerManager();
             speakerManager.setCurrentUser(userManager.getCurrentUser());
             SpeakerEventController speakerEventController = new SpeakerEventController(speakerManager, eventManager, roomManager);
             return new SpeakerEventPresenter(speakerManager, speakerEventController, eventManager, languageManager);
+        } else {
+            AdminManager adminManager = factoryUseCaseHelper.createAdminManager();
+            adminManager.setCurrentUser(userManager.getCurrentUser());
+            AdminEventController adminEventController = new AdminEventController(userManager, eventManager, roomManager, factoryUseCaseHelper.createSpeakerManager(), adminManager);
+            return new AdminEventPresenter(adminManager, adminEventController, eventManager, languageManager);
         }
     }
 }

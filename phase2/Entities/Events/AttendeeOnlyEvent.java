@@ -9,7 +9,6 @@ public class AttendeeOnlyEvent extends Event{
      * An event carries a unique id, name, room number, time, attendee list and organizer
      *
 
-     * @param id              id of the event
      * @param name            name of the event
      * @param num             room number of the event
      * @param maxCapacity
@@ -17,7 +16,7 @@ public class AttendeeOnlyEvent extends Event{
      * @param duration
      * @param event_organizer organizer of the event
      */
-    public AttendeeOnlyEvent(int id, String name, int num, int maxCapacity, LocalDateTime time, int duration, int event_organizer, ArrayList<Integer> attendees) {
+    public AttendeeOnlyEvent(String name, int num, int maxCapacity, LocalDateTime time, int duration, int event_organizer, ArrayList<Integer> attendees) {
         super(name, num, maxCapacity, time, duration, event_organizer, attendees);
     }
 }

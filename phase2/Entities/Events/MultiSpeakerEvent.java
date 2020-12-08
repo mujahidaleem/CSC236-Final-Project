@@ -48,6 +48,7 @@ public class MultiSpeakerEvent extends Event {
         }
     }
 
+    @Override
     public ArrayList<Integer> getSpeakers() {
         return speakers;
     }
@@ -58,14 +59,5 @@ public class MultiSpeakerEvent extends Event {
             return true;
         }
         return false;
-    }
-
-    public int getSpeaker(int speakerId) {
-        for (int i:speakers){
-            if (i == speakerId){
-                return i;
-            }
-        }
-        return 0;
     }
 }

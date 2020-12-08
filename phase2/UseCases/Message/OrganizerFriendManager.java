@@ -9,6 +9,7 @@ import Entities.Users.User;
 import UseCases.Events.EventManager;
 import UseCases.Users.UserManager;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -21,7 +22,7 @@ public class OrganizerFriendManager extends UserFriendManager {
      *
      * @param userToMessages - a dictionary mapping users to their messages sent and received from friends
      */
-    public OrganizerFriendManager(HashMap<ArrayList<User>, ArrayList<Message>> userToMessages, Organizer organizer, EventManager eventManager) {
+    public OrganizerFriendManager(HashMap<ArrayList<Integer>, ArrayList<Message>> userToMessages, Organizer organizer, EventManager eventManager) {
         super(userToMessages, organizer);
     }
 
@@ -43,10 +44,10 @@ public class OrganizerFriendManager extends UserFriendManager {
      * @param userManager    - contains a list of users
      */
 
-    public void sendingAnnouncement(Speaker speaker, Event event, String messageContent, UserManager userManager) {
+    public void sendingAnnouncement(Speaker speaker, Event event, String messageContent, UserManager userManager, LocalDateTime dateTime) {
         for (Integer id : event.getAttendees()) {
             User user = userManager.users.get(id - 1000);
-            sendMessageTo(speaker, user, messageContent);
+            sendMessageTo(speaker, user, messageContent, dateTime);
         }
     }
 

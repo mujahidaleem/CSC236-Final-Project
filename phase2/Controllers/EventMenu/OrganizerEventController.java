@@ -2,8 +2,6 @@ package Controllers.EventMenu;
 
 import Entities.Users.AccountCreatorFactory;
 import Entities.Events.Event;
-import Entities.Events.MultiSpeakerEvent;
-import Entities.Events.OneSpeakerEvent;
 import Entities.Room;
 import Entities.Users.*;
 import UseCases.Events.EventFactory;
@@ -129,10 +127,12 @@ public class OrganizerEventController extends EventMenuController {
      */
     public boolean addSpeaker(Event event, int speaker) throws NullSpeakerException {
         Speaker speaker1 = speakerManager.findSpeaker(speaker);
+        ArrayList<Integer> newSpeaker = new ArrayList<>();
+        newSpeaker.add(speaker);
         if (speaker1 == null) {
             throw new NullSpeakerException();
         } else {
-            if (speakerManager.available(speaker1, event.getEventTime())) {
+            if (speakerManager.available(newSpeaker, event.getEventTime())) {
                 eventManager.addSpeaker(speaker1, event);
                 speakerManager.setSpeaker(speaker1, event);
                 return true;
@@ -159,7 +159,7 @@ public class OrganizerEventController extends EventMenuController {
     }
 
     /**
-     * Checks if the date of an event can be changed and if so, changes the event
+     * Checks if the date of an event can be changed and if so, changes the date of the event
      *
      * @param event the event that the organizer is trying to change the date
      * @param newDateTime  the new date of the event
@@ -167,17 +167,14 @@ public class OrganizerEventController extends EventMenuController {
      */
     public boolean changeEventDate(Event event, LocalDateTime newDateTime) {
         Room currentRoom = roomManager.findRoom(event.getRoomNumber());
-        LocalDateTime startTime = event.getEventTime();
 
-        roomManager.removeEvent(currentRoom, event);
-
-        if (newDateTime.isAfter(LocalDateTime.now()) && roomManager.bookable(event.getRoomNumber(), newDateTime, event.getDuration())){
-            roomManager.scheduleEvent(currentRoom, newDateTime, event.getDuration(), event);
+        if (roomManager.bookable(event.getRoomNumber(), newDateTime, event.getDuration()) && speakerManager.dateChangeable(event, newDateTime)){
+            roomManager.removeEvent(currentRoom, event);
             eventManager.changeDate(event, newDateTime);
+            roomManager.scheduleEvent(currentRoom, newDateTime, event.getDuration(), event);
+            speakerManager.changeDate(event, newDateTime);
             return true;
         }
-
-        roomManager.scheduleEvent(currentRoom, startTime, event.getDuration(), event);
         return false;
     }
 

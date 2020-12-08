@@ -4,9 +4,7 @@ import Entities.Events.AttendeeOnlyEvent;
 import Entities.Events.Event;
 import Entities.Events.MultiSpeakerEvent;
 import Entities.Events.OneSpeakerEvent;
-import Entities.Users.User;
 import UseCases.Events.EventManager;
-import UseCases.Users.UserManager;
 
 import java.io.*;
 import java.sql.*;
@@ -83,7 +81,7 @@ public class EventReader extends MySQLReader {
                 "eventName VARCHAR(64) NOT NULL," +
                 "eventType VARCHAR(64)," +
                 "roomNumber INT(64)," +
-                "date DATETIME," +
+                "date Timestamp," +
                 "organizer INT(64)," +
                 "maxCapacity INT(64)," +
                 "duration INT(64)," +
@@ -140,38 +138,33 @@ public class EventReader extends MySQLReader {
 
     private String generateInformation(Event event) {
         if (event.getClass() == AttendeeOnlyEvent.class) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            Date date = Date.valueOf(event.getEventTime().format(formatter));
             return "INSERT INTO events(eventName, eventType, roomNumber, date, organizer, maxCapacity, duration, attendees) " +
-                    "VALUES('" + event.getEventName() + "', 'attendeeOnlyEvent', " + event.getRoomNumber() + "', '" + date + "', '" + event.getOrganizer() +
-                    "', '" + event.getMaxCapacity() + "', '" + event.getDuration() + "', '" + turnArrayIntoString(event.attendees) + "')";
+                    "VALUES('" + event.getEventName() + "', 'attendeeOnlyEvent', '" + event.getRoomNumber() +"', '" +
+                    event.getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "', '" + event.getOrganizer() + "', '" + event.getMaxCapacity() +
+                    "', '" + event.getDuration() +  "', '" + turnArrayIntoString(event.attendees) + "')";
         } else if (event.getClass() == OneSpeakerEvent.class) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            Date date = Date.valueOf(event.getEventTime().format(formatter));
             return "INSERT INTO events(eventName, eventType, roomNumber, date, organizer, maxCapacity, duration, speakers, attendees) " +
-                    "VALUES('" + event.getEventName() + "', 'oneSpeakerEvent', " + event.getRoomNumber() + "', '" + date + "', '" + event.getOrganizer() +
-                    "', '" + event.getMaxCapacity() + "', '" + event.getDuration() + "', '" + event.getSpeaker() + "', '" + turnArrayIntoString(event.attendees) + "')";
+                    "VALUES('" + event.getEventName() + "', 'oneSpeakerEvent', '" + event.getRoomNumber() + "', '" + event.getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "', '" + event.getOrganizer() +
+                    "', '" + event.getMaxCapacity() + "', '" + event.getDuration() + "', '" + turnArrayIntoString(event.getSpeakers()) + "', '" + turnArrayIntoString(event.attendees) + "')";
         } else {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            Date date = Date.valueOf(event.getEventTime().format(formatter));
             return "INSERT INTO events(eventName, eventType, roomNumber, date, organizer, maxCapacity, duration, speakers, attendees) " +
-                    "VALUES('" + event.getEventName() + "', 'multipleSpeakerEvent', " + event.getRoomNumber() + "', '" + date + "', '" + event.getOrganizer() +
+                    "VALUES('" + event.getEventName() + "', 'multipleSpeakerEvent', '" + event.getRoomNumber() + "', '" + event.getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "', '" + event.getOrganizer() +
                     "', '" + event.getMaxCapacity() + "', '" + event.getDuration() + "', '" +
-                    ((MultiSpeakerEvent) event).getSpeakers() + "', '" + turnArrayIntoString(event.attendees) + "')";
+                    turnArrayIntoString(event.getSpeakers()) + "', '" + turnArrayIntoString(event.attendees) + "')";
         }
     }
 
     private String turnArrayIntoString(ArrayList<Integer> arrayList) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i : arrayList) {
-            stringBuilder.append(i).append("_");
+            stringBuilder.append(i).append(" ");
         }
         return stringBuilder.toString();
     }
 
     private ArrayList<Integer> turnStringIntoArrayList(String string){
         ArrayList<Integer> arrayList = new ArrayList<>();
-        String[] strings = string.split("_");
+        String[] strings = string.split(" ");
         for(String s: strings){
             arrayList.add(Integer.parseInt(s));
         }

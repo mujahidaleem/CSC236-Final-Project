@@ -17,6 +17,7 @@ change password, logout, go to event menu, and go to message menu will be displa
     host = 127.0.0.1
     user = root
     password = csc207group0070
+    database = phase2
 
 
 Functions of the program. 

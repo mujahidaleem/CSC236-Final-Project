@@ -59,11 +59,10 @@ public class PdfGenerator {
     /**
      * Finds out how many events are happening at each time block
      *
-     * @param startOfWeek the date of the start of the week
      * @return a hashMap showing how many events happen at each time block throughout the week
      */
-    public HashMap<LocalDateTime, Integer> eventsOnHour(LocalDateTime startOfWeek) {
-        HashMap<LocalDateTime, Integer> map = new HashMap<LocalDateTime, Integer>();
+    public HashMap<LocalDateTime, Integer> eventsOnHour() {
+        HashMap<LocalDateTime, Integer> map = new HashMap<>();
         for (Event event : eventManager.getEvents()) {
             for (int i = 0; i < event.getDuration() / 60; i++) {
                 if (map.containsKey(event.getEventTime().plusHours(i))) {

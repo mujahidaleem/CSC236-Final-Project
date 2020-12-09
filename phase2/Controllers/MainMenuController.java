@@ -1,13 +1,23 @@
 package Controllers;
 
+import Controllers.EventMenu.EventMenuController;
+import Controllers.MessageMenu.UserFriendListController;
+import GUI.MainMenuPanel;
 import Presenters.EventMenu.EventMenuPresenter;
+import Presenters.MainMenuPresenter;
 import Presenters.MessageMenu.MessageMenuPresenter;
 import UseCases.Users.UserManager;
 
 public class MainMenuController {
     private EventMenuPresenter eventMenuPresenter;
     private MessageMenuPresenter messageMenuPresenter;
+
+
+    private EventMenuController eventMenuController;
+    private UserFriendListController friendListController;
     private UserManager userManager;
+    private MainMenuPanel mainMenuPanel;
+    private MainMenuPresenter presenter;
 
     /**
      * @param eventMenuPresenter   attribute eventMenuPresenter
@@ -26,14 +36,27 @@ public class MainMenuController {
      */
 
     public void printEventMenu() {
-        eventMenuPresenter.run();
+        eventMenuPresenter.printMenu();
+    }
+
+    /**
+     * main method, called by the main code to initialize MainMenuPresenter
+     */
+
+    public void printMenu() {
+        presenter.printMenu();
+
     }
 
     /**
      * Calls the Message menu presenter
      */
     public void printMessageMenu() {
-        messageMenuPresenter.run();
+        friendListController.printMenu();
+    }
+
+    public void changeLanguage(String language){
+        presenter.changeLanguage(language);
     }
 
     /**
@@ -46,6 +69,9 @@ public class MainMenuController {
         userManager.changePassword(password);
     }
 
+    public void logout(){
+        //TODO
+    }
 }
 
 

@@ -2,14 +2,13 @@ package GUI;
 
 import Controllers.LoginMenuController;
 import UseCases.Language.LanguageManager;
+import UseCases.Language.LanguagePack;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainLoginPanel extends JPanel {
-    private int width;
-    private int height;
+public class MainLoginPanel extends GUIPanel {
 
     private JLabel introMessage;
     private JLabel userLabel;
@@ -19,14 +18,17 @@ public class MainLoginPanel extends JPanel {
     private JButton loginButton;
     private JButton createUserButton;
 
-    private LanguageManager languageManager;
+    private LoginMenuController loginMenuController;
 
-    public MainLoginPanel(JFrame frame, LanguageManager languageManager){
-        this.width = frame.getWidth();
-        this.height = frame.getHeight();
-        this.languageManager = languageManager;
-        this.setLayout(null);
+    public MainLoginPanel(JFrame frame, LoginMenuController loginMenuController){
+        super(frame);
+        this.loginMenuController = loginMenuController;
+    }
+
+    public void printMenu(){
         createButtons();
+        setCreateUserButton();
+        setLoginButton();
     }
 
     public void createButtons(){
@@ -45,29 +47,27 @@ public class MainLoginPanel extends JPanel {
         passwordText = new JPasswordField(20);
         passwordText.setBounds(363,185,165,25);
 
-        add(userLabel);
-        add(userText);
-        add(passwordLabel);
-        add(passwordText);
-        add(introMessage);
+        panel.add(userLabel);
+        panel.add(userText);
+        panel.add(passwordLabel);
+        panel.add(passwordText);
+        panel.add(introMessage);
     }
 
-    public void setCreateUserButton(JPanel panel2, JFrame frame){
+    public void setCreateUserButton(){
         createUserButton = new JButton();
         createUserButton.setBounds(150, 300, 200, 25);
 
         createUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(panel2);
-                frame.repaint();
-                frame.revalidate();
+                loginMenuController.showCreateNewAccountPrompt();
             }
         });
-        add(createUserButton);
+        panel.add(createUserButton);
     }
 
-    public void setLoginButton(JPanel original, LoginMenuController loginMenuController, JFrame frame){
+    public void setLoginButton(){
         loginButton = new JButton();
         loginButton.setBounds(450, 300, 200, 25);
 
@@ -75,26 +75,18 @@ public class MainLoginPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int username = Integer.parseInt(userText.getText());
-
                 String password = new String(passwordText.getPassword());
-                if(loginMenuController.checkLogin(username, password) == null){
-                    JOptionPane.showMessageDialog(original, "Username and password did not match.", "Alert", JOptionPane.WARNING_MESSAGE);
-                } else {
-                    JPanel panel = new JPanel();
-                    frame.setContentPane(panel);
-                    frame.repaint();
-                    frame.revalidate();
-                }
+                loginMenuController.checkLogin(username, password);
             }
         });
-        add(loginButton);
+        panel.add(loginButton);
     }
 
-    protected void setText(){
-        introMessage.setText(languageManager.languagePack.loginMenuGreeting());
-        userLabel.setText(languageManager.languagePack.loggingInPrompt()[0]);
-        passwordLabel.setText(languageManager.languagePack.loggingInPrompt()[1]);
-        createUserButton.setText(languageManager.languagePack.loggingInPrompt()[2]);
-        loginButton.setText(languageManager.languagePack.loggingInPrompt()[3]);
+    public void setText(LanguagePack languagePack){
+        introMessage.setText(languagePack.loginMenuGreeting());
+        userLabel.setText(languagePack.loggingInPrompt()[0]);
+        passwordLabel.setText(languagePack.loggingInPrompt()[1]);
+        createUserButton.setText(languagePack.loggingInPrompt()[2]);
+        loginButton.setText(languagePack.loggingInPrompt()[3]);
     }
 }

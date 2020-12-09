@@ -1,8 +1,12 @@
 package Presenters;
 
 import Controllers.LoginMenuController;
+import GUI.MainLoginPanel;
+import GUI.UserCreationPanel;
 import UseCases.Language.LanguageManager;
 
+import javax.swing.*;
+import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -11,19 +15,48 @@ public class LoginMenuPresenter {
     public LoginMenuController loginMenuController;
     public LanguageManager languageManager;
 
+    private MainLoginPanel mainLoginPanel;
+    private UserCreationPanel userCreationPanel;
+
     /**
      * LoginMenuPresenter constructor
      *
      * @param loginMenuController need to call loginMenuController
      */
-
-    public LoginMenuPresenter(LoginMenuController loginMenuController, LanguageManager languageManager) {
+    public LoginMenuPresenter(LoginMenuController loginMenuController, LanguageManager languageManager, MainLoginPanel mainLoginPanel, UserCreationPanel userCreationPanel) {
         this.loginMenuController = loginMenuController;
         this.languageManager = languageManager;
+        this.userCreationPanel = userCreationPanel;
+        this.mainLoginPanel = mainLoginPanel;
+    }
+
+    public void setUpMenu(){
+        mainLoginPanel.printMenu();
+        mainLoginPanel.setText(languageManager.languagePack);
+        userCreationPanel.printMenu();
+        userCreationPanel.setText(languageManager.languagePack);
+    }
+
+    public void showCreateNewAccountPrompt(){
+        mainLoginPanel.changePanel(userCreationPanel.getPanel());
+    }
+
+    public void showLoginMenu(){
+        userCreationPanel.changePanel(mainLoginPanel.getPanel());
+    }
+
+    public void loginFailed(){
+        JOptionPane.showMessageDialog(mainLoginPanel.getPanel(), ""); //TODO:
+    }
+
+    public void showCreateAccountSuccess(int id){
+        JOptionPane.showMessageDialog(userCreationPanel.getPanel(), ""); //TODO: add text
     }
 
     public void changeLanguage(String language){
         languageManager.changeLanguage(language);
+        mainLoginPanel.setText(languageManager.languagePack);
+        userCreationPanel.setText(languageManager.languagePack);
     }
 
     /**
@@ -44,7 +77,7 @@ public class LoginMenuPresenter {
                 case "exit":
                     break outer;
                 case "1":
-                    System.out.println(languageManager.languagePack.loggingInPrompt());
+                    System.out.println(Arrays.toString(languageManager.languagePack.loggingInPrompt()));
                     //loginCommand(scanner.next());
                     break;
                 case "2":
@@ -57,7 +90,7 @@ public class LoginMenuPresenter {
                         String type = scanner.next();
                         if (type.equals("attendee") || type.equals("organizer")) {
                             loginMenuController.signUp(name, password, type);
-                            String id = String.valueOf(loginMenuController.return_id());
+                            String id = String.valueOf(loginMenuController.returnId());
                             System.out.println(languageManager.languagePack.userCreationResult(id));
                             break;
                         }

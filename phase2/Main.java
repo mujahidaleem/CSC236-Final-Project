@@ -14,6 +14,7 @@ import UseCases.Language.LanguageManager;
 import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
 
+import javax.swing.*;
 import java.time.LocalDateTime;
 
 
@@ -33,8 +34,7 @@ public class Main {
         LanguageManager languageManager = new LanguageManager("english");
 
         LoginMenuController loginMenuController = new LoginMenuController(userManager, eventManager, languageManager, roomManager);
-        LoginMenuPresenter loginMenuPresenter = new LoginMenuPresenter(loginMenuController, languageManager);
-        loginMenuPresenter.run();
+        loginMenuController.printMenu();
 //
 //        userFriendManager.setCurrentUser(null);
 //        userManager.setCurrentUser(null);

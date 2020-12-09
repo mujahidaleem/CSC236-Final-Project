@@ -54,4 +54,8 @@ public abstract class UserFriendListController {
             return false;
         }
     }
+
+    public void printMenu(){
+
+    }
 }

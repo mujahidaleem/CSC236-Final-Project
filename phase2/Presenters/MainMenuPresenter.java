@@ -1,10 +1,12 @@
 package Presenters;
 
 import Controllers.MainMenuController;
+import GUI.MainMenuPanel;
 import Presenters.EventMenu.EventMenuPresenter;
 import Presenters.MessageMenu.MessageMenuPresenter;
 import UseCases.Language.LanguageManager;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 public class MainMenuPresenter {
@@ -13,6 +15,7 @@ public class MainMenuPresenter {
     private MessageMenuPresenter messageMenuPresenter;
     private MainMenuController mainMenuController;
     private LanguageManager languageManager;
+    private MainMenuPanel mainMenuPanel;
 
     /**
      * MainMenuPresenter constructor
@@ -64,7 +67,13 @@ public class MainMenuPresenter {
      */
 
     public void printMenu() {
-        System.out.println(languageManager.languagePack.mainMenuCommands());
+        mainMenuPanel.createButtons();
+        mainMenuPanel.setText(languageManager.languagePack);
+    }
+
+    public void changeLanguage(String language){
+        languageManager.changeLanguage(language);
+        mainMenuPanel.setText(languageManager.languagePack);
     }
 
     /**

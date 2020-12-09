@@ -107,7 +107,7 @@ public class ScheduleSaver {
      */
     private void addEvents(PdfContentByte over, PdfContentByte under, LocalDateTime date) throws DocumentException {
         HashMap<LocalDateTime, ArrayList<Integer>> orders = new HashMap<LocalDateTime, ArrayList<Integer>>();
-        HashMap<LocalDateTime, Integer> number = pdfGenerator.eventsOnHour(pdfGenerator.getStartOfWeek(date));
+        HashMap<LocalDateTime, Integer> number = pdfGenerator.eventsOnHour();
 
         for (Event event : pdfGenerator.sortEvents()) {
             if (event.getEventTime().isAfter(pdfGenerator.getStartOfWeek(date)) && event.getEventTime().isBefore(pdfGenerator.getStartOfWeek(date).plusDays(7))) {

@@ -1,5 +1,6 @@
 package GUI;
 
+import Controllers.MainMenuController;
 import Entities.Events.Event;
 import Gateways.ScheduleSaver;
 import UseCases.Events.EventManager;
@@ -15,12 +16,11 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import UseCases.Language.LanguagePack;
 import UseCases.PdfGenerator;
 import com.itextpdf.text.DocumentException;
 
-public class MainMenuPanel extends JPanel {
-    private int width;
-    private int height;
+public class MainMenuPanel extends GUIPanel{
     private int tableX = 120;
     private int tableY = 750;
     private int tableWidth = 600;
@@ -38,46 +38,70 @@ public class MainMenuPanel extends JPanel {
     private JButton messages;
     private JButton setDate;
     private JButton saveScheduleButton;
+    private JButton logoutButton;
 
-    private LanguageManager languageManager;
     private ScheduleSaver scheduleSaver;
     private EventManager eventManager;
     private PdfGenerator pdfGenerator;
+    private MainMenuController mainMenuController;
 
-    public MainMenuPanel(JFrame frame, JPanel messageMenu, JPanel eventMenu, LanguageManager languageManager, EventManager eventManager){
-        this.width = frame.getWidth();
-        this.height = frame.getHeight();
-        this.languageManager = languageManager;
-        this.setLayout(null);
+    public MainMenuPanel(JFrame frame, EventManager eventManager, MainMenuController mainMenuController){
+        super(frame);
+        this.panel = new JPanel();
+        this.panel.setLayout(null);
         this.scheduleSaver = new ScheduleSaver(eventManager);
         this.eventManager = eventManager;
         this.pdfGenerator = new PdfGenerator(eventManager);
-        //setDateButton(this);
-        setTimeTable();
-        drawBlock(eventManager.getEvents().get(0),0,1);
-        showSchedule(LocalDateTime.now());
-        createEventButton(eventMenu, frame);
-        createMessageButton(messageMenu, frame);
-        setSaveScheduleButton();
-        setText();
+        this.mainMenuController = mainMenuController;
     }
 
-    public void createEventButton(JPanel panel, JFrame frame){
+    public void createButtons(){
+        createMessageButton();
+        createEventButton();
+        createLogoutButton();
+        createDateButton();
+        createSaveScheduleButton();
+    }
+
+    public void createEventButton(){
         event = new JButton();
         event.setBounds(10,100,100,50);
 
         event.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(panel);
-                frame.repaint();
-                frame.revalidate();
+                mainMenuController.printEventMenu();
             }
         });
-        add(event);
+        panel.add(event);
     }
 
-    public void setDateButton(JPanel origin){
+    public void createMessageButton(){
+        messages = new JButton();
+        messages.setBounds(10,200,100,50);
+
+        messages.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainMenuController.printMessageMenu();
+            }
+        });
+        panel.add(messages);
+    }
+
+    public void createLogoutButton(){
+        logoutButton = new JButton();
+        logoutButton.setBounds(0, 0, 0,0);
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainMenuController.logout();
+            }
+        });
+        panel.add(logoutButton);
+    }
+
+    public void createDateButton(){
         yearLabel = new JLabel();
         yearLabel.setBounds(50,20,40,20);
         yearTextField = new JTextField();
@@ -102,33 +126,18 @@ public class MainMenuPanel extends JPanel {
                     LocalDateTime date = LocalDateTime.parse(yearTextField.getText()+"-"+monthTextField.getText()+"-"+dayTextField.getText()+"T00:00:00");
                     showSchedule(date);
                 } catch (DateTimeParseException f) {
-                    JOptionPane.showMessageDialog(origin, "Please input a correct date.","Alert",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(panel, "Please input a correct date.","Alert",JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
 
-        add(yearLabel);
-        add(yearTextField);
-        add(monthLabel);
-        add(monthTextField);
-        add(dayLabel);
-        add(dayTextField);
-        add(setDate);
-    }
-
-    public void createMessageButton(JPanel panel, JFrame frame){
-        messages = new JButton();
-        messages.setBounds(10,200,100,50);
-
-        messages.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(panel);
-                frame.repaint();
-                frame.revalidate();
-            }
-        });
-        add(messages);
+        panel.add(yearLabel);
+        panel.add(yearTextField);
+        panel.add(monthLabel);
+        panel.add(monthTextField);
+        panel.add(dayLabel);
+        panel.add(dayTextField);
+        panel.add(setDate);
     }
 
     private void drawBlock(Event event, int order, int number){
@@ -144,18 +153,18 @@ public class MainMenuPanel extends JPanel {
         label.setText(event.getEventName() + "\n" + event.getRoomNumber());
         panel.add(label);
 
-        add(panel);
+        panel.add(panel);
         panel.setBackground(Color.red);
 
-        repaint();
-        revalidate();
+        panel.repaint();
+        panel.revalidate();
 
 
     }
 
     private void addEvents(LocalDateTime dateTime) {
         HashMap<LocalDateTime, ArrayList<Integer>> orders = new HashMap<>();
-        HashMap<LocalDateTime, Integer> number = pdfGenerator.eventsOnHour(dateTime);
+        HashMap<LocalDateTime, Integer> number = pdfGenerator.eventsOnHour();
 
         for (Event event : pdfGenerator.sortEvents()) {
             if (event.getEventTime().isAfter(dateTime) && event.getEventTime().isBefore(dateTime.plusDays(7))) {
@@ -189,7 +198,7 @@ public class MainMenuPanel extends JPanel {
         return new Rectangle(coordinates[0], coordinates[1], coordinates[2] - coordinates[0], coordinates[3]-coordinates[1]);
     }
 
-    public void setSaveScheduleButton () {
+    public void createSaveScheduleButton () {
         saveScheduleButton = new JButton();
         saveScheduleButton.setBounds(500, 20, 70, 30);
         saveScheduleButton.addActionListener(new ActionListener() {
@@ -204,23 +213,23 @@ public class MainMenuPanel extends JPanel {
             }
         });
 
-        add(saveScheduleButton);
+        panel.add(saveScheduleButton);
     }
 
-    private void setText(){
-        event.setText(languageManager.languagePack.mainMenuCommands()[0]);
-        messages.setText(languageManager.languagePack.mainMenuCommands()[1]);
-        yearLabel.setText(languageManager.languagePack.mainMenuCommands()[2]);
-        monthLabel.setText(languageManager.languagePack.mainMenuCommands()[3]);
-        dayLabel.setText(languageManager.languagePack.mainMenuCommands()[4]);
-        setDate.setText(languageManager.languagePack.mainMenuCommands()[5]);
-        saveScheduleButton.setText(languageManager.languagePack.mainMenuCommands()[6]);
+    public void setText(LanguagePack languagePack){
+        event.setText(languagePack.mainMenuCommands()[0]);
+        messages.setText(languagePack.mainMenuCommands()[1]);
+        yearLabel.setText(languagePack.mainMenuCommands()[2]);
+        monthLabel.setText(languagePack.mainMenuCommands()[3]);
+        dayLabel.setText(languagePack.mainMenuCommands()[4]);
+        setDate.setText(languagePack.mainMenuCommands()[5]);
+        saveScheduleButton.setText(languagePack.mainMenuCommands()[6]);
     }
 
     private void setTimeTable(){
         JPanel timeTable = new JPanel();
         timeTable.setBounds(tableX, tableY-tableHeight, tableWidth, tableHeight);
-        add(timeTable);
+        panel.add(timeTable);
         timeTable.setBackground(Color.CYAN);
     }
 }

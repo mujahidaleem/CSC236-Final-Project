@@ -1,9 +1,14 @@
 package Controllers.EventMenu;
 
 import Entities.Events.Event;
+import GUI.Events.EventMenuPanel;
+import Presenters.EventMenu.EventMenuPresenter;
 import UseCases.Events.EventManager;
 import UseCases.Events.RoomManager;
+import UseCases.Language.LanguageManager;
 import UseCases.Users.UserManager;
+
+import javax.swing.*;
 
 /**
  * Performs the commands inputted on the event menu
@@ -13,16 +18,25 @@ public abstract class EventMenuController {
     public EventManager eventManager;
     public RoomManager roomManager;
 
+    private EventMenuPresenter presenter;
+    private EventMenuPanel eventMenuPanel;
+
     /**
      * AttendeeEventController constructor
      *
      * @param userManager  contains the attendee using the current session
      * @param eventManager contains the list of events
      */
-    public EventMenuController(UserManager userManager, EventManager eventManager, RoomManager roomManager) {
+    public EventMenuController(UserManager userManager, EventManager eventManager, RoomManager roomManager, LanguageManager languageManager, JFrame frame) {
         this.userManager = userManager;
         this.eventManager = eventManager;
         this.roomManager = roomManager;
+        this.eventMenuPanel = new EventMenuPanel(this, frame);
+        this.presenter = new EventMenuPresenter(userManager, eventManager, languageManager, eventMenuPanel);
+    }
+
+    public void printMenu(){
+        presenter.setUpMenu();
     }
 
     /**
@@ -31,16 +45,16 @@ public abstract class EventMenuController {
      * @param event the event the user is trying to attend
      * @return whether the user has signed up for the event
      */
-    public boolean signUpForEvent(Event event) {
+    public void signUpForEvent(Event event) {
 
         boolean canBook = eventManager.spaceAvailable(event) &&                                     // if event still Event and Room still has space
                 roomManager.getRoomCapacity(event.getRoomNumber()) >= event.getTotalNum() + 1;
 
         if (canBook && eventManager.addUser(event, userManager.getCurrentUser())) {
             userManager.attendEvent(event);
-            return true;
+            presenter.signUpResult(true, event);
         } else {
-            return false;
+            presenter.signUpResult(false, event);
         }
     }
 
@@ -50,12 +64,17 @@ public abstract class EventMenuController {
      * @param event the event the user is trying to cancel their spot from
      * @return whether the user's spot has been removed from the event
      */
-    public boolean removeSpotFromEvent(Event event) {
+    public void removeSpotFromEvent(Event event) {
         if (eventManager.removeUser(userManager.getCurrentUser(), event)) {
             userManager.leaveEvent(event);
-            return true;
+            presenter.removalResult(true, event);
         } else {
-            return false;
+            presenter.removalResult(false, event);
         }
     }
+
+    public void returnToMainMenu(){
+        presenter.returnToMainMenu();
+    }
+
 }

@@ -27,13 +27,23 @@ public class Main {
         MessageReader messageReader = new MessageReader("userFriendManager.ser");
         RoomReader roomReader = new RoomReader("roomManager.ser");
 
+//        UserManager userManager = userReader.readFile();
+//        userReader.createTable();
+//        userReader.saveUserManager(userManager);
         UserManager userManager = userReader.readData();
+
+//        EventManager eventManager = eventReader.readFile();
+//        eventReader.createTable();
+//        eventReader.saveEventManager(eventManager);
         EventManager eventManager = eventReader.readData();
+
+//        RoomManager roomManager = roomReader.readFile();
+//        roomReader.saveRoomManager(roomManager);
         RoomManager roomManager = roomReader.readData();
 
         LanguageManager languageManager = new LanguageManager("english");
 
-        LoginMenuController loginMenuController = new LoginMenuController(userManager, eventManager, languageManager, roomManager);
+        LoginMenuController loginMenuController = new LoginMenuController(languageManager, userReader, eventReader, roomReader);
         loginMenuController.printMenu();
 //
 //        userFriendManager.setCurrentUser(null);

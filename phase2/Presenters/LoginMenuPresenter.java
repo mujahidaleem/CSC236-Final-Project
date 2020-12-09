@@ -23,7 +23,8 @@ public class LoginMenuPresenter {
      *
      * @param loginMenuController need to call loginMenuController
      */
-    public LoginMenuPresenter(LoginMenuController loginMenuController, LanguageManager languageManager, MainLoginPanel mainLoginPanel, UserCreationPanel userCreationPanel) {
+    public LoginMenuPresenter(LoginMenuController loginMenuController, LanguageManager languageManager,
+                              MainLoginPanel mainLoginPanel, UserCreationPanel userCreationPanel) {
         this.loginMenuController = loginMenuController;
         this.languageManager = languageManager;
         this.userCreationPanel = userCreationPanel;
@@ -46,7 +47,7 @@ public class LoginMenuPresenter {
     }
 
     public void loginFailed(){
-        JOptionPane.showMessageDialog(mainLoginPanel.getPanel(), ""); //TODO:
+        JOptionPane.showMessageDialog(mainLoginPanel.getPanel(), "","WARNING", JOptionPane.WARNING_MESSAGE); //TODO:
     }
 
     public void showCreateAccountSuccess(int id){
@@ -57,6 +58,10 @@ public class LoginMenuPresenter {
         languageManager.changeLanguage(language);
         mainLoginPanel.setText(languageManager.languagePack);
         userCreationPanel.setText(languageManager.languagePack);
+    }
+
+    public boolean confirmExit(JFrame frame){
+        return (JOptionPane.showConfirmDialog(frame, "") == JOptionPane.YES_OPTION); //TODO: add text
     }
 
     /**

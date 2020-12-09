@@ -6,29 +6,34 @@ import GUI.MainMenuPanel;
 import Presenters.EventMenu.EventMenuPresenter;
 import Presenters.MainMenuPresenter;
 import Presenters.MessageMenu.MessageMenuPresenter;
+import UseCases.Events.EventManager;
+import UseCases.Language.LanguageManager;
 import UseCases.Users.UserManager;
 
-public class MainMenuController {
-    private EventMenuPresenter eventMenuPresenter;
-    private MessageMenuPresenter messageMenuPresenter;
+import javax.swing.*;
 
+public class MainMenuController {
 
     private EventMenuController eventMenuController;
     private UserFriendListController friendListController;
+
     private UserManager userManager;
+    private EventManager eventManager;
     private MainMenuPanel mainMenuPanel;
     private MainMenuPresenter presenter;
 
     /**
-     * @param eventMenuPresenter   attribute eventMenuPresenter
-     * @param messageMenuPresenter attribute messageMenuPresenter
+     * @param eventMenuController   attribute eventMenuPresenter
+     * @param friendListController attribute messageMenuPresenter
      * @param userManager          attribute userManager
      */
-    public MainMenuController(EventMenuPresenter eventMenuPresenter, MessageMenuPresenter messageMenuPresenter,
-                              UserManager userManager) {
-        this.eventMenuPresenter = eventMenuPresenter;
-        this.messageMenuPresenter = messageMenuPresenter;
+    public MainMenuController(EventMenuController eventMenuController, UserFriendListController friendListController, UserManager userManager, LanguageManager languageManager, EventManager eventManager, JFrame frame) {
         this.userManager = userManager;
+        this.eventManager = eventManager;
+        this.eventMenuController = eventMenuController;
+        this.friendListController = friendListController;
+        this.mainMenuPanel = new MainMenuPanel(frame, eventManager, this);
+        this.presenter = new MainMenuPresenter(languageManager, mainMenuPanel);
     }
 
     /**
@@ -36,7 +41,7 @@ public class MainMenuController {
      */
 
     public void printEventMenu() {
-        eventMenuPresenter.printMenu();
+        eventMenuController.printMenu();
     }
 
     /**
@@ -44,8 +49,7 @@ public class MainMenuController {
      */
 
     public void printMenu() {
-        presenter.printMenu();
-
+        presenter.setUpMenu();
     }
 
     /**
@@ -56,7 +60,13 @@ public class MainMenuController {
     }
 
     public void changeLanguage(String language){
+
         presenter.changeLanguage(language);
+    }
+
+    public void showChangePasswordPrompt(){
+        changePassword(presenter.changePassword());
+        presenter.showChangePasswordResult();
     }
 
     /**
@@ -65,12 +75,12 @@ public class MainMenuController {
      * @param password password of a given user
      */
 
-    public void changePw(String password) {
+    public void changePassword(String password) {
         userManager.changePassword(password);
     }
 
     public void logout(){
-        //TODO
+
     }
 }
 

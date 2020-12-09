@@ -5,6 +5,7 @@ import Entities.Events.Event;
 import Entities.Users.Speaker;
 import Controllers.EventMenu.OrganizerEventController;
 import Entities.Users.User;
+import GUI.Events.OrganizerEventMenuPanel;
 import UseCases.Events.EventManager;
 import UseCases.Events.SameEventNameException;
 import UseCases.Language.LanguageManager;
@@ -19,7 +20,6 @@ import java.time.format.DateTimeParseException;
  * commands inputted by the organizer
  */
 public class OrganizerEventPresenter extends EventMenuPresenter {
-    private OrganizerEventController organizerEventController;
     private OrganizerManager organizerManager;
     private SpeakerManager speakerManager;
 
@@ -28,87 +28,84 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      *
      * @param organizerManager         stores the current user
      * @param speakerManager           stores a list of speakers
-     * @param organizerEventController the controller that performs the commands inputted
      * @param languageManager          decides which language is used in the UI
      */
     public OrganizerEventPresenter(OrganizerManager organizerManager, SpeakerManager speakerManager,
-                                   OrganizerEventController organizerEventController, EventManager eventManager,
-                                   LanguageManager languageManager) {
-        super(organizerManager, organizerEventController, eventManager, languageManager);
-        this.organizerEventController = organizerEventController;
+                                   EventManager eventManager, LanguageManager languageManager, OrganizerEventMenuPanel organizerEventMenuPanel) {
+        super(organizerManager, eventManager, languageManager, organizerEventMenuPanel);
         this.organizerManager = organizerManager;
         this.speakerManager = speakerManager;
     }
 
-    /**
-     * Prints the list of commands that can be executed by the organizer
-     */
-    @Override
-    protected void printCommands() {
-        languageManager.languagePack.printEventStandardCommands();
-        languageManager.languagePack.printOrganizerCommands();
-    }
-
-    /**
-     * The menu for events is initialized and commands relating to events can be
-     * performed by typing in the correct strings into the command line.
-     */
-    @Override
-    protected void extraCommands(String[] command) {
-        outer:
-        try {
-            switch (command[0]) {
-                case "3":
-                    Event event1 = organizerEventController.createEvent(command[1], LocalDateTime.parse(command[2]), Integer.parseInt(command[3]), Integer.parseInt(command[4]), Integer.parseInt(command[5]), command[6]);
-                    if (event1 == null) {
-                        createEventResults(false, null);
-                    } else {
-                        createEventResults(true, event1);
-                    }
-                    break outer;
-                case "9":
-                    User user = organizerEventController.createAccount(command[1], command[2], command[3]);
-                    if (user == null) {
-                        createUserAccountResults(false, null);
-                    } else {
-                        createUserAccountResults(true, user);
-                    }
-                    break outer;
-                case "10":
-                    printSpeakers();
-                    break outer;
-            }
-            Event event = eventManager.findEvent(command[1]);
-            if (!organizerEventController.eventModifiable(event)) {
-                System.out.println(languageManager.languagePack.eventUnchangeable(event));
-            } else {
-                switch (command[0]) {
-                    case "4":
-                        setSpeakerResults(organizerEventController.addSpeaker(event, Integer.parseInt(command[2])), event);
-                        break;
-                    case "7":
-                        changeEventDateResults(organizerEventController.changeEventDate(event, LocalDateTime.parse(command[2])), event);
-                        break;
-                    case "8":
-                        changeEventRoomResults(organizerEventController.changeEventRoom(event, Integer.parseInt(command[2])), event);
-                    case "6":
-                        deleteEvent(organizerEventController.deleteEvent(event), event);
-                        break;
-                    case "5":
-                        removeSpeakerResults(organizerEventController.removeSpeaker(event, Integer.parseInt(command[2])), event);
-                        break;
-                    default:
-                        System.out.println(languageManager.languagePack.unknownCommand());
-                }
-            }
-        } catch (NullPointerException e) {
-            System.out.println(languageManager.languagePack.unknownEvent());
-        } catch (NullSpeakerException e) {
-            System.out.println(languageManager.languagePack.unknownSpeaker());
-        } catch (DateTimeParseException e) {
-            System.out.println(languageManager.languagePack.unknownDate());
-        }
-    }
+//    /**
+//     * Prints the list of commands that can be executed by the organizer
+//     */
+//    @Override
+//    protected void printCommands() {
+//        languageManager.languagePack.printEventStandardCommands();
+//        languageManager.languagePack.printOrganizerCommands();
+//    }
+//
+//    /**
+//     * The menu for events is initialized and commands relating to events can be
+//     * performed by typing in the correct strings into the command line.
+//     */
+//    @Override
+//    protected void extraCommands(String[] command) {
+//        outer:
+//        try {
+//            switch (command[0]) {
+//                case "3":
+//                    Event event1 = organizerEventController.createEvent(command[1], LocalDateTime.parse(command[2]), Integer.parseInt(command[3]), Integer.parseInt(command[4]), Integer.parseInt(command[5]), command[6]);
+//                    if (event1 == null) {
+//                        createEventResults(false, null);
+//                    } else {
+//                        createEventResults(true, event1);
+//                    }
+//                    break outer;
+//                case "9":
+//                    User user = organizerEventController.createAccount(command[1], command[2], command[3]);
+//                    if (user == null) {
+//                        createUserAccountResults(false, null);
+//                    } else {
+//                        createUserAccountResults(true, user);
+//                    }
+//                    break outer;
+//                case "10":
+//                    printSpeakers();
+//                    break outer;
+//            }
+//            Event event = eventManager.findEvent(command[1]);
+//            if (!organizerEventController.eventModifiable(event)) {
+//                System.out.println(languageManager.languagePack.eventUnchangeable(event));
+//            } else {
+//                switch (command[0]) {
+//                    case "4":
+//                        setSpeakerResults(organizerEventController.addSpeaker(event, Integer.parseInt(command[2])), event);
+//                        break;
+//                    case "7":
+//                        changeEventDateResults(organizerEventController.changeEventDate(event, LocalDateTime.parse(command[2])), event);
+//                        break;
+//                    case "8":
+//                        changeEventRoomResults(organizerEventController.changeEventRoom(event, Integer.parseInt(command[2])), event);
+//                    case "6":
+//                        deleteEvent(organizerEventController.deleteEvent(event), event);
+//                        break;
+//                    case "5":
+//                        removeSpeakerResults(organizerEventController.removeSpeaker(event, Integer.parseInt(command[2])), event);
+//                        break;
+//                    default:
+//                        System.out.println(languageManager.languagePack.unknownCommand());
+//                }
+//            }
+//        } catch (NullPointerException e) {
+//            System.out.println(languageManager.languagePack.unknownEvent());
+//        } catch (NullSpeakerException e) {
+//            System.out.println(languageManager.languagePack.unknownSpeaker());
+//        } catch (DateTimeParseException e) {
+//            System.out.println(languageManager.languagePack.unknownDate());
+//        }
+//    }
 
     /**
      * Prints the result of trying to create a new event

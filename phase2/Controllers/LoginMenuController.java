@@ -6,6 +6,9 @@ import Entities.Users.User;
 import GUI.LoginMenuFrame;
 import GUI.MainLoginPanel;
 import GUI.UserCreationPanel;
+import Gateways.EventReader;
+import Gateways.RoomReader;
+import Gateways.UserReader;
 import Presenters.LoginMenuPresenter;
 import Presenters.MainMenuPresenter;
 import UseCases.Events.EventManager;
@@ -15,6 +18,8 @@ import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,9 +31,17 @@ public class LoginMenuController {
 
     protected UserManager userManager;
     protected EventManager eventManager;
+    protected RoomManager roomManager;
+
     private EventMenuFactory eventMenuFactory;
     private MessageMenuFactory messageMenuFactory;
     private LoginMenuPresenter presenter;
+    private LanguageManager languageManager;
+
+    private UserReader userReader;
+    private EventReader eventReader;
+    private RoomReader roomReader;
+
 
     private JFrame frame;
     private MainLoginPanel loginPanel;
@@ -38,17 +51,42 @@ public class LoginMenuController {
     /**
      * LoginMenuPresenter constructor
      *
-     * @param userManager stores the list of users
      */
-    public LoginMenuController(UserManager userManager, EventManager eventManager, LanguageManager languageManager, RoomManager roomManager) {
-        this.userManager = userManager;
-        this.eventManager = eventManager;
-        this.eventMenuFactory = new EventMenuFactory(userManager, eventManager, languageManager, roomManager);
+    public LoginMenuController(LanguageManager languageManager, UserReader userReader, EventReader eventReader, RoomReader roomReader) {
+        this.userReader = userReader;
+        this.eventReader = eventReader;
+        this.roomReader = roomReader;
+
+
+        this.userManager = userReader.readData();
+        this.eventManager = eventReader.readData();
+        this.roomManager = roomReader.readData();
+        this.languageManager = languageManager;
+        this.eventMenuFactory = new EventMenuFactory(userManager, eventManager, languageManager, roomManager, frame);
         this.messageMenuFactory = new MessageMenuFactory(userManager, eventManager, languageManager);
+
         this.frame = new JFrame();
+        this.frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.frame.addWindowListener(new WindowAdapter() {
+            /**
+             * Invoked when a window is in the process of being closed.
+             * The close operation can be overridden at this point.
+             *
+             * @param e
+             */
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if(presenter.confirmExit(frame)){
+                    saveFiles();
+                    System.exit(0);
+                }
+            }
+        });
+
         this.loginPanel = new MainLoginPanel(frame, this);
         this.creationPanel = new UserCreationPanel(frame, languageManager,this);
-        this.presenter = new LoginMenuPresenter(this, languageManager, loginPanel, creationPanel);
+
+        this.presenter = new LoginMenuPresenter(this, this.languageManager, loginPanel, creationPanel);
     }
 
     public void printMenu(){
@@ -72,28 +110,28 @@ public class LoginMenuController {
      *
      * @param id the inputted username
      * @param password the inputted password
-     * @return The user with those login credentials or nothing if the credentials are wrong
      */
     public void checkLogin(int id, String password) {
         for (User user : userManager.users) {
             if (user.getId() == id && user.getPassword().equals(password)) {
                 userManager.setCurrentUser(user);
-                MainMenuController mainMenuController = new MainMenuController(eventMenuFactory.getEventMenu(), messageMenuFactory.createMessageMenu(), userManager);
+                MainMenuController mainMenuController = new MainMenuController(eventMenuFactory.getEventMenu(),
+                        messageMenuFactory.createMessageMenu(), userManager, languageManager, eventManager,frame);
                 mainMenuController.printMenu();
             }
         }
         presenter.loginFailed();
     }
 
-    /**
-     * Creates a main menu presenter in the event of a login
-     *
-     * @return MainMenuPresenter
-     */
-    public MainMenuPresenter login(LanguageManager languageManager) {
-        MainMenuController mainMenuController = new MainMenuController(eventMenuFactory.getEventMenu(), messageMenuFactory.createMessageMenu(), userManager);
-        return new MainMenuPresenter(eventMenuFactory.getEventMenu(), messageMenuFactory.createMessageMenu(), mainMenuController, languageManager);
-    }
+//    /**
+//     * Creates a main menu presenter in the event of a login
+//     *
+//     * @return MainMenuPresenter
+//     */
+//    public MainMenuPresenter login(LanguageManager languageManager) {
+//        MainMenuController mainMenuController = new MainMenuController(eventMenuFactory.getEventMenu(), messageMenuFactory.createMessageMenu(), userManager);
+//        return new MainMenuPresenter(eventMenuFactory.getEventMenu(), messageMenuFactory.createMessageMenu(), mainMenuController, languageManager);
+//    }
 
     /**
      * Creates a new user.
@@ -113,5 +151,11 @@ public class LoginMenuController {
      */
     public int returnId() {
         return userManager.getUsers().size() + 1000 - 1;
+    }
+
+    private void saveFiles(){
+        userReader.saveUserManager(userManager);
+        eventReader.saveEventManager(eventManager);
+        roomReader.saveRoomManager(roomManager);
     }
 }

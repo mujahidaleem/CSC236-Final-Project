@@ -111,7 +111,7 @@ public class RoomReader extends MySQLReader{
         }
     }
 
-    public void saveUserManager(RoomManager roomManager) {
+    public void saveRoomManager(RoomManager roomManager) {
         cleanTable("rooms");
         for (Room room : roomManager.getRooms()) {
             try {
@@ -127,33 +127,40 @@ public class RoomReader extends MySQLReader{
     }
 
     private String generateInformation(Room room){
-        return "INSERT INTO roms(roomNumber, roomCapacity, schedule) VALUES('" + room.getRoomNumber() + "', '"
-                + room.getRoomCapacity() + "', '" + turnHashMapIntoString(room.getRoomSchedule()) + "')";
+        return "INSERT INTO rooms(roomNumber, roomCapacity, schedule) VALUES('" + room.getRoomNumber() + "', '"
+                + room.getRoomCapacity() + "', '" + turnHashMap2IntoString(room.getRoomSchedule()) + "')";
     }
 
-    private String turnHashMapIntoString(HashMap<ArrayList<LocalDateTime>, String> map){
+    private String turnHashMap2IntoString(HashMap<ArrayList<LocalDateTime>, String> map){
         StringBuilder stringBuilder = new StringBuilder();
-        for(ArrayList<LocalDateTime> arrayList: map.keySet()){
-            stringBuilder.append(arrayList.get(0)).append("-").append(arrayList.get(1)).append(":").append(map.get(arrayList)).append("_");
+        if(map.size()>0){
+            for(ArrayList<LocalDateTime> arrayList: map.keySet()){
+                stringBuilder.append(arrayList.get(0)).append("-").append(arrayList.get(1)).append(":").append(map.get(arrayList)).append("_");
+            }
+            return stringBuilder.toString();
         }
-        return stringBuilder.toString();
+        return "";
     }
 
-    private HashMap<ArrayList<LocalDateTime>, String> turnStringToHashMap(String s){
+    private HashMap<ArrayList<LocalDateTime>, String> turnStringToHashMap(String s) {
         HashMap<ArrayList<LocalDateTime>, String> map = new HashMap<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String[] strings = s.split("_");
-        for(String string: strings){
-            String[] s1 = string.split(":");
-            String[] time = s1[0].split("-");
-            LocalDateTime start = LocalDateTime.parse(time[0],formatter);
-            LocalDateTime end = LocalDateTime.parse(time[1],formatter);
-            String event = s1[1];
-            ArrayList<LocalDateTime> arrayList = new ArrayList<>();
-            arrayList.add(start);
-            arrayList.add(end);
-            map.put(arrayList, event);
+        if (s != null && s.length() > 0) {
+            String[] strings = s.split("_");
+            for (String string : strings) {
+                String[] s1 = string.split(":");
+                String[] time = s1[0].split("-");
+                LocalDateTime start = LocalDateTime.parse(time[0], formatter);
+                LocalDateTime end = LocalDateTime.parse(time[1], formatter);
+                String event = s1[1];
+                ArrayList<LocalDateTime> arrayList = new ArrayList<>();
+                arrayList.add(start);
+                arrayList.add(end);
+                map.put(arrayList, event);
+            }
+            return map;
+        } else {
+            return new HashMap<>();
         }
-        return map;
     }
 }

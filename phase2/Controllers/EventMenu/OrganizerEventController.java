@@ -7,8 +7,10 @@ import Entities.Users.*;
 import UseCases.Events.EventFactory;
 import UseCases.Events.EventManager;
 import UseCases.Events.RoomManager;
+import UseCases.Language.LanguageManager;
 import UseCases.Users.*;
 
+import javax.swing.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,9 +30,10 @@ public class OrganizerEventController extends EventMenuController {
      * @param speakerManager contains the list of speakers
      */
     public OrganizerEventController(OrganizerManager manager, RoomManager roomManager,
-                                    EventManager eventManager, UserManager userManager, SpeakerManager speakerManager,
-                                    AccountCreatorFactory accountCreatorFactory){
-        super(userManager, eventManager, roomManager);
+                                    EventManager eventManager, UserManager userManager, LanguageManager languageManager,
+                                    SpeakerManager speakerManager,
+                                    AccountCreatorFactory accountCreatorFactory, JFrame frame){
+        super(userManager, eventManager, roomManager, languageManager, frame);
         this.organizerManager = manager;
         this.speakerManager = speakerManager;
         this.accountCreatorFactory = accountCreatorFactory;

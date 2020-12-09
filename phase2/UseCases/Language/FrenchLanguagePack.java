@@ -144,10 +144,11 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     }
 
     @Override
-    public String mainMenuCommands(){
-        return "---------------------------------------------------------------------------------\n" +
-                "Veuillez sélectionner un sous-menu. Tapez le numéro et appuyez sur Entrée:\n" +
-                "1. Événements\n2. Messages\n3. Se déconnecter\n4. Changer le mot de passe";
+    public String[] mainMenuCommands(){
+        return new String[]{};
+//        return "---------------------------------------------------------------------------------\n" +
+//                "Veuillez sélectionner un sous-menu. Tapez le numéro et appuyez sur Entrée:\n" +
+//                "1. Événements\n2. Messages\n3. Se déconnecter\n4. Changer le mot de passe";
     }
 
     @Override

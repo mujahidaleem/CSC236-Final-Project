@@ -149,10 +149,12 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
     }
 
     @Override
-    public String mainMenuCommands(){
-        return "---------------------------------------------------------------------------------\n" +
-                "Please select a sub menu. Type the number and press enter:\n" +
-                "1. Event Manager\n2. Messages\n3. Log out\n4. Change Password\n5. Save schedule";
+    public String[] mainMenuCommands(){
+        return new String[]{"Events", "Messages", "Year", "Month", "Day", "Show Schedule", "Save Schedule Pdf"};
+
+//                "---------------------------------------------------------------------------------\n" +
+//            "Please select a sub menu. Type the number and press enter:\n" +
+//                "1. Event Manager\n2. Messages\n3. Log out\n4. Change Password\n5. Save schedule";
     }
 
     @Override

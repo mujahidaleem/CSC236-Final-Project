@@ -90,7 +90,7 @@ public interface LanguagePack {
      *
      * @return a list of commands available at the main menu
      */
-    String mainMenuCommands();
+    String[] mainMenuCommands();
 
     /**
      * Contains the strings associated with changing the password

@@ -4,12 +4,9 @@ import Controllers.MainMenuController;
 import Entities.Events.Event;
 import Gateways.ScheduleSaver;
 import UseCases.Events.EventManager;
-import UseCases.Language.LanguageManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
@@ -20,13 +17,17 @@ import UseCases.Language.LanguagePack;
 import UseCases.PdfGenerator;
 import com.itextpdf.text.DocumentException;
 
-public class MainMenuPanel extends GUIPanel{
-    private int tableX = 120;
-    private int tableY = 750;
-    private int tableWidth = 600;
-    private int tableHeight = 650;
-    private int tableCellWidth = tableWidth/8;
-    private int tableCellHeight = tableHeight/25;
+public class MainMenuPanel extends GUIPanel {
+    private final int tableX = 120;
+    private final int tableY = 750;
+    private final int tableWidth = 600;
+    private final int tableHeight = 650;
+    private final int tableCellWidth = tableWidth / 8;
+    private final int tableCellHeight = tableHeight / 25;
+
+    private final int buttonX = 10;
+    private final int buttonHeight = 30;
+    private final int buttonWidth = 100;
 
     private JLabel yearLabel;
     private JLabel monthLabel;
@@ -34,18 +35,20 @@ public class MainMenuPanel extends GUIPanel{
     private JTextField yearTextField;
     private JTextField monthTextField;
     private JTextField dayTextField;
+
     private JButton event;
     private JButton messages;
     private JButton setDate;
     private JButton saveScheduleButton;
     private JButton logoutButton;
+    private JButton changePasswordButton;
 
-    private ScheduleSaver scheduleSaver;
+    private final ScheduleSaver scheduleSaver;
     private EventManager eventManager;
-    private PdfGenerator pdfGenerator;
-    private MainMenuController mainMenuController;
+    private final PdfGenerator pdfGenerator;
+    private final MainMenuController mainMenuController;
 
-    public MainMenuPanel(JFrame frame, EventManager eventManager, MainMenuController mainMenuController){
+    public MainMenuPanel(JFrame frame, EventManager eventManager, MainMenuController mainMenuController) {
         super(frame);
         this.panel = new JPanel();
         this.panel.setLayout(null);
@@ -55,79 +58,67 @@ public class MainMenuPanel extends GUIPanel{
         this.mainMenuController = mainMenuController;
     }
 
-    public void createButtons(){
-        createMessageButton();
-        createEventButton();
-        createLogoutButton();
+    /**
+     * Create the components of the GUI
+     */
+    public void setUpMenu() {
         createDateButton();
         createSaveScheduleButton();
+        createButtons();
     }
 
-    public void createEventButton(){
+    /**
+     * Creates the buttons shown on the GUI
+     */
+    public void createButtons() {
         event = new JButton();
-        event.setBounds(10,100,100,50);
-
-        event.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainMenuController.printEventMenu();
-            }
-        });
+        event.setBounds(buttonX, 100, buttonWidth, buttonHeight);
+        event.addActionListener(e -> mainMenuController.printEventMenu());
         panel.add(event);
-    }
 
-    public void createMessageButton(){
         messages = new JButton();
-        messages.setBounds(10,200,100,50);
-
-        messages.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainMenuController.printMessageMenu();
-            }
-        });
+        messages.setBounds(buttonX, 200, buttonWidth, buttonHeight);
+        messages.addActionListener(e -> mainMenuController.printMessageMenu());
         panel.add(messages);
-    }
 
-    public void createLogoutButton(){
+        changePasswordButton = new JButton();
+        changePasswordButton.setBounds(buttonX, 300, buttonWidth, buttonHeight);
+        changePasswordButton.addActionListener(e -> mainMenuController.showChangePasswordPrompt());
+        panel.add(changePasswordButton);
+
         logoutButton = new JButton();
-        logoutButton.setBounds(0, 0, 0,0);
-        logoutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainMenuController.logout();
-            }
-        });
+        logoutButton.setBounds(buttonX, 400, buttonWidth, buttonHeight);
+        logoutButton.addActionListener(e -> mainMenuController.logout());
         panel.add(logoutButton);
     }
 
-    public void createDateButton(){
+    /**
+     * Creates the GUI components related to showing the schedule
+     */
+    public void createDateButton() {
         yearLabel = new JLabel();
-        yearLabel.setBounds(50,20,40,20);
+        yearLabel.setBounds(50, 20, 40, 20);
         yearTextField = new JTextField();
         yearTextField.setBounds(90, 20, 40, 20);
 
         monthLabel = new JLabel();
-        monthLabel.setBounds(150,20,40,20);
+        monthLabel.setBounds(150, 20, 40, 20);
         monthTextField = new JTextField();
         monthTextField.setBounds(190, 20, 40, 20);
 
         dayLabel = new JLabel();
-        dayLabel.setBounds(250,20,40,20);
+        dayLabel.setBounds(250, 20, 40, 20);
         dayTextField = new JTextField();
         dayTextField.setBounds(290, 20, 40, 20);
 
         setDate = new JButton();
         setDate.setBounds(350, 20, 100, 20);
-        setDate.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try{
-                    LocalDateTime date = LocalDateTime.parse(yearTextField.getText()+"-"+monthTextField.getText()+"-"+dayTextField.getText()+"T00:00:00");
-                    showSchedule(date);
-                } catch (DateTimeParseException f) {
-                    JOptionPane.showMessageDialog(panel, "Please input a correct date.","Alert",JOptionPane.WARNING_MESSAGE);
-                }
+        setDate.addActionListener(e -> {
+            try {
+                LocalDateTime date = LocalDateTime.parse(yearTextField.getText() + "-" + monthTextField.getText() + "-" + dayTextField.getText() + "T00:00:00");
+                showSchedule(date);
+            } catch (DateTimeParseException f) {
+                JOptionPane.showMessageDialog(panel, "Please input a correct date.", "Alert", JOptionPane.WARNING_MESSAGE);
             }
         });
 
@@ -140,7 +131,7 @@ public class MainMenuPanel extends GUIPanel{
         panel.add(setDate);
     }
 
-    private void drawBlock(Event event, int order, int number){
+    private void drawBlock(Event event, int order, int number) {
         JPanel panel = new JPanel();
         panel.setLayout(new CardLayout());
         JLabel label = new JLabel();
@@ -189,34 +180,43 @@ public class MainMenuPanel extends GUIPanel{
         }
     }
 
-    public void showSchedule(LocalDateTime dateTime){
+    public void showSchedule(LocalDateTime dateTime) {
         addEvents(pdfGenerator.getStartOfWeek(dateTime));
     }
 
-    private Rectangle getPosition(Event event, int order, int number){
+    private Rectangle getPosition(Event event, int order, int number) {
         Integer[] coordinates = pdfGenerator.getPosition(event, order, number, tableX, tableY, tableCellWidth, tableCellHeight, "swing");
-        return new Rectangle(coordinates[0], coordinates[1], coordinates[2] - coordinates[0], coordinates[3]-coordinates[1]);
+        return new Rectangle(coordinates[0], coordinates[1], coordinates[2] - coordinates[0], coordinates[3] - coordinates[1]);
     }
 
-    public void createSaveScheduleButton () {
+    public void createSaveScheduleButton() {
         saveScheduleButton = new JButton();
         saveScheduleButton.setBounds(500, 20, 70, 30);
-        saveScheduleButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                LocalDateTime date = LocalDateTime.parse(yearTextField.getText()+"-"+monthTextField.getText()+"-"+dayTextField.getText()+"T00:00:00");
-                try{
-                    scheduleSaver.generatePDF(pdfGenerator.getStartOfWeek(date));
-                } catch (DocumentException | IOException e1){
-                    e1.printStackTrace();
-                }
+        saveScheduleButton.addActionListener(e -> {
+            LocalDateTime date = LocalDateTime.parse(yearTextField.getText() + "-" + monthTextField.getText() + "-" + dayTextField.getText() + "T00:00:00");
+            try {
+                scheduleSaver.generatePDF(pdfGenerator.getStartOfWeek(date));
+            } catch (DocumentException | IOException e1) {
+                e1.printStackTrace();
             }
         });
 
         panel.add(saveScheduleButton);
     }
 
-    public void setText(LanguagePack languagePack){
+    private void setTimeTable() {
+        JPanel timeTable = new JPanel();
+        timeTable.setBounds(tableX, tableY - tableHeight, tableWidth, tableHeight);
+        panel.add(timeTable);
+        timeTable.setBackground(Color.CYAN);
+    }
+
+    /**
+     * shows all strings in the GUI in a specific language
+     *
+     * @param languagePack contains the language the GUI is in
+     */
+    public void setText(LanguagePack languagePack) {
         event.setText(languagePack.mainMenuCommands()[0]);
         messages.setText(languagePack.mainMenuCommands()[1]);
         yearLabel.setText(languagePack.mainMenuCommands()[2]);
@@ -224,12 +224,7 @@ public class MainMenuPanel extends GUIPanel{
         dayLabel.setText(languagePack.mainMenuCommands()[4]);
         setDate.setText(languagePack.mainMenuCommands()[5]);
         saveScheduleButton.setText(languagePack.mainMenuCommands()[6]);
-    }
-
-    private void setTimeTable(){
-        JPanel timeTable = new JPanel();
-        timeTable.setBounds(tableX, tableY-tableHeight, tableWidth, tableHeight);
-        panel.add(timeTable);
-        timeTable.setBackground(Color.CYAN);
+        changePasswordButton.setText(languagePack.mainMenuCommands()[7]);
+        logoutButton.setText(languagePack.mainMenuCommands()[8]);
     }
 }

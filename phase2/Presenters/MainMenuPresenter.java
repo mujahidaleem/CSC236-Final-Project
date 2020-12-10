@@ -1,11 +1,9 @@
 package Presenters;
 
-import Controllers.MainMenuController;
 import GUI.MainMenuPanel;
 import UseCases.Language.LanguageManager;
 
 import javax.swing.*;
-import java.util.Scanner;
 
 public class MainMenuPresenter {
     private LanguageManager languageManager;
@@ -14,9 +12,9 @@ public class MainMenuPresenter {
     /**
      * MainMenuPresenter constructor
      *
-     * @param languageManager      need to display strings
+     * @param languageManager need to display strings
+     * @param mainMenuPanel   the GUI representing the main menu
      */
-
     public MainMenuPresenter(LanguageManager languageManager, MainMenuPanel mainMenuPanel) {
         this.languageManager = languageManager;
         this.mainMenuPanel = mainMenuPanel;
@@ -53,36 +51,38 @@ public class MainMenuPresenter {
 //    }
 
     /**
-     * To print command line menu
+     * sets up the main menu panel so it can be presented to the user.
      */
-
     public void setUpMenu() {
-        mainMenuPanel.createButtons();
+        mainMenuPanel.setUpMenu();
         mainMenuPanel.setText(languageManager.languagePack);
         mainMenuPanel.changePanel(mainMenuPanel.getPanel());
     }
 
-    public void changeLanguage(String language){
+    /**
+     * changes the language of GUI
+     *
+     * @param language the new language of the GUI
+     */
+    public void changeLanguage(String language) {
         languageManager.changeLanguage(language);
         mainMenuPanel.setText(languageManager.languagePack);
     }
 
     /**
-     * To return user's input
+     * Asks the user for the new password
      *
-     * @return user's input value
+     * @return the new password
      */
-    public static String takeInput() {
-        Scanner userInput = new Scanner(System.in);
-        return userInput.nextLine();
+    public String changePassword() {
+        return JOptionPane.showInputDialog(mainMenuPanel.getPanel(), languageManager.languagePack.changePassword()[0]);
     }
 
-    public String changePassword(){
-        return JOptionPane.showInputDialog(mainMenuPanel.getPanel(), "new password"); //TODO: add this to language pack
-    }
-
-    public void showChangePasswordResult(){
-        JOptionPane.showMessageDialog(mainMenuPanel.getPanel(), "");//TODO: add text
+    /**
+     * Tells the user that the password has been changed
+     */
+    public void showChangePasswordResult() {
+        JOptionPane.showMessageDialog(mainMenuPanel.getPanel(), languageManager.languagePack.changePassword()[1]);
     }
 
 }

@@ -104,7 +104,11 @@ public class SpeakerManager extends UserManager {
      *
      * @param event the event that is being removed
      */
-    public void removeEvent(Event event) {
+    public void removeEvent(Speaker speaker, Event event) {
+        speaker.speakingSchedule.remove(event.getEventName());
+    }
+
+    public void deleteEvent(Event event){
         for(int id:event.getSpeakers()){
             findSpeaker(id).speakingSchedule.remove(event.getEventName());
         }

@@ -11,18 +11,18 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class EventMenuPanel extends GUIPanel {
-    private final int labelLayerX = 20;
-    private final int labelLayerY = 40;
-    private final int labelWidth = 120;
-    private final int labelHeight = 20;
-    private final int sideBarY = 20;
-    private final int sideBarX = 500;
+    protected final int labelLayerX = 20;
+    protected final int labelLayerY = 40;
+    protected final int labelWidth = 120;
+    protected final int labelHeight = 20;
+    protected final int sideBarY = 20;
+    protected final int sideBarX = 500;
 
-    private final int buttonLayerX = 10;
-    private final int buttonLayerY = 10;
-    private final int buttonLayerHeight = 20;
-    private final int buttonWidth = 100;
-    private int textFieldWidth = 60;
+    protected final int buttonLayerX = 10;
+    protected final int buttonLayerY = 10;
+    protected final int buttonLayerHeight = 20;
+    protected final int buttonWidth = 100;
+    protected int textFieldWidth = 60;
 
     private JLabel eventNameLabel;
     private JTextField eventNameTextField;
@@ -34,26 +34,45 @@ public class EventMenuPanel extends GUIPanel {
     private JLabel mainHeading;
     private JLabel heading1;
     private JLabel heading2;
-    private JTextField eventsAttendingTextField;
-    private JTextField otherEventsTextField;
+    private JTextArea eventsAttendingTextField;
+    private JTextArea otherEventsTextField;
 
     private final EventMenuController eventMenuController;
 
-    public EventMenuPanel(EventMenuController eventMenuController, JFrame frame){
+    /**
+     * Constructor for EventMenuPanel
+     *
+     * @param eventMenuController the controller that executes all the commands
+     * @param frame               the original frame of the program
+     */
+    public EventMenuPanel(EventMenuController eventMenuController, JFrame frame) {
         super(frame);
         this.eventMenuController = eventMenuController;
     }
 
-    public void printMenu(){
+    /**
+     * Sets up the GUI components
+     */
+    public void printMenu() {
         createHeading();
         showEvents();
         createLabels();
         createButtons();
+        printExtraComponents();
     }
 
-    private void createHeading(){
+    /**
+     * Prints extra components special to this menu
+     */
+    public void printExtraComponents() {
+    }
+
+    /**
+     * Creates the headings in the GUI
+     */
+    private void createHeading() {
         mainHeading = new JLabel();
-        mainHeading.setBounds(labelLayerX,labelLayerY,labelWidth,labelHeight); //TODO: Set up bounds
+        mainHeading.setBounds(labelLayerX, labelLayerY, labelWidth, labelHeight); //TODO: Set up bounds
 
         heading1 = new JLabel();
         heading1.setBounds(labelLayerX, labelLayerY + 20, labelWidth, labelHeight);
@@ -66,50 +85,94 @@ public class EventMenuPanel extends GUIPanel {
         panel.add(heading2);
     }
 
-    private void showEvents(){
-        eventsAttendingTextField = new JTextField();
-        eventsAttendingTextField.setBounds(labelLayerX + 20,labelLayerY + 2*labelHeight,400,300); //TODO: set bounds
+    /**
+     * Shows the events in the system to the user
+     */
+    private void showEvents() {
+        eventsAttendingTextField = new JTextArea();
+        eventsAttendingTextField.setBounds(labelLayerX + 20, labelLayerY + 2 * labelHeight, 400, 300); //TODO: set bounds
         eventsAttendingTextField.setEditable(false);
 
-        otherEventsTextField = new JTextField();
-        otherEventsTextField.setBounds(labelLayerX + 20,labelLayerY + 400,400,300); //TODO: set bounds
+        otherEventsTextField = new JTextArea();
+        otherEventsTextField.setBounds(labelLayerX + 20, labelLayerY + 400, 400, 300); //TODO: set bounds
         otherEventsTextField.setEditable(false);
 
         panel.add(eventsAttendingTextField);
         panel.add(otherEventsTextField);
     }
 
-    private void createLabels(){
+    /**
+     * Creates the labels for the GUI
+     */
+    private void createLabels() {
         eventNameLabel = new JLabel();
-        eventNameLabel.setBounds(sideBarX, 4*sideBarY, labelWidth, labelHeight);
+        eventNameLabel.setBounds(sideBarX, 4 * sideBarY, labelWidth, labelHeight);
 
         eventNameTextField = new JTextField();
-        eventNameTextField.setBounds(sideBarX + 120, 4*sideBarY, textFieldWidth, buttonLayerHeight);
+        eventNameTextField.setBounds(sideBarX + 120, 4 * sideBarY, textFieldWidth, buttonLayerHeight);
 
         panel.add(eventNameLabel);
         panel.add(eventNameTextField);
     }
 
-    private void createButtons(){
+    /**
+     * Creates the buttons for the GUI
+     */
+    private void createButtons() {
         returnToMainMenuButton = new JButton();
         returnToMainMenuButton.setBounds(sideBarX, sideBarY, buttonWidth, buttonLayerHeight);
         returnToMainMenuButton.addActionListener(e -> eventMenuController.returnToMainMenu());
 
         signUpButton = new JButton();
-        signUpButton.setBounds(sideBarX, 6*sideBarY, buttonWidth, buttonLayerHeight);
-        signUpButton.addActionListener(e -> eventMenuController.signUpForEvent(eventMenuController.eventManager.findEvent(eventNameTextField.getText())));
+        signUpButton.setBounds(sideBarX, 6 * sideBarY, buttonWidth, buttonLayerHeight);
+        signUpButton.addActionListener(e -> {
+                    Event event = eventMenuController.eventManager.findEvent(eventNameTextField.getText());
+                    if(event != null){
+                        eventMenuController.signUpForEvent(eventMenuController.eventManager.findEvent(eventNameTextField.getText()));
+                    } else {
+                        eventMenuController.showNullEventError();
+                    }
+                }
+        );
 
         leaveButton = new JButton();
-        leaveButton.setBounds( sideBarX, 8*sideBarY, buttonWidth, buttonLayerHeight);
-        leaveButton.addActionListener(e -> eventMenuController.removeSpotFromEvent(eventMenuController.eventManager.findEvent(eventNameTextField.getText())));
+        leaveButton.setBounds(sideBarX, 8 * sideBarY, buttonWidth, buttonLayerHeight);
+        leaveButton.addActionListener(e -> {
+            Event event = eventMenuController.eventManager.findEvent(eventNameTextField.getText());
+            if (event != null){
+                eventMenuController.removeSpotFromEvent(eventMenuController.eventManager.findEvent(eventNameTextField.getText()));
+            } else {
+                eventMenuController.showNullEventError();
+            }
+        });
 
         panel.add(returnToMainMenuButton);
         panel.add(signUpButton);
         panel.add(leaveButton);
     }
 
-    public void setText(ArrayList<Event> events, User user, LanguagePack languagePack){
-        //TODO: Edit this
+    /**
+     * Generates the text for the GUI
+     *
+     * @param events       the list of events
+     * @param user         the current user
+     * @param languagePack contains the strings used for the text
+     */
+    public void setText(ArrayList<Event> events, User user, LanguagePack languagePack) {
+        reprintEvents(events, user);
+
+        mainHeading.setText(languagePack.eventMenuHeadings()[0]);
+        heading1.setText(languagePack.eventMenuHeadings()[1]);
+        heading2.setText(languagePack.eventMenuHeadings()[2]);
+
+        returnToMainMenuButton.setText(languagePack.eventStandardCommands()[0]);
+        signUpButton.setText(languagePack.eventStandardCommands()[1]);
+        leaveButton.setText(languagePack.eventStandardCommands()[2]);
+        eventNameLabel.setText(languagePack.eventStandardCommands()[3]);
+        setAdditionalText();
+    }
+
+    public void reprintEvents(ArrayList<Event> events, User user){
         StringBuilder eventsAttending = new StringBuilder();
         for (Event event : events) {
             if (user.getPersonalSchedule().containsKey(event.getEventName())) {
@@ -124,16 +187,12 @@ public class EventMenuPanel extends GUIPanel {
         }
         eventsAttendingTextField.setText(eventsAttending.toString());
         otherEventsTextField.setText(otherEvents.toString());
-
-        mainHeading.setText("EVENTS");
-        heading1.setText(languagePack.eventMenuHeadings()[0]);
-        heading2.setText(languagePack.eventMenuHeadings()[1]);
-
-        returnToMainMenuButton.setText(languagePack.eventStandardCommands()[0]);
-        signUpButton.setText(languagePack.eventStandardCommands()[1]);
-        leaveButton.setText(languagePack.eventStandardCommands()[2]);
-        eventNameLabel.setText(languagePack.eventStandardCommands()[3]);
-
     }
 
+    /**
+     * Creates text for additional components special to this menu
+     */
+    public void setAdditionalText() {
+
+    }
 }

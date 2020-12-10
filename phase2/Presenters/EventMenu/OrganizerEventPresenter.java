@@ -5,6 +5,7 @@ import Entities.Events.Event;
 import Entities.Users.Speaker;
 import Controllers.EventMenu.OrganizerEventController;
 import Entities.Users.User;
+import GUI.Events.CreateAccountPanel;
 import GUI.Events.EditEventPanel;
 import GUI.Events.OrganizerEventMenuPanel;
 import GUI.MainMenuPanel;
@@ -29,6 +30,7 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
 
     private OrganizerEventMenuPanel organizerEventMenuPanel;
     private EditEventPanel editEventPanel;
+    private CreateAccountPanel createAccountPanel;
 
     /**
      * EventMenuPresenter constructor
@@ -38,12 +40,15 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      * @param languageManager          decides which language is used in the UI
      */
     public OrganizerEventPresenter(OrganizerManager organizerManager, SpeakerManager speakerManager,
-                                   EventManager eventManager, LanguageManager languageManager, OrganizerEventMenuPanel organizerEventMenuPanel, EditEventPanel editEventPanel, MainMenuPanel mainMenuPanel) {
+                                   EventManager eventManager, LanguageManager languageManager,
+                                   OrganizerEventMenuPanel organizerEventMenuPanel, EditEventPanel editEventPanel,
+                                   MainMenuPanel mainMenuPanel, CreateAccountPanel createAccountPanel) {
         super(organizerManager, eventManager, languageManager, organizerEventMenuPanel, mainMenuPanel);
         this.organizerManager = organizerManager;
         this.speakerManager = speakerManager;
         this.organizerEventMenuPanel = organizerEventMenuPanel;
         this.editEventPanel = editEventPanel;
+        this.createAccountPanel = createAccountPanel;
     }
 
     public void changeEventInformationResults(){
@@ -63,15 +68,31 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
     }
 
     public void showEventMenu(){
+        organizerEventMenuPanel.printMenu();
         editEventPanel.changePanel(organizerEventMenuPanel.getPanel());
     }
 
+    public void showEditMenu(Event event){
+        organizerEventMenuPanel.changePanel(editEventPanel.getPanel());
+        editEventPanel.setText(event, languageManager.languagePack);
+    }
+
+    public void showCreateAccountMenu(){
+        createAccountPanel.setUpMenu();
+        organizerEventMenuPanel.changePanel(createAccountPanel.getPanel());
+        createAccountPanel.setText(languageManager.languagePack);
+    }
+
     public int showAddSpeakerPrompt(){
-        return Integer.parseInt(JOptionPane.showInputDialog(""));
+        return Integer.parseInt(JOptionPane.showInputDialog("")); //TODO: Change the text
     }
 
     public void showNullSpeaker(){
-        JOptionPane.showMessageDialog(editEventPanel.getPanel(), "", "Warning", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(editEventPanel.getPanel(), "", "Warning", JOptionPane.WARNING_MESSAGE); //TODO: change the text
+    }
+
+    public void showNonModifiableEventPrompt(String string){
+        JOptionPane.showMessageDialog(organizerEventMenuPanel.getPanel(), "", "Warbubg", JOptionPane.WARNING_MESSAGE); //TODO: change the text
     }
 
 //    /**
@@ -152,9 +173,9 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      */
     public void createEventResults(boolean i, Event event) {
         if (i) {
-            System.out.println(languageManager.languagePack.organizerEventResultsSuccess(event)[0]);
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), event.getEventName() + " was successfully created"); //TODO: change this
         } else {
-            System.out.println(languageManager.languagePack.organizerEventResultsFailure(event)[5]);
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), "The event could not be created", "Error", JOptionPane.WARNING_MESSAGE); //TODO: change this
         }
     }
 
@@ -162,13 +183,12 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      * Prints the result of trying to assign a speaker to an event
      *
      * @param i     determines whether the command was successful or not
-     * @param event The event that the organizer is trying change speakers
      */
-    public void setSpeakerResults(boolean i, Event event) {
+    public void addSpeakerResults(boolean i, Speaker speaker) {
         if (i) {
-            System.out.println(languageManager.languagePack.organizerEventResultsSuccess(event)[1]);
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), speaker.getName() + ""); //TODO: change this
         } else {
-            System.out.println(languageManager.languagePack.organizerEventResultsFailure(event)[1]);
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), speaker.getName() + ""); //TODO: change this
         }
     }
 
@@ -176,13 +196,12 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      * Prints the results of trying to remove a speaker from an event
      *
      * @param i     Determines whether the command was successful or not
-     * @param event The event that the organizer is trying to remove the speaker from
      */
-    public void removeSpeakerResults(boolean i, Event event) {
+    public void removeSpeakerResults(boolean i, Speaker speaker) {
         if (i) {
-            System.out.println(languageManager.languagePack.organizerEventResultsSuccess(event)[2]);
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), speaker.getName() + ""); //TODO: change this
         } else {
-            System.out.println(languageManager.languagePack.organizerEventResultsFailure(event)[2]);
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), speaker.getName() + ""); //TODO: change this
         }
     }
 

@@ -23,6 +23,9 @@ public class EventMenuPresenter {
     /**
      * EventMenuPresenter constructor
      *
+     * @param eventManager    contains all the events
+     * @param mainMenuPanel   contains the GUI of the main menu
+     * @param eventMenuPanel  contains the GUI of hte event menu
      * @param manager         stores the current user
      * @param languageManager prints the strings in the current language of the system
      */
@@ -34,10 +37,17 @@ public class EventMenuPresenter {
         this.mainMenuPanel = mainMenuPanel;
     }
 
-    public void setUpMenu(){
+    /**
+     * Sets up the components of the GUI
+     */
+    public void setUpMenu() {
         eventMenuPanel.printMenu();
         eventMenuPanel.setText(eventManager.getEvents(), manager.getCurrentUser(), languageManager.languagePack);
         eventMenuPanel.changePanel(eventMenuPanel.getPanel());
+    }
+
+    public void showNullEventError(){
+        JOptionPane.showMessageDialog(eventMenuPanel.getPanel(), "","Warning", JOptionPane.WARNING_MESSAGE); //TODO:
     }
 
 //    /**
@@ -111,9 +121,10 @@ public class EventMenuPresenter {
      */
     public void signUpResult(boolean i, Event event) {
         if (i) {
-            JOptionPane.showMessageDialog(eventMenuPanel.getPanel(),languageManager.languagePack.standardEventResultsSuccess(event)[1]); //TODO: Check this text
+            JOptionPane.showMessageDialog(eventMenuPanel.getPanel(), languageManager.languagePack.standardEventResultsSuccess(event)[1]);
+            eventMenuPanel.reprintEvents(eventManager.getEvents(), manager.getCurrentUser());
         } else {
-            JOptionPane.showMessageDialog(eventMenuPanel.getPanel(),languageManager.languagePack.standardEventResultsFailure(event)[1]); //TODO: Check this text
+            JOptionPane.showMessageDialog(eventMenuPanel.getPanel(), languageManager.languagePack.standardEventResultsFailure(event)[1]);
         }
     }
 
@@ -125,13 +136,17 @@ public class EventMenuPresenter {
      */
     public void removalResult(boolean i, Event event) {
         if (i) {
-            JOptionPane.showMessageDialog(eventMenuPanel.getPanel(), languageManager.languagePack.standardEventResultsSuccess(event)[2]); //TODO: Check this text
+            JOptionPane.showMessageDialog(eventMenuPanel.getPanel(), languageManager.languagePack.standardEventResultsSuccess(event)[2]);
+            eventMenuPanel.reprintEvents(eventManager.getEvents(), manager.getCurrentUser());
         } else {
-            JOptionPane.showMessageDialog(eventMenuPanel.getPanel(), languageManager.languagePack.standardEventResultsFailure(event)[2]); //TODO: Check this text
+            JOptionPane.showMessageDialog(eventMenuPanel.getPanel(), languageManager.languagePack.standardEventResultsFailure(event)[2]);
         }
     }
 
-    public void returnToMainMenu(){
+    /**
+     * Tells the GUI to return to the main menu panel
+     */
+    public void returnToMainMenu() {
         eventMenuPanel.changePanel(mainMenuPanel.getPanel());
     }
 

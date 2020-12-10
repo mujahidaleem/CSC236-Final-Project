@@ -153,8 +153,8 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     }
 
     @Override
-    public String changePassword() {
-        return "Veuillez saisir votre nouveau mot de passe:";
+    public String[] changePassword() {
+        return new String[]{"Veuillez saisir votre nouveau mot de passe:"};
     }
 
     @Override

@@ -16,6 +16,7 @@ public class GUIPanel {
         this.panel = new JPanel();
         this.panel.setLayout(null);
         panel.setSize(panelWidth, panelHeight);
+
     }
 
     public void changePanel(JPanel newPanel){
@@ -27,4 +28,6 @@ public class GUIPanel {
     public JPanel getPanel(){
         return panel;
     }
+
+
 }

@@ -28,10 +28,7 @@ public class EventManager implements Serializable {
     }
 
     public boolean spaceAvailable(Event event){
-        if (event.getTotalNum() < event.getMaxCapacity()){
-            return true;
-        }
-        return false;
+        return event.getTotalNum() < event.getMaxCapacity();
     }
 
     /**
@@ -186,7 +183,12 @@ public class EventManager implements Serializable {
      * @param user  given user
      */
     public boolean addUser(Event event, User user) {
-        return event.getAttendees().add(user.getId());
+        if(event.getAttendees().contains(user.getId())){
+            return false;
+        } else{
+            event.getAttendees().add(user.getId());
+            return true;
+        }
     }
 
     /**

@@ -57,7 +57,6 @@ public class LoginMenuController {
         this.eventReader = eventReader;
         this.roomReader = roomReader;
 
-
         this.userManager = userReader.readData();
         this.eventManager = eventReader.readData();
         this.roomManager = roomReader.readData();

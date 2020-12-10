@@ -4,6 +4,7 @@ import Entities.Users.AccountCreatorFactory;
 import Entities.Events.Event;
 import Entities.Room;
 import Entities.Users.*;
+import GUI.Events.CreateAccountPanel;
 import GUI.Events.EditEventPanel;
 import GUI.Events.OrganizerEventMenuPanel;
 import GUI.MainMenuPanel;
@@ -25,7 +26,7 @@ public class OrganizerEventController extends EventMenuController {
     private AccountCreatorFactory accountCreatorFactory;
     private EventFactory eventFactory;
     private OrganizerEventMenuPanel panel;
-    private OrganizerEventPresenter presenter;
+    private OrganizerEventPresenter eventPresenter;
 
     /**
      * OrganizerEventController constructor
@@ -45,46 +46,64 @@ public class OrganizerEventController extends EventMenuController {
         this.accountCreatorFactory = accountCreatorFactory;
         this.eventFactory = new EventFactory();
         this.panel = new OrganizerEventMenuPanel(this, frame);
-        this.presenter = new OrganizerEventPresenter(organizerManager, speakerManager, eventManager, languageManager, panel, new EditEventPanel(frame,this), mainMenuPanel);
+        this.eventPresenter = new OrganizerEventPresenter(organizerManager, speakerManager, eventManager,
+                languageManager, panel, new EditEventPanel(frame,this), mainMenuPanel,
+                new CreateAccountPanel(frame, this, languageManager.languagePack));
     }
 
-    public Event createEvent(String name, LocalDateTime dateTime, int roomNumber, int maxCapacity, int duration, String type){
+    @Override
+    public void printMenu(){
+        eventPresenter.setUpMenu();
+    }
+
+    public void showCreateAccountMenu(){
+        eventPresenter.showCreateAccountMenu();
+    }
+
+    public void createEvent(String name, LocalDateTime dateTime, int roomNumber, int maxCapacity, int duration, String type){
         if (dateTime.isAfter(LocalDateTime.now()) && eventManager.nameAvailable(name) && roomManager.hasRoom(roomNumber)
                 && roomManager.bookable(roomNumber, dateTime, duration)) {
             ArrayList<Integer> speakers = new ArrayList<>();
             speakers.add(0);
-            return eventManager.createEvent(type, name,dateTime,duration,organizerManager.getCurrentOrganizer().getId(), roomNumber, maxCapacity, new ArrayList<>(), speakers);
+            Event event = eventManager.createEvent(type, name,dateTime,duration,organizerManager.getCurrentOrganizer().getId(), roomNumber, maxCapacity, new ArrayList<>(), speakers);
+            eventPresenter.createEventResults(true,event);
         } else {
-            return null;
+            eventPresenter.createEventResults(false, null);
         }
     }
+    //TODO: if there is time, change this so it displays why there was an error.
+
 
     public void changeEventInformation(Event event, LocalDateTime dateTime, int duration, int maxCapacity, int roomNumber){
         if(changeEventDate(event, dateTime)){
             if (changeEventRoom(event, roomNumber)){
                 if (setMaxCapacity(event, maxCapacity)){
                     if(setDuration(event,duration)){
-                        presenter.changeEventInformationResults();
+                        eventPresenter.changeEventInformationResults();
                     } else {
-                        presenter.changeEventDurationFailure();
+                        eventPresenter.changeEventDurationFailure();
                     }
                 } else{
-                    presenter.changeEventCapacityFailure();
+                    eventPresenter.changeEventCapacityFailure();
                 }
             } else {
-                presenter.changeEventRoomFailure();
+                eventPresenter.changeEventRoomFailure();
             }
         } else {
-            presenter.changeEventDateFailure();
+            eventPresenter.changeEventDateFailure();
         }
     }
 
     public void showEventMenu(){
-        presenter.showEventMenu();
+        eventPresenter.showEventMenu();
+    }
+
+    public void showEditMenu(Event event){
+        eventPresenter.showEditMenu(event);
     }
 
     public int showAddSpeakerPrompt(){
-        return presenter.showAddSpeakerPrompt();
+        return eventPresenter.showAddSpeakerPrompt();
     }
 
 
@@ -163,9 +182,8 @@ public class OrganizerEventController extends EventMenuController {
      *
      * @param event   the event that the organizer is trying to assign the speaker to
      * @param speaker the speaker that the organizer is trying to assign to an event
-     * @return whether or not the speaker can be assigned to the event
      */
-    public boolean addSpeaker(Event event, int speaker) throws NullSpeakerException {
+    public void addSpeaker(Event event, int speaker) throws NullSpeakerException {
         Speaker speaker1 = speakerManager.findSpeaker(speaker);
         ArrayList<Integer> newSpeaker = new ArrayList<>();
         newSpeaker.add(speaker);
@@ -175,30 +193,34 @@ public class OrganizerEventController extends EventMenuController {
             if (speakerManager.available(newSpeaker, event.getEventTime())) {
                 eventManager.addSpeaker(speaker1, event);
                 speakerManager.setSpeaker(speaker1, event);
-                return true;
+                eventPresenter.addSpeakerResults(true, speaker1);
             } else {
-                return false;
+                eventPresenter.addSpeakerResults(false, speaker1);
             }
         }
     }
 
     public void showNullSpeaker(){
-        presenter.showNullSpeaker();
+        eventPresenter.showNullSpeaker();
     }
 
     /**
      * Checks if the speaker of an event can be removed and removes the speaker
      *
      * @param event the event that the organizer is trying to remove the speaker from
-     * @return whether or not the speaker has been removed
      */
-    public boolean removeSpeaker(Event event, int speaker) {
-        if (eventManager.hasSpeaker(event)) {
-            speakerManager.removeEvent(event);
-            eventManager.removeSpeaker(event, speaker);
-            return true;
+    public void removeSpeaker(Event event, int speaker) throws NullSpeakerException {
+        Speaker speaker1 = speakerManager.findSpeaker(speaker);
+        if (speaker1 == null) {
+            throw new NullSpeakerException();
         } else {
-            return false;
+            if (eventManager.hasSpeaker(event)) {
+                speakerManager.removeEvent(speaker1, event);
+                eventManager.removeSpeaker(event, speaker);
+                eventPresenter.removeSpeakerResults(true,speaker1);
+            } else {
+                eventPresenter.removeSpeakerResults(false, speaker1);
+            }
         }
     }
 
@@ -273,7 +295,7 @@ public class OrganizerEventController extends EventMenuController {
      * @param event the event that the organizer is trying to delete
      * @return whether or not the event has been deleted
      */
-    public boolean deleteEvent(Event event) {
+    public void deleteEvent(Event event) {
         if (organizerManager.cancelEvent(event)) {
 
             Room currentRoom = roomManager.findRoom(event.getRoomNumber());
@@ -281,10 +303,6 @@ public class OrganizerEventController extends EventMenuController {
             userManager.deleteEvent(event);
             eventManager.removeEvent(event);
             roomManager.removeEvent(currentRoom, event);
-
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -298,6 +316,10 @@ public class OrganizerEventController extends EventMenuController {
         return event.getOrganizer() == organizerManager.getCurrentOrganizer().getId();
     }
 
+    public void showNonModifiableEventPrompt(String string){
+        eventPresenter.showNonModifiableEventPrompt(string);
+    }
+
     /**
      * Creates an account depending on accountType, returns null if accountType password is nothing or accountype DNE
      * @param name name of account
@@ -305,11 +327,10 @@ public class OrganizerEventController extends EventMenuController {
      * @param accountType type of account (admin, attendee, organizer, speaker)
      * @return User account
      */
-    public User createAccount(String name, String password, String accountType) {
+    public void createAccount(String name, String password, String accountType) {
         User user = accountCreatorFactory.createAccountFactory(userManager.getUsers().size() + 1000, name, password,
                 accountType, new HashMap<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
         this.userManager.getUsers().add(user);
-        return user;
+        eventPresenter.createUserAccountResults(true, user);
     }
-
 }

@@ -97,7 +97,7 @@ public interface LanguagePack {
      *
      * @return the strings associated with changing the password
      */
-    String changePassword();
+    String[] changePassword();
 
     /**
      * Contains the list of standard commands for the message menu

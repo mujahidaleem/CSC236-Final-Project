@@ -23,7 +23,7 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String[] eventMenuHeadings() {
-        return new String[]{"Events Attending", "Events Available", "Events Speaking At"};
+        return new String[]{"Events", "Events Attending", "Events Available", "Events Speaking At"};
     }
 
     @Override
@@ -132,7 +132,7 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String[] userCreationPrompt(){
-        return new String[]{"Creating a new account", "Name", "Password", "Attendee", "Organizer", "Create Account"};
+        return new String[]{"Name", "Password", "Attendee", "Organizer", "Create Account", "Cancel", "Speaker", "Admin"};
     }
 
     @Override
@@ -147,7 +147,8 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String[] mainMenuCommands(){
-        return new String[]{"Events", "Messages", "Year", "Month", "Day", "Show Schedule", "Save Schedule Pdf"};
+        return new String[]{"Events", "Messages", "Year", "Month", "Day", "Show Schedule", "Save Schedule Pdf",
+                "Change Password", "Logout"};
 
 //                "---------------------------------------------------------------------------------\n" +
 //            "Please select a sub menu. Type the number and press enter:\n" +
@@ -155,8 +156,8 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
     }
 
     @Override
-    public String changePassword() {
-        return "Please enter your new password:";
+    public String[] changePassword() {
+        return new String[]{"Please enter your new password:", "Your password has been changed."};
     }
 
     @Override
@@ -170,7 +171,7 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String[] messageMenuHeadings(){
-        return new String[]{"Friend List", "Commands"};
+        return new String[]{"Friend List", "Commands", "Add Friend"};
     }
 
     @Override

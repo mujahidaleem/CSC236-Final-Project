@@ -43,7 +43,7 @@ public class AdminManager extends UserManager {
         if (event.getAttendees().size() == 0 && event.getEventTime().isAfter(LocalDateTime.now())) {
             eventManager.removeEvent(event);
             userManager.deleteEvent(event);
-            speakerManager.removeEvent(event);
+            speakerManager.deleteEvent(event);
             return true;
         } else
             return false;

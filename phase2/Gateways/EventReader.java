@@ -108,11 +108,9 @@ public class EventReader extends MySQLReader {
             while (rs.next()) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime date = LocalDateTime.parse(rs.getString("date"), formatter);
-                System.out.println(date);
                 eventManager.createEvent(rs.getString("eventType"), rs.getString("eventName"),
                         date, rs.getInt("duration"), rs.getInt("organizer"), rs.getInt("roomNumber"),
-                        rs.getInt("maxCapacity"), turnStringIntoArrayList(rs.getString("attendees")), turnStringIntoArrayList(rs.getString("speakers")));
-
+                        rs.getInt("maxCapacity"), turnStringToArrayList(rs.getString("attendees")), turnStringToArrayList(rs.getString("speakers")));
             }
             conn.close();
         } catch (Exception e) {
@@ -141,33 +139,16 @@ public class EventReader extends MySQLReader {
             return "INSERT INTO events(eventName, eventType, roomNumber, date, organizer, maxCapacity, duration, attendees) " +
                     "VALUES('" + event.getEventName() + "', 'attendeeOnlyEvent', '" + event.getRoomNumber() +"', '" +
                     event.getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "', '" + event.getOrganizer() + "', '" + event.getMaxCapacity() +
-                    "', '" + event.getDuration() +  "', '" + turnArrayIntoString(event.attendees) + "')";
+                    "', '" + event.getDuration() +  "', '" + turnArrayListIntoString(event.attendees) + "')";
         } else if (event.getClass() == OneSpeakerEvent.class) {
             return "INSERT INTO events(eventName, eventType, roomNumber, date, organizer, maxCapacity, duration, speakers, attendees) " +
                     "VALUES('" + event.getEventName() + "', 'oneSpeakerEvent', '" + event.getRoomNumber() + "', '" + event.getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "', '" + event.getOrganizer() +
-                    "', '" + event.getMaxCapacity() + "', '" + event.getDuration() + "', '" + turnArrayIntoString(event.getSpeakers()) + "', '" + turnArrayIntoString(event.attendees) + "')";
+                    "', '" + event.getMaxCapacity() + "', '" + event.getDuration() + "', '" + turnArrayListIntoString(event.getSpeakers()) + "', '" + turnArrayListIntoString(event.attendees) + "')";
         } else {
             return "INSERT INTO events(eventName, eventType, roomNumber, date, organizer, maxCapacity, duration, speakers, attendees) " +
                     "VALUES('" + event.getEventName() + "', 'multipleSpeakerEvent', '" + event.getRoomNumber() + "', '" + event.getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "', '" + event.getOrganizer() +
                     "', '" + event.getMaxCapacity() + "', '" + event.getDuration() + "', '" +
-                    turnArrayIntoString(event.getSpeakers()) + "', '" + turnArrayIntoString(event.attendees) + "')";
+                    turnArrayListIntoString(event.getSpeakers()) + "', '" + turnArrayListIntoString(event.attendees) + "')";
         }
-    }
-
-    private String turnArrayIntoString(ArrayList<Integer> arrayList) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i : arrayList) {
-            stringBuilder.append(i).append(" ");
-        }
-        return stringBuilder.toString();
-    }
-
-    private ArrayList<Integer> turnStringIntoArrayList(String string){
-        ArrayList<Integer> arrayList = new ArrayList<>();
-        String[] strings = string.split(" ");
-        for(String s: strings){
-            arrayList.add(Integer.parseInt(s));
-        }
-        return arrayList;
     }
 }

@@ -43,15 +43,17 @@ public class LoginMenuPresenter {
     }
 
     public void showLoginMenu(){
+        userCreationPanel.setText(languageManager.languagePack);
         userCreationPanel.changePanel(mainLoginPanel.getPanel());
     }
 
     public void loginFailed(){
-        JOptionPane.showMessageDialog(mainLoginPanel.getPanel(), "","WARNING", JOptionPane.WARNING_MESSAGE); //TODO:
+        JOptionPane.showMessageDialog(mainLoginPanel.getPanel(), languageManager.languagePack.incorrectLoginCredentials(),"WARNING", JOptionPane.WARNING_MESSAGE);
     }
 
     public void showCreateAccountSuccess(int id){
-        JOptionPane.showMessageDialog(userCreationPanel.getPanel(), ""); //TODO: add text
+        JOptionPane.showMessageDialog(userCreationPanel.getPanel(), languageManager.languagePack.userCreationResult(Integer.toString(id)));
+        showLoginMenu();
     }
 
     public void changeLanguage(String language){

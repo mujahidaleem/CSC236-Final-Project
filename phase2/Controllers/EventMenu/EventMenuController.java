@@ -76,6 +76,10 @@ public abstract class EventMenuController {
         }
     }
 
+    public void showNullEventError(){
+        presenter.showNullEventError();
+    }
+
     public void returnToMainMenu(){
         presenter.returnToMainMenu();
     }

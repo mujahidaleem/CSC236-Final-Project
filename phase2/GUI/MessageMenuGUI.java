@@ -7,37 +7,75 @@ import java.awt.event.ActionListener;
 
 public class MessageMenuGUI {
 
-    public static void main(){
-        JFrame frame = new JFrame("Messages");
-        //Creating the Frame
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 400);
-
-        //Creating the MenuBar and adding components
-        JMenuBar mb = new JMenuBar();
-        JMenu m1 = new JMenu("Home");
-        JMenu m2 = new JMenu("logout");
+    private JFrame frame;
+    private JPanel loginPanel;
 
 
-        //Creating the panel at bottom and adding components
-        JPanel panel = new JPanel(); // the panel is not visible in output
-        JLabel label = new JLabel("Enter Text");
-        JTextField tf = new JTextField(10); // accepts upto 10 characters
-        JButton send = new JButton("Send");
-        JButton reset = new JButton("Reset");
-        panel.add(label); // Components Added using Flow Layout
-        panel.add(tf);
-        panel.add(send);
-        panel.add(reset);
-
-        // Text Area at the Center
-        JTextArea ta = new JTextArea();
-
-        //Adding Components to the frame.
-        frame.getContentPane().add(BorderLayout.SOUTH, panel);
-        frame.getContentPane().add(BorderLayout.NORTH, mb);
-        frame.getContentPane().add(BorderLayout.CENTER, ta);
-        frame.setVisible(true);
+    public static void main(String[] args){
+        MessageMenuGUI a = new MessageMenuGUI();
     }
 
-}
+    public MessageMenuGUI() {
+        createWindow();
+    }
+
+    private void createWindow(){
+        // Create JFrame instance
+        JFrame frame = new JFrame("Login");
+        // Setting the width and height of frame
+        frame.setSize(800, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        JPanel loginPanel = new JPanel();
+        // Add panel
+        frame.add(loginPanel);
+        frame.setVisible(true);
+        placeComponents(loginPanel);
+    }
+
+        private void placeComponents(JPanel panel) {
+            panel.setLayout(null);
+            // Create JLabel
+            JLabel userLabel = new JLabel("User ID:");
+            /*
+             * setBounds(x, y, width, height)
+             */
+            userLabel.setBounds(273, 155, 80, 25);
+            panel.add(userLabel);
+            /*
+             * Create text field for user input
+             */
+            JTextField userText = new JTextField(20);
+            userText.setBounds(363, 155, 165, 25);
+            panel.add(userText);
+
+
+            // Create Send Message Button
+            JButton sendMessageButton = new JButton("Send Message");
+            sendMessageButton.setBounds(300, 350, 200, 25);
+            panel.add(sendMessageButton);
+
+            sendMessageButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    SendMessageGUI.main();
+                }
+            });
+
+
+            // Create add friend button
+            JButton addFriendButton = new JButton("Send Message");
+            addFriendButton.setBounds(300, 300, 200, 25);
+            panel.add(addFriendButton);
+
+
+            // Create remove friend button
+            JButton removeFriendButton = new JButton("Send Message");
+            removeFriendButton.setBounds(300, 250, 200, 25);
+            panel.add(removeFriendButton);
+
+
+                }
+        }
+
+

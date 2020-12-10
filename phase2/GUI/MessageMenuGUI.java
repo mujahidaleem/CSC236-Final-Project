@@ -66,24 +66,16 @@ public class MessageMenuGUI {
             // Create add friend button
             JButton addFriendButton = new JButton("Send Message");
             addFriendButton.setBounds(300, 300, 200, 25);
+            panel.add(addFriendButton);
 
 
             // Create remove friend button
             JButton removeFriendButton = new JButton("Send Message");
             removeFriendButton.setBounds(300, 250, 200, 25);
+            panel.add(removeFriendButton);
 
 
-            // Create new user button
-            JButton createUserButton = new JButton("Create new user");
-            createUserButton.setBounds(150, 300, 200, 25);
-            panel.add(createUserButton);
-
-            createUserButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    CreateUserGUI.main();
                 }
-            });
         }
-        }
+
 

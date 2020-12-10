@@ -1,6 +1,7 @@
 package Controllers.EventMenu;
 
 import Entities.Events.Event;
+import GUI.MainMenuPanel;
 import UseCases.Events.EventManager;
 import UseCases.Events.RoomManager;
 import UseCases.Language.LanguageManager;
@@ -15,8 +16,8 @@ public class AdminEventController extends EventMenuController{
     private AdminManager adminManager;
 
     public AdminEventController (UserManager userManager, EventManager eventManager, RoomManager roomManager, LanguageManager languageManager,
-                                 SpeakerManager speakerManager, AdminManager adminManager, JFrame frame){
-        super(userManager, eventManager, roomManager, languageManager, frame);
+                                 SpeakerManager speakerManager, AdminManager adminManager, JFrame frame, MainMenuPanel mainMenuPanel){
+        super(userManager, eventManager, roomManager, languageManager, frame, mainMenuPanel);
         this.speakerManager = speakerManager;
         this.adminManager = adminManager;
     }

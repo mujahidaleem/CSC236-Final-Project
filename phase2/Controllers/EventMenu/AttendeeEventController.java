@@ -1,5 +1,6 @@
 package Controllers.EventMenu;
 
+import GUI.MainMenuPanel;
 import UseCases.Events.RoomManager;
 import UseCases.Language.LanguageManager;
 import UseCases.Users.AttendeeManager;
@@ -19,7 +20,7 @@ public class AttendeeEventController extends EventMenuController {
      * @param eventManager contains the list of events
      */
     public AttendeeEventController(AttendeeManager manager, EventManager eventManager, RoomManager roomManager,
-                                   LanguageManager languageManager, JFrame frame) {
-        super(manager, eventManager, roomManager, languageManager, frame);
+                                   LanguageManager languageManager, JFrame frame, MainMenuPanel mainMenuPanel) {
+        super(manager, eventManager, roomManager, languageManager, frame, mainMenuPanel);
     }
 }

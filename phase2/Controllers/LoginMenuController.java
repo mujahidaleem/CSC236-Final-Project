@@ -62,17 +62,16 @@ public class LoginMenuController {
         this.eventManager = eventReader.readData();
         this.roomManager = roomReader.readData();
         this.languageManager = languageManager;
-        this.eventMenuFactory = new EventMenuFactory(userManager, eventManager, languageManager, roomManager, frame);
-        this.messageMenuFactory = new MessageMenuFactory(userManager, eventManager, languageManager);
 
         this.frame = new JFrame();
+        frame.setBounds(0, 0, width, height);
         this.frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.frame.addWindowListener(new WindowAdapter() {
             /**
              * Invoked when a window is in the process of being closed.
              * The close operation can be overridden at this point.
              *
-             * @param e
+             * @param e the windowEvent
              */
             @Override
             public void windowClosing(WindowEvent e) {
@@ -82,6 +81,9 @@ public class LoginMenuController {
                 }
             }
         });
+
+        this.eventMenuFactory = new EventMenuFactory(userManager, eventManager, languageManager, roomManager, frame);
+        this.messageMenuFactory = new MessageMenuFactory(userManager, eventManager, languageManager);
 
         this.loginPanel = new MainLoginPanel(frame, this);
         this.creationPanel = new UserCreationPanel(frame, languageManager,this);
@@ -112,15 +114,20 @@ public class LoginMenuController {
      * @param password the inputted password
      */
     public void checkLogin(int id, String password) {
+        boolean status = false;
         for (User user : userManager.users) {
             if (user.getId() == id && user.getPassword().equals(password)) {
                 userManager.setCurrentUser(user);
-                MainMenuController mainMenuController = new MainMenuController(eventMenuFactory.getEventMenu(),
-                        messageMenuFactory.createMessageMenu(), userManager, languageManager, eventManager,frame);
+                MainMenuController mainMenuController = new MainMenuController(eventMenuFactory, messageMenuFactory,
+                        userManager, languageManager, eventManager,frame, this);
                 mainMenuController.printMenu();
+                status = true;
+                break;
             }
         }
-        presenter.loginFailed();
+        if (!status){
+            presenter.loginFailed();
+        }
     }
 
 //    /**
@@ -153,7 +160,7 @@ public class LoginMenuController {
         return userManager.getUsers().size() + 1000 - 1;
     }
 
-    private void saveFiles(){
+    public void saveFiles(){
         userReader.saveUserManager(userManager);
         eventReader.saveEventManager(eventManager);
         roomReader.saveRoomManager(roomManager);

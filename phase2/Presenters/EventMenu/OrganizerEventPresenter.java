@@ -5,13 +5,17 @@ import Entities.Events.Event;
 import Entities.Users.Speaker;
 import Controllers.EventMenu.OrganizerEventController;
 import Entities.Users.User;
+import GUI.Events.EditEventPanel;
 import GUI.Events.OrganizerEventMenuPanel;
+import GUI.MainMenuPanel;
 import UseCases.Events.EventManager;
 import UseCases.Events.SameEventNameException;
 import UseCases.Language.LanguageManager;
 import UseCases.Users.OrganizerManager;
 import UseCases.Users.SpeakerManager;
+import jdk.nashorn.internal.scripts.JO;
 
+import javax.swing.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
@@ -23,6 +27,9 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
     private OrganizerManager organizerManager;
     private SpeakerManager speakerManager;
 
+    private OrganizerEventMenuPanel organizerEventMenuPanel;
+    private EditEventPanel editEventPanel;
+
     /**
      * EventMenuPresenter constructor
      *
@@ -31,10 +38,40 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      * @param languageManager          decides which language is used in the UI
      */
     public OrganizerEventPresenter(OrganizerManager organizerManager, SpeakerManager speakerManager,
-                                   EventManager eventManager, LanguageManager languageManager, OrganizerEventMenuPanel organizerEventMenuPanel) {
-        super(organizerManager, eventManager, languageManager, organizerEventMenuPanel);
+                                   EventManager eventManager, LanguageManager languageManager, OrganizerEventMenuPanel organizerEventMenuPanel, EditEventPanel editEventPanel, MainMenuPanel mainMenuPanel) {
+        super(organizerManager, eventManager, languageManager, organizerEventMenuPanel, mainMenuPanel);
         this.organizerManager = organizerManager;
         this.speakerManager = speakerManager;
+        this.organizerEventMenuPanel = organizerEventMenuPanel;
+        this.editEventPanel = editEventPanel;
+    }
+
+    public void changeEventInformationResults(){
+        JOptionPane.showMessageDialog(editEventPanel.getPanel(), ""); //TODO: change this
+    }
+
+    public void changeEventDurationFailure(){
+        JOptionPane.showMessageDialog(editEventPanel.getPanel(), ""); //TODO: change this
+    }
+
+    public void changeEventCapacityFailure(){
+        JOptionPane.showMessageDialog(editEventPanel.getPanel(), ""); //TODO: change this
+    }
+
+    public void changeEventRoomFailure(){
+        JOptionPane.showMessageDialog(editEventPanel.getPanel(), ""); //TODO: change this
+    }
+
+    public void showEventMenu(){
+        editEventPanel.changePanel(organizerEventMenuPanel.getPanel());
+    }
+
+    public int showAddSpeakerPrompt(){
+        return Integer.parseInt(JOptionPane.showInputDialog(""));
+    }
+
+    public void showNullSpeaker(){
+        JOptionPane.showMessageDialog(editEventPanel.getPanel(), "", "Warning", JOptionPane.WARNING_MESSAGE);
     }
 
 //    /**
@@ -152,15 +189,9 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
     /**
      * Prints the result of trying to change the time of an event
      *
-     * @param i     Determines whether the command was successful or not
-     * @param event The event whose date is trying to be changed by the organizer
      */
-    public void changeEventDateResults(boolean i, Event event) {
-        if (i) {
-            System.out.println(languageManager.languagePack.organizerEventResultsSuccess(event)[3]);
-        } else {
-            System.out.println(languageManager.languagePack.organizerEventResultsFailure(event)[3]);
-        }
+    public void changeEventDateFailure() {
+        JOptionPane.showMessageDialog(editEventPanel.getPanel(), ""); //TODO: change this
     }
 
     /**

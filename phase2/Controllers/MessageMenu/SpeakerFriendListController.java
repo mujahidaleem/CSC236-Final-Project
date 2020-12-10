@@ -2,6 +2,7 @@ package Controllers.MessageMenu;
 
 import Entities.Events.Event;
 import Entities.Users.Speaker;
+import GUI.MainMenuPanel;
 import UseCases.Message.SpeakerFriendManager;
 import UseCases.Users.SpeakerManager;
 import UseCases.Users.UserManager;
@@ -23,8 +24,8 @@ public class SpeakerFriendListController extends UserFriendListController {
      * @param userManager          contains the list of users
      */
 
-    public SpeakerFriendListController(SpeakerFriendManager speakerFriendManager, SpeakerManager speakerManager, UserManager userManager) {
-        super(speakerFriendManager);
+    public SpeakerFriendListController(SpeakerFriendManager speakerFriendManager, SpeakerManager speakerManager, UserManager userManager, MainMenuPanel mainMenuPanel) {
+        super(speakerFriendManager, mainMenuPanel);
         this.speakerFriendManager = speakerFriendManager;
         this.speakerManager = speakerManager;
         this.userManager = userManager;

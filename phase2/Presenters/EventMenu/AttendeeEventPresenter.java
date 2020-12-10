@@ -2,6 +2,7 @@ package Presenters.EventMenu;
 
 import Controllers.EventMenu.EventMenuController;
 import GUI.Events.AttendeeEventMenuPanel;
+import GUI.MainMenuPanel;
 import UseCases.Users.AttendeeManager;
 import UseCases.Events.EventManager;
 import UseCases.Language.LanguageManager;
@@ -20,8 +21,8 @@ public class AttendeeEventPresenter extends EventMenuPresenter {
      * @param languageManager prints the strings
      */
     public AttendeeEventPresenter(AttendeeManager attendeeManager, EventManager eventManager,
-                                  LanguageManager languageManager, AttendeeEventMenuPanel attendeeEventMenuPanel) {
-        super(attendeeManager, eventManager, languageManager, attendeeEventMenuPanel);
+                                  LanguageManager languageManager, AttendeeEventMenuPanel attendeeEventMenuPanel, MainMenuPanel mainMenuPanel) {
+        super(attendeeManager, eventManager, languageManager, attendeeEventMenuPanel, mainMenuPanel);
     }
 
 }

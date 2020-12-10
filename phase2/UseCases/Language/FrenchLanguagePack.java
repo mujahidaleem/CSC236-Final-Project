@@ -24,11 +24,12 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     }
 
     @Override
-    public void printEventStandardCommands() {
+    public String[] eventStandardCommands() {
         System.out.println("---------------------------------------------------------------------------------");
         System.out.println("Pour revenir au menu principal, tapez 0");
         System.out.println("Pour vous inscrire à un événement, tapez 1_Événements");
         System.out.println("Pour annuler votre position dans un événement, tapez 2_Événement");
+        return new String[]{};
     }
 
     @Override

@@ -2,6 +2,7 @@ package Controllers.MessageMenu;
 
 import Entities.Users.Organizer;
 import Entities.Users.User;
+import GUI.MainMenuPanel;
 import UseCases.Message.UserFriendManager;
 
 import java.time.LocalDateTime;
@@ -9,8 +10,11 @@ import java.time.LocalDateTime;
 public abstract class UserFriendListController {
     public UserFriendManager userFriendManager;
 
-    public UserFriendListController(UserFriendManager userFriendManager) {
+    private MainMenuPanel mainMenuPanel;
+
+    public UserFriendListController(UserFriendManager userFriendManager, MainMenuPanel mainMenuPanel) {
         this.userFriendManager = userFriendManager;
+        this.mainMenuPanel = mainMenuPanel;
     }
 
     /**
@@ -57,5 +61,9 @@ public abstract class UserFriendListController {
 
     public void printMenu(){
 
+    }
+
+    public void setMainMenuPanel(MainMenuPanel mainMenuPanel){
+        this.mainMenuPanel = mainMenuPanel;
     }
 }

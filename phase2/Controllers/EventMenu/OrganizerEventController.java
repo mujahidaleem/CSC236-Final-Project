@@ -4,6 +4,10 @@ import Entities.Users.AccountCreatorFactory;
 import Entities.Events.Event;
 import Entities.Room;
 import Entities.Users.*;
+import GUI.Events.EditEventPanel;
+import GUI.Events.OrganizerEventMenuPanel;
+import GUI.MainMenuPanel;
+import Presenters.EventMenu.OrganizerEventPresenter;
 import UseCases.Events.EventFactory;
 import UseCases.Events.EventManager;
 import UseCases.Events.RoomManager;
@@ -20,6 +24,8 @@ public class OrganizerEventController extends EventMenuController {
     private SpeakerManager speakerManager;
     private AccountCreatorFactory accountCreatorFactory;
     private EventFactory eventFactory;
+    private OrganizerEventMenuPanel panel;
+    private OrganizerEventPresenter presenter;
 
     /**
      * OrganizerEventController constructor
@@ -32,12 +38,14 @@ public class OrganizerEventController extends EventMenuController {
     public OrganizerEventController(OrganizerManager manager, RoomManager roomManager,
                                     EventManager eventManager, UserManager userManager, LanguageManager languageManager,
                                     SpeakerManager speakerManager,
-                                    AccountCreatorFactory accountCreatorFactory, JFrame frame){
-        super(userManager, eventManager, roomManager, languageManager, frame);
+                                    AccountCreatorFactory accountCreatorFactory, JFrame frame, MainMenuPanel mainMenuPanel){
+        super(userManager, eventManager, roomManager, languageManager, frame, mainMenuPanel);
         this.organizerManager = manager;
         this.speakerManager = speakerManager;
         this.accountCreatorFactory = accountCreatorFactory;
         this.eventFactory = new EventFactory();
+        this.panel = new OrganizerEventMenuPanel(this, frame);
+        this.presenter = new OrganizerEventPresenter(organizerManager, speakerManager, eventManager, languageManager, panel, new EditEventPanel(frame,this), mainMenuPanel);
     }
 
     public Event createEvent(String name, LocalDateTime dateTime, int roomNumber, int maxCapacity, int duration, String type){
@@ -50,6 +58,35 @@ public class OrganizerEventController extends EventMenuController {
             return null;
         }
     }
+
+    public void changeEventInformation(Event event, LocalDateTime dateTime, int duration, int maxCapacity, int roomNumber){
+        if(changeEventDate(event, dateTime)){
+            if (changeEventRoom(event, roomNumber)){
+                if (setMaxCapacity(event, maxCapacity)){
+                    if(setDuration(event,duration)){
+                        presenter.changeEventInformationResults();
+                    } else {
+                        presenter.changeEventDurationFailure();
+                    }
+                } else{
+                    presenter.changeEventCapacityFailure();
+                }
+            } else {
+                presenter.changeEventRoomFailure();
+            }
+        } else {
+            presenter.changeEventDateFailure();
+        }
+    }
+
+    public void showEventMenu(){
+        presenter.showEventMenu();
+    }
+
+    public int showAddSpeakerPrompt(){
+        return presenter.showAddSpeakerPrompt();
+    }
+
 
 //    /**
 //     * Tries to create an event with no speakers and add it to the list of events if event name is available and
@@ -117,13 +154,6 @@ public class OrganizerEventController extends EventMenuController {
 //        return null;
 //    }
 
-    /**
-     * creates a room
-     *
-     * @param roomCapacity
-     * @return Room
-     */
-
     public Room createRoom(int roomCapacity){
         return roomManager.addRoom(roomCapacity);
     }
@@ -150,6 +180,10 @@ public class OrganizerEventController extends EventMenuController {
                 return false;
             }
         }
+    }
+
+    public void showNullSpeaker(){
+        presenter.showNullSpeaker();
     }
 
     /**
@@ -208,13 +242,6 @@ public class OrganizerEventController extends EventMenuController {
         return false;
     }
 
-    /**
-     * Checks if duration of the event can be changed and if so, changes the event duration
-     * @param event
-     * @param newDuration
-     * @return whether duration of an event is changed
-     */
-
     public boolean setDuration(Event event, int newDuration){
         Room currentRoom = roomManager.findRoom(event.getRoomNumber());
         LocalDateTime startTime = event.getEventTime();
@@ -231,15 +258,12 @@ public class OrganizerEventController extends EventMenuController {
         return false;
     }
 
-    /**
-     * sets max capacity for an event
-     * @param event
-     * @param newMax
-     * @return
-     */
-
-    public void setMaxCapacity(Event event, int newMax){
-        eventManager.setMaxCapacity(event, newMax);
+    public boolean setMaxCapacity(Event event, int newMax){
+        if (newMax <= roomManager.findRoom(event.getRoomNumber()).getRoomCapacity()){
+            event.setMaxCapacity(newMax);
+            return true;
+        }
+        return false;
     }
 
 

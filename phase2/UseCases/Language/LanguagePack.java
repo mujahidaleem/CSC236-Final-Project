@@ -18,7 +18,7 @@ public interface LanguagePack {
     /**
      * Prints the instructions on how to input the standard commands
      */
-    void printEventStandardCommands();
+    String[] eventStandardCommands();
 
     /**
      * Contains the strings corresponding to successful standard commands

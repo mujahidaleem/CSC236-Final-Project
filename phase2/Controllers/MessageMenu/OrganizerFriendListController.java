@@ -3,6 +3,7 @@ package Controllers.MessageMenu;
 import Entities.Users.Attendee;
 import Entities.Users.Speaker;
 import Entities.Users.User;
+import GUI.MainMenuPanel;
 import UseCases.Message.OrganizerFriendManager;
 import UseCases.Users.UserManager;
 
@@ -20,8 +21,8 @@ public class OrganizerFriendListController extends UserFriendListController {
      * @param userManager            Use case for a user's options
      */
 
-    public OrganizerFriendListController(OrganizerFriendManager organizerFriendManager, UserManager userManager) {
-        super(organizerFriendManager);
+    public OrganizerFriendListController(OrganizerFriendManager organizerFriendManager, UserManager userManager, MainMenuPanel mainMenuPanel) {
+        super(organizerFriendManager, mainMenuPanel);
         this.organizerFriendManager = organizerFriendManager;
         this.userManager = userManager;
     }

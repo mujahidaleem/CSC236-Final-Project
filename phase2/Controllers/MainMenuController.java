@@ -1,6 +1,8 @@
 package Controllers;
 
 import Controllers.EventMenu.EventMenuController;
+import Controllers.Factories.EventMenuFactory;
+import Controllers.Factories.MessageMenuFactory;
 import Controllers.MessageMenu.UserFriendListController;
 import GUI.MainMenuPanel;
 import Presenters.EventMenu.EventMenuPresenter;
@@ -22,18 +24,22 @@ public class MainMenuController {
     private MainMenuPanel mainMenuPanel;
     private MainMenuPresenter presenter;
 
+    private LoginMenuController loginMenuController;
+
     /**
-     * @param eventMenuController   attribute eventMenuPresenter
-     * @param friendListController attribute messageMenuPresenter
      * @param userManager          attribute userManager
      */
-    public MainMenuController(EventMenuController eventMenuController, UserFriendListController friendListController, UserManager userManager, LanguageManager languageManager, EventManager eventManager, JFrame frame) {
-        this.userManager = userManager;
-        this.eventManager = eventManager;
-        this.eventMenuController = eventMenuController;
-        this.friendListController = friendListController;
+    public MainMenuController(EventMenuFactory eventMenuFactory, MessageMenuFactory messageMenuFactory,
+                              UserManager userManager, LanguageManager languageManager, EventManager eventManager,
+                              JFrame frame, LoginMenuController loginMenuController) {
         this.mainMenuPanel = new MainMenuPanel(frame, eventManager, this);
         this.presenter = new MainMenuPresenter(languageManager, mainMenuPanel);
+        this.userManager = userManager;
+        this.eventManager = eventManager;
+        this.loginMenuController = loginMenuController;
+
+        this.eventMenuController = eventMenuFactory.getEventMenu(mainMenuPanel);
+        this.friendListController = messageMenuFactory.createMessageMenu(mainMenuPanel);
     }
 
     /**
@@ -80,8 +86,12 @@ public class MainMenuController {
     }
 
     public void logout(){
-
+        loginMenuController.saveFiles();
+        userManager.setCurrentUser(null);
+        loginMenuController.returnToLoginMenu();
     }
+
+
 }
 
 

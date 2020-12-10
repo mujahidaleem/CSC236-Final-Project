@@ -26,16 +26,18 @@ public class EventMenuPresenter {
      * @param manager         stores the current user
      * @param languageManager prints the strings in the current language of the system
      */
-    public EventMenuPresenter(UserManager manager, EventManager eventManager, LanguageManager languageManager, EventMenuPanel eventMenuPanel) {
+    public EventMenuPresenter(UserManager manager, EventManager eventManager, LanguageManager languageManager, EventMenuPanel eventMenuPanel, MainMenuPanel mainMenuPanel) {
         this.manager = manager;
         this.eventManager = eventManager;
         this.languageManager = languageManager;
         this.eventMenuPanel = eventMenuPanel;
+        this.mainMenuPanel = mainMenuPanel;
     }
 
     public void setUpMenu(){
         eventMenuPanel.printMenu();
         eventMenuPanel.setText(eventManager.getEvents(), manager.getCurrentUser(), languageManager.languagePack);
+        eventMenuPanel.changePanel(eventMenuPanel.getPanel());
     }
 
 //    /**

@@ -2,6 +2,7 @@ package Controllers.EventMenu;
 
 import Entities.Events.Event;
 import GUI.Events.EventMenuPanel;
+import GUI.MainMenuPanel;
 import Presenters.EventMenu.EventMenuPresenter;
 import UseCases.Events.EventManager;
 import UseCases.Events.RoomManager;
@@ -19,6 +20,7 @@ public abstract class EventMenuController {
     public RoomManager roomManager;
 
     private EventMenuPresenter presenter;
+    private MainMenuPanel mainMenuPanel;
     private EventMenuPanel eventMenuPanel;
 
     /**
@@ -27,12 +29,13 @@ public abstract class EventMenuController {
      * @param userManager  contains the attendee using the current session
      * @param eventManager contains the list of events
      */
-    public EventMenuController(UserManager userManager, EventManager eventManager, RoomManager roomManager, LanguageManager languageManager, JFrame frame) {
+    public EventMenuController(UserManager userManager, EventManager eventManager, RoomManager roomManager, LanguageManager languageManager, JFrame frame, MainMenuPanel mainMenuPanel) {
         this.userManager = userManager;
         this.eventManager = eventManager;
         this.roomManager = roomManager;
+        this.mainMenuPanel = mainMenuPanel;
         this.eventMenuPanel = new EventMenuPanel(this, frame);
-        this.presenter = new EventMenuPresenter(userManager, eventManager, languageManager, eventMenuPanel);
+        this.presenter = new EventMenuPresenter(userManager, eventManager, languageManager, eventMenuPanel, mainMenuPanel);
     }
 
     public void printMenu(){
@@ -76,5 +79,4 @@ public abstract class EventMenuController {
     public void returnToMainMenu(){
         presenter.returnToMainMenu();
     }
-
 }

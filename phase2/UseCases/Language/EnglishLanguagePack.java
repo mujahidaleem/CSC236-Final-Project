@@ -27,11 +27,8 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
     }
 
     @Override
-    public void printEventStandardCommands() {
-        System.out.println("---------------------------------------------------------------------------------");
-        System.out.println("To return to the main menu, type 0");
-        System.out.println("To sign up for an event, type 1_Event");
-        System.out.println("To cancel your position in an event, type 2_Event");
+    public String[] eventStandardCommands() {
+        return new String[]{"Main Menu", "Sign Up", "Leave", "Event Name"};
     }
 
     @Override

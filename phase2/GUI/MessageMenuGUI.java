@@ -1,12 +1,21 @@
 package GUI;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class MessageMenuGUI {
 
     public static void main(){
         JFrame frame = new JFrame("Messages");
         //Creating the Frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 400);
+        frame.setSize(800, 400);
 
         //Creating the MenuBar and adding components
         JMenuBar mb = new JMenuBar();

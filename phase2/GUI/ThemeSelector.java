@@ -33,8 +33,9 @@ public class ThemeSelector {
             lightTheme.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    UIManager.put("Button.background", new Color(247, 245, 239));
-                    UIManager.put("Button.foreground", new Color(255, 242, 194));
+                    UIManager.put("background", new Color(247, 245, 239));
+                    UIManager.put("Button.background", new Color(252, 112, 43));
+                    UIManager.put("Button.foreground", new Color(56,50,56));
                 }
             });
 

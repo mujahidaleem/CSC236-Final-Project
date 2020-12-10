@@ -5,12 +5,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class ThemeSelector {
     /**
      *
      * Maybe copy the below code and integrate this into the main menu?
      * this would show up as a menu bar at the very top
-     * Light theme
+     * Light theme (default)
      *     background: (247, 245, 239)
      *     panels: (195, 226, 230)
      *     buttons: (252, 112, 43)
@@ -23,14 +24,15 @@ public class ThemeSelector {
      *      text: (255, 242, 194)
      */
 
-    JMenuBar mb = new JMenuBar();
-    JMenu m1 = new JMenu("Theme");
-        mb.add(m1);
-    JMenuItem m11 = new JMenuItem("Light");
-    JMenuItem m22 = new JMenuItem("Dark");
-        m1.add(m11);
-        m1.add(m22);
+        public static void main(String args[]) {
+            JMenuBar mb = new JMenuBar();
+            JMenu m1 = new JMenu("Theme");
+            mb.add(m1);
+            JMenuItem m11 = new JMenuItem("Light");
+            JMenuItem m22 = new JMenuItem("Dark");
+            m1.add(m11);
+            m1.add(m22);
 
 
-
+        }
 }

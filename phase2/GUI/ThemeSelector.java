@@ -4,13 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-
+import javax.swing.UIManager;
+import java.awt.Color;
 public class ThemeSelector {
     /**
-     *
      * Maybe copy the below code and integrate this into the main menu?
      * this would show up as a menu bar at the very top
+     *
      * Light theme (default)
      *     background: (247, 245, 239)
      *     panels: (195, 226, 230)
@@ -26,13 +26,22 @@ public class ThemeSelector {
 
         public static void main(String args[]) {
             JMenuBar mb = new JMenuBar();
-            JMenu m1 = new JMenu("Theme");
-            mb.add(m1);
-            JMenuItem m11 = new JMenuItem("Light");
-            JMenuItem m22 = new JMenuItem("Dark");
-            m1.add(m11);
-            m1.add(m22);
+            JMenu themeMenu = new JMenu("Theme");
+            mb.add(themeMenu);
+            JMenuItem lightTheme = new JMenuItem("Light");
+            themeMenu.add(lightTheme);
+            lightTheme.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    UIManager.put("Button.background", new Color(247, 245, 239));
+                    UIManager.put("Button.foreground", new Color(255, 242, 194));
+                }
+            });
+
+            JMenuItem darkTheme = new JMenuItem("Dark");
+            themeMenu.add(darkTheme);
 
 
         }
-}
+        }
+

@@ -40,6 +40,13 @@ public class ThemeSelector {
 
             JMenuItem darkTheme = new JMenuItem("Dark");
             themeMenu.add(darkTheme);
+            darkTheme.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    UIManager.put("Button.background", new Color(108, 104, 108));
+                    UIManager.put("Button.foreground", new Color(255, 242, 194));
+                }
+            });
 
 
         }

@@ -117,6 +117,13 @@ public class OrganizerEventController extends EventMenuController {
 //        return null;
 //    }
 
+    /**
+     * creates a room
+     *
+     * @param roomCapacity
+     * @return Room
+     */
+
     public Room createRoom(int roomCapacity){
         return roomManager.addRoom(roomCapacity);
     }
@@ -201,6 +208,13 @@ public class OrganizerEventController extends EventMenuController {
         return false;
     }
 
+    /**
+     * Checks if duration of the event can be changed and if so, changes the event duration
+     * @param event
+     * @param newDuration
+     * @return whether duration of an event is changed
+     */
+
     public boolean setDuration(Event event, int newDuration){
         Room currentRoom = roomManager.findRoom(event.getRoomNumber());
         LocalDateTime startTime = event.getEventTime();
@@ -217,9 +231,15 @@ public class OrganizerEventController extends EventMenuController {
         return false;
     }
 
-    public boolean setMaxCapacity(Event event, int newMax){
+    /**
+     * sets max capacity for an event
+     * @param event
+     * @param newMax
+     * @return
+     */
+
+    public void setMaxCapacity(Event event, int newMax){
         eventManager.setMaxCapacity(event, newMax);
-        return true;
     }
 
 

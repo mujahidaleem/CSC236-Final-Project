@@ -83,4 +83,8 @@ public abstract class EventMenuController {
     public void returnToMainMenu(){
         presenter.returnToMainMenu();
     }
+
+    public void changeTheme(String theme){
+        presenter.changeTheme(theme);
+    }
 }

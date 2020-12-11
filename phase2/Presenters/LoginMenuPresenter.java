@@ -108,6 +108,11 @@ public class LoginMenuPresenter {
         }
     }
 
+    public void changeTheme(String theme){
+        mainLoginPanel.changeTheme(theme);
+        userCreationPanel.changeTheme(theme);
+    }
+
 //    /**
 //     * The login security checkpoint
 //     * Inputted USERID_PASSWORD is checked. If correct the user moves to their main menu

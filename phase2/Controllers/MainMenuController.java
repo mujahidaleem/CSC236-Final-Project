@@ -92,4 +92,14 @@ public class MainMenuController {
         userManager.setCurrentUser(null);
         loginMenuController.returnToLoginMenu();
     }
+
+    public void changeTheme(String theme){
+        presenter.changeTheme(theme);
+        if(eventMenuController != null){
+            eventMenuController.changeTheme(theme);
+        }
+        if(friendListController != null){
+            friendListController.changeTheme(theme);
+        }
+    }
 }

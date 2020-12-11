@@ -151,10 +151,8 @@ public class EventMenuPresenter {
         eventMenuPanel.changePanel(mainMenuPanel.getPanel());
     }
 
-//    /**
-//     * Prints the list of commands that can be executed by the organizer
-//     */
-//    protected void printCommands() {
-//        languageManager.languagePack.printEventStandardCommands();
-//    }
+    public void changeTheme(String theme){
+        eventMenuPanel.changeTheme(theme);
+    }
+
 }

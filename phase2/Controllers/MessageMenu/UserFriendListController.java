@@ -66,4 +66,8 @@ public abstract class UserFriendListController {
     public void setMainMenuPanel(MainMenuPanel mainMenuPanel){
         this.mainMenuPanel = mainMenuPanel;
     }
+
+    public void changeTheme(String theme){
+        //TODO: change this
+    }
 }

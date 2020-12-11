@@ -89,4 +89,7 @@ public class MainMenuPresenter {
         JOptionPane.showMessageDialog(mainMenuPanel.getPanel(), languageManager.languagePack.unknownDate());
     }
 
+    public void changeTheme(String theme){
+        mainMenuPanel.changeTheme(theme);
+    }
 }

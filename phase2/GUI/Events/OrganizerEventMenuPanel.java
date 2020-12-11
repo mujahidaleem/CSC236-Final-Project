@@ -113,4 +113,20 @@ public class OrganizerEventMenuPanel extends EventMenuPanel{
         eventNameTextField.setText("");
 
     }
+
+    public void changeColourOfExtraComponents(){
+        createEventButton.setForeground(textColour);
+        editEventButton.setForeground(textColour);
+        createAccountButton.setForeground(textColour);
+
+        eventToBeChanged.setForeground(textColour);
+        instructions.setForeground(textColour);
+        eventNameTextField.setForeground(textColour);
+
+        createEventButton.setBackground(buttonColour1);
+        editEventButton.setBackground(buttonColour1);
+        createAccountButton.setBackground(buttonColour1);
+        eventNameTextField.setBackground(textFieldColour);
+        instructions.setBackground(backgroundColour);
+    }
 }

@@ -1,10 +1,12 @@
 package GUI;
 
 import Controllers.LoginMenuController;
+import GUI.MainFrame.ThemeManager;
 import UseCases.Language.LanguageManager;
 import UseCases.Language.LanguagePack;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -29,6 +31,7 @@ public class MainLoginPanel extends GUIPanel {
         createButtons();
         setCreateUserButton();
         setLoginButton();
+        changeTheme("lightTheme");
     }
 
     public void createButtons(){
@@ -57,12 +60,9 @@ public class MainLoginPanel extends GUIPanel {
     public void setCreateUserButton(){
         createUserButton = new JButton();
         createUserButton.setBounds(150, 300, 200, 25);
-
-        createUserButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loginMenuController.showCreateNewAccountPrompt();
-            }
+        createUserButton.addActionListener(e -> {
+            clearText();
+            loginMenuController.showCreateNewAccountPrompt();
         });
         panel.add(createUserButton);
     }
@@ -70,13 +70,14 @@ public class MainLoginPanel extends GUIPanel {
     public void setLoginButton(){
         loginButton = new JButton();
         loginButton.setBounds(450, 300, 200, 25);
-
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        loginButton.addActionListener(e -> {
+            try{
                 int username = Integer.parseInt(userText.getText());
                 String password = new String(passwordText.getPassword());
+                clearText();
                 loginMenuController.checkLogin(username, password);
+            } catch (NumberFormatException f) {
+                loginMenuController.showWrongCredentials();
             }
         });
         panel.add(loginButton);
@@ -88,5 +89,28 @@ public class MainLoginPanel extends GUIPanel {
         passwordLabel.setText(languagePack.loggingInPrompt()[1]);
         createUserButton.setText(languagePack.loggingInPrompt()[2]);
         loginButton.setText(languagePack.loggingInPrompt()[3]);
+    }
+
+    private void clearText(){
+        userText.setText("");
+        passwordText.setText("");
+    }
+    @Override
+    public void changeColours(){
+        panel.setBackground(backgroundColour);
+
+        introMessage.setForeground(textColour);
+        userLabel.setForeground(textColour);
+        userText.setForeground(textColour);
+        passwordLabel.setForeground(textColour);
+        passwordText.setForeground(textColour);
+
+        userText.setBackground(textFieldColour);
+        passwordText.setBackground(textFieldColour);
+
+        createUserButton.setForeground(textColour);
+        createUserButton.setBackground(buttonColour1);
+        loginButton.setForeground(textColour);
+        loginButton.setBackground(buttonColour1);
     }
 }

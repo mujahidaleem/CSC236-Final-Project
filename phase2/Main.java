@@ -1,21 +1,12 @@
 import Controllers.LoginMenuController;
-import Entities.Events.Event;
-import Entities.Users.Attendee;
-import Entities.Users.User;
-import GUI.LoginMenuFrame;
 import Gateways.RoomReader;
 import Gateways.UserReader;
 import Gateways.EventReader;
 import Gateways.MessageReader;
-import Presenters.LoginMenuPresenter;
 import UseCases.Events.EventManager;
 import UseCases.Events.RoomManager;
 import UseCases.Language.LanguageManager;
-import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
-
-import javax.swing.*;
-import java.time.LocalDateTime;
 
 
 public class Main {

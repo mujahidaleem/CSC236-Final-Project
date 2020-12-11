@@ -59,6 +59,7 @@ public class EventMenuPanel extends GUIPanel {
         createLabels();
         createButtons();
         printExtraComponents();
+        changeTheme("lightTheme");
     }
 
     /**
@@ -78,7 +79,7 @@ public class EventMenuPanel extends GUIPanel {
         heading1.setBounds(labelLayerX, labelLayerY + 20, labelWidth, labelHeight);
 
         heading2 = new JLabel();
-        heading2.setBounds(labelLayerX, labelLayerY + 350, labelWidth, labelHeight);
+        heading2.setBounds(labelLayerX, labelLayerY + 200, labelWidth, labelHeight);
 
         panel.add(mainHeading);
         panel.add(heading1);
@@ -90,11 +91,11 @@ public class EventMenuPanel extends GUIPanel {
      */
     private void showEvents() {
         eventsAttendingTextField = new JTextArea();
-        eventsAttendingTextField.setBounds(labelLayerX + 20, labelLayerY + 2 * labelHeight, 400, 300);
+        eventsAttendingTextField.setBounds(labelLayerX + 20, labelLayerY + 2 * labelHeight, 400, 150);
         eventsAttendingTextField.setEditable(false);
 
         otherEventsTextField = new JTextArea();
-        otherEventsTextField.setBounds(labelLayerX + 20, labelLayerY + 400, 400, 300);
+        otherEventsTextField.setBounds(labelLayerX + 20, labelLayerY + 220, 400, 150);
         otherEventsTextField.setEditable(false);
 
         panel.add(eventsAttendingTextField);
@@ -193,5 +194,32 @@ public class EventMenuPanel extends GUIPanel {
      * Creates text for additional components special to this menu
      */
     public void setAdditionalText(LanguagePack languagePack) {
+    }
+
+    public void changeColours(){
+        panel.setBackground(backgroundColour);
+
+        eventNameLabel.setForeground(textColour);
+        eventNameTextField.setForeground(textColour);
+        returnToMainMenuButton.setForeground(textColour);
+        signUpButton.setForeground(textColour);
+        leaveButton.setForeground(textColour);
+        mainHeading.setForeground(textColour);
+        heading1.setForeground(textColour);
+        heading2.setForeground(textColour);
+        eventsAttendingTextField.setForeground(textColour);
+        otherEventsTextField.setForeground(textColour);
+
+        eventNameTextField.setBackground(textFieldColour);
+        eventsAttendingTextField.setBackground(textFieldColour);
+        otherEventsTextField.setBackground(textFieldColour);
+
+        returnToMainMenuButton.setBackground(buttonColour1);
+        signUpButton.setBackground(buttonColour1);
+        leaveButton.setBackground(buttonColour1);
+    }
+
+    public void changeColourOfExtraComponents(){
+
     }
 }

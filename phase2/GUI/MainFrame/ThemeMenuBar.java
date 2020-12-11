@@ -1,7 +1,8 @@
-package GUI;
+package GUI.MainFrame;
+
+import GUI.MainFrame.ThemeManager;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.UIManager;

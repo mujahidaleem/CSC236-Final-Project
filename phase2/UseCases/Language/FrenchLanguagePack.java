@@ -20,21 +20,23 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String[] eventMenuHeadings() {
-        return new String[]{"Événements participant", "Événements disponsibles", "Événements parlant à"};
+        return new String[]{
+                "Événements", "Événements auxquels participent", "Événements disponibles", "Événements qui parlent à"};
     }
 
     @Override
     public String[] eventStandardCommands() {
-        System.out.println("---------------------------------------------------------------------------------");
-        System.out.println("Pour revenir au menu principal, tapez 0");
-        System.out.println("Pour vous inscrire à un événement, tapez 1_Événements");
-        System.out.println("Pour annuler votre position dans un événement, tapez 2_Événement");
-        return new String[]{};
+//        System.out.println("---------------------------------------------------------------------------------");
+//        System.out.println("Pour revenir au menu principal, tapez 0");
+//        System.out.println("Pour vous inscrire à un événement, tapez 1_Événements");
+//        System.out.println("Pour annuler votre position dans un événement, tapez 2_Événement");
+        return new String[]{"Menu principal", "Inscription", "Quitter", "Nom de l'événement"};
     }
 
     @Override
     public String[] organizerEventCommands() {
-        return new String[]{};
+        return new String[]{"Créer un nouvel événement", "Modifier l'événement", "Créer un compte", "Nom de l'événement",
+                "Pour modifier les détails d'un événement, veuillez saisir \nle nom de l'événement et cliquez sur Modifier l'événement."};
 //        System.out.println("Pour créer un nouvel événement, tapez 3_Nom_YYYY-MM-DDTHH:mm:ss_numéro de chambre_id_la durée_capacité maximale");
 //        System.out.println("Pour affecter un orateur à un événement, tapez 4_événement_OrateurID");
 //        System.out.println("Pour supprimer un orateur d'un événement, tapez 5_événement");
@@ -47,13 +49,14 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String[] standardEventResultsSuccess(Event event) {
-        return new String[]{"Échec", "Désolé, vous ne pouvez pas assister à cet événement.", "Vous n'êtes déjà pas présent " + event + "."};
+        return new String[]{"Succès", "Vous êtes maintenant inscrit pour " + event + ".",
+                "Vous n'assistez plus" + event + "."};
     }
 
     @Override
     public String[] standardEventResultsFailure(Event event) {
         return new String[]{"Échec", "Désolé, vous ne pouvez pas assister à cet événement.",
-                "Vous n'assistez déjà pas à " + event.getEventName()};
+                "Vous n'êtes déjà pas présent" + event.getEventName()};
     }
 
     @Override
@@ -85,7 +88,7 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String eventUnchangeable(Event event) {
-        return event.getEventName() + " ne peut pas être modifié par vous car vous n'êtes pas l'organisateur.";
+        return event.getEventName() + "ne peut pas être modifié par vous car vous n'êtes pas l'organisateur.";
     }
 
     @Override
@@ -126,23 +129,18 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String loginMenuGreeting(){
-        return "\n" +
-                "Bienvenue à la conférence! Souhaitez-vous vous connecter à votre compte existant ou créer un nouveau compte?\n"+
-                "euillez saisir '1' pour vous connecter à votre compte existant et '2' pour créer un nouveau compte.\n" +
-                "Entrez 'exit' pour quitter le programme.";
+        return "Bienvenue à la conférence!";
     }
 
     @Override
     public String[] loggingInPrompt(){
-        return new String[]{"a", "b", "c", "d"}; //TODO
+        return new String[]{"Nom d'utilisateur", "Mot de passe", "Créer un nouveau compte", "Connexion"}; //TODO
         //return "Veuillez saisir votre identifiant et votre mot de passe, séparés par un _ \nou tapez 'exit' pour revenir en arrière.";
     }
 
     @Override
     public String[] userCreationPrompt(){
-        return new String[]{"Veuillez saisir votre prénom et votre nom séparés par _",
-                "s'il vous plait entrez votre mot de passe",
-                "Êtes-vous un participant ou un organisateur? Veuillez saisir 'attendee' ou 'organizer' en minuscules."};
+        return new String[]{"Nom", "Mot de passe", "Attendee", "Organisateur", "Créer un compte", "Annuler", "Président", "Admin"};
     }
 
     @Override
@@ -157,7 +155,8 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String[] mainMenuCommands(){
-        return new String[]{};
+        return new String[]{"Evénements", "Messages", "Année", "Mois", "Jour", "Afficher le programme", "Enregistrer le programme Pdf",
+                "Changer le mot de passe", "Déconnexion"};
 //        return "---------------------------------------------------------------------------------\n" +
 //                "Veuillez sélectionner un sous-menu. Tapez le numéro et appuyez sur Entrée:\n" +
 //                "1. Événements\n2. Messages\n3. Se déconnecter\n4. Changer le mot de passe";
@@ -179,7 +178,7 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String[] messageMenuHeadings(){
-        return new String[]{"Liste d'amis", "Commandes"};
+        return new String[]{"Liste d'amis", "Commandes", "Ajouter un ami"};
     }
 
     @Override
@@ -212,23 +211,22 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String messageAllAttendeePrompt() {
-        return "\n" +
-                "Veuillez saisir le message que vous souhaitez envoyer à tous les Attendees.";
+        return "Veuillez saisir le message que vous souhaitez envoyer à tous les participants.";
     }
 
     @Override
     public String messageAllSpeakerPrompt() {
-        return "Veuillez saisir le message que vous souhaitez envoyer à tous les orateurs.";
+        return "Veuillez saisir le message que vous souhaitez envoyer à tous les orateurs";
     }
     @Override
     public String messageSuccessful() {
-        return "Message has been sent.";
+        return "Le message a été envoyé.";
     }
 
     @Override
     public void printSpeakerMessageCommands() {
         printMessageMenuStandardCommands();
-        System.out.println("Pour envoyer un message à tous les utilisateurs participant à l'une de vos présentations, saisissez 4_ nom de l'événement");
+        System.out.println("Pour envoyer un message à tous les utilisateurs participant à l'une de vos présentations, saisissez 4_eventName");
         System.out.println("Pour envoyer un message à tous les utilisateurs participant à l'une de vos présentations, tapez 5");
     }
 
@@ -239,21 +237,23 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String messageAllAttendeeForOneEventPrompt() {
-        return "Veuillez saisir le message que vous souhaitez envoyer à tous les Attendees à cet événement.";
+        return "Veuillez saisir le message que vous souhaitez envoyer à tous les participants à cet événement.";
     }
 
     @Override
     public String saveScheduleAsPdf() {
-        return "veuillez saisir où vous souhaitez enregistrer le fichier.";
+        return "Veuillez saisir où vous souhaitez enregistrer le fichier.";
     }
 
     @Override
     public String logoutPrompt() {
-        return null;
+        return "Voulez-vous quitter le programme?";
     }
 
     @Override
     public String[] adminEventMenuPrompts() {
-        return new String[0];
+        return new String[]{"Supprimer l'événement", "Afficher les événements", "Pour voir tous les événements sans participant, appuyez sur Afficher les événements." +
+                "Pour supprimer un événement sans participant, saisissez le nom de l'événement dans la zone de texte et appuyez sur Supprimer l'événement.",
+                "Événement supprimé.", "Cet événement ne peut pas être supprimé car il a des participants."};
     }
 }

@@ -24,13 +24,25 @@ public class AdminEventPresenter extends EventMenuPresenter{
         }
     }
 
-    public void setUpMenu(){
-        adminEventMenuPanel.printMenu();
+    public void showEventMenu(){
         adminEventMenuPanel.setText(eventManager.getEvents(), manager.getCurrentUser(), languageManager.languagePack);
         mainMenuPanel.changePanel(adminEventMenuPanel.getPanel());
     }
 
+    public void setUpMenu(String theme){
+        adminEventMenuPanel.printMenu(theme);
+        showEventMenu();
+    }
+
     public void reprintEvents(){
         adminEventMenuPanel.reprintEvents(eventManager.getEvents(), manager.getCurrentUser());
+    }
+
+    public void changeTheme(String theme){
+        adminEventMenuPanel.changeTheme(theme);
+    }
+
+    public void changeLanguage(String language){
+        adminEventMenuPanel.changeLanguage(language);
     }
 }

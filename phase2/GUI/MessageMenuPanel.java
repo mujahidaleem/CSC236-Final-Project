@@ -1,5 +1,6 @@
 package GUI;
 
+import UseCases.Language.LanguageManager;
 import UseCases.Language.LanguagePack;
 import com.sun.xml.internal.bind.v2.TODO;
 
@@ -13,8 +14,8 @@ public class MessageMenuPanel extends GUIPanel{
         private JButton deleteFriend;
         private JButton startChat;
 
-        public MessageMenuPanel(JFrame frame){
-            super(frame);
+        public MessageMenuPanel(JFrame frame, LanguageManager languageManager){
+            super(frame, languageManager);
             this.panel = new JPanel();
         }
 

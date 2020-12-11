@@ -20,41 +20,11 @@ public class MainMenuPresenter {
         this.mainMenuPanel = mainMenuPanel;
     }
 
-//    /**
-//     * main method, called by the main code to initialize MainMenuPresenter
-//     */
-//
-//    public void run() {
-//        while (true) {
-//            setUpMenu();
-//            String userOption = takeInput();
-//            if (userOption.equals("3")) {
-//                break;
-//            } else {
-//                switch (userOption) {
-//                    case "1":
-//                        mainMenuController.printEventMenu();
-//                        break;
-//                    case "2":
-//                        mainMenuController.printMessageMenu();
-//                        break;
-//                    case "4":
-//                        System.out.println(languageManager.languagePack.changePassword());
-//                        String userPwChange = takeInput();
-//                        mainMenuController.changePassword(userPwChange);
-//                        break;
-//                    default:
-//                        System.out.println(languageManager.languagePack.unknownCommand());
-//                }
-//            }
-//        }
-//    }
-
     /**
      * sets up the main menu panel so it can be presented to the user.
      */
-    public void setUpMenu() {
-        mainMenuPanel.setUpMenu();
+    public void setUpMenu(String theme) {
+        mainMenuPanel.setUpMenu(theme);
         mainMenuPanel.setText(languageManager.languagePack);
         mainMenuPanel.changePanel(mainMenuPanel.getPanel());
     }

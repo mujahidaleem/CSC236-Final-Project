@@ -1,17 +1,11 @@
 package GUI.MainFrame;
 
 import Controllers.LoginMenuController;
-import GUI.MainLoginPanel;
-import GUI.UserCreationPanel;
-import Presenters.LoginMenuPresenter;
-import UseCases.Language.LanguageManager;
-import UseCases.Users.UserManager;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+
 
 public class LoginMenuFrame extends JFrame{
     private JMenuBar menuBar;
@@ -71,18 +65,8 @@ public class LoginMenuFrame extends JFrame{
     private void themeBar(){
         lightTheme = new JMenuItem("Light Theme");
         darkTheme = new JMenuItem("Dark Theme");
-        lightTheme.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loginMenuController.changeTheme("lightTheme");
-            }
-        });
-        darkTheme.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loginMenuController.changeTheme("darkTheme");
-            }
-        });
+        lightTheme.addActionListener(e -> loginMenuController.changeTheme("lightTheme"));
+        darkTheme.addActionListener(e -> loginMenuController.changeTheme("darkTheme"));
 
         themeMenu.add(lightTheme);
         themeMenu.add(darkTheme);

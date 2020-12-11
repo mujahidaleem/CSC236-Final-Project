@@ -26,25 +26,13 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String[] eventStandardCommands() {
-//        System.out.println("---------------------------------------------------------------------------------");
-//        System.out.println("Pour revenir au menu principal, tapez 0");
-//        System.out.println("Pour vous inscrire à un événement, tapez 1_Événements");
-//        System.out.println("Pour annuler votre position dans un événement, tapez 2_Événement");
         return new String[]{"Menu principal", "Inscription", "Quitter", "Nom de l'événement"};
     }
 
     @Override
     public String[] organizerEventCommands() {
         return new String[]{"Créer un nouvel événement", "Modifier l'événement", "Créer un compte", "Nom de l'événement",
-                "Pour modifier les détails d'un événement, veuillez saisir \nle nom de l'événement et cliquez sur Modifier l'événement."};
-//        System.out.println("Pour créer un nouvel événement, tapez 3_Nom_YYYY-MM-DDTHH:mm:ss_numéro de chambre_id_la durée_capacité maximale");
-//        System.out.println("Pour affecter un orateur à un événement, tapez 4_événement_OrateurID");
-//        System.out.println("Pour supprimer un orateur d'un événement, tapez 5_événement");
-//        System.out.println("Pour supprimer un événement, tapez 6_événement");
-//        System.out.println("Pour changer la date d'un événement, tapez 7_Événement_nouvelle date");
-//        System.out.println("Pour changer la salle d'un événement, tapez 8_Événement_nouveau numéro de chambre");
-//        System.out.println("Pour créer un nouveau compte de conférencier, tapez 9_Nom_mot de passe");
-//        System.out.println("Pour voir la liste des orateurs, tapez 10");
+                "Pour modifier les détails d'un événement, veuillez saisir le nom de l'événement et cliquez sur Modifier l'événement."};
     }
 
     @Override
@@ -103,7 +91,10 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
      */
     @Override
     public String[] changeEventPrompts() {
-        return new String[0];
+        return new String[]{"Nom", "Numéro de la salle", "Date", "Durée", "Capacité maximale", "Haut-parleurs", "Année",
+                "AttendeeOnlyEvent", "MultiSpeakerEvent", "OneSpeakerEvent",
+                "Supprimer l'événement", "Enregistrer les modifications", "Annuler", "Ajouter un haut-parleur", "Supprimer le haut-parleur",
+                "Mois", "Jour", "Heure", "Minute"};
     }
 
     @Override

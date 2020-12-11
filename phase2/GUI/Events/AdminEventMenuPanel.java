@@ -1,9 +1,9 @@
 package GUI.Events;
 
 import Controllers.EventMenu.AdminEventController;
-import UseCases.Events.EventManager;
 
 import Entities.Events.Event;
+import UseCases.Language.LanguageManager;
 import UseCases.Language.LanguagePack;
 
 import javax.swing.*;
@@ -20,8 +20,8 @@ public class AdminEventMenuPanel extends EventMenuPanel{
 
     private AdminEventController adminEventController;
 
-    public AdminEventMenuPanel(AdminEventController adminEventController, JFrame frame){
-        super(adminEventController, frame);
+    public AdminEventMenuPanel(AdminEventController adminEventController, JFrame frame, LanguageManager languageManager){
+        super(adminEventController, frame, languageManager);
         this.adminEventController = adminEventController;
     }
 
@@ -84,7 +84,22 @@ public class AdminEventMenuPanel extends EventMenuPanel{
         instructions.setText(languagePack.adminEventMenuPrompts()[2]);
     }
 
-    private void clearAdditionalText(){
+    public void clearAdditionalText(){
         deleteEventTextField.setText("");
+    }
+
+    public void changeColourOfExtraComponents(){
+        deleteEventButton.setForeground(textColour);
+        showEventsWithNoAttendeesButton.setForeground(textColour);
+        eventsWithNoAttendeesTextField.setForeground(textColour);
+        instructions.setForeground(textColour);
+        deleteEventTextField.setForeground(textColour);
+
+        deleteEventButton.setBackground(buttonColour1);
+        showEventsWithNoAttendeesButton.setBackground(buttonColour1);
+
+        eventsWithNoAttendeesTextField.setBackground(textFieldColour);
+        instructions.setBackground(textFieldColour);
+        deleteEventTextField.setBackground(textFieldColour);
     }
 }

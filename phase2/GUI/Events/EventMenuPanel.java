@@ -4,6 +4,7 @@ import Controllers.EventMenu.EventMenuController;
 import Entities.Events.Event;
 import Entities.Users.User;
 import GUI.GUIPanel;
+import UseCases.Language.LanguageManager;
 import UseCases.Language.LanguagePack;
 
 import javax.swing.*;
@@ -21,7 +22,7 @@ public class EventMenuPanel extends GUIPanel {
     protected final int buttonLayerX = 10;
     protected final int buttonLayerY = 10;
     protected final int buttonLayerHeight = 20;
-    protected final int buttonWidth = 100;
+    protected final int buttonWidth = 120;
     protected int textFieldWidth = 60;
 
     private JLabel eventNameLabel;
@@ -45,21 +46,21 @@ public class EventMenuPanel extends GUIPanel {
      * @param eventMenuController the controller that executes all the commands
      * @param frame               the original frame of the program
      */
-    public EventMenuPanel(EventMenuController eventMenuController, JFrame frame) {
-        super(frame);
+    public EventMenuPanel(EventMenuController eventMenuController, JFrame frame, LanguageManager languageManager) {
+        super(frame, languageManager);
         this.eventMenuController = eventMenuController;
     }
 
     /**
      * Sets up the GUI components
      */
-    public void printMenu() {
+    public void printMenu(String theme) {
         createHeading();
         showEvents();
         createLabels();
         createButtons();
         printExtraComponents();
-        changeTheme("lightTheme");
+        changeTheme(theme);
     }
 
     /**
@@ -122,13 +123,16 @@ public class EventMenuPanel extends GUIPanel {
     private void createButtons() {
         returnToMainMenuButton = new JButton();
         returnToMainMenuButton.setBounds(sideBarX, sideBarY, buttonWidth, buttonLayerHeight);
-        returnToMainMenuButton.addActionListener(e -> eventMenuController.returnToMainMenu());
+        returnToMainMenuButton.addActionListener(e -> {
+            eventMenuController.returnToMainMenu();
+            clearText();
+        });
 
         signUpButton = new JButton();
         signUpButton.setBounds(sideBarX, 6 * sideBarY, buttonWidth, buttonLayerHeight);
         signUpButton.addActionListener(e -> {
                     Event event = eventMenuController.eventManager.findEvent(eventNameTextField.getText());
-                    if(event != null){
+                    if (event != null) {
                         eventMenuController.signUpForEvent(eventMenuController.eventManager.findEvent(eventNameTextField.getText()));
                     } else {
                         eventMenuController.showNullEventError();
@@ -140,7 +144,7 @@ public class EventMenuPanel extends GUIPanel {
         leaveButton.setBounds(sideBarX, 8 * sideBarY, buttonWidth, buttonLayerHeight);
         leaveButton.addActionListener(e -> {
             Event event = eventMenuController.eventManager.findEvent(eventNameTextField.getText());
-            if (event != null){
+            if (event != null) {
                 eventMenuController.removeSpotFromEvent(eventMenuController.eventManager.findEvent(eventNameTextField.getText()));
             } else {
                 eventMenuController.showNullEventError();
@@ -161,7 +165,10 @@ public class EventMenuPanel extends GUIPanel {
      */
     public void setText(ArrayList<Event> events, User user, LanguagePack languagePack) {
         reprintEvents(events, user);
+        setStrings(languagePack);
+    }
 
+    public void setStrings(LanguagePack languagePack){
         mainHeading.setText(languagePack.eventMenuHeadings()[0]);
         heading1.setText(languagePack.eventMenuHeadings()[1]);
         heading2.setText(languagePack.eventMenuHeadings()[2]);
@@ -173,7 +180,7 @@ public class EventMenuPanel extends GUIPanel {
         setAdditionalText(languagePack);
     }
 
-    public void reprintEvents(ArrayList<Event> events, User user){
+    public void reprintEvents(ArrayList<Event> events, User user) {
         StringBuilder eventsAttending = new StringBuilder();
         for (Event event : events) {
             if (user.getPersonalSchedule().containsKey(event.getEventName())) {
@@ -196,9 +203,8 @@ public class EventMenuPanel extends GUIPanel {
     public void setAdditionalText(LanguagePack languagePack) {
     }
 
-    public void changeColours(){
+    public void changeColours() {
         panel.setBackground(backgroundColour);
-
         eventNameLabel.setForeground(textColour);
         eventNameTextField.setForeground(textColour);
         returnToMainMenuButton.setForeground(textColour);
@@ -217,9 +223,23 @@ public class EventMenuPanel extends GUIPanel {
         returnToMainMenuButton.setBackground(buttonColour1);
         signUpButton.setBackground(buttonColour1);
         leaveButton.setBackground(buttonColour1);
+        changeColourOfExtraComponents();
+
     }
 
-    public void changeColourOfExtraComponents(){
+    public void changeText(LanguageManager languageManager){
+        setStrings(languageManager.languagePack);
+        setAdditionalText(languageManager.languagePack);
+    }
 
+    public void changeColourOfExtraComponents() {
+    }
+
+    public void clearText() {
+        eventNameTextField.setText("");
+        clearAdditionalText();
+    }
+
+    public void clearAdditionalText(){
     }
 }

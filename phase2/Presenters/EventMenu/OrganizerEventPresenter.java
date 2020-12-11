@@ -11,7 +11,6 @@ import GUI.Events.OrganizerEventMenuPanel;
 import GUI.MainMenuPanel;
 import UseCases.Events.EventManager;
 import UseCases.Events.SameEventNameException;
-import UseCases.Language.EnglishLanguagePack;
 import UseCases.Language.LanguageManager;
 import UseCases.Users.OrganizerManager;
 import UseCases.Users.SpeakerManager;
@@ -52,36 +51,48 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
         this.createAccountPanel = createAccountPanel;
     }
 
-    public void changeEventInformationResults(Event event){
-        JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.changeEventInfoResults(event));
+    public void changeEventInformationResults(){
+        JOptionPane.showMessageDialog(editEventPanel.getPanel(), ""); //TODO: change this
     }
 
     public void changeEventDurationFailure(){
-        JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.changeEventDurationFailure());
+        JOptionPane.showMessageDialog(editEventPanel.getPanel(), ""); //TODO: change this
     }
 
     public void changeEventCapacityFailure(){
-        JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.changeEventCapacityFailure());
+        JOptionPane.showMessageDialog(editEventPanel.getPanel(), ""); //TODO: change this
     }
 
     public void changeEventRoomFailure(){
-        JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.changeEventRoomFailure());
+        JOptionPane.showMessageDialog(editEventPanel.getPanel(), ""); //TODO: change this
+    }
+
+    public void setUpMenu(String theme){
+        organizerEventMenuPanel.printMenu(theme);
+        showEventMenu();
     }
 
     public void showEventMenu(){
-        organizerEventMenuPanel.printMenu();
         organizerEventMenuPanel.setText(eventManager.getEvents(), manager.getCurrentUser(), languageManager.languagePack);
         editEventPanel.changePanel(organizerEventMenuPanel.getPanel());
     }
 
     public void showEditMenu(Event event, boolean i){
-        editEventPanel.printMenu(i);
         editEventPanel.setText(event, languageManager.languagePack);
         organizerEventMenuPanel.changePanel(editEventPanel.getPanel());
     }
 
+    public void setUpEditMenu(Event event, boolean i, String theme){
+        editEventPanel.printMenu(i, theme);
+        showEditMenu(event, i);
+    }
+
+    public void setUpCreateAccountMenu(String theme){
+        createAccountPanel.setUpMenu(theme);
+        showCreateAccountMenu();
+    }
+
     public void showCreateAccountMenu(){
-        createAccountPanel.setUpMenu();
         organizerEventMenuPanel.changePanel(createAccountPanel.getPanel());
         createAccountPanel.setText(languageManager.languagePack);
     }
@@ -102,77 +113,6 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
         JOptionPane.showMessageDialog(organizerEventMenuPanel.getPanel(), "", "Warning", JOptionPane.WARNING_MESSAGE);
     }
 
-
-//    /**
-//     * Prints the list of commands that can be executed by the organizer
-//     */
-//    @Override
-//    protected void printCommands() {
-//        languageManager.languagePack.printEventStandardCommands();
-//        languageManager.languagePack.printOrganizerCommands();
-//    }
-//
-//    /**
-//     * The menu for events is initialized and commands relating to events can be
-//     * performed by typing in the correct strings into the command line.
-//     */
-//    @Override
-//    protected void extraCommands(String[] command) {
-//        outer:
-//        try {
-//            switch (command[0]) {
-//                case "3":
-//                    Event event1 = organizerEventController.createEvent(command[1], LocalDateTime.parse(command[2]), Integer.parseInt(command[3]), Integer.parseInt(command[4]), Integer.parseInt(command[5]), command[6]);
-//                    if (event1 == null) {
-//                        createEventResults(false, null);
-//                    } else {
-//                        createEventResults(true, event1);
-//                    }
-//                    break outer;
-//                case "9":
-//                    User user = organizerEventController.createAccount(command[1], command[2], command[3]);
-//                    if (user == null) {
-//                        createUserAccountResults(false, null);
-//                    } else {
-//                        createUserAccountResults(true, user);
-//                    }
-//                    break outer;
-//                case "10":
-//                    printSpeakers();
-//                    break outer;
-//            }
-//            Event event = eventManager.findEvent(command[1]);
-//            if (!organizerEventController.eventModifiable(event)) {
-//                System.out.println(languageManager.languagePack.eventUnchangeable(event));
-//            } else {
-//                switch (command[0]) {
-//                    case "4":
-//                        setSpeakerResults(organizerEventController.addSpeaker(event, Integer.parseInt(command[2])), event);
-//                        break;
-//                    case "7":
-//                        changeEventDateResults(organizerEventController.changeEventDate(event, LocalDateTime.parse(command[2])), event);
-//                        break;
-//                    case "8":
-//                        changeEventRoomResults(organizerEventController.changeEventRoom(event, Integer.parseInt(command[2])), event);
-//                    case "6":
-//                        deleteEvent(organizerEventController.deleteEvent(event), event);
-//                        break;
-//                    case "5":
-//                        removeSpeakerResults(organizerEventController.removeSpeaker(event, Integer.parseInt(command[2])), event);
-//                        break;
-//                    default:
-//                        System.out.println(languageManager.languagePack.unknownCommand());
-//                }
-//            }
-//        } catch (NullPointerException e) {
-//            System.out.println(languageManager.languagePack.unknownEvent());
-//        } catch (NullSpeakerException e) {
-//            System.out.println(languageManager.languagePack.unknownSpeaker());
-//        } catch (DateTimeParseException e) {
-//            System.out.println(languageManager.languagePack.unknownDate());
-//        }
-//    }
-
     /**
      * Prints the result of trying to create a new event
      *
@@ -181,10 +121,9 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      */
     public void createEventResults(boolean i, Event event) {
         if (i) {
-            JOptionPane.showMessageDialog(editEventPanel.getPanel(), event.getEventName() +
-                    languageManager.languagePack.organizerEventResultsSuccess(event)[0]);
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), event.getEventName() + " was successfully created"); //TODO: change this
         } else {
-            JOptionPane.showMessageDialog(editEventPanel.getPanel(), "", "Error", JOptionPane.WARNING_MESSAGE); //TODO: change this
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), "The event could not be created", "Error", JOptionPane.WARNING_MESSAGE); //TODO: change this
         }
     }
 
@@ -195,9 +134,9 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      */
     public void addSpeakerResults(boolean i, Speaker speaker) {
         if (i) {
-            JOptionPane.showMessageDialog(editEventPanel.getPanel(), speaker.getName() + languageManager.languagePack.speakerAdditionSuccess());
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), speaker.getName() + ""); //TODO: change this
         } else {
-            JOptionPane.showMessageDialog(editEventPanel.getPanel(), speaker.getName() + languageManager.languagePack.speakerAdditionFailure());
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), speaker.getName() + ""); //TODO: change this
         }
     }
 
@@ -208,9 +147,9 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      */
     public void removeSpeakerResults(boolean i, Speaker speaker) {
         if (i) {
-            JOptionPane.showMessageDialog(editEventPanel.getPanel(), speaker.getName() + languageManager.languagePack.speakerRemovalSuccess());
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), speaker.getName() + ""); //TODO: change this
         } else {
-            JOptionPane.showMessageDialog(editEventPanel.getPanel(), speaker.getName() + languageManager.languagePack.speakerRemovalFailure());
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), speaker.getName() + ""); //TODO: change this
         }
     }
 
@@ -219,7 +158,7 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      *
      */
     public void changeEventDateFailure() {
-        JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.changeEventTimeFailure());
+        JOptionPane.showMessageDialog(editEventPanel.getPanel(), ""); //TODO: change this
     }
 
     /**
@@ -276,5 +215,25 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
 
     public void reprintEvents(){
         organizerEventMenuPanel.reprintEvents(eventManager.getEvents(), manager.getCurrentUser());
+    }
+
+    public void changeTheme(String theme){
+        organizerEventMenuPanel.changeTheme(theme);
+    }
+    public void changeEditPanelTheme(String theme){
+        editEventPanel.changeTheme(theme);
+    }
+    public void changeAccountPanelTheme(String theme){
+        createAccountPanel.changeTheme(theme);
+    }
+
+    public void changeLanguage(String language){
+        organizerEventMenuPanel.changeLanguage(language);
+    }
+    public void changeEditPanelLanguage(String theme){
+        editEventPanel.changeLanguage(theme);
+    }
+    public void changeAccountPanelLanguage(String theme){
+        createAccountPanel.changeLanguage(theme);
     }
 }

@@ -22,8 +22,8 @@ public class MainLoginPanel extends GUIPanel {
 
     private LoginMenuController loginMenuController;
 
-    public MainLoginPanel(JFrame frame, LoginMenuController loginMenuController){
-        super(frame);
+    public MainLoginPanel(JFrame frame, LoginMenuController loginMenuController, LanguageManager languageManager){
+        super(frame, languageManager);
         this.loginMenuController = loginMenuController;
     }
 

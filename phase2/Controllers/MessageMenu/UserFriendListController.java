@@ -70,4 +70,7 @@ public abstract class UserFriendListController {
     public void changeTheme(String theme){
         //TODO: change this
     }
+    public void changeLanguage(String language){
+        //TODO: change this
+    }
 }

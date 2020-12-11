@@ -4,6 +4,7 @@ import Controllers.EventMenu.SpeakerEventController;
 import Entities.Events.Event;
 
 import UseCases.Events.EventManager;
+import UseCases.Language.LanguageManager;
 import UseCases.Language.LanguagePack;
 import UseCases.Users.SpeakerManager;
 
@@ -18,8 +19,9 @@ public class SpeakerEventMenuPanel extends EventMenuPanel{
     private SpeakerManager speakerManager;
     private SpeakerEventController speakerEventController;
 
-    public SpeakerEventMenuPanel(SpeakerEventController speakerEventController, JFrame frame, SpeakerManager speakerManager, EventManager eventManager){
-        super(speakerEventController, frame);
+    public SpeakerEventMenuPanel(SpeakerEventController speakerEventController, JFrame frame,
+                                 SpeakerManager speakerManager, EventManager eventManager, LanguageManager languageManager){
+        super(speakerEventController, frame, languageManager);
         this.speakerEventController = speakerEventController;
         this.speakerManager = speakerManager;
         this.eventManager = eventManager;
@@ -45,4 +47,11 @@ public class SpeakerEventMenuPanel extends EventMenuPanel{
             }
         }eventsSpeaking.setText(eventsSpeakingAt.toString());
     }
+
+    public void changeColourOfExtraComponents(){
+        heading3.setForeground(textColour);
+        eventsSpeaking.setForeground(textColour);
+        eventsSpeaking.setBackground(textFieldColour);
+    }
+
 }

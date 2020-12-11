@@ -5,8 +5,6 @@ import UseCases.Language.LanguageManager;
 import UseCases.Language.LanguagePack;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class UserCreationPanel extends GUIPanel{
     private String[] types;
@@ -22,14 +20,13 @@ public class UserCreationPanel extends GUIPanel{
     private JLabel introMessage;
     private JButton createNewUser;
     private JButton cancelButton;
-    private JComboBox type;
+    private JComboBox<String> type;
 
-    private LanguageManager languageManager;
-    private LoginMenuController loginMenuController;
+    private final LoginMenuController loginMenuController;
 
     public UserCreationPanel(JFrame frame, LanguageManager languageManager, LoginMenuController loginMenuController){
-        super(frame);
-        this.types = new String[]{languageManager.languagePack.userCreationPrompt()[3], languageManager.languagePack.userCreationPrompt()[4]};
+        super(frame, languageManager);
+        this.types = new String[]{languageManager.languagePack.userCreationPrompt()[2], languageManager.languagePack.userCreationPrompt()[3]};
         this.loginMenuController = loginMenuController;
     }
 
@@ -37,6 +34,7 @@ public class UserCreationPanel extends GUIPanel{
         createLabels();
         setCreateAccountButton();
         setCancelButton();
+        changeTheme("lightTheme");
     }
 
     public void createLabels(){
@@ -55,7 +53,8 @@ public class UserCreationPanel extends GUIPanel{
         passwordText = new JTextField(20);
         passwordText.setBounds(363,185,165,25);
 
-        type = new JComboBox(types);
+        type = new JComboBox<>(types);
+        type.setBounds(273, 230, 150, 25);
 
         panel.add(introMessage);
         panel.add(name);
@@ -73,14 +72,11 @@ public class UserCreationPanel extends GUIPanel{
         tf3.setBounds(50,150,150,20);
         tf3.setEditable(false);
 
-        createNewUser.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String name = newName.getText();
-                String password = passwordText.getText();
-                String[] accountType = {"attendee, organizer"};
-                loginMenuController.signUp(name, password, accountType[type.getSelectedIndex()]);
-            }
+        createNewUser.addActionListener(e -> {
+            String name = newName.getText();
+            String password = passwordText.getText();
+            String[] types = {"attendee", "organizer"};
+            loginMenuController.signUp(name, password, types[type.getSelectedIndex()]);
         });
         panel.add(createNewUser);
     }
@@ -88,21 +84,36 @@ public class UserCreationPanel extends GUIPanel{
     private void setCancelButton(){
         cancelButton = new JButton();
         cancelButton.setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loginMenuController.returnToLoginMenu();
-            }
-        });
+        cancelButton.addActionListener(e -> loginMenuController.returnToLoginMenu());
         panel.add(cancelButton);
     }
 
     public void setText(LanguagePack languagePack){
-        introMessage.setText(languagePack.userCreationPrompt()[0]);
-        name.setText(languagePack.userCreationPrompt()[1]);
-        passwordLabel.setText(languagePack.userCreationPrompt()[2]);
-        createNewUser.setText(languagePack.userCreationPrompt()[5]);
-        cancelButton.setText("RETURN"); //TODO: edit this
-        types = new String[]{languagePack.userCreationPrompt()[3], languagePack.userCreationPrompt()[4]};
+        introMessage.setText(languagePack.userCreationPrompt()[4]);
+        name.setText(languagePack.userCreationPrompt()[0]);
+        passwordLabel.setText(languagePack.userCreationPrompt()[1]);
+        createNewUser.setText(languagePack.userCreationPrompt()[4]);
+        cancelButton.setText(languagePack.userCreationPrompt()[5]);
+        types = new String[]{languagePack.userCreationPrompt()[2], languagePack.userCreationPrompt()[3]};
+    }
+
+    @Override
+    public void changeColours(){
+        panel.setBackground(backgroundColour);
+        introMessage.setForeground(textColour);
+
+        name.setForeground(textColour);
+        newName.setForeground(textColour);
+        passwordLabel.setForeground(textColour);
+        passwordText.setForeground(textColour);
+        newName.setBackground(textFieldColour);
+        passwordText.setBackground(textFieldColour);
+
+        createNewUser.setForeground(textColour);
+        createNewUser.setBackground(buttonColour1);
+        cancelButton.setForeground(textColour);
+        cancelButton.setBackground(buttonColour1);
+        type.setForeground(textColour);
+        type.setBackground(buttonColour2);
     }
 }

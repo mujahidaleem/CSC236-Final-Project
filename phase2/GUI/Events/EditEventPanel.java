@@ -69,21 +69,22 @@ public class EditEventPanel extends GUIPanel {
     private OrganizerEventController organizerEventController;
     private EventManager eventManager;
 
-    public EditEventPanel(JFrame frame, OrganizerEventController organizerEventController, LanguagePack languagePack){
-        super(frame);
+    public EditEventPanel(JFrame frame, OrganizerEventController organizerEventController, LanguageManager languageManager){
+        super(frame, languageManager);
         this.organizerEventController = organizerEventController;
-        this.types = new String[]{languagePack.changeEventPrompts()[7], languagePack.changeEventPrompts()[8],
-                languagePack.changeEventPrompts()[9]};
+        this.types = new String[]{languageManager.languagePack.changeEventPrompts()[7], languageManager.languagePack.changeEventPrompts()[8],
+                languageManager.languagePack.changeEventPrompts()[9]};
         this.eventManager = organizerEventController.eventManager;
     }
 
-    public void printMenu(boolean i){
+    public void printMenu(boolean i, String theme){
         setLabels();
         setTextFields();
         setEventNameTextField(i);
         setDateComponents();
         setEventType();
         setUpButtons();
+        changeTheme(theme);
     }
 
     private void setLabels(){
@@ -203,12 +204,12 @@ public class EditEventPanel extends GUIPanel {
                     organizerEventController.createEvent(eventNameTextField.getText(), date, Integer.parseInt(eventRoomTextField.getText()),
                             Integer.parseInt(eventMaxCapacityTextField.getText()),Integer.parseInt(eventDurationTextField.getText()), eventTypes[eventTypeLabel.getSelectedIndex()]);
                 } else {
-                    organizerEventController.createEvent(eventNameTextField.getText(), date, Integer.parseInt(eventRoomTextField.getText()),
-                            Integer.parseInt(eventMaxCapacityTextField.getText()), Integer.parseInt(eventDurationTextField.getText()), types[eventTypeLabel.getSelectedIndex()]);
+                    organizerEventController.changeEventInformation(organizerEventController.eventManager.findEvent(eventNameTextField.getText()), date, Integer.parseInt(eventRoomTextField.getText()),
+                            Integer.parseInt(eventMaxCapacityTextField.getText()), Integer.parseInt(eventDurationTextField.getText()));
                 }
-            } catch (DateTimeParseException f){
+            } catch (DateTimeParseException | NumberFormatException f){
                 organizerEventController.showIncorrectDate();
-            } finally {
+            } finally{
                 clearAdditionalText();
                 organizerEventController.showEventMenu();
             }
@@ -239,6 +240,27 @@ public class EditEventPanel extends GUIPanel {
     }
 
     public void setText(Event event, LanguagePack languagePack){
+        setStrings(languagePack);
+
+        if(event!= null){
+            eventNameTextField.setText(event.getEventName());
+            eventRoomTextField.setText(Integer.toString(event.getRoomNumber()));
+            eventDurationTextField.setText(Integer.toString(event.getDuration()));
+            eventMaxCapacityTextField.setText(Integer.toString(event.getMaxCapacity()));
+            yearValue.setText(String.valueOf(event.getEventTime().getYear()));
+            monthValue.setSelectedIndex(event.getEventTime().getMonthValue());
+            hourValue.setSelectedIndex(event.getEventTime().getHour());
+            minuteValue.setSelectedIndex(event.getEventTime().getMinute()/60);
+            if(event.hasSpeaker()){
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int id: event.getSpeakers()){
+                    stringBuilder.append(organizerEventController.getSpeakerManager().findSpeaker(id)).append("\n");
+                }
+                speakersTextField.setText(stringBuilder.toString());
+            }
+        }
+    }
+    public void setStrings(LanguagePack languagePack){
         eventNameLabel.setText(languagePack.changeEventPrompts()[0]);
         eventRoomLabel.setText(languagePack.changeEventPrompts()[1]);
         eventDurationLabel.setText(languagePack.changeEventPrompts()[3]);
@@ -259,25 +281,8 @@ public class EditEventPanel extends GUIPanel {
         returnButton.setText(languagePack.changeEventPrompts()[12]);
         addSpeakerButton.setText(languagePack.changeEventPrompts()[13]);
         removeSpeakerButton.setText(languagePack.changeEventPrompts()[14]);
-
-        if(event!= null){
-            eventNameTextField.setText(event.getEventName());
-            eventRoomTextField.setText(Integer.toString(event.getRoomNumber()));
-            eventDurationTextField.setText(Integer.toString(event.getDuration()));
-            eventMaxCapacityTextField.setText(Integer.toString(event.getMaxCapacity()));
-            yearValue.setText(String.valueOf(event.getEventTime().getYear()));
-            monthValue.setSelectedIndex(event.getEventTime().getMonthValue());
-            hourValue.setSelectedIndex(event.getEventTime().getHour());
-            minuteValue.setSelectedIndex(event.getEventTime().getMinute()/60);
-            if(event.hasSpeaker()){
-                StringBuilder stringBuilder = new StringBuilder();
-                for (int id: event.getSpeakers()){
-                    stringBuilder.append(organizerEventController.getSpeakerManager().findSpeaker(id)).append("\n");
-                }
-                speakersTextField.setText(stringBuilder.toString());
-            }
-        }
     }
+
     public void clearAdditionalText(){
         eventNameTextField.setText("");
         eventRoomTextField.setText("");
@@ -285,5 +290,62 @@ public class EditEventPanel extends GUIPanel {
         eventMaxCapacityTextField.setText("");
         yearValue.setText("");
         speakersTextField.setText("");
+    }
+
+    public void changeColours(){
+        panel.setBackground(backgroundColour);
+
+        deleteEventButton.setForeground(textColour);
+        saveChangesButton.setForeground(textColour);
+        removeSpeakerButton.setForeground(textColour);
+        returnButton.setForeground(textColour);
+        addSpeakerButton.setForeground(textColour);
+
+        deleteEventButton.setBackground(buttonColour1);
+        saveChangesButton.setBackground(buttonColour1);
+        removeSpeakerButton.setBackground(buttonColour1);
+        returnButton.setBackground(buttonColour1);
+        addSpeakerButton.setBackground(buttonColour1);
+
+        eventTypeLabel.setForeground(textColour);
+        eventTypeLabel.setBackground(buttonColour2);
+
+        year.setForeground(textColour);
+        yearValue.setForeground(textColour);
+        month.setForeground(textColour);
+        monthValue.setForeground(textColour);
+        day.setForeground(textColour);
+        dayValue.setForeground(textColour);
+        hour.setForeground(textColour);
+        hourValue.setForeground(textColour);
+        minute.setForeground(textColour);
+        minuteValue.setForeground(textColour);
+
+        yearValue.setBackground(textFieldColour);
+        monthValue.setBackground(textFieldColour);
+        dayValue.setBackground(textFieldColour);
+        hourValue.setBackground(textFieldColour);
+        minuteValue.setBackground(textFieldColour);
+
+        eventNameTextField.setForeground(textColour);
+        eventRoomTextField.setForeground(textColour);
+        eventDurationTextField.setForeground(textColour);
+        eventMaxCapacityTextField.setForeground(textColour);
+        speakersTextField.setForeground(textColour);
+
+        eventNameTextField.setBackground(textFieldColour);
+        eventRoomTextField.setBackground(textFieldColour);
+        eventDurationTextField.setBackground(textFieldColour);
+        eventMaxCapacityTextField.setBackground(textFieldColour);
+        speakersTextField.setBackground(textFieldColour);
+
+        eventNameLabel.setForeground(textColour);
+        eventRoomLabel.setForeground(textColour);
+        eventDurationLabel.setForeground(textColour);
+        eventMaxCapacityLabel.setForeground(textColour);
+        speakers.setForeground(textColour);
+    }
+    public void changeText(LanguageManager languageManager){
+        setStrings(languageManager.languagePack);
     }
 }

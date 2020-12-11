@@ -1,5 +1,6 @@
 package UseCases.Events;
 
+import Entities.Events.AttendeeOnlyEvent;
 import Entities.Events.Event;
 import Entities.Events.MultiSpeakerEvent;
 import Entities.Events.OneSpeakerEvent;
@@ -28,11 +29,11 @@ public class EventFactory implements Serializable {
      */
     public Event createEvent(String name, int roomNumber, int maxCapacity, LocalDateTime time, int duration, int organizer, String type, ArrayList<Integer> attendees,ArrayList<Integer> speakers){
         switch (type) {
-            case "no speakers":
-                return new Event(name, roomNumber, maxCapacity, time, duration, organizer, attendees);
-            case "one speaker":
+            case "attendeeOnlyEvent":
+                return new AttendeeOnlyEvent(name, roomNumber, maxCapacity, time, duration, organizer, attendees);
+            case "oneSpeakerEvent":
                 return new OneSpeakerEvent(name, roomNumber, maxCapacity, time, duration, organizer, attendees, speakers.get(0));
-            case "multiple speakers":
+            case "multipleSpeakerEvent":
                 return new MultiSpeakerEvent(name, roomNumber, maxCapacity, time, duration, organizer, attendees, speakers);
             default:
                 return null;

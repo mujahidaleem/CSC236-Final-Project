@@ -34,7 +34,7 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
     @Override
     public String[] organizerEventCommands() {
         return new String[]{"Create New Event", "Change Event", "Create Account", "Event Name",
-                "To change the details of an event, please type \nthe event name and click Change Event."};
+                "To change the details of an event, please type the event name and click Change Event."};
     }
 
     public String[] changeEventPrompts(){

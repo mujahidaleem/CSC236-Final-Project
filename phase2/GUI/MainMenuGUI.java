@@ -12,5 +12,7 @@ public class MainMenuGUI {
         JPanel mainMenuPanel = new JPanel();
         frame.add(mainMenuPanel);
         frame.setVisible(true);
+
+        ThemeMenuBar
     }
 }

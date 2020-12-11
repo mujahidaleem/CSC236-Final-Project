@@ -61,6 +61,12 @@ public interface LanguagePack {
      *
      * @return Greetings to the user and available commands
      */
+
+    String unknownUserID();
+
+    String invalidIDInput();
+
+
     String loginMenuGreeting();
 
     /**
@@ -247,6 +253,10 @@ public interface LanguagePack {
      * @return as tring telling the user how to save the schedule
      */
     String saveScheduleAsPdf();
+
+    String[] messageMenuButtons();
+
+    String[] messageMenuLabels();
 
     String logoutPrompt();
 

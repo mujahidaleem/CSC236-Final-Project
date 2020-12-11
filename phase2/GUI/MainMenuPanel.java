@@ -48,6 +48,7 @@ public class MainMenuPanel extends GUIPanel {
     private EventManager eventManager;
     private final PdfGenerator pdfGenerator;
     private final MainMenuController mainMenuController;
+    private ThemeManager themeManager;
 
     public MainMenuPanel(JFrame frame, EventManager eventManager, MainMenuController mainMenuController, LanguageManager languageManager) {
         super(frame, languageManager);
@@ -73,6 +74,7 @@ public class MainMenuPanel extends GUIPanel {
      * Creates the buttons shown on the GUI
      */
     public void createButtons() {
+
         event = new JButton();
         event.setBounds(buttonX, 100, buttonWidth, buttonHeight);
         event.addActionListener(e -> mainMenuController.printEventMenu());

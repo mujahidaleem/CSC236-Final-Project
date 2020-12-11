@@ -1,19 +1,25 @@
 package Presenters.MessageMenu;
 
 import Controllers.MessageMenu.UserFriendListController;
+import Entities.Message;
 import Entities.Users.User;
+import GUI.MainMenuPanel;
+import GUI.MessageMenuPanel;
 import UseCases.Language.LanguageManager;
 import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
 
+import javax.swing.*;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class MessageMenuPresenter {
-    public UserFriendListController userFriendListcontroller;
-    public UserManager userManager;
-    public UserFriendManager userFriendManager;
-    public LanguageManager languageManager;
+    private UserFriendListController userFriendListcontroller;
+    private UserManager userManager;
+    private UserFriendManager userFriendManager;
+    private MessageMenuPanel messageMenuPanel;
+    private MainMenuPanel mainMenuPanel;
+    private LanguageManager languageManager;
 
     /**
      * MessageMenuPresenter Constructor
@@ -24,11 +30,18 @@ public class MessageMenuPresenter {
      * @param userFriendManager        Use case for user friend list functions
      * @param languageManager          Displays strings
      */
-    public MessageMenuPresenter(UserFriendListController UserFriendListController, UserManager userManager, UserFriendManager userFriendManager, LanguageManager languageManager) {
+    public MessageMenuPresenter(UserFriendListController UserFriendListController,
+                                UserManager userManager,
+                                UserFriendManager userFriendManager,
+                                LanguageManager languageManager,
+                                MessageMenuPanel messageMenuPanel,
+                                MainMenuPanel mainMenuPanel) {
         this.userFriendListcontroller = UserFriendListController;
         this.userManager = userManager;
         this.userFriendManager = userFriendManager;
         this.languageManager = languageManager;
+        this.messageMenuPanel = messageMenuPanel;
+        this.mainMenuPanel = mainMenuPanel;
     }
 
     /**
@@ -37,20 +50,20 @@ public class MessageMenuPresenter {
      * Standard commands include; messaging others, adding friends, and removing friends
      * You can also exit this menu
      */
-    public void run() {
-        while (true) {
-            printFriends();
-            printCommands();
-            Scanner userInput0 = new Scanner(System.in);
-            String[] answer1 = userInput0.nextLine().split("_");
-            if (answer1[0].equals("0")) {
-                break;
-            } else {
-                if (!standardCommands(answer1)) {
-                    extraCommands(answer1);
-                }
-            }
-        }
+    public void setUpMenu() {
+        messageMenuPanel.setUpMenu();
+    }
+
+    public void showNullUserError(){
+        JOptionPane.showMessageDialog(messageMenuPanel.getPanel(), languageManager.languagePack.unknownUserID(), "Warning", JOptionPane.WARNING_MESSAGE);
+    }
+
+    public void showInvalidIDInput(){
+        JOptionPane.showMessageDialog(messageMenuPanel.getPanel(), languageManager.languagePack.unknownUserID(), "Warning", JOptionPane.WARNING_MESSAGE);
+    }
+
+    public void returnToMainMenu(){
+        messageMenuPanel.changePanel(mainMenuPanel.getPanel());
     }
 
     /**
@@ -62,7 +75,7 @@ public class MessageMenuPresenter {
      *
      * @param answer Inputted command by the user
      * @return Returns if the command went through
-     */
+
     public boolean standardCommands(String[] answer) {
         switch (answer[0]) {
             case "1":
@@ -79,19 +92,19 @@ public class MessageMenuPresenter {
         }
     }
 
-    /**
+
      * Prints back if the input is invalid
      *
      * @param answer Inputted command by the user
-     */
+
     public void extraCommands(String[] answer) {
         System.out.println("Input is invalid.");
     }
 
     /**
      * Print the friend list of the user
-     */
-    //TODO: have a sign showing if there are new messages from that friend
+
+
     protected void printFriends() {
         System.out.println(languageManager.languagePack.messageMenuHeadings()[0]);
         userFriendManager.displayFriend(userManager);
@@ -101,7 +114,7 @@ public class MessageMenuPresenter {
      * Send a message to a user
      *
      * @param anotherUser The user that the current user wants to send a message to
-     */
+
     protected void sendMessage(User anotherUser) {
         if (userFriendManager.messageable(anotherUser)) {
             while (true) {
@@ -124,7 +137,7 @@ public class MessageMenuPresenter {
      * Add a friend to the current user's friend list
      *
      * @param anotherUser the wanted user friend
-     */
+
     protected void addFriend(User anotherUser) {
         if (userFriendListcontroller.addFriend(anotherUser)) {
             System.out.println(languageManager.languagePack.messageMenuResultsSuccess(anotherUser)[0]);
@@ -137,7 +150,7 @@ public class MessageMenuPresenter {
      * Remove a friend from the current user's friend list
      *
      * @param anotherUser the unwanted user
-     */
+
     protected void removeFriend(User anotherUser) {
         if (userFriendListcontroller.removeFrom(anotherUser)) {
             System.out.println(languageManager.languagePack.messageMenuResultsSuccess(anotherUser)[1]);
@@ -148,9 +161,11 @@ public class MessageMenuPresenter {
 
     /**
      * Print's the command prompts that the user will see
-     */
+
     protected void printCommands() {
         System.out.println(languageManager.languagePack.messageMenuHeadings()[1]);
         languageManager.languagePack.printMessageMenuStandardCommands();
+
     }
+    */
 }

@@ -33,7 +33,7 @@ public class ThemeManager {
      */
 
     public void lightMode() {
-        this.backgroundColour = new Color(247, 245, 239);
+        this.backgroundColour = new Color(244, 255, 218);
         this.buttonColour1 = new Color(252, 132, 43);
         this.buttonColour2 = new Color(67, 165, 176);
         this.textColour = new Color(56, 50, 56);

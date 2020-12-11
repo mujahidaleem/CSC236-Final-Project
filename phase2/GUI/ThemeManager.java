@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import javax.swing.UIManager;
 import java.awt.Color;
 
+/** if the UIManager.put doesn't work, we could use the attributes of this thememanger to manually change
+ * the colours of the buttons/background/text etc.
+ */
 public class ThemeManager {
     private Color backgroundColour;
     private Color buttonColour1;

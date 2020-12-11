@@ -19,6 +19,7 @@ public class MainLoginPanel extends GUIPanel {
     private JPasswordField passwordText;
     private JButton loginButton;
     private JButton createUserButton;
+    private themeManager themeManager;
 
     private LoginMenuController loginMenuController;
 

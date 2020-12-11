@@ -26,6 +26,7 @@ public class UserCreationPanel extends GUIPanel{
 
     private LanguageManager languageManager;
     private LoginMenuController loginMenuController;
+    private ThemeManager themeManager;
 
     public UserCreationPanel(JFrame frame, LanguageManager languageManager, LoginMenuController loginMenuController){
         super(frame);
@@ -102,7 +103,7 @@ public class UserCreationPanel extends GUIPanel{
         name.setText(languagePack.userCreationPrompt()[1]);
         passwordLabel.setText(languagePack.userCreationPrompt()[2]);
         createNewUser.setText(languagePack.userCreationPrompt()[5]);
-        cancelButton.setText("RETURN"); //TODO: edit this
+        cancelButton.setText(languagePack.userCreationPrompt()[6]);
         types = new String[]{languagePack.userCreationPrompt()[3], languagePack.userCreationPrompt()[4]};
     }
 }

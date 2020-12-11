@@ -137,6 +137,15 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
     }
 
     @Override
+    public String unknownUserID(){
+        return "User ID does not exist, please try again.";
+    }
+
+    @Override
+    public String invalidIDInput(){
+        return "Input user id is invalid, please try again";
+    }
+    @Override
     public String unknownSpeaker() {
         return "This speaker does not exist. Please try again.";
     }
@@ -291,5 +300,26 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
                 "To delete an event with no attendees, type the event name into the text box and press Delete Event.",
                 "Event Deleted.", "This event cannot be deleted as it has attendees."
         };
+    }
+
+    public String logoutPrompt(){
+        return "Do you want to exit the program?";
+    }
+
+    public String[] adminEventMenuPrompts(){
+        return new String[]{ "Delete Event", "Show Events", "To see all events with no attendees, press Show Events. " +
+                "To delete an event with no attendees, type the event name into the text box and press Delete Event.",
+                "Event Deleted.", "This event cannot be deleted as it has attendees."
+        };
+    }
+
+    @Override
+    public String[] messageMenuButtons(){
+        return new String[]{"Add friend", "Delete friend", "Start chat", "Return"};
+    }
+
+    @Override
+    public String[] messageMenuLabels(){
+        return new String[]{"Friend List", "Enter Friend ID:"};
     }
 }

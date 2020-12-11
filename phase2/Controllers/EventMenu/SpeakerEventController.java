@@ -1,6 +1,8 @@
 package Controllers.EventMenu;
 
+import GUI.Events.SpeakerEventMenuPanel;
 import GUI.MainMenuPanel;
+import Presenters.EventMenu.SpeakerEventPresenter;
 import UseCases.Events.RoomManager;
 import UseCases.Language.LanguageManager;
 import UseCases.Users.SpeakerManager;
@@ -12,7 +14,9 @@ import javax.swing.*;
  * Performs the commands inputted in the speaker event menu
  */
 public class SpeakerEventController extends EventMenuController {
-    public SpeakerManager speakerManager;
+    private SpeakerManager speakerManager;
+    private SpeakerEventPresenter eventPresenter;
+
 
     /**
      * SpeakerEventController constructor
@@ -24,5 +28,11 @@ public class SpeakerEventController extends EventMenuController {
                                   LanguageManager languageManager, JFrame frame, MainMenuPanel mainMenuPanel) {
         super(manager, eventManager, roomManager, languageManager, frame, mainMenuPanel);
         this.speakerManager = manager;
+        this.eventPresenter = new SpeakerEventPresenter(speakerManager, eventManager, languageManager,
+                new SpeakerEventMenuPanel(this, frame, speakerManager, eventManager), mainMenuPanel);
+    }
+
+    public void printMenu(){
+        eventPresenter.setUpMenu();
     }
 }

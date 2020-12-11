@@ -4,11 +4,13 @@ import Entities.Events.Event;
 import UseCases.Events.EventManager;
 
 import java.awt.*;
+import java.io.File;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 
 public class PdfGenerator {
     private EventManager eventManager;
@@ -22,6 +24,19 @@ public class PdfGenerator {
         this.eventManager = eventManager;
     }
 
+    """
+    // Use ghost j4 for this
+    public void ImageGen(String pdf){
+        PDFDocument document = new PDFDocument();
+        document.load(new File(pdf));
+        SimpleRenderer renderer = new SimpleRenderer();
+
+        // set resolution (in DPI)
+        renderer.setResolution(300);
+        List<Image> images = renderer.render(document);
+
+    }
+"""
     /**
      * sorts the list of events in order of when they happen
      *

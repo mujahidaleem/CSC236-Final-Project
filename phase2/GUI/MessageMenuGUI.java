@@ -49,33 +49,7 @@ public class MessageMenuGUI {
             userText.setBounds(363, 155, 165, 25);
             panel.add(userText);
 
-
-            // Create Send Message Button
-            JButton sendMessageButton = new JButton("Send Message");
-            sendMessageButton.setBounds(300, 350, 200, 25);
-            panel.add(sendMessageButton);
-
-            sendMessageButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    SendMessageGUI.main();
-                }
-            });
-
-
-            // Create add friend button
-            JButton addFriendButton = new JButton("Send Message");
-            addFriendButton.setBounds(300, 300, 200, 25);
-            panel.add(addFriendButton);
-
-
-            // Create remove friend button
-            JButton removeFriendButton = new JButton("Send Message");
-            removeFriendButton.setBounds(300, 250, 200, 25);
-            panel.add(removeFriendButton);
-
-
-                }
+            }
         }
 
 

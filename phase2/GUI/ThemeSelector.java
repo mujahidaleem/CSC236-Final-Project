@@ -34,8 +34,8 @@ public class ThemeSelector {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     UIManager.put("background", new Color(247, 245, 239));
-                    UIManager.put("Button.background", new Color(252, 112, 43));
-                    UIManager.put("Button.foreground", new Color(56,50,56));
+                    UIManager.put("panel.color", new Color(252, 112, 43));
+                    UIManager.put("text.color", new Color(56,50,56));
                 }
             });
 
@@ -44,8 +44,9 @@ public class ThemeSelector {
             darkTheme.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    UIManager.put("Button.background", new Color(108, 104, 108));
-                    UIManager.put("Button.foreground", new Color(255, 242, 194));
+                    UIManager.put("background", new Color(56,50,56));
+                    UIManager.put("panel.color", new Color(108, 104, 108));
+                    UIManager.put("text.color", new Color(255, 242, 194));
                 }
             });
 

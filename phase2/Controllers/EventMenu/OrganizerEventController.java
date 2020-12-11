@@ -107,7 +107,7 @@ public class OrganizerEventController extends EventMenuController {
             if (changeEventRoom(event, roomNumber)){
                 if (setMaxCapacity(event, maxCapacity)){
                     if(setDuration(event,duration)){
-                        eventPresenter.changeEventInformationResults();
+                        eventPresenter.changeEventInformationResults(event);
                     } else {
                         eventPresenter.changeEventDurationFailure();
                     }

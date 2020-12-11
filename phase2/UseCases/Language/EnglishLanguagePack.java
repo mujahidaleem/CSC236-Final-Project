@@ -60,11 +60,17 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
     public String[] organizerEventResultsSuccess(Event event) {
         return new String[]{"Your event has successfully been created.",
                 event.getSpeakers() + " will now be speaking at " + event.getEventName(),
-                "Speaker has successfully been removed.", event.getEventName() + " will now occur at " +
-                event.getEventTime().format(DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm:ss")),
+                "Speaker has successfully been removed.",
+                event.getEventName() + " will now occur at " + event.getEventTime().format(DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm:ss")),
                 event.getEventName() + " has been cancelled.",
                 event.getEventName() + " will now occur in room " + event.getRoomNumber() + "."
         };
+    }
+
+    public String changeEventInfoResults(Event event){
+        return event.getSpeakers() + " will now be speaking at " + event.getEventName() + "\n" + event.getEventName() +
+                " will now occur at " + event.getEventTime().format(DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm:ss")) +
+                "\n" + event.getEventName() + " will now occur in room " + event.getRoomNumber() + ".";
     }
 
     @Override
@@ -76,6 +82,43 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
                 event.getEventName() + " cannot be cancelled.",
                 "Sorry, the room is not available at that time."
         };
+    }
+
+    public String changeEventTimeFailure(){
+        return "Sorry, the event time cannot be changed.";
+    }
+
+    public String speakerRemovalSuccess(){
+        return "removal successful";
+    }
+
+    public String speakerRemovalFailure(){
+        return "removal unsuccessful";
+    }
+
+    @Override
+    public String speakerAdditionSuccess() {
+        return "addition successful";
+    }
+
+    @Override
+    public String speakerAdditionFailure() {
+        return "addition unsuccessful";
+    }
+
+    @Override
+    public String changeEventDurationFailure() {
+        return "duration change unsuccessful";
+    }
+
+    @Override
+    public String changeEventCapacityFailure() {
+        return "capacity change unsuccessful";
+    }
+
+    @Override
+    public String changeEventRoomFailure() {
+        return "change room unsuccessful";
     }
 
     @Override

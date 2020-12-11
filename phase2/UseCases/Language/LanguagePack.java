@@ -251,4 +251,23 @@ public interface LanguagePack {
     String logoutPrompt();
 
     String[] adminEventMenuPrompts();
+
+    String changeEventInfoResults(Event event);
+
+    String changeEventTimeFailure();
+
+    String speakerRemovalSuccess();
+
+    String speakerRemovalFailure();
+
+    String speakerAdditionSuccess();
+
+    String speakerAdditionFailure();
+
+    String changeEventDurationFailure();
+
+    String changeEventCapacityFailure();
+
+    String changeEventRoomFailure();
+
 }

@@ -256,4 +256,48 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
                 "Pour supprimer un événement sans participant, saisissez le nom de l'événement dans la zone de texte et appuyez sur Supprimer l'événement.",
                 "Événement supprimé.", "Cet événement ne peut pas être supprimé car il a des participants."};
     }
+
+    @Override
+    public String changeEventInfoResults(Event event) {
+        return event.getSpeakers() + "parlera maintenant à" + event.getEventName() + "\n" + event.getEventName() +
+                "se produira maintenant à" + event.getEventTime().format(DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm:ss")) +
+                "\n" + event.getEventName() + "se produira désormais dans la salle" + event.getRoomNumber() + ".";
+    }
+
+    public String changeEventTimeFailure(){
+        return "Désolé, l'heure de l'événement ne peut pas être modifiée.";
+    }
+
+    public String speakerRemovalSuccess(){
+        return "suppression réussie";
+    }
+
+    public String speakerRemovalFailure(){
+        return "suppression échouée";
+    }
+
+    @Override
+    public String speakerAdditionSuccess() {
+        return "ajout réussi";
+    }
+
+    @Override
+    public String speakerAdditionFailure() {
+        return "ajout échoué";
+    }
+
+    @Override
+    public String changeEventDurationFailure() {
+        return "échec du changement de durée";
+    }
+
+    @Override
+    public String changeEventCapacityFailure() {
+        return "échec du changement de capacité";
+    }
+
+    @Override
+    public String changeEventRoomFailure() {
+        return "échec du vestiaire";
+    }
 }

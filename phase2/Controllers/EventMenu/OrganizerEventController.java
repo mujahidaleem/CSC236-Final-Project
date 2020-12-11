@@ -47,13 +47,39 @@ public class OrganizerEventController extends EventMenuController {
         this.eventFactory = new EventFactory();
         this.panel = new OrganizerEventMenuPanel(this, frame);
         this.eventPresenter = new OrganizerEventPresenter(organizerManager, speakerManager, eventManager,
-                languageManager, panel, new EditEventPanel(frame,this), mainMenuPanel,
+                languageManager, panel, new EditEventPanel(frame,this, languageManager.languagePack), mainMenuPanel,
                 new CreateAccountPanel(frame, this, languageManager.languagePack));
     }
 
     @Override
     public void printMenu(){
         eventPresenter.setUpMenu();
+    }
+
+    @Override
+    public void removeSpotFromEvent(Event event) {
+        if (eventManager.removeUser(userManager.getCurrentUser(), event)) {
+            userManager.leaveEvent(event);
+            eventPresenter.removalResult(true, event);
+        } else {
+            eventPresenter.removalResult(false, event);
+        }
+    }
+
+    @Override
+    public void signUpForEvent(Event event) {
+        boolean canBook = eventManager.spaceAvailable(event) &&                                     // if event still Event and Room still has space
+                roomManager.getRoomCapacity(event.getRoomNumber()) >= event.getTotalNum() + 1;
+        if (canBook && eventManager.addUser(event, userManager.getCurrentUser())) {
+            userManager.attendEvent(event);
+            eventPresenter.signUpResult(true, event);
+        } else {
+            eventPresenter.signUpResult(false, event);
+        }
+    }
+
+    public void reprintEvents(){
+        eventPresenter.reprintEvents();
     }
 
     public void showCreateAccountMenu(){
@@ -66,7 +92,9 @@ public class OrganizerEventController extends EventMenuController {
             ArrayList<Integer> speakers = new ArrayList<>();
             speakers.add(0);
             Event event = eventManager.createEvent(type, name,dateTime,duration,organizerManager.getCurrentOrganizer().getId(), roomNumber, maxCapacity, new ArrayList<>(), speakers);
-            eventPresenter.createEventResults(true,event);
+            organizerManager.getCurrentOrganizer().get_eventsOrganizing().put(event.getEventName(), event.getEventTime());
+            roomManager.scheduleEvent(roomManager.findRoom(event.getRoomNumber()),event.getEventTime(), event.getDuration(), event);
+            eventPresenter.createEventResults(true, event);
         } else {
             eventPresenter.createEventResults(false, null);
         }
@@ -98,8 +126,8 @@ public class OrganizerEventController extends EventMenuController {
         eventPresenter.showEventMenu();
     }
 
-    public void showEditMenu(Event event){
-        eventPresenter.showEditMenu(event);
+    public void showEditMenu(Event event, boolean i){
+        eventPresenter.showEditMenu(event, i);
     }
 
     public int showAddSpeakerPrompt(){
@@ -295,7 +323,10 @@ public class OrganizerEventController extends EventMenuController {
      * @param event the event that the organizer is trying to delete
      * @return whether or not the event has been deleted
      */
-    public void deleteEvent(Event event) {
+    public void deleteEvent(Event event) throws NullEventException {
+        if(event == null){
+            throw new NullEventException();
+        }
         if (organizerManager.cancelEvent(event)) {
 
             Room currentRoom = roomManager.findRoom(event.getRoomNumber());
@@ -312,7 +343,10 @@ public class OrganizerEventController extends EventMenuController {
      * @param event the event that is being checked
      * @return if the current organizer is organizing this event
      */
-    public boolean eventModifiable(Event event) {
+    public boolean eventModifiable(Event event) throws NullEventException {
+        if(event == null){
+            throw new NullEventException();
+        }
         return event.getOrganizer() == organizerManager.getCurrentOrganizer().getId();
     }
 
@@ -331,6 +365,14 @@ public class OrganizerEventController extends EventMenuController {
         User user = accountCreatorFactory.createAccountFactory(userManager.getUsers().size() + 1000, name, password,
                 accountType, new HashMap<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
         this.userManager.getUsers().add(user);
-        eventPresenter.createUserAccountResults(true, user);
+        eventPresenter.createUserAccountResults(true, user, accountType);
+    }
+
+    public SpeakerManager getSpeakerManager(){
+        return speakerManager;
+    }
+
+    public void showIncorrectDate(){
+        eventPresenter.showIncorrectDate();
     }
 }

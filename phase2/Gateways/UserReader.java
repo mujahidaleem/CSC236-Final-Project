@@ -82,7 +82,7 @@ public class UserReader extends MySQLReader{
                 "accountType VARCHAR (64)," +
                 "eventsAttending VARCHAR(64)," +
                 "friends VARCHAR(64),"+
-                "eventsOrganizing VARCHAR(64)," +
+                "eventsOrganizing LONGTEXT," +
                 "eventsSpeaking VARCHAR(64))";
         try{
             Class.forName(jdbcDriver);
@@ -146,7 +146,9 @@ public class UserReader extends MySQLReader{
                     + turnHashMapIntoString(user.getPersonalSchedule())+ "', '" + turnArrayListIntoString(user.getFriendList())+
                     "', '"+ turnHashMapIntoString(((Speaker) user).getSpeakingSchedule())+"')";
         } else {
-            return ""; //TODO
+            return "INSERT INTO users(id, fullName, password, accountType, eventsAttending, friends) " +
+                    "VALUES('" + user.getId() + "', '" + user.getName() + "', '" + user.getPassword() + "', 'admin', '"
+                    + turnHashMapIntoString(user.getPersonalSchedule())+"', '" + turnArrayListIntoString(user.getFriendList())+"')";
         }
     }
 //    private String turnHashMapIntoString(HashMap<String, LocalDateTime> arrayList){

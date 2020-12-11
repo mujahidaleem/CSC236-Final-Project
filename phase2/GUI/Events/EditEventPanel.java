@@ -1,28 +1,29 @@
 package GUI.Events;
 
+import Controllers.EventMenu.NullEventException;
 import Controllers.EventMenu.NullSpeakerException;
 import Controllers.EventMenu.OrganizerEventController;
 import GUI.GUIPanel;
 import UseCases.Events.EventManager;
-import UseCases.Language.LanguageManager;
 import Entities.Events.Event;
+import UseCases.Language.LanguageManager;
 import UseCases.Language.LanguagePack;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
 public class EditEventPanel extends GUIPanel {
     private final int labelX = 20;
-    private final int labelWidth = 50;
+    private final int labelWidth = 100;
     private final int labelHeight = 20;
+    private final int dateWidth = 50;
 
-    private final int textBoxX = 70;
+    private final int textBoxX = 120;
     private final int textBoxWidth = 100;
     private final int textBoxHeight = 20;
 
-    private final int buttonWidth = 50;
+    private final int buttonWidth = 100;
     private final int buttonHeight = 30;
 
     private final int y = 20;
@@ -30,32 +31,33 @@ public class EditEventPanel extends GUIPanel {
 
     private JLabel eventNameLabel;
     private JLabel eventRoomLabel;
-    private JLabel eventDateLabel;
     private JLabel eventDurationLabel;
     private JLabel eventMaxCapacityLabel;
     private JLabel speakers;
 
     private JTextField eventNameTextField;
     private JTextField eventRoomTextField;
-    private JTextField eventDateTextField;
     private JTextField eventDurationTextField;
     private JTextField eventMaxCapacityTextField;
-    private JTextField speakersTextField;
-    private JCheckBox newEventCheckBox;
+    private JTextArea speakersTextField;
 
-    private final Integer[] months = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-    private final Integer[] days = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31};
-    private final Integer[] hours = new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23};
-    private final Integer[] minutes = new Integer[]{0, 10, 20, 30, 40, 50};
+    private final String[] months = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+    private final String[] days = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+    private final String[] hours = new String[]{"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
+    private final String[] minutes = new String[]{"00", "10", "20", "30", "40", "50"};
 
     private JLabel year;
     private JTextField yearValue;
-    private JComboBox<Integer> month;
-    private JComboBox<Integer> day;
-    private JComboBox<Integer> hour;
-    private JComboBox<Integer> minute;
+    private JLabel month;
+    private JComboBox<String> monthValue;
+    private JLabel day;
+    private JComboBox<String> dayValue;
+    private JLabel hour;
+    private JComboBox<String> hourValue;
+    private JLabel minute;
+    private JComboBox<String> minuteValue;
 
-    private String[] types = new String[]{""}; //TODO: add text
+    private String[] types;
     private JComboBox<String> eventTypeLabel;
 
     private JButton deleteEventButton;
@@ -67,133 +69,154 @@ public class EditEventPanel extends GUIPanel {
     private OrganizerEventController organizerEventController;
     private EventManager eventManager;
 
-    public EditEventPanel(JFrame frame, OrganizerEventController organizerEventController){
+    public EditEventPanel(JFrame frame, OrganizerEventController organizerEventController, LanguagePack languagePack){
         super(frame);
         this.organizerEventController = organizerEventController;
+        this.types = new String[]{languagePack.changeEventPrompts()[7], languagePack.changeEventPrompts()[8],
+                languagePack.changeEventPrompts()[9]};
+        this.eventManager = organizerEventController.eventManager;
     }
 
-    public void printMenu(){
-        setEventNameComponents();
-        setEventRoomComponents();
-        setEventDurationComponents();
+    public void printMenu(boolean i){
+        setLabels();
+        setTextFields();
+        setEventNameTextField(i);
+        setDateComponents();
+        setEventType();
+        setUpButtons();
     }
 
-    private void setEventNameComponents(){
+    private void setLabels(){
         eventNameLabel = new JLabel();
         eventNameLabel.setBounds(labelX, y, labelWidth, labelHeight);
-        eventNameTextField = new JTextField();
-        eventNameTextField.setBounds(textBoxX, y, textBoxWidth, textBoxHeight);
-        eventNameTextField.setEditable(false);
-        panel.add(eventNameLabel);
-        panel.add(eventNameTextField);
-    }
-
-    private void setEventRoomComponents(){
         eventRoomLabel = new JLabel();
         eventRoomLabel.setBounds(labelX, y+heightIncrement, labelWidth, labelHeight);
-        eventRoomTextField = new JTextField();
-        eventRoomTextField.setBounds(textBoxX, y+heightIncrement, textBoxWidth, textBoxHeight);
-        panel.add(eventRoomLabel);
-        panel.add(eventRoomTextField);
-    }
-
-    private void setEventDurationComponents(){
         eventDurationLabel = new JLabel();
         eventDurationLabel.setBounds(labelX, y+2*heightIncrement, labelWidth, labelHeight);
-        eventDurationTextField = new JTextField();
-        eventDurationTextField.setBounds(textBoxX, y+2*heightIncrement, textBoxWidth, textBoxHeight);
-        panel.add(eventDurationLabel);
-        panel.add(eventDurationTextField);
-    }
-
-    private void setDateComponents(){
-
         year = new JLabel();
-        year.setBounds(labelX, y+3*heightIncrement, labelWidth, labelHeight);
-        yearValue = new JTextField();
-        yearValue.setBounds(labelX + 60, y + 3*heightIncrement, textBoxWidth, textBoxHeight);
-        month = new JComboBox<>(months);
-        month.setBounds(labelX + 150, y+3*heightIncrement, labelWidth, labelHeight);
-        day = new JComboBox<>(days);
-        day.setBounds(labelX + 200, y + 3*heightIncrement, labelWidth, labelHeight);
-        hour = new JComboBox<>(hours);
-        hour.setBounds(labelX + 250, y+ 3*heightIncrement, labelWidth, labelHeight);
-        minute = new JComboBox<>(minutes);
-        minute.setBounds(labelX + 300, y + 3*heightIncrement, labelWidth, labelHeight);
+        year.setBounds(labelX, y+3*heightIncrement, dateWidth, labelHeight);
+        month = new JLabel();
+        month.setBounds(labelX + 210, y+3*heightIncrement, dateWidth, labelHeight);
+        day = new JLabel();
+        day.setBounds(labelX + 310, y+3*heightIncrement, dateWidth, labelHeight);
+        hour = new JLabel();
+        hour.setBounds(labelX + 410, y+3*heightIncrement, dateWidth, labelHeight);
+        minute = new JLabel();
+        minute.setBounds(labelX + 510, y+3*heightIncrement, dateWidth, labelHeight);
 
+        eventMaxCapacityLabel = new JLabel();
+        eventMaxCapacityLabel.setBounds(labelX, y + 4*heightIncrement, labelWidth, labelHeight);
+        speakers = new JLabel();
+        speakers.setBounds(labelX, y + 5*heightIncrement, labelWidth, labelHeight);
+
+        panel.add(eventNameLabel);
+        panel.add(eventRoomLabel);
+        panel.add(eventDurationLabel);
         panel.add(year);
-        panel.add(yearValue);
         panel.add(month);
         panel.add(day);
         panel.add(hour);
         panel.add(minute);
+        panel.add(eventMaxCapacityLabel);
+        panel.add(speakers);
     }
 
-    private void setSpeakerComponents(){
-        speakers = new JLabel();
-        speakers.setBounds(labelX, y + 4*heightIncrement, labelWidth, labelHeight);
-        speakersTextField = new JTextField();
-        speakersTextField.setBounds(textBoxX, y + 4*heightIncrement, textBoxWidth, textBoxHeight);
+    private void setEventNameTextField(boolean i){
+        eventNameTextField = new JTextField();
+        eventNameTextField.setBounds(textBoxX, y, textBoxWidth, textBoxHeight);
+        eventNameTextField.setEditable(i);
+        panel.add(eventNameTextField);
+    }
+
+    private void setTextFields(){
+        eventRoomTextField = new JTextField();
+        eventRoomTextField.setBounds(textBoxX, y+heightIncrement, textBoxWidth, textBoxHeight);
+        eventDurationTextField = new JTextField();
+        eventDurationTextField.setBounds(textBoxX, y+2*heightIncrement, textBoxWidth, textBoxHeight);
+        yearValue = new JTextField();
+        yearValue.setBounds(textBoxX, y + 3*heightIncrement, textBoxWidth, textBoxHeight);
+        eventMaxCapacityTextField = new JTextField();
+        eventMaxCapacityTextField.setBounds(textBoxX, y + 4*heightIncrement, textBoxWidth, textBoxHeight);
+
+        speakersTextField = new JTextArea();
+        speakersTextField.setBounds(textBoxX, y + 5*heightIncrement, textBoxWidth + 50, textBoxHeight + 50);
         speakersTextField.setEditable(false);
-        panel.add(speakers);
+
+        panel.add(eventRoomTextField);
+        panel.add(eventDurationTextField);
+        panel.add(yearValue);
+        panel.add(eventMaxCapacityTextField);
         panel.add(speakersTextField);
     }
 
-    private void setEventType(LanguageManager languageManager){
+    private void setDateComponents(){
+        monthValue = new JComboBox<>(months);
+        monthValue.setBounds(labelX + 250, y+3*heightIncrement, dateWidth, labelHeight);
+        dayValue = new JComboBox<>(days);
+        dayValue.setBounds(labelX + 350, y + 3*heightIncrement, dateWidth, labelHeight);
+        hourValue = new JComboBox<>(hours);
+        hourValue.setBounds(labelX + 450, y+ 3*heightIncrement, dateWidth, labelHeight);
+        minuteValue = new JComboBox<>(minutes);
+        minuteValue.setBounds(labelX + 550, y + 3*heightIncrement, dateWidth, labelHeight);
+
+        panel.add(monthValue);
+        panel.add(dayValue);
+        panel.add(hourValue);
+        panel.add(minuteValue);
+    }
+
+    private void setEventType(){
         eventTypeLabel = new JComboBox<>(types);
-        eventTypeLabel.setBounds(300, y, textBoxWidth, textBoxHeight);
+        eventTypeLabel.setBounds(300, y, textBoxWidth + 100, textBoxHeight);
 
         panel.add(eventTypeLabel);
     }
 
     private void setUpButtons(){
-        newEventCheckBox = new JCheckBox();
-        newEventCheckBox.setBounds(labelX, y + 4*heightIncrement, buttonWidth, buttonHeight);
-        panel.add(newEventCheckBox);
+
+        returnButton = new JButton();
+        returnButton.setBounds(labelX + 100, y + 7*heightIncrement, buttonWidth, buttonHeight);
+        returnButton.addActionListener(e -> organizerEventController.showEventMenu());
+        panel.add(returnButton);
 
         deleteEventButton = new JButton();
-        deleteEventButton.setBounds(labelX, y + 5*heightIncrement, buttonWidth, buttonHeight);
-        deleteEventButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        deleteEventButton.setBounds(labelX + 250, y + 7*heightIncrement, buttonWidth + 50, buttonHeight);
+        deleteEventButton.addActionListener(e -> {
+            try{
                 organizerEventController.deleteEvent(eventManager.findEvent(eventNameTextField.getText()));
+                clearAdditionalText();
+                organizerEventController.showEventMenu();
+            } catch (NullEventException f){
+                organizerEventController.showNullEventError();
             }
         });
         panel.add(deleteEventButton);
 
         saveChangesButton = new JButton();
-        saveChangesButton.setBounds(labelX + 300, y + 5*heightIncrement, buttonWidth, buttonHeight);
-        saveChangesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (newEventCheckBox.isSelected()){
-                    LocalDateTime date = LocalDateTime.parse(yearValue.getText() + "-" + months[month.getSelectedIndex()] + "-" +
-                            days[day.getSelectedIndex()] + "T" + hours[hour.getSelectedIndex()] + ":" + minutes[minute.getSelectedIndex()] + ":00");
-                    organizerEventController.changeEventInformation(eventManager.findEvent(eventNameTextField.getText()
-                            ), date, Integer.parseInt(eventDurationTextField.getText()),
-                            Integer.parseInt(eventMaxCapacityTextField.getText()), Integer.parseInt(eventRoomTextField.getText()));
+        saveChangesButton.setBounds(labelX + 450, y + 7*heightIncrement, buttonWidth + 50, buttonHeight);
+        saveChangesButton.addActionListener(e -> {
+            try {
+                LocalDateTime date = LocalDateTime.parse(yearValue.getText() + "-" + months[monthValue.getSelectedIndex()] + "-" +
+                        days[dayValue.getSelectedIndex()] + "T" + hours[hourValue.getSelectedIndex()] + ":" + minutes[minuteValue.getSelectedIndex()] + ":00");
+                if (eventNameTextField.isEditable()) {
+                    String[] eventTypes = new String[]{"attendeeOnlyEvent", "multiSpeakerEvent", "oneSpeakerEvent"};
+                    organizerEventController.createEvent(eventNameTextField.getText(), date, Integer.parseInt(eventRoomTextField.getText()),
+                            Integer.parseInt(eventMaxCapacityTextField.getText()),Integer.parseInt(eventDurationTextField.getText()), eventTypes[eventTypeLabel.getSelectedIndex()]);
                 } else {
-                    LocalDateTime date = LocalDateTime.parse(yearValue.getText() + "-" + months[month.getSelectedIndex()] + "-" +
-                            days[day.getSelectedIndex()] + "T" + hours[hour.getSelectedIndex()] + ":" + minutes[minute.getSelectedIndex()] + ":00");
-                    organizerEventController.createEvent(eventNameTextField.getText(), date,  Integer.parseInt(eventRoomTextField.getText()),
+                    organizerEventController.createEvent(eventNameTextField.getText(), date, Integer.parseInt(eventRoomTextField.getText()),
                             Integer.parseInt(eventMaxCapacityTextField.getText()), Integer.parseInt(eventDurationTextField.getText()), types[eventTypeLabel.getSelectedIndex()]);
                 }
+            } catch (DateTimeParseException f){
+                organizerEventController.showIncorrectDate();
+            } finally {
+                clearAdditionalText();
+                organizerEventController.showEventMenu();
             }
         });
         panel.add(saveChangesButton);
 
-        returnButton = new JButton();
-        returnButton.setBounds(labelX + 350, y + 5*heightIncrement, buttonWidth, buttonHeight);
-        returnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                organizerEventController.showEventMenu();
-            }
-        });
-        panel.add(returnButton);
-
         removeSpeakerButton = new JButton();
-        removeSpeakerButton.setBounds(labelX + 500, y + 5*heightIncrement, buttonWidth, buttonHeight);
+        removeSpeakerButton.setBounds(labelX + 280, y + 5*heightIncrement, buttonWidth + 70, buttonHeight);
         removeSpeakerButton.addActionListener(e -> {
             try {
                 organizerEventController.removeSpeaker(eventManager.findEvent(eventNameTextField.getText()), organizerEventController.showAddSpeakerPrompt());
@@ -201,25 +224,66 @@ public class EditEventPanel extends GUIPanel {
                 organizerEventController.showNullSpeaker();
             }
         });
-        panel.add(returnButton);
+        panel.add(removeSpeakerButton);
 
         addSpeakerButton = new JButton();
-        addSpeakerButton.setBounds(labelX + 400, y + 5*heightIncrement, buttonWidth, buttonHeight);
-        addSpeakerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    organizerEventController.addSpeaker(eventManager.findEvent(eventNameTextField.getText()), organizerEventController.showAddSpeakerPrompt());
-                } catch (NullSpeakerException nullSpeakerException) {
-                    organizerEventController.showNullSpeaker();
-                }
+        addSpeakerButton.setBounds(labelX + 480, y + 5*heightIncrement, buttonWidth + 70, buttonHeight);
+        addSpeakerButton.addActionListener(e -> {
+            try {
+                organizerEventController.addSpeaker(eventManager.findEvent(eventNameTextField.getText()), organizerEventController.showAddSpeakerPrompt());
+            } catch (NullSpeakerException nullSpeakerException) {
+                organizerEventController.showNullSpeaker();
             }
         });
         panel.add(addSpeakerButton);
     }
 
     public void setText(Event event, LanguagePack languagePack){
-        //TODO:
-    }
+        eventNameLabel.setText(languagePack.changeEventPrompts()[0]);
+        eventRoomLabel.setText(languagePack.changeEventPrompts()[1]);
+        eventDurationLabel.setText(languagePack.changeEventPrompts()[3]);
+        eventMaxCapacityLabel.setText(languagePack.changeEventPrompts()[4]);
+        speakers.setText(languagePack.changeEventPrompts()[5]);
 
+        year.setText(languagePack.changeEventPrompts()[6]);
+        month.setText(languagePack.changeEventPrompts()[15]);
+        day.setText(languagePack.changeEventPrompts()[16]);
+        hour.setText(languagePack.changeEventPrompts()[17]);
+        minute.setText(languagePack.changeEventPrompts()[18]);
+
+        types = new String[]{languagePack.changeEventPrompts()[7], languagePack.changeEventPrompts()[8],
+                languagePack.changeEventPrompts()[9]};
+
+        deleteEventButton.setText(languagePack.changeEventPrompts()[10]);
+        saveChangesButton.setText(languagePack.changeEventPrompts()[11]);
+        returnButton.setText(languagePack.changeEventPrompts()[12]);
+        addSpeakerButton.setText(languagePack.changeEventPrompts()[13]);
+        removeSpeakerButton.setText(languagePack.changeEventPrompts()[14]);
+
+        if(event!= null){
+            eventNameTextField.setText(event.getEventName());
+            eventRoomTextField.setText(Integer.toString(event.getRoomNumber()));
+            eventDurationTextField.setText(Integer.toString(event.getDuration()));
+            eventMaxCapacityTextField.setText(Integer.toString(event.getMaxCapacity()));
+            yearValue.setText(String.valueOf(event.getEventTime().getYear()));
+            monthValue.setSelectedIndex(event.getEventTime().getMonthValue());
+            hourValue.setSelectedIndex(event.getEventTime().getHour());
+            minuteValue.setSelectedIndex(event.getEventTime().getMinute()/60);
+            if(event.hasSpeaker()){
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int id: event.getSpeakers()){
+                    stringBuilder.append(organizerEventController.getSpeakerManager().findSpeaker(id)).append("\n");
+                }
+                speakersTextField.setText(stringBuilder.toString());
+            }
+        }
+    }
+    public void clearAdditionalText(){
+        eventNameTextField.setText("");
+        eventRoomTextField.setText("");
+        eventDurationTextField.setText("");
+        eventMaxCapacityTextField.setText("");
+        yearValue.setText("");
+        speakersTextField.setText("");
+    }
 }

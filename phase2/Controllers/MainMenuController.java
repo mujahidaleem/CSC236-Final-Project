@@ -5,9 +5,7 @@ import Controllers.Factories.EventMenuFactory;
 import Controllers.Factories.MessageMenuFactory;
 import Controllers.MessageMenu.UserFriendListController;
 import GUI.MainMenuPanel;
-import Presenters.EventMenu.EventMenuPresenter;
 import Presenters.MainMenuPresenter;
-import Presenters.MessageMenu.MessageMenuPresenter;
 import UseCases.Events.EventManager;
 import UseCases.Language.LanguageManager;
 import UseCases.Users.UserManager;
@@ -70,6 +68,10 @@ public class MainMenuController {
         presenter.changeLanguage(language);
     }
 
+    public void showIncorrectDate(){
+        presenter.showIncorrectDate();
+    }
+
     public void showChangePasswordPrompt(){
         changePassword(presenter.changePassword());
         presenter.showChangePasswordResult();
@@ -90,8 +92,4 @@ public class MainMenuController {
         userManager.setCurrentUser(null);
         loginMenuController.returnToLoginMenu();
     }
-
-
 }
-
-

@@ -24,7 +24,7 @@ public class PdfGenerator {
         this.eventManager = eventManager;
     }
 
-    """
+    /**
     // Use ghost j4 for this
     public void ImageGen(String pdf){
         PDFDocument document = new PDFDocument();
@@ -36,7 +36,7 @@ public class PdfGenerator {
         List<Image> images = renderer.render(document);
 
     }
-"""
+*/
     /**
      * sorts the list of events in order of when they happen
      *

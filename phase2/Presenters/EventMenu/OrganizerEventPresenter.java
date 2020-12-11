@@ -69,12 +69,14 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
 
     public void showEventMenu(){
         organizerEventMenuPanel.printMenu();
+        organizerEventMenuPanel.setText(eventManager.getEvents(), manager.getCurrentUser(), languageManager.languagePack);
         editEventPanel.changePanel(organizerEventMenuPanel.getPanel());
     }
 
-    public void showEditMenu(Event event){
-        organizerEventMenuPanel.changePanel(editEventPanel.getPanel());
+    public void showEditMenu(Event event, boolean i){
+        editEventPanel.printMenu(i);
         editEventPanel.setText(event, languageManager.languagePack);
+        organizerEventMenuPanel.changePanel(editEventPanel.getPanel());
     }
 
     public void showCreateAccountMenu(){
@@ -92,8 +94,13 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
     }
 
     public void showNonModifiableEventPrompt(String string){
-        JOptionPane.showMessageDialog(organizerEventMenuPanel.getPanel(), "", "Warbubg", JOptionPane.WARNING_MESSAGE); //TODO: change the text
+        JOptionPane.showMessageDialog(organizerEventMenuPanel.getPanel(), "", "Warning", JOptionPane.WARNING_MESSAGE); //TODO: change the text
     }
+
+    public void showIncorrectDate(){
+        JOptionPane.showMessageDialog(organizerEventMenuPanel.getPanel(), "", "Warning", JOptionPane.WARNING_MESSAGE);
+    }
+
 
 //    /**
 //     * Prints the list of commands that can be executed by the organizer
@@ -247,11 +254,11 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      * @param i       determines whether the command was successful or not
      * @param user    the new user account that has been created
      */
-    public void createUserAccountResults(boolean i, User user) {
+    public void createUserAccountResults(boolean i, User user, String type) {
         if (i) {
-            System.out.println(languageManager.languagePack.organizerAccountCreationSuccess(user));
+            JOptionPane.showMessageDialog(organizerEventMenuPanel.getPanel(), languageManager.languagePack.organizerAccountCreationSuccess(user, type));
         } else {
-            System.out.println(languageManager.languagePack.speakerAccountFailure());
+            JOptionPane.showMessageDialog(organizerEventMenuPanel.getPanel(), languageManager.languagePack.accountCreationFailure());
         }
     }
 
@@ -263,5 +270,9 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
         for (Speaker speaker : speakerManager.getSpeakers()) {
             System.out.println(speaker);
         }
+    }
+
+    public void reprintEvents(){
+        organizerEventMenuPanel.reprintEvents(eventManager.getEvents(), manager.getCurrentUser());
     }
 }

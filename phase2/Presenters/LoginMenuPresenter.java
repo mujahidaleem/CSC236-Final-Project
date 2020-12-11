@@ -63,7 +63,7 @@ public class LoginMenuPresenter {
     }
 
     public boolean confirmExit(JFrame frame){
-        return (JOptionPane.showConfirmDialog(frame, "") == JOptionPane.YES_OPTION); //TODO: add text
+        return (JOptionPane.showConfirmDialog(frame, languageManager.languagePack.logoutPrompt()) == JOptionPane.YES_OPTION);
     }
 
     /**

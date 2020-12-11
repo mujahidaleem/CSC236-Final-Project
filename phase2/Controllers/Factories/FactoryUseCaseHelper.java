@@ -66,7 +66,7 @@ public class FactoryUseCaseHelper {
         AdminManager adminManager = new AdminManager(null, new ArrayList<>());
         for (User user : userManager.users) {
             if (user.getClass().equals(Admin.class)) {
-                adminManager.users.add(user);
+                adminManager.getAdmins().add((Admin) user);
             }
         }
         return adminManager;

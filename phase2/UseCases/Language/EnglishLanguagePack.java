@@ -32,15 +32,16 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
     }
 
     @Override
-    public void printOrganizerCommands() {
-        System.out.println("To create a new event, type 3_Name_YYYY-MM-DDTHH:mm:ss_roomNumber_id_duration_max capacity");
-        System.out.println("To assign a speaker to an event, type 4_Event_SpeakerID");
-        System.out.println("To remove a speaker from an event, type 5_Event");
-        System.out.println("To delete an event, type 6_Event");
-        System.out.println("To change the date of an event, type 7_Event_new date");
-        System.out.println("To change the room of an event, type 8_Event_roomNumber");
-        System.out.println("To create a new speaker account, type 9_name_password");
-        System.out.println("To see the list of speakers, type 10");
+    public String[] organizerEventCommands() {
+        return new String[]{"Create New Event", "Change Event", "Create Account", "Event Name",
+                "To change the details of an event, please type \nthe event name and click Change Event."};
+    }
+
+    public String[] changeEventPrompts(){
+        return new String[] {"Name", "Room Number", "Date", "Duration", "Max Capacity", "Speakers", "Year",
+                "AttendeeOnlyEvent", "MultiSpeakerEvent", "OneSpeakerEvent",
+                "Delete Event", "Save Changes", "Cancel", "Add Speaker", "Remove Speaker",
+                "Month", "Day", "Hour", "Minute"};
     }
 
     @Override
@@ -103,13 +104,13 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
     }
 
     @Override
-    public String organizerAccountCreationSuccess(User user) {
-        return "Speaker account has been created with username " + user.getId() + " and temporary password " +
+    public String organizerAccountCreationSuccess(User user, String type) {
+        return type + " account has been created with username " + user.getId() + " and temporary password " +
                 user.getPassword();
     }
 
     @Override
-    public String speakerAccountFailure() {
+    public String accountCreationFailure() {
         return "Sorry, this speaker account cannot be created.";
     }
 
@@ -236,5 +237,16 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
     @Override
     public String saveScheduleAsPdf() {
         return "Please input where you want to save the file.";
+    }
+
+    public String logoutPrompt(){
+        return "Do you want to exit the program?";
+    }
+
+    public String[] adminEventMenuPrompts(){
+        return new String[]{ "Delete Event", "Show Events", "To see all events with no attendees, press Show Events. " +
+                "To delete an event with no attendees, type the event name into the text box and press Delete Event.",
+                "Event Deleted.", "This event cannot be deleted as it has attendees."
+        };
     }
 }

@@ -51,6 +51,12 @@ public interface LanguagePack {
     String unknownEvent();
 
     /**
+     * contains the strings used in the editEventPanel GUI
+     * @return strings to generate text
+     */
+    String[] changeEventPrompts();
+
+    /**
      * Contains the string that will be shown upon starting the program
      *
      * @return Greetings to the user and available commands
@@ -137,7 +143,7 @@ public interface LanguagePack {
     /**
      * Prints how to input the extra organizer event commands
      */
-    void printOrganizerCommands();
+    String[] organizerEventCommands();
 
     /**
      * Contains the strings corresponding to successful organizer event commands
@@ -161,14 +167,14 @@ public interface LanguagePack {
      * @param user the new speaker account
      * @return a string telling the user that a new speaker account has been created
      */
-    String organizerAccountCreationSuccess(User user);
+    String organizerAccountCreationSuccess(User user, String string);
 
     /**
      * Contains the string telling the user that a speaker cannot be created
      *
      * @return a string telling the user that a new speaker account cannot be created
      */
-    String speakerAccountFailure();
+    String accountCreationFailure();
 
     /**
      * Tells the user cannot modified the selected event
@@ -241,4 +247,8 @@ public interface LanguagePack {
      * @return as tring telling the user how to save the schedule
      */
     String saveScheduleAsPdf();
+
+    String logoutPrompt();
+
+    String[] adminEventMenuPrompts();
 }

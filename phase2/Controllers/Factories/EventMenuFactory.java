@@ -1,12 +1,8 @@
 package Controllers.Factories;
 
 import Controllers.EventMenu.*;
-import Entities.Users.Attendee;
-import Entities.Users.Organizer;
-import Entities.Users.AccountCreatorFactory;
-import Entities.Users.Speaker;
+import Entities.Users.*;
 import GUI.MainMenuPanel;
-import Presenters.EventMenu.*;
 import UseCases.Events.EventManager;
 import UseCases.Events.RoomManager;
 import UseCases.Language.LanguageManager;
@@ -47,20 +43,24 @@ public class EventMenuFactory {
         if (userManager.getCurrentUser().getClass().equals(Attendee.class)) {
             AttendeeManager attendeeManager = factoryUseCaseHelper.createAttendeeManager();
             attendeeManager.setCurrentUser(userManager.getCurrentUser());
+            attendeeManager.setCurrentAttendee((Attendee) userManager.getCurrentUser());
             return new AttendeeEventController(attendeeManager, eventManager, roomManager, languageManager, frame, mainMenuPanel);
         } else if (userManager.getCurrentUser().getClass().equals(Organizer.class)) {
             OrganizerManager organizerManager = factoryUseCaseHelper.createOrganizerManager();
             organizerManager.setCurrentUser(userManager.getCurrentUser());
+            organizerManager.setCurrentOrganizer((Organizer) userManager.getCurrentUser());
             SpeakerManager speakerManager = factoryUseCaseHelper.createSpeakerManager();
             AccountCreatorFactory accountCreatorFactory = new AccountCreatorFactory();
             return new OrganizerEventController(organizerManager, roomManager, eventManager, userManager, languageManager, speakerManager, accountCreatorFactory, frame, mainMenuPanel);
         } else if(userManager.getCurrentUser().getClass().equals(Speaker.class)){
             SpeakerManager speakerManager = factoryUseCaseHelper.createSpeakerManager();
             speakerManager.setCurrentUser(userManager.getCurrentUser());
+            speakerManager.setCurrentSpeaker((Speaker) userManager.getCurrentUser());
             return new SpeakerEventController(speakerManager, eventManager, roomManager, languageManager, frame, mainMenuPanel);
         } else {
             AdminManager adminManager = factoryUseCaseHelper.createAdminManager();
             adminManager.setCurrentUser(userManager.getCurrentUser());
+            adminManager.setCurrentAdmin((Admin) userManager.getCurrentUser());
             return new AdminEventController(userManager, eventManager, roomManager, languageManager, factoryUseCaseHelper.createSpeakerManager(), adminManager, frame, mainMenuPanel);
         }
     }

@@ -164,4 +164,8 @@ public class LoginMenuController {
         eventReader.saveEventManager(eventManager);
         roomReader.saveRoomManager(roomManager);
     }
+
+    public void showWrongCredentials(){
+        presenter.loginFailed();
+    }
 }

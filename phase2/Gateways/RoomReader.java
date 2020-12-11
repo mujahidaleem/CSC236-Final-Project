@@ -99,7 +99,7 @@ public class RoomReader extends MySQLReader{
         String myTableName = "CREATE TABLE IF NOT EXISTS rooms(" +
                 "roomNumber INT(64) NOT NULL," +
                 "roomCapacity INT(64)," +
-                "schedule VARCHAR(64))";
+                "schedule LONGTEXT)";
         try{
             Class.forName(jdbcDriver);
             Connection conn = DriverManager.getConnection(url, userName, password);
@@ -135,7 +135,9 @@ public class RoomReader extends MySQLReader{
         StringBuilder stringBuilder = new StringBuilder();
         if(map.size()>0){
             for(ArrayList<LocalDateTime> arrayList: map.keySet()){
-                stringBuilder.append(arrayList.get(0)).append("-").append(arrayList.get(1)).append(":").append(map.get(arrayList)).append("_");
+                stringBuilder.append(arrayList.get(0).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))).
+                        append("&").append(arrayList.get(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))).
+                        append("=").append(map.get(arrayList)).append("_");
             }
             return stringBuilder.toString();
         }
@@ -148,8 +150,8 @@ public class RoomReader extends MySQLReader{
         if (s != null && s.length() > 0) {
             String[] strings = s.split("_");
             for (String string : strings) {
-                String[] s1 = string.split(":");
-                String[] time = s1[0].split("-");
+                String[] s1 = string.split("=");
+                String[] time = s1[0].split("&");
                 LocalDateTime start = LocalDateTime.parse(time[0], formatter);
                 LocalDateTime end = LocalDateTime.parse(time[1], formatter);
                 String event = s1[1];

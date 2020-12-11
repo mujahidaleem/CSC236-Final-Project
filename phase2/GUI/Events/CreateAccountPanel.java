@@ -10,7 +10,7 @@ public class CreateAccountPanel extends GUIPanel {
     private final int labelX = 20;
     private final int labelY = 30;
     private final int labelYHeightIncrement = 40;
-    private final int labelWidth = 50;
+    private final int labelWidth = 100;
     private final int labelHeight = 20;
 
     private final int textWidth = 100;
@@ -18,7 +18,7 @@ public class CreateAccountPanel extends GUIPanel {
 
     private final int buttonX = 20;
     private final int buttonY = 100;
-    private final int buttonWidth = 50;
+    private final int buttonWidth = 100;
     private final int buttonHeight = 30;
 
     private JButton createAccountButton;
@@ -77,9 +77,9 @@ public class CreateAccountPanel extends GUIPanel {
      */
     public void createTextFields() {
         nameTextField = new JTextField();
-        nameTextField.setBounds(labelX + 50, labelY, labelWidth, labelHeight);
+        nameTextField.setBounds(labelX + 100, labelY, labelWidth, labelHeight);
         passwordTextField = new JTextField();
-        passwordTextField.setBounds(labelX + 50, labelY + labelYHeightIncrement, labelWidth, labelHeight);
+        passwordTextField.setBounds(labelX + 100, labelY + labelYHeightIncrement, labelWidth, labelHeight);
 
         panel.add(nameTextField);
         panel.add(passwordTextField);
@@ -90,7 +90,7 @@ public class CreateAccountPanel extends GUIPanel {
      */
     private void createType() {
         accountType = new JComboBox<>(types);
-        accountType.setBounds(labelX + 150, labelY, buttonWidth, buttonHeight);
+        accountType.setBounds(labelX + 350, labelY, buttonWidth + 50, buttonHeight);
         panel.add(accountType);
     }
 
@@ -107,11 +107,14 @@ public class CreateAccountPanel extends GUIPanel {
         panel.add(cancelButton);
 
         createAccountButton = new JButton();
-        createAccountButton.setBounds(buttonX + 100, buttonY, buttonWidth, buttonHeight);
+        createAccountButton.setBounds(buttonX + 140, buttonY, buttonWidth + 30, buttonHeight);
         createAccountButton.addActionListener(e -> {
-            organizerEventController.createAccount(nameTextField.getText(), passwordTextField.getText(), types[accountType.getSelectedIndex()]);
+            String[] accountTypes = new String[]{"attendee", "organizer", "speaker", "admin"};
+            organizerEventController.createAccount(nameTextField.getText(), passwordTextField.getText(), accountTypes[accountType.getSelectedIndex()]);
             clearTextFields();
+            organizerEventController.showEventMenu();
         });
+        panel.add(createAccountButton);
     }
 
     /**

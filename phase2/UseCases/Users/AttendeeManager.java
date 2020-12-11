@@ -9,6 +9,7 @@ import java.util.ArrayList;
  * An instance of this stores all the attendees
  */
 public class AttendeeManager extends UserManager {
+    private Attendee currentAttendee;
 
     /**
      * AttendeeManager constructor
@@ -18,5 +19,9 @@ public class AttendeeManager extends UserManager {
      */
     public AttendeeManager(Attendee currentUser, ArrayList<User> attendees) {
         super(currentUser, attendees);
+    }
+
+    public void setCurrentAttendee(Attendee attendee){
+        this.currentAttendee = attendee;
     }
 }

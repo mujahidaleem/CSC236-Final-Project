@@ -17,8 +17,9 @@ public class EventMenuPresenter {
     protected EventManager eventManager;
     protected LanguageManager languageManager;
 
-    protected EventMenuPanel eventMenuPanel;
+    private EventMenuPanel eventMenuPanel;
     protected MainMenuPanel mainMenuPanel;
+
 
     /**
      * EventMenuPresenter constructor
@@ -47,7 +48,7 @@ public class EventMenuPresenter {
     }
 
     public void showNullEventError(){
-        JOptionPane.showMessageDialog(eventMenuPanel.getPanel(), "","Warning", JOptionPane.WARNING_MESSAGE); //TODO:
+        JOptionPane.showMessageDialog(eventMenuPanel.getPanel(), languageManager.languagePack.unknownEvent(),"Warning", JOptionPane.WARNING_MESSAGE); //TODO:
     }
 
 //    /**

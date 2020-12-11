@@ -109,8 +109,10 @@ public class SpeakerManager extends UserManager {
     }
 
     public void deleteEvent(Event event){
-        for(int id:event.getSpeakers()){
-            findSpeaker(id).speakingSchedule.remove(event.getEventName());
+        if(event.hasSpeaker()){
+            for(int id:event.getSpeakers()){
+                findSpeaker(id).speakingSchedule.remove(event.getEventName());
+            }
         }
     }
 
@@ -127,5 +129,9 @@ public class SpeakerManager extends UserManager {
             }
         }
         return null;
+    }
+
+    public void setCurrentSpeaker(Speaker speaker){
+        this.currentSpeaker = speaker;
     }
 }

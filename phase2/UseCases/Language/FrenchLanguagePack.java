@@ -33,15 +33,16 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     }
 
     @Override
-    public void printOrganizerCommands() {
-        System.out.println("Pour créer un nouvel événement, tapez 3_Nom_YYYY-MM-DDTHH:mm:ss_numéro de chambre_id_la durée_capacité maximale");
-        System.out.println("Pour affecter un orateur à un événement, tapez 4_événement_OrateurID");
-        System.out.println("Pour supprimer un orateur d'un événement, tapez 5_événement");
-        System.out.println("Pour supprimer un événement, tapez 6_événement");
-        System.out.println("Pour changer la date d'un événement, tapez 7_Événement_nouvelle date");
-        System.out.println("Pour changer la salle d'un événement, tapez 8_Événement_nouveau numéro de chambre");
-        System.out.println("Pour créer un nouveau compte de conférencier, tapez 9_Nom_mot de passe");
-        System.out.println("Pour voir la liste des orateurs, tapez 10");
+    public String[] organizerEventCommands() {
+        return new String[]{};
+//        System.out.println("Pour créer un nouvel événement, tapez 3_Nom_YYYY-MM-DDTHH:mm:ss_numéro de chambre_id_la durée_capacité maximale");
+//        System.out.println("Pour affecter un orateur à un événement, tapez 4_événement_OrateurID");
+//        System.out.println("Pour supprimer un orateur d'un événement, tapez 5_événement");
+//        System.out.println("Pour supprimer un événement, tapez 6_événement");
+//        System.out.println("Pour changer la date d'un événement, tapez 7_Événement_nouvelle date");
+//        System.out.println("Pour changer la salle d'un événement, tapez 8_Événement_nouveau numéro de chambre");
+//        System.out.println("Pour créer un nouveau compte de conférencier, tapez 9_Nom_mot de passe");
+//        System.out.println("Pour voir la liste des orateurs, tapez 10");
     }
 
     @Override
@@ -92,6 +93,16 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
         return "L'événement n'existe pas, veuillez réessayer.";
     }
 
+    /**
+     * contains the strings used in the editEventPanel GUI
+     *
+     * @return strings to generate text
+     */
+    @Override
+    public String[] changeEventPrompts() {
+        return new String[0];
+    }
+
     @Override
     public String unknownSpeaker() {
         return "Ce haut-parleur n'existe pas. Veuillez réessayer.";
@@ -103,13 +114,13 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     }
 
     @Override
-    public String organizerAccountCreationSuccess(User user) {
+    public String organizerAccountCreationSuccess(User user, String string) {
         return "Le compte du conférencier a été créé avec le nom d'utilisateur " + user.getId() + " et le mot de passe temporaire " +
                 user.getPassword();
     }
 
     @Override
-    public String speakerAccountFailure() {
+    public String accountCreationFailure() {
         return "Désolé, ce compte de conférencier ne peut pas être créé.";
     }
 
@@ -234,5 +245,15 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     @Override
     public String saveScheduleAsPdf() {
         return "veuillez saisir où vous souhaitez enregistrer le fichier.";
+    }
+
+    @Override
+    public String logoutPrompt() {
+        return null;
+    }
+
+    @Override
+    public String[] adminEventMenuPrompts() {
+        return new String[0];
     }
 }

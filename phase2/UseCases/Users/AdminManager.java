@@ -1,5 +1,6 @@
 package UseCases.Users;
 
+import Controllers.EventMenu.NullEventException;
 import Entities.Users.Admin;
 import Entities.Events.Event;
 import UseCases.Events.EventManager;
@@ -13,6 +14,7 @@ public class AdminManager extends UserManager {
      * An instance of this stores all the AdminUsers
      */
     private Admin currentAdmin;
+    private ArrayList<Admin> admins;
 
     /**
      * AdminManager constructor
@@ -22,6 +24,7 @@ public class AdminManager extends UserManager {
     public AdminManager(Admin currentUser, ArrayList<Admin> Admins) {
         super(currentUser);
         this.currentAdmin = currentUser;
+        this.admins = new ArrayList<>();
     }
 
     public void setCurrentAdmin(Admin admin){
@@ -39,7 +42,10 @@ public class AdminManager extends UserManager {
     /**
      * cancel a event if there is no attendee
      */
-    public boolean cancelEventWithoutAttendee(Event event, EventManager eventManager, UserManager userManager, SpeakerManager speakerManager) {
+    public boolean cancelEventWithoutAttendee(Event event, EventManager eventManager, UserManager userManager, SpeakerManager speakerManager) throws NullEventException {
+        if(event == null){
+            throw new NullEventException();
+        }
         if (event.getAttendees().size() == 0 && event.getEventTime().isAfter(LocalDateTime.now())) {
             eventManager.removeEvent(event);
             userManager.deleteEvent(event);
@@ -49,6 +55,9 @@ public class AdminManager extends UserManager {
             return false;
     }
 
+    public ArrayList<Admin> getAdmins(){
+        return admins;
+    }
 }
 
 

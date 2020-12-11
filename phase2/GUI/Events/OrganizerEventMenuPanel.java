@@ -1,12 +1,11 @@
 package GUI.Events;
 
+import Controllers.EventMenu.NullEventException;
 import Controllers.EventMenu.OrganizerEventController;
-import Entities.Events.Event;
-import Entities.Users.User;
 import UseCases.Language.LanguagePack;
 
+
 import javax.swing.*;
-import java.util.ArrayList;
 
 public class OrganizerEventMenuPanel extends EventMenuPanel{
 
@@ -15,6 +14,7 @@ public class OrganizerEventMenuPanel extends EventMenuPanel{
     private JButton createAccountButton;
 
     private JLabel eventToBeChanged;
+    private JTextArea instructions;
     private JTextField eventNameTextField;
 
     private final OrganizerEventController organizerEventController;
@@ -35,20 +35,25 @@ public class OrganizerEventMenuPanel extends EventMenuPanel{
     @Override
     public void printExtraComponents(){
         setExtraButtons();
-        setEventNameTextField();
+        setTextFields();
     }
 
     /**
      * Creates a text field so the user can specify an event by its name
      */
-    public void setEventNameTextField(){
+    public void setTextFields(){
+        instructions = new JTextArea();
+        instructions.setBounds(sideBarX, sideBarY + 200, labelWidth + 150, labelHeight+20);
+        instructions.setEditable(false);
+
         eventToBeChanged = new JLabel();
-        eventToBeChanged.setBounds(sideBarX, sideBarY + 450, labelWidth, labelHeight);
+        eventToBeChanged.setBounds(sideBarX, sideBarY + 250, labelWidth, labelHeight);
 
         eventNameTextField = new JTextField();
-        eventNameTextField.setBounds(sideBarX + 60, sideBarY + 450, textFieldWidth, 20);
+        eventNameTextField.setBounds(sideBarX + 80, sideBarY + 250, textFieldWidth, 20);
         panel.add(eventNameTextField);
         panel.add(eventToBeChanged);
+        panel.add(instructions);
     }
 
     /**
@@ -56,26 +61,29 @@ public class OrganizerEventMenuPanel extends EventMenuPanel{
      */
     public void setExtraButtons(){
         createEventButton = new JButton();
-        createEventButton.setBounds(sideBarX, sideBarY + 400, buttonWidth, buttonLayerHeight);
+        createEventButton.setBounds(sideBarX, sideBarY + 300, buttonWidth + 40, buttonLayerHeight);
         createEventButton.addActionListener(e -> {
-            organizerEventController.showEditMenu(null);
+            organizerEventController.showEditMenu(null, true);
             clearAdditionalText();
         });
 
         editEventButton = new JButton();
-        editEventButton.setBounds(sideBarX, sideBarY + 500, buttonWidth, buttonLayerHeight);
+        editEventButton.setBounds(sideBarX , sideBarY + 340, buttonWidth + 40, buttonLayerHeight);
         editEventButton.addActionListener(e -> {
-            if(organizerEventController.eventModifiable(organizerEventController.eventManager.findEvent(eventNameTextField.getText()))){
-                organizerEventController.showEditMenu(organizerEventController.eventManager.findEvent(eventNameTextField.getText()));
-                clearAdditionalText();
-            } else {
-                organizerEventController.showNonModifiableEventPrompt(eventNameTextField.getText());
+            try{
+                if(organizerEventController.eventModifiable(organizerEventController.eventManager.findEvent(eventNameTextField.getText()))){
+                    organizerEventController.showEditMenu(organizerEventController.eventManager.findEvent(eventNameTextField.getText()), false);
+                    clearAdditionalText();
+                } else {
+                    organizerEventController.showNonModifiableEventPrompt(eventNameTextField.getText());
+                }
+            } catch (NullEventException f){
+                organizerEventController.showNullEventError();
             }
-
         });
 
         createAccountButton = new JButton();
-        createAccountButton.setBounds(sideBarX, sideBarY + 550, buttonWidth, buttonLayerHeight);
+        createAccountButton.setBounds(sideBarX, sideBarY + 380, buttonWidth + 40, buttonLayerHeight);
         createAccountButton.addActionListener(e -> {
             organizerEventController.showCreateAccountMenu();
             clearAdditionalText();
@@ -83,14 +91,19 @@ public class OrganizerEventMenuPanel extends EventMenuPanel{
 
         panel.add(createEventButton);
         panel.add(editEventButton);
+        panel.add(createAccountButton);
     }
 
     /**
      * Sets the strings shown on the GUI
      */
     @Override
-    public void setAdditionalText(){
-
+    public void setAdditionalText(LanguagePack languagePack){
+        instructions.setText(languagePack.organizerEventCommands()[4]);
+        eventToBeChanged.setText(languagePack.organizerEventCommands()[3]);
+        createEventButton.setText(languagePack.organizerEventCommands()[0]);
+        editEventButton.setText(languagePack.organizerEventCommands()[1]);
+        createAccountButton.setText(languagePack.organizerEventCommands()[2]);
     }
 
     /**
@@ -98,5 +111,6 @@ public class OrganizerEventMenuPanel extends EventMenuPanel{
      */
     public void clearAdditionalText(){
         eventNameTextField.setText("");
+
     }
 }

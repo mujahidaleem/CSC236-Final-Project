@@ -85,4 +85,8 @@ public class MainMenuPresenter {
         JOptionPane.showMessageDialog(mainMenuPanel.getPanel(), languageManager.languagePack.changePassword()[1]);
     }
 
+    public void showIncorrectDate(){
+        JOptionPane.showMessageDialog(mainMenuPanel.getPanel(), languageManager.languagePack.unknownDate());
+    }
+
 }

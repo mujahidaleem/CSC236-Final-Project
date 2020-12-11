@@ -4,6 +4,7 @@ import Controllers.EventMenu.AdminEventController;
 import UseCases.Events.EventManager;
 
 import Entities.Events.Event;
+import UseCases.Language.LanguagePack;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +14,8 @@ public class AdminEventMenuPanel extends EventMenuPanel{
     private JButton deleteEventButton;
     private JButton showEventsWithNoAttendeesButton;
 
-    private JTextField eventsWithNoAttendeesTextField;
+    private JTextArea eventsWithNoAttendeesTextField;
+    private JTextArea instructions;
     private JTextField deleteEventTextField;
 
     private AdminEventController adminEventController;
@@ -30,15 +32,25 @@ public class AdminEventMenuPanel extends EventMenuPanel{
     }
 
     public void createShowEventsTextField(){
-        eventsWithNoAttendeesTextField = new JTextField();
-        eventsWithNoAttendeesTextField.setBounds(sideBarX, sideBarY + 420, 100, 100);
+        eventsWithNoAttendeesTextField = new JTextArea();
+        eventsWithNoAttendeesTextField.setBounds(sideBarX, sideBarY + 350, 100, 100);
         eventsWithNoAttendeesTextField.setEditable(false);
         panel.add(eventsWithNoAttendeesTextField);
+
+        instructions = new JTextArea();
+        instructions.setBounds(sideBarX, sideBarY + 200, 180, 100);
+        instructions.setLineWrap(true);
+        instructions.setEditable(false);
+        panel.add(instructions);
+
+        deleteEventTextField = new JTextField();
+        deleteEventTextField.setBounds(sideBarX, sideBarY + 470, 100, 20);
+        panel.add(deleteEventTextField);
     }
 
     public void createExtraButtons(){
         showEventsWithNoAttendeesButton = new JButton();
-        showEventsWithNoAttendeesButton.setBounds(sideBarX, sideBarY+400, buttonWidth, buttonLayerHeight);
+        showEventsWithNoAttendeesButton.setBounds(sideBarX, sideBarY+320, buttonWidth+50, buttonLayerHeight);
         showEventsWithNoAttendeesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,18 +65,26 @@ public class AdminEventMenuPanel extends EventMenuPanel{
         });
         panel.add(showEventsWithNoAttendeesButton);
 
-
         deleteEventButton = new JButton();
-        deleteEventButton.setBounds(sideBarX, sideBarY + 550, buttonWidth, buttonLayerHeight);
+        deleteEventButton.setBounds(sideBarX, sideBarY + 500, buttonWidth + 50, buttonLayerHeight);
         deleteEventButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                adminEventController.deleteEventWithNoAttendees(adminEventController.eventManager.findEvent(deleteEventTextField.getText()));
+                clearAdditionalText();
+                adminEventController.reprintEvents();
             }
         });
+        panel.add(deleteEventButton);
     }
 
-    public void setAdditionalText(){
+    public void setAdditionalText(LanguagePack languagePack){
+        deleteEventButton.setText(languagePack.adminEventMenuPrompts()[0]); //TODO:
+        showEventsWithNoAttendeesButton.setText(languagePack.adminEventMenuPrompts()[1]); //TODO:
+        instructions.setText(languagePack.adminEventMenuPrompts()[2]);
+    }
 
+    private void clearAdditionalText(){
+        deleteEventTextField.setText("");
     }
 }

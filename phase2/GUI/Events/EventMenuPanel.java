@@ -90,11 +90,11 @@ public class EventMenuPanel extends GUIPanel {
      */
     private void showEvents() {
         eventsAttendingTextField = new JTextArea();
-        eventsAttendingTextField.setBounds(labelLayerX + 20, labelLayerY + 2 * labelHeight, 400, 300); //TODO: set bounds
+        eventsAttendingTextField.setBounds(labelLayerX + 20, labelLayerY + 2 * labelHeight, 400, 300);
         eventsAttendingTextField.setEditable(false);
 
         otherEventsTextField = new JTextArea();
-        otherEventsTextField.setBounds(labelLayerX + 20, labelLayerY + 400, 400, 300); //TODO: set bounds
+        otherEventsTextField.setBounds(labelLayerX + 20, labelLayerY + 400, 400, 300);
         otherEventsTextField.setEditable(false);
 
         panel.add(eventsAttendingTextField);
@@ -169,7 +169,7 @@ public class EventMenuPanel extends GUIPanel {
         signUpButton.setText(languagePack.eventStandardCommands()[1]);
         leaveButton.setText(languagePack.eventStandardCommands()[2]);
         eventNameLabel.setText(languagePack.eventStandardCommands()[3]);
-        setAdditionalText();
+        setAdditionalText(languagePack);
     }
 
     public void reprintEvents(ArrayList<Event> events, User user){
@@ -192,7 +192,6 @@ public class EventMenuPanel extends GUIPanel {
     /**
      * Creates text for additional components special to this menu
      */
-    public void setAdditionalText() {
-
+    public void setAdditionalText(LanguagePack languagePack) {
     }
 }

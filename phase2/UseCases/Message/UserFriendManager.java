@@ -125,5 +125,7 @@ public abstract class UserFriendManager implements Serializable {
     public HashMap<ArrayList<Integer>, ArrayList<Message>> getUserToMessages() {
         return userToMessages;
     }
+
+
 }
 

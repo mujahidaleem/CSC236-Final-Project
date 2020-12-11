@@ -3,6 +3,7 @@ package Controllers.MessageMenu;
 import Entities.Users.Organizer;
 import Entities.Users.User;
 import GUI.MainMenuPanel;
+import Presenters.MessageMenu.MessageMenuPresenter;
 import UseCases.Message.UserFriendManager;
 
 import java.time.LocalDateTime;
@@ -11,10 +12,14 @@ public abstract class UserFriendListController {
     public UserFriendManager userFriendManager;
 
     private MainMenuPanel mainMenuPanel;
+    private MessageMenuPresenter messageMenuPresenter;
 
-    public UserFriendListController(UserFriendManager userFriendManager, MainMenuPanel mainMenuPanel) {
+    public UserFriendListController(UserFriendManager userFriendManager,
+                                    MainMenuPanel mainMenuPanel,
+                                    MessageMenuPresenter messageMenuPresenter) {
         this.userFriendManager = userFriendManager;
         this.mainMenuPanel = mainMenuPanel;
+        this.messageMenuPresenter = messageMenuPresenter;
     }
 
     /**
@@ -59,13 +64,22 @@ public abstract class UserFriendListController {
         }
     }
 
-    public void printMenu(){
+    public void printMenu(){messageMenuPresenter.setUpMenu();}
 
-    }
+    public void showNullUserError(){messageMenuPresenter.showNullUserError(); }
+
+    public void showInvalidIDInput(){messageMenuPresenter.showInvalidIDInput();}
+
+    public void returnToMainMenu(){messageMenuPresenter.returnToMainMenu();}
 
     public void setMainMenuPanel(MainMenuPanel mainMenuPanel){
         this.mainMenuPanel = mainMenuPanel;
     }
+
+    public void changeTheme(String theme){
+        //TODO: change this
+    }
+
 
     public void changeTheme(String theme){
         //TODO: change this

@@ -107,12 +107,12 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
      */
     @Override
     public String unknownUserID() {
-        return null;
+        return "Cette ID n'exist pas";
     }
 
     @Override
     public String invalidIDInput() {
-        return null;
+        return "l'entrée est invalide";
     }
 
     @Override

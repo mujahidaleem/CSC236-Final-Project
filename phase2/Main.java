@@ -32,7 +32,7 @@ public class Main {
 
         LanguageManager languageManager = new LanguageManager("english");
 
-        LoginMenuController loginMenuController = new LoginMenuController(languageManager, userReader, eventReader, roomReader);
+        LoginMenuController loginMenuController = new LoginMenuController(languageManager, userReader, eventReader, roomReader, messageReader);
         loginMenuController.printMenu();
 //        ScheduleSaver scheduleSaver = new ScheduleSaver(eventManager);
 

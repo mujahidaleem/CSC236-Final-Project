@@ -220,6 +220,9 @@ public class MainMenuPanel extends GUIPanel {
         panel.add(saveScheduleButton);
     }
 
+    /**
+     * Sets the time table
+     */
     private void setTimeTable() {
         JPanel timeTable = new JPanel();
         timeTable.setBounds(tableX, tableY - tableHeight, tableWidth, tableHeight);
@@ -244,6 +247,9 @@ public class MainMenuPanel extends GUIPanel {
         logoutButton.setText(languagePack.mainMenuCommands()[8]);
     }
 
+    /**
+     * Changes the colours of the menu
+     */
     public void changeColours(){
         panel.setBackground(backgroundColour);
 

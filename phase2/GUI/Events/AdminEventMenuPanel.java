@@ -20,17 +20,29 @@ public class AdminEventMenuPanel extends EventMenuPanel{
 
     private AdminEventController adminEventController;
 
+    /**
+     * Constructor for AdminEventMenuPanel
+     * @param adminEventController the controller that executes commands
+     * @param frame the initial frame of the program
+     * @param languageManager stores all the strings used to generate text
+     */
     public AdminEventMenuPanel(AdminEventController adminEventController, JFrame frame, LanguageManager languageManager){
         super(adminEventController, frame, languageManager);
         this.adminEventController = adminEventController;
     }
 
+    /**
+     * prints the commands unique to this type of user
+     */
     @Override
     public void printExtraComponents(){
         createShowEventsTextField();
         createExtraButtons();
     }
 
+    /**
+     * Creates the components used to display events with no attendees
+     */
     public void createShowEventsTextField(){
         eventsWithNoAttendeesTextField = new JTextArea();
         eventsWithNoAttendeesTextField.setBounds(sideBarX, sideBarY + 350, 100, 100);
@@ -48,20 +60,20 @@ public class AdminEventMenuPanel extends EventMenuPanel{
         panel.add(deleteEventTextField);
     }
 
+    /**
+     * Creates extra buttons unique to this type of user
+     */
     public void createExtraButtons(){
         showEventsWithNoAttendeesButton = new JButton();
         showEventsWithNoAttendeesButton.setBounds(sideBarX, sideBarY+320, buttonWidth+50, buttonLayerHeight);
-        showEventsWithNoAttendeesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                StringBuilder stringBuilder = new StringBuilder();
-                for(Event event: adminEventController.eventManager.getEvents()){
-                    if (event.getAttendees().size() == 0){
-                        stringBuilder.append(event.getEventName()).append("\n");
-                    }
+        showEventsWithNoAttendeesButton.addActionListener(e -> {
+            StringBuilder stringBuilder = new StringBuilder();
+            for(Event event: adminEventController.eventManager.getEvents()){
+                if (event.getAttendees().size() == 0){
+                    stringBuilder.append(event.getEventName()).append("\n");
                 }
-                eventsWithNoAttendeesTextField.setText(stringBuilder.toString());
             }
+            eventsWithNoAttendeesTextField.setText(stringBuilder.toString());
         });
         panel.add(showEventsWithNoAttendeesButton);
 
@@ -78,16 +90,26 @@ public class AdminEventMenuPanel extends EventMenuPanel{
         panel.add(deleteEventButton);
     }
 
+    /**
+     * Generates text unique to this type of user
+     * @param languagePack contains the strings used to generate text
+     */
     public void setAdditionalText(LanguagePack languagePack){
-        deleteEventButton.setText(languagePack.adminEventMenuPrompts()[0]); //TODO:
-        showEventsWithNoAttendeesButton.setText(languagePack.adminEventMenuPrompts()[1]); //TODO:
+        deleteEventButton.setText(languagePack.adminEventMenuPrompts()[0]);
+        showEventsWithNoAttendeesButton.setText(languagePack.adminEventMenuPrompts()[1]);
         instructions.setText(languagePack.adminEventMenuPrompts()[2]);
     }
 
+    /**
+     * Clears the text fields of any written text
+     */
     public void clearAdditionalText(){
         deleteEventTextField.setText("");
     }
 
+    /**
+     * Changes the colours of additional components to match the theme
+     */
     public void changeColourOfExtraComponents(){
         deleteEventButton.setForeground(textColour);
         showEventsWithNoAttendeesButton.setForeground(textColour);

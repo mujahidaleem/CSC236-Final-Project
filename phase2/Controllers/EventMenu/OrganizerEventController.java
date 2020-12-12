@@ -120,16 +120,23 @@ public class OrganizerEventController extends EventMenuController {
      * @param type        the type of event that is being created
      */
     public void createEvent(String name, LocalDateTime dateTime, int roomNumber, int maxCapacity, int duration, String type) {
-        if (dateTime.isAfter(LocalDateTime.now()) && eventManager.nameAvailable(name) && roomManager.hasRoom(roomNumber)
-                && roomManager.bookable(roomNumber, dateTime, duration)) {
-            ArrayList<Integer> speakers = new ArrayList<>();
-            speakers.add(0);
-            Event event = eventManager.createEvent(type, name, dateTime, duration, organizerManager.getCurrentOrganizer().getId(), roomNumber, maxCapacity, new ArrayList<>(), speakers);
-            organizerManager.getCurrentOrganizer().get_eventsOrganizing().put(event.getEventName(), event.getEventTime());
-            roomManager.scheduleEvent(roomManager.findRoom(event.getRoomNumber()), event.getEventTime(), event.getDuration(), event);
-            eventPresenter.createEventResults(true, event);
-        } else {
-            eventPresenter.createEventResults(false, null);
+        if (dateTime.isAfter(LocalDateTime.now())){
+            if(eventManager.nameAvailable(name)){
+                if(roomManager.hasRoom(roomNumber) && roomManager.bookable(roomNumber, dateTime, duration)){
+                    ArrayList<Integer> speakers = new ArrayList<>();
+                    speakers.add(0);
+                    Event event = eventManager.createEvent(type, name, dateTime, duration, organizerManager.getCurrentOrganizer().getId(), roomNumber, maxCapacity, new ArrayList<>(), speakers);
+                    organizerManager.getCurrentOrganizer().get_eventsOrganizing().put(event.getEventName(), event.getEventTime());
+                    roomManager.scheduleEvent(roomManager.findRoom(event.getRoomNumber()), event.getEventTime(), event.getDuration(), event);
+                    eventPresenter.createEventResults(3, event);
+                } else {
+                    eventPresenter.createEventResults(2, null);
+                }
+            }else {
+                eventPresenter.createEventResults(1, null);
+            }
+        } else{
+            eventPresenter.createEventResults(0, null);
         }
     }
 
@@ -148,7 +155,7 @@ public class OrganizerEventController extends EventMenuController {
             if (changeEventRoom(event, roomNumber)) {
                 if (setMaxCapacity(event, maxCapacity)) {
                     if (setDuration(event, duration)) {
-                        eventPresenter.changeEventInformationResults();
+                        eventPresenter.changeEventInformationResults(event);
                     } else {
                         eventPresenter.changeEventDurationFailure();
                     }

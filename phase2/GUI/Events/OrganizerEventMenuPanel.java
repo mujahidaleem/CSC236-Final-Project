@@ -109,12 +109,16 @@ public class OrganizerEventMenuPanel extends EventMenuPanel{
     }
 
     /**
-     * Rests the text in the text fields
+     * Resets the text in the text fields
      */
     public void clearAdditionalText(){
         eventNameTextField.setText("");
     }
 
+    /**
+     * Changes the colour of the components to match the theme
+     */
+    @Override
     public void changeColourOfExtraComponents(){
         System.out.println(textColour);
         createEventButton.setForeground(textColour);

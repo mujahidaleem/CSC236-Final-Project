@@ -69,6 +69,12 @@ public class EditEventPanel extends GUIPanel {
     private OrganizerEventController organizerEventController;
     private EventManager eventManager;
 
+    /**
+     * Constructor for EditEventPanel
+     * @param frame the original frame of the program
+     * @param organizerEventController the controller that executes commands
+     * @param languageManager stores the text of the GUI in a specific language
+     */
     public EditEventPanel(JFrame frame, OrganizerEventController organizerEventController, LanguageManager languageManager){
         super(frame, languageManager);
         this.organizerEventController = organizerEventController;
@@ -77,6 +83,11 @@ public class EditEventPanel extends GUIPanel {
         this.eventManager = organizerEventController.eventManager;
     }
 
+    /**
+     * Displays the menu
+     * @param i whether an event is being edited or created
+     * @param theme the theme of the GUI
+     */
     public void printMenu(boolean i, String theme){
         setLabels();
         setTextFields();
@@ -87,6 +98,9 @@ public class EditEventPanel extends GUIPanel {
         changeTheme(theme);
     }
 
+    /**
+     * Creates the labels of the GUI
+     */
     private void setLabels(){
         eventNameLabel = new JLabel();
         eventNameLabel.setBounds(labelX, y, labelWidth, labelHeight);
@@ -122,6 +136,10 @@ public class EditEventPanel extends GUIPanel {
         panel.add(speakers);
     }
 
+    /**
+     * Sets the event name text field
+     * @param i whether the text field is editable
+     */
     private void setEventNameTextField(boolean i){
         eventNameTextField = new JTextField();
         eventNameTextField.setBounds(textBoxX, y, textBoxWidth, textBoxHeight);
@@ -129,6 +147,9 @@ public class EditEventPanel extends GUIPanel {
         panel.add(eventNameTextField);
     }
 
+    /**
+     * Sets the text fields of the GUI
+     */
     private void setTextFields(){
         eventRoomTextField = new JTextField();
         eventRoomTextField.setBounds(textBoxX, y+heightIncrement, textBoxWidth, textBoxHeight);
@@ -150,6 +171,9 @@ public class EditEventPanel extends GUIPanel {
         panel.add(speakersTextField);
     }
 
+    /**
+     * Sets the components used in determining the date of the event
+     */
     private void setDateComponents(){
         monthValue = new JComboBox<>(months);
         monthValue.setBounds(labelX + 250, y+3*heightIncrement, dateWidth, labelHeight);
@@ -166,6 +190,9 @@ public class EditEventPanel extends GUIPanel {
         panel.add(minuteValue);
     }
 
+    /**
+     * Sets a combo box used to determine the type of event
+     */
     private void setEventType(){
         eventTypeLabel = new JComboBox<>(types);
         eventTypeLabel.setBounds(300, y, textBoxWidth + 100, textBoxHeight);
@@ -173,6 +200,9 @@ public class EditEventPanel extends GUIPanel {
         panel.add(eventTypeLabel);
     }
 
+    /**
+     * Sets up the buttons of the GUI
+     */
     private void setUpButtons(){
 
         returnButton = new JButton();
@@ -239,10 +269,19 @@ public class EditEventPanel extends GUIPanel {
         panel.add(addSpeakerButton);
     }
 
+    /**
+     * Sets the mode of the GUI
+     * @param i whether an event is being edited or created
+     */
     public void setMode(boolean i){
         eventNameTextField.setEditable(i);
     }
 
+    /**
+     * Sets the text of the GUI to a specific language
+     * @param event the event being edited
+     * @param languagePack contains the strings to generate the text
+     */
     public void setText(Event event, LanguagePack languagePack){
         setStrings(languagePack);
 
@@ -264,7 +303,12 @@ public class EditEventPanel extends GUIPanel {
             }
         }
     }
-    public void setStrings(LanguagePack languagePack){
+
+    /**
+     * Sets the text of the GUI in a specific language
+     * @param languagePack stores the strings used to generate the text
+     */
+    private void setStrings(LanguagePack languagePack){
         eventNameLabel.setText(languagePack.changeEventPrompts()[0]);
         eventRoomLabel.setText(languagePack.changeEventPrompts()[1]);
         eventDurationLabel.setText(languagePack.changeEventPrompts()[3]);
@@ -287,6 +331,9 @@ public class EditEventPanel extends GUIPanel {
         removeSpeakerButton.setText(languagePack.changeEventPrompts()[14]);
     }
 
+    /**
+     * Clears all text fields in the GUI
+     */
     public void clearAdditionalText(){
         eventNameTextField.setText("");
         eventRoomTextField.setText("");
@@ -296,6 +343,9 @@ public class EditEventPanel extends GUIPanel {
         speakersTextField.setText("");
     }
 
+    /**
+     * Changes the colour of the components to match the theme
+     */
     public void changeColours(){
         panel.setBackground(backgroundColour);
 
@@ -349,6 +399,11 @@ public class EditEventPanel extends GUIPanel {
         eventMaxCapacityLabel.setForeground(textColour);
         speakers.setForeground(textColour);
     }
+
+    /**
+     * Changes the text of the GUI so that they are in a specific language
+     * @param languageManager contains the strings used to generate the text in a specific language
+     */
     public void changeText(LanguageManager languageManager){
         setStrings(languageManager.languagePack);
     }

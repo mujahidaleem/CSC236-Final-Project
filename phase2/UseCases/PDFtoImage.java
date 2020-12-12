@@ -23,7 +23,7 @@ public class PDFtoImage {
      * @throws DocumentException Document exception error
      * @throws RendererException Rendering the image exception
      */
-    public void convertPdfToIm( String pdfFilePath, String imExtension ) throws
+    public List<Image> convertPdfToIm( String pdfFilePath, String imExtension ) throws
             IOException,DocumentException,RendererException{
     // load the pdf
         PDFDocument pdfDocument = new PDFDocument();
@@ -43,7 +43,6 @@ public class PDFtoImage {
         ImageIO.write( (RenderedImage) images.get( iPage ), imExtension,
                 new File( "" + iPage + "." + imExtension ) );
     }
-
+    return images;
 }
-
 }

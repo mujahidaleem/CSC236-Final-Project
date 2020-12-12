@@ -141,6 +141,9 @@ public class CreateAccountPanel extends GUIPanel {
                 languagePack.userCreationPrompt()[6], languagePack.userCreationPrompt()[7]};
     }
 
+    /**
+     * Changes the colour of the components to match the chosen theme
+     */
     public void changeColours(){
         panel.setBackground(backgroundColour);
 
@@ -159,6 +162,10 @@ public class CreateAccountPanel extends GUIPanel {
         passwordTextField.setBackground(textFieldColour);
     }
 
+    /**
+     * Changes the text to a specific language
+     * @param languageManager stores the text of the GUI for a given language
+     */
     public void changeText(LanguageManager languageManager){
         setText(languageManager.languagePack);
     }

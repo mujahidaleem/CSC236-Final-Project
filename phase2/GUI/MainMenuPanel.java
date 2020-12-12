@@ -2,15 +2,14 @@ package GUI;
 
 import Controllers.MainMenuController;
 import Entities.Events.Event;
-import GUI.MainFrame.ThemeManager;
 import Gateways.ScheduleSaver;
 import UseCases.Events.EventManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,11 +45,12 @@ public class MainMenuPanel extends GUIPanel {
     private JButton logoutButton;
     private JButton changePasswordButton;
 
+    private JTextArea schedule;
+
     private final ScheduleSaver scheduleSaver;
     private EventManager eventManager;
     private final PdfGenerator pdfGenerator;
     private final MainMenuController mainMenuController;
-    private ThemeManager themeManager;
 
     public MainMenuPanel(JFrame frame, EventManager eventManager, MainMenuController mainMenuController, LanguageManager languageManager) {
         super(frame, languageManager);
@@ -70,13 +70,14 @@ public class MainMenuPanel extends GUIPanel {
         createSaveScheduleButton();
         createButtons();
         changeTheme(theme);
+        setSchedule();
+        changeSchedule(LocalDateTime.now());
     }
 
     /**
      * Creates the buttons shown on the GUI
      */
     public void createButtons() {
-
         event = new JButton();
         event.setBounds(buttonX, 100, buttonWidth, buttonHeight);
         event.addActionListener(e -> mainMenuController.printEventMenu());
@@ -122,7 +123,7 @@ public class MainMenuPanel extends GUIPanel {
         setDate.addActionListener(e -> {
             try {
                 LocalDateTime date = LocalDateTime.parse(yearTextField.getText() + "-" + monthTextField.getText() + "-" + dayTextField.getText() + "T00:00:00");
-                showSchedule(date);
+                changeSchedule(date);
             } catch (DateTimeParseException f) {
                 JOptionPane.showMessageDialog(panel, "Please input a correct date.", "Alert", JOptionPane.WARNING_MESSAGE);
             }
@@ -136,6 +137,32 @@ public class MainMenuPanel extends GUIPanel {
         panel.add(dayTextField);
         panel.add(setDate);
     }
+
+    public void setSchedule(){
+        schedule = new JTextArea();
+        schedule.setBounds(300, 300, 400, 400);
+        schedule.setEditable(false);
+        panel.add(schedule);
+    }
+
+    private void changeSchedule(LocalDateTime dateTime){
+        schedule.setText(setSchedule(pdfGenerator.getStartOfWeek(dateTime)));
+    }
+
+    private String setSchedule(LocalDateTime dateTime){
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i=0; i<8; i++){
+            stringBuilder.append("--------------------------------------------\n").append(dateTime.plusDays(i).getDayOfWeek());
+            for(Event event:pdfGenerator.sortEvents()){
+                if(event.getEventTime().isAfter(dateTime.plusDays(i)) && event.getEventTime().isBefore(dateTime.plusDays(i+1))){
+                    stringBuilder.append(event.getEventName()).append(" ").append(event.getEventTime().
+                            format(DateTimeFormatter.ofPattern("HH:mm:ss"))).append(" room Number: ").append(event.getRoomNumber());
+                }
+            }
+        }
+        return stringBuilder.toString();
+    }
+
 
     private void drawBlock(Event event, int order, int number) {
         JPanel panel = new JPanel();
@@ -171,32 +198,17 @@ public class MainMenuPanel extends GUIPanel {
                 } catch (NullPointerException e) {
                     orders.put(event.getEventTime(), new ArrayList<>());
                 }
-                drawScheduleString(event, order, scheduleSaver.getLargestNumber(number, event));
-
-                //drawBlock(event, order, scheduleSaver.getLargestNumber(number, event));
-                //for (int i = 0; i < event.getDuration() / 60; i++) {
-                  //  try {
-                    //    orders.get(event.getEventTime().plusHours(i)).add(order);
-                    //} catch (NullPointerException e) {
-                      //  orders.put(event.getEventTime().plusHours(i), new ArrayList<>());
-                        //orders.get(event.getEventTime().plusHours(i)).add(order);
-                    //}
-
+                drawBlock(event, order, scheduleSaver.getLargestNumber(number, event));
+                for (int i = 0; i < event.getDuration() / 60; i++) {
+                    try {
+                        orders.get(event.getEventTime().plusHours(i)).add(order);
+                    } catch (NullPointerException e) {
+                        orders.put(event.getEventTime().plusHours(i), new ArrayList<>());
+                        orders.get(event.getEventTime().plusHours(i)).add(order);
+                    }
                 }
             }
         }
-
-    /**
-     * Draws the schedule in txt format
-     * @param event events
-     * @param order order of the event
-     * @param number number of events
-     */
-    private void drawScheduleString(Event event, int order, int number){
-        JPanel panel = new JPanel();
-        panel.setLayout(new CardLayout());
-        JLabel label = new JLabel();
-        //Print events here in string format
     }
 
     public void showSchedule(LocalDateTime dateTime) {
@@ -227,9 +239,6 @@ public class MainMenuPanel extends GUIPanel {
         panel.add(saveScheduleButton);
     }
 
-    /**
-     * Sets the time table
-     */
     private void setTimeTable() {
         JPanel timeTable = new JPanel();
         timeTable.setBounds(tableX, tableY - tableHeight, tableWidth, tableHeight);
@@ -254,9 +263,6 @@ public class MainMenuPanel extends GUIPanel {
         logoutButton.setText(languagePack.mainMenuCommands()[8]);
     }
 
-    /**
-     * Changes the colours of the menu
-     */
     public void changeColours(){
         panel.setBackground(backgroundColour);
 

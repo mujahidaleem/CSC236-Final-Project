@@ -1,6 +1,7 @@
 package UseCases.Language;
 
 import Entities.Events.Event;
+import Entities.Users.Speaker;
 import Entities.Users.User;
 
 import java.io.Serializable;
@@ -75,12 +76,14 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String[] organizerEventResultsFailure(Event event) {
-        return new String[]{"Sorry, an event with that name already exists",
+        return new String[]{"You cannot create events in the past.",
+                "Sorry, an event with that name already exists",
+                "Sorry, the room is not available at that time.",
                 "Sorry, " + event.getSpeakers() + " is not available at that specific time.",
                 "This event already does not have a speaker.",
                 "Sorry, the event time cannot be changed.",
                 event.getEventName() + " cannot be cancelled.",
-                "Sorry, the room is not available at that time."
+                "Sorry, this event could not be created."
         };
     }
 
@@ -88,47 +91,27 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
         return "Sorry, the event time cannot be changed.";
     }
 
-    public String speakerRemovalSuccess(){
-        return "removal successful";
+    public String speakerRemovalSuccess(Speaker speaker){
+        return speaker.getName() + " is no longer speaking at this event";
     }
 
-    public String speakerRemovalFailure(){
-        return "removal unsuccessful";
-    }
-
-    @Override
-    public String speakerAdditionSuccess() {
-        return "addition successful";
+    public String speakerRemovalFailure(Speaker speaker){
+        return speaker.getName() + " is already not speaking at this event";
     }
 
     @Override
-    public String speakerAdditionFailure() {
-        return "addition unsuccessful";
+    public String speakerAdditionSuccess(Speaker speaker) {
+        return speaker.getName() + " will now be speaking in this event";
     }
 
     @Override
-    public String changeEventDurationFailure() {
-        return "duration change unsuccessful";
+    public String speakerAdditionFailure(Speaker speaker) {
+        return speaker.getName() + " is unavailable at this time";
     }
 
     @Override
-    public String changeEventCapacityFailure() {
-        return "capacity change unsuccessful";
-    }
-
-    @Override
-    public String changeEventRoomFailure() {
-        return "change room unsuccessful";
-    }
-
-    @Override
-    public String unknownCommand() {
-        return "Sorry, that command was not recognized. Please try again.";
-    }
-
-    @Override
-    public String eventUnchangeable(Event event) {
-        return event.getEventName() + " cannot be modified by you as you are not the organizer.";
+    public String eventUnchangeable(String event) {
+        return event + " cannot be modified by you as you are not the organizer.";
     }
 
     @Override
@@ -291,16 +274,6 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
         return "Please input where you want to save the file.";
     }
 
-    public String logoutPrompt(){
-        return "Do you want to exit the program?";
-    }
-
-    public String[] adminEventMenuPrompts(){
-        return new String[]{ "Delete Event", "Show Events", "To see all events with no attendees, press Show Events. " +
-                "To delete an event with no attendees, type the event name into the text box and press Delete Event.",
-                "Event Deleted.", "This event cannot be deleted as it has attendees."
-        };
-    }
 
     public String logoutPrompt(){
         return "Do you want to exit the program?";

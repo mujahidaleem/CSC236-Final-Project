@@ -2,6 +2,7 @@ package GUI;
 
 import Controllers.MainMenuController;
 import Entities.Events.Event;
+import GUI.MainFrame.ThemeManager;
 import Gateways.ScheduleSaver;
 import UseCases.Events.EventManager;
 

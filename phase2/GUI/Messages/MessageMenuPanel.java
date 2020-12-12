@@ -1,7 +1,8 @@
-package GUI;
+package GUI.Messages;
 
 import Controllers.MessageMenu.UserFriendListController;
 import Entities.Users.User;
+import GUI.GUIPanel;
 import UseCases.Language.LanguagePack;
 import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
@@ -10,7 +11,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MessageMenuPanel extends GUIPanel{
+public class MessageMenuPanel extends GUIPanel {
         private JTextArea myFriendList;
 
         private JTextField userIDField;
@@ -69,7 +70,9 @@ public class MessageMenuPanel extends GUIPanel{
             startChat.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    //TODO
+                    int targetUserID = Integer.parseInt(userIDField.getText());
+                    User targetUser = userManager.findUser(targetUserID);
+                    userFriendListController.printChatPanel(targetUser);
                 }
             });
             this.panel.add(startChat);
@@ -112,7 +115,7 @@ public class MessageMenuPanel extends GUIPanel{
 
             friendListLabel.setText(languagePack.messageMenuLabels()[0]);
 
-            myFriendList.setText();
+            myFriendList.setText(userFriendManager.displayFriend(userManager));
         }
 }
 

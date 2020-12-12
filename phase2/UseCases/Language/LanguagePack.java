@@ -280,4 +280,5 @@ public interface LanguagePack {
 
     String changeEventRoomFailure();
 
+    String[] chatPanelButtons();
 }

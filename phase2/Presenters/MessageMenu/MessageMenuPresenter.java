@@ -1,17 +1,15 @@
 package Presenters.MessageMenu;
 
 import Controllers.MessageMenu.UserFriendListController;
-import Entities.Message;
 import Entities.Users.User;
 import GUI.MainMenuPanel;
-import GUI.MessageMenuPanel;
+import GUI.Messages.ChatPanel;
+import GUI.Messages.MessageMenuPanel;
 import UseCases.Language.LanguageManager;
 import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
 
 import javax.swing.*;
-import java.time.LocalDateTime;
-import java.util.Scanner;
 
 public class MessageMenuPresenter {
     private UserFriendListController userFriendListcontroller;
@@ -19,6 +17,7 @@ public class MessageMenuPresenter {
     private UserFriendManager userFriendManager;
     private MessageMenuPanel messageMenuPanel;
     private MainMenuPanel mainMenuPanel;
+    private ChatPanel chatPanel;
     private LanguageManager languageManager;
 
     /**
@@ -35,13 +34,15 @@ public class MessageMenuPresenter {
                                 UserFriendManager userFriendManager,
                                 LanguageManager languageManager,
                                 MessageMenuPanel messageMenuPanel,
-                                MainMenuPanel mainMenuPanel) {
+                                MainMenuPanel mainMenuPanel,
+                                ChatPanel chatPanel) {
         this.userFriendListcontroller = UserFriendListController;
         this.userManager = userManager;
         this.userFriendManager = userFriendManager;
         this.languageManager = languageManager;
         this.messageMenuPanel = messageMenuPanel;
         this.mainMenuPanel = mainMenuPanel;
+        this.chatPanel = chatPanel;
     }
 
     /**
@@ -52,6 +53,14 @@ public class MessageMenuPresenter {
      */
     public void setUpMenu() {
         messageMenuPanel.setUpMenu();
+        messageMenuPanel.setText(languageManager.languagePack);
+        messageMenuPanel.changePanel(messageMenuPanel.getPanel());
+    }
+
+    public void printChatPanel(User targetUser){
+        chatPanel.initializePanel(targetUser);
+        chatPanel.setText(languageManager.languagePack);
+        messageMenuPanel.changePanel(chatPanel.getPanel());
     }
 
     public void showNullUserError(){
@@ -66,6 +75,9 @@ public class MessageMenuPresenter {
         messageMenuPanel.changePanel(mainMenuPanel.getPanel());
     }
 
+    public void returnToChatMenu(){
+        chatPanel.changePanel(messageMenuPanel.getPanel());
+    }
     /**
      * Standard commands that the user can input
      * Can input the following;

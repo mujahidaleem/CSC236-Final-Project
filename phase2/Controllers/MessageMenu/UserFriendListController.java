@@ -3,9 +3,12 @@ package Controllers.MessageMenu;
 import Entities.Users.Organizer;
 import Entities.Users.User;
 import GUI.MainMenuPanel;
+import GUI.Messages.MessageMenuPanel;
 import Presenters.MessageMenu.MessageMenuPresenter;
 import UseCases.Message.UserFriendManager;
+import UseCases.Users.UserManager;
 
+import javax.swing.*;
 import java.time.LocalDateTime;
 
 public abstract class UserFriendListController {
@@ -13,13 +16,19 @@ public abstract class UserFriendListController {
 
     private MainMenuPanel mainMenuPanel;
     private MessageMenuPresenter messageMenuPresenter;
+    private MessageMenuPanel messageMenuPanel;
+    private UserManager userManager;
 
     public UserFriendListController(UserFriendManager userFriendManager,
                                     MainMenuPanel mainMenuPanel,
-                                    MessageMenuPresenter messageMenuPresenter) {
+                                    MessageMenuPresenter messageMenuPresenter,
+                                    UserManager userManager,
+                                    JFrame frame) {
         this.userFriendManager = userFriendManager;
         this.mainMenuPanel = mainMenuPanel;
         this.messageMenuPresenter = messageMenuPresenter;
+        this.userManager = userManager;
+        this.messageMenuPanel = new MessageMenuPanel(this, userFriendManager, userManager, frame);
     }
 
     /**
@@ -28,6 +37,7 @@ public abstract class UserFriendListController {
      * @param recipient      User who receive the Message
      * @param messageContent the content of the message
      */
+
     public void sendingMessage(User sender, User recipient, String messageContent, LocalDateTime dateTime) {
         if (this.userFriendManager.messageable(recipient)) {
             this.userFriendManager.sendMessageTo(sender, recipient, messageContent, dateTime);
@@ -71,6 +81,12 @@ public abstract class UserFriendListController {
     public void showInvalidIDInput(){messageMenuPresenter.showInvalidIDInput();}
 
     public void returnToMainMenu(){messageMenuPresenter.returnToMainMenu();}
+
+    public void printChatPanel(User targetUser){messageMenuPresenter.printChatPanel(targetUser);}
+
+    public User getCurrentUser(){
+        return userFriendManager.getCurrentUser();
+    }
 
     public void setMainMenuPanel(MainMenuPanel mainMenuPanel){
         this.mainMenuPanel = mainMenuPanel;

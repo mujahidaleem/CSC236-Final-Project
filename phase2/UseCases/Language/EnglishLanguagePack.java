@@ -322,4 +322,8 @@ public class EnglishLanguagePack implements LanguagePack, Serializable {
     public String[] messageMenuLabels(){
         return new String[]{"Friend List", "Enter Friend ID:"};
     }
+
+    public String[] chatPanelButtons(){
+        return new String[]{"Send", "Back to Messages"};
+    }
 }

@@ -27,15 +27,15 @@ public abstract class UserFriendListController {
     private MessageMenuPanel messageMenuPanel;
     private UserManager userManager;
 
-    public UserFriendListController(UserFriendManager userFriendManager,
-                                    AdminFriendManager adminFriendManager,
-                                    AttendeeFriendManager attendeeFriendManager,
-                                    OrganizerFriendManager organizerFriendManager,
-                                    MainMenuPanel mainMenuPanel,
-                                    MessageMenuPresenter messageMenuPresenter,
-                                    UserManager userManager,
+   public UserFriendListController(UserFriendManager userFriendManager,
+                                 AdminFriendManager adminFriendManager,
+                                  AttendeeFriendManager attendeeFriendManager,
+                                   OrganizerFriendManager organizerFriendManager,
+                                   MainMenuPanel mainMenuPanel,
+                                   MessageMenuPresenter messageMenuPresenter,
+                                   UserManager userManager,
                                     JFrame frame,
-                                    LanguageManager languageManager) {
+                                   LanguageManager languageManager) {
         this.userFriendManager = userFriendManager;
         this.adminFriendManager = adminFriendManager;
         this.attendeeFriendManager = attendeeFriendManager;
@@ -43,8 +43,7 @@ public abstract class UserFriendListController {
         this.mainMenuPanel = mainMenuPanel;
         this.messageMenuPresenter = messageMenuPresenter;
         this.userManager = userManager;
-        this.messageMenuPanel = new MessageMenuPanel(this, userFriendManager, userManager, frame, languageManager);
-    }
+        this.messageMenuPanel = new MessageMenuPanel(this, userFriendManager, userManager, frame, languageManager); }
 
     /**
      * currentUser Send a message to another User

@@ -38,7 +38,6 @@ public class LoginMenuController {
     private MessageMenuFactory messageMenuFactory;
     private LoginMenuPresenter presenter;
     private LanguageManager languageManager;
-    private ThemeManager themeManager;
 
     private UserReader userReader;
     private EventReader eventReader;

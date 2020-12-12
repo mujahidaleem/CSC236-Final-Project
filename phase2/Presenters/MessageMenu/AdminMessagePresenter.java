@@ -1,9 +1,9 @@
 package Presenters.MessageMenu;
 
-import Controllers.MessageMenu.AttendeeFriendListController;
 import UseCases.Language.LanguageManager;
 import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
+import Controllers.MessageMenu.AdminFriendListController;
 
 public class AdminMessagePresenter extends MessageMenuPresenter {
 
@@ -16,7 +16,7 @@ public class AdminMessagePresenter extends MessageMenuPresenter {
      * @param userFriendManager            Use case for the attendee's friend list
      */
 
-    public AdminMessagePresenter(AttendeeFriendListController adminFriendListController, UserManager userManager,
+    public AdminMessagePresenter(AdminFriendListController adminFriendListController, UserManager userManager,
                                  UserFriendManager userFriendManager, LanguageManager languageManager) {
         super(adminFriendListController, userManager, userFriendManager, languageManager);
     }

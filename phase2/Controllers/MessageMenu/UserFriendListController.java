@@ -95,11 +95,12 @@ public abstract class UserFriendListController {
     }
 
     public void changeTheme(String theme){
-        //TODO: change this
+        mainMenuPanel.changeTheme(theme);
     }
 
 
     public void changeLanguage(String language){
-        //TODO: change this
+        mainMenuPanel.changeLanguage(language);
+
     }
 }

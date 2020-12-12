@@ -1,4 +1,5 @@
 package UseCases;
+import org.ghost4j.document.AbstractDocument;
 import org.ghost4j.document.Document;
 import org.ghost4j.document.DocumentException;
 import org.ghost4j.document.PDFDocument;
@@ -25,16 +26,17 @@ public class PDFtoImage {
     public void convertPdfToIm( String pdfFilePath, String imExtension ) throws
             IOException,DocumentException,RendererException{
     // load the pdf
-        document.load( new File( pdfFilePath ) );
+        PDFDocument pdfDocument = new PDFDocument();
+        pdfDocument.load( new File( pdfFilePath ) );
 
     // create renderer
-    SimpleRenderer renderer = new SimpleRenderer();
+        SimpleRenderer renderer = new SimpleRenderer();
 
     // set resolution (in DPI)
         renderer.setResolution( 300 );
 
     // render the images
-    List<Image> images = renderer.render( document );
+    List<Image> images = renderer.render( pdfDocument );
 
     // write the images to file
         for (int iPage = 0; iPage < images.size(); iPage++) {

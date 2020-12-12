@@ -76,6 +76,9 @@ public class EventReader extends MySQLReader {
         }
     }
 
+    /**
+     * Creates a tabel in a MySQL database
+     */
     public void createTable() {
         String myTableName = "CREATE TABLE IF NOT EXISTS events(" +
                 "eventName VARCHAR(64) NOT NULL," +
@@ -98,6 +101,10 @@ public class EventReader extends MySQLReader {
         }
     }
 
+    /**
+     * Reads data from a mySQL database to generate a list of events
+     * @return an eventManager will all the events
+     */
     public EventManager readData() {
         EventManager eventManager = new EventManager(new ArrayList<>());
         try {
@@ -119,6 +126,10 @@ public class EventReader extends MySQLReader {
         return eventManager;
     }
 
+    /**
+     * Saves the eventManager with all the events into a MySQL Database
+     * @param eventManager contains all the events
+     */
     public void saveEventManager(EventManager eventManager) {
         cleanTable("events");
         for (Event event : eventManager.getEvents()) {
@@ -134,6 +145,11 @@ public class EventReader extends MySQLReader {
         }
     }
 
+    /**
+     * Turns the event into strings to be saved into the database
+     * @param event the event to be saved
+     * @return a string command of how the data will be saved
+     */
     private String generateInformation(Event event) {
         if (event.getClass() == AttendeeOnlyEvent.class) {
             return "INSERT INTO events(eventName, eventType, roomNumber, date, organizer, maxCapacity, duration, attendees) " +

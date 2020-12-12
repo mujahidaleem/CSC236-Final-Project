@@ -65,11 +65,16 @@ public class MainMenuController {
     }
 
 
-
+    /**
+     * Tells the user that the date inputted could not be recognized
+     */
     public void showIncorrectDate(){
         presenter.showIncorrectDate();
     }
 
+    /**
+     * Shows the prompt asking for the new password
+     */
     public void showChangePasswordPrompt(){
         changePassword(presenter.changePassword());
         presenter.showChangePasswordResult();
@@ -85,12 +90,19 @@ public class MainMenuController {
         userManager.changePassword(password);
     }
 
+    /**
+     * Logs the user out of the current session
+     */
     public void logout(){
         loginMenuController.saveFiles();
         userManager.setCurrentUser(null);
         loginMenuController.returnToLoginMenu();
     }
 
+    /**
+     * Changes the theme of the GUI
+     * @param theme the new theme
+     */
     public void changeTheme(String theme){
         currentTheme = theme;
         if(menuCreated){
@@ -104,6 +116,10 @@ public class MainMenuController {
         }
     }
 
+    /**
+     * Changes the language of the GUI
+     * @param language the new language
+     */
     public void changeLanguage(String language){
         currentLanguage = language;
         if(menuCreated){

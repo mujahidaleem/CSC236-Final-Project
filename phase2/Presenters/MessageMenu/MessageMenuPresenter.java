@@ -1,5 +1,6 @@
 package Presenters.MessageMenu;
 
+import Controllers.MessageMenu.AttendeeFriendListController;
 import Controllers.MessageMenu.UserFriendListController;
 import Entities.Users.User;
 import GUI.MainMenuPanel;
@@ -43,6 +44,9 @@ public class MessageMenuPresenter {
         this.messageMenuPanel = messageMenuPanel;
         this.mainMenuPanel = mainMenuPanel;
         this.chatPanel = chatPanel;
+    }
+
+    public MessageMenuPresenter(AttendeeFriendListController adminFriendListController, UserManager userManager, UserFriendManager userFriendManager, LanguageManager languageManager) {
     }
 
     /**

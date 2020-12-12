@@ -4,6 +4,7 @@ import Controllers.MessageMenu.UserFriendListController;
 import Entities.Users.User;
 import GUI.GUIPanel;
 import Presenters.MessageMenu.MessageMenuPresenter;
+import UseCases.Language.LanguageManager;
 import UseCases.Language.LanguagePack;
 import UseCases.Message.UserFriendManager;
 
@@ -21,14 +22,14 @@ public class ChatPanel extends GUIPanel {
     private UserFriendListController userFriendListController;
     private User targetUser;
 
-    private LanguagePack languagePack;
+    private LanguageManager languageManager;
 
     public ChatPanel(JFrame frame,
                      UserFriendListController userFriendListController,
-                     LanguagePack languagePack,
+                     LanguageManager languageManager,
                      MessageMenuPresenter messageMenuPresenter){
-        super(frame);
-        this.languagePack = languagePack;
+        super(frame, languageManager);
+        this.languageManager = languageManager;
         this.userFriendListController = userFriendListController;
         this.messageMenuPresenter = messageMenuPresenter;
     }

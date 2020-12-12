@@ -8,12 +8,14 @@ import GUI.MainFrame.ThemeManager;
 import GUI.MainLoginPanel;
 import GUI.UserCreationPanel;
 import Gateways.EventReader;
+import Gateways.MessageReader;
 import Gateways.RoomReader;
 import Gateways.UserReader;
 import Presenters.LoginMenuPresenter;
 import UseCases.Events.EventManager;
 import UseCases.Events.RoomManager;
 import UseCases.Language.LanguageManager;
+import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
 
 import javax.swing.*;
@@ -30,16 +32,17 @@ public class LoginMenuController {
     protected UserManager userManager;
     protected EventManager eventManager;
     protected RoomManager roomManager;
+    protected UserFriendManager userFriendManager;
 
     private EventMenuFactory eventMenuFactory;
     private MessageMenuFactory messageMenuFactory;
     private LoginMenuPresenter presenter;
     private LanguageManager languageManager;
-    private ThemeManager themeManager;
 
     private UserReader userReader;
     private EventReader eventReader;
     private RoomReader roomReader;
+    private MessageReader messageReader;
 
     private LoginMenuFrame frame;
     private MainLoginPanel loginPanel;
@@ -57,10 +60,11 @@ public class LoginMenuController {
      * @param roomReader the gateway to read the list of rooms
      * @param languageManager stores the strings used in the GUI
      */
-    public LoginMenuController(LanguageManager languageManager, UserReader userReader, EventReader eventReader, RoomReader roomReader) {
+    public LoginMenuController(LanguageManager languageManager, UserReader userReader, EventReader eventReader, RoomReader roomReader, MessageReader messageReader) {
         this.userReader = userReader;
         this.eventReader = eventReader;
         this.roomReader = roomReader;
+        this.messageReader = messageReader;
 
         this.userManager = userReader.readData();
         this.eventManager = eventReader.readData();
@@ -168,6 +172,9 @@ public class LoginMenuController {
         userReader.saveUserManager(userManager);
         eventReader.saveEventManager(eventManager);
         roomReader.saveRoomManager(roomManager);
+        if(userFriendManager != null){
+            messageReader.saveMessages(userFriendManager, userManager);
+        }
     }
 
     /**

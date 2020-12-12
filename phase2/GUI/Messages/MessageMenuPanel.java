@@ -1,7 +1,8 @@
-package GUI;
+package GUI.Messages;
 
 import Controllers.MessageMenu.UserFriendListController;
 import Entities.Users.User;
+import GUI.GUIPanel;
 import UseCases.Language.LanguageManager;
 import UseCases.Language.LanguagePack;
 import UseCases.Message.UserFriendManager;
@@ -72,6 +73,7 @@ public class MessageMenuPanel extends GUIPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO
+
             }
         });
         this.panel.add(startChat);

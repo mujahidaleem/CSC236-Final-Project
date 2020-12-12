@@ -5,6 +5,7 @@ import Entities.Users.User;
 import GUI.MainMenuPanel;
 import GUI.Messages.MessageMenuPanel;
 import Presenters.MessageMenu.MessageMenuPresenter;
+import UseCases.Language.LanguageManager;
 import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
 
@@ -23,12 +24,13 @@ public abstract class UserFriendListController {
                                     MainMenuPanel mainMenuPanel,
                                     MessageMenuPresenter messageMenuPresenter,
                                     UserManager userManager,
-                                    JFrame frame) {
+                                    JFrame frame,
+                                    LanguageManager languageManager) {
         this.userFriendManager = userFriendManager;
         this.mainMenuPanel = mainMenuPanel;
         this.messageMenuPresenter = messageMenuPresenter;
         this.userManager = userManager;
-        this.messageMenuPanel = new MessageMenuPanel(this, userFriendManager, userManager, frame);
+        this.messageMenuPanel = new MessageMenuPanel(this, userFriendManager, userManager, frame, languageManager);
     }
 
     /**
@@ -93,11 +95,12 @@ public abstract class UserFriendListController {
     }
 
     public void changeTheme(String theme){
-        //TODO: change this
+        mainMenuPanel.changeTheme(theme);
     }
 
 
     public void changeLanguage(String language){
-        //TODO: change this
+        mainMenuPanel.changeLanguage(language);
+
     }
 }

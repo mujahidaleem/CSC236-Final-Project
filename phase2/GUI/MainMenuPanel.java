@@ -9,6 +9,7 @@ import UseCases.Events.EventManager;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -184,7 +185,15 @@ public class MainMenuPanel extends GUIPanel {
     }
 
     public void showSchedule(LocalDateTime dateTime) {
-        addEvents(pdfGenerator.getStartOfWeek(dateTime));
+        ArrayList<Event> events = eventManager.getEvents();
+        ArrayList<Event> correct_timed = null;
+        for (Event temp: events ) {
+            if(temp.getEventTime() == dateTime){
+                correct_timed.add(temp);
+            }
+        }
+        //addEvents(correct_timed);
+        //addEvents(pdfGenerator.getStartOfWeek(dateTime));
     }
 
     private Rectangle getPosition(Event event, int order, int number) {
@@ -211,6 +220,9 @@ public class MainMenuPanel extends GUIPanel {
         panel.add(saveScheduleButton);
     }
 
+    /**
+     * Sets the time table
+     */
     private void setTimeTable() {
         JPanel timeTable = new JPanel();
         timeTable.setBounds(tableX, tableY - tableHeight, tableWidth, tableHeight);
@@ -235,6 +247,9 @@ public class MainMenuPanel extends GUIPanel {
         logoutButton.setText(languagePack.mainMenuCommands()[8]);
     }
 
+    /**
+     * Changes the colours of the menu
+     */
     public void changeColours(){
         panel.setBackground(backgroundColour);
 

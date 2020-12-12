@@ -73,6 +73,7 @@ public class MessageMenuPanel extends GUIPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO
+
             }
         });
         this.panel.add(startChat);

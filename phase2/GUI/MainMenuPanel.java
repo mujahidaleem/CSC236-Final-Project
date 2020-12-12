@@ -193,6 +193,9 @@ public class MainMenuPanel extends GUIPanel {
      * @param number number of events
      */
     private void drawScheduleString(Event event, int order, int number){
+        JPanel panel = new JPanel();
+        panel.setLayout(new CardLayout());
+        JLabel label = new JLabel();
         //Print events here in string format
     }
 

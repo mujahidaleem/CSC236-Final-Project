@@ -239,6 +239,10 @@ public class EditEventPanel extends GUIPanel {
         panel.add(addSpeakerButton);
     }
 
+    public void setMode(boolean i){
+        eventNameTextField.setEditable(i);
+    }
+
     public void setText(Event event, LanguagePack languagePack){
         setStrings(languagePack);
 

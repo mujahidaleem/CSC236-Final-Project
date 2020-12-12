@@ -1,6 +1,7 @@
 package UseCases.Language;
 
 import Entities.Events.Event;
+import Entities.Users.Speaker;
 import Entities.Users.User;
 
 import java.io.Serializable;
@@ -60,7 +61,9 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String[] organizerEventResultsFailure(Event event) {
-        return new String[]{"Désolé, un événement portant ce nom existe déjà",
+        return new String[]{"Vous ne pouvez pas créer d'événements dans le passé.",
+                "Désolé, un événement portant ce nom existe déjà",
+                "Désolé, la salle n'est pas disponible à ce moment-là.",
                 "Désolé, " + event.getSpeakers() +" n'est pas disponible à ce moment précis.",
                 "Cet événement n'a déjà pas de conférencier.",
                 "Désolé, l'heure de l'événement ne peut pas être modifiée.",
@@ -75,8 +78,8 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     }
 
     @Override
-    public String eventUnchangeable(Event event) {
-        return event.getEventName() + "ne peut pas être modifié par vous car vous n'êtes pas l'organisateur.";
+    public String eventUnchangeable(String event) {
+        return event + "ne peut pas être modifié par vous car vous n'êtes pas l'organisateur.";
     }
 
     @Override
@@ -259,22 +262,22 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
         return "Désolé, l'heure de l'événement ne peut pas être modifiée.";
     }
 
-    public String speakerRemovalSuccess(){
-        return "suppression réussie";
+    public String speakerRemovalSuccess(Speaker speaker){
+        return speaker.getName() + " ne parle plus à cet événement";
     }
 
-    public String speakerRemovalFailure(){
-        return "suppression échouée";
-    }
-
-    @Override
-    public String speakerAdditionSuccess() {
-        return "ajout réussi";
+    public String speakerRemovalFailure(Speaker speaker){
+        return speaker.getName() + " ne parle déjà pas à cet événement";
     }
 
     @Override
-    public String speakerAdditionFailure() {
-        return "ajout échoué";
+    public String speakerAdditionSuccess(Speaker speaker) {
+        return speaker.getName() + " parlera maintenant de cet événement";
+    }
+
+    @Override
+    public String speakerAdditionFailure(Speaker speaker) {
+        return speaker.getName() + " n'est pas disponible pour le moment";
     }
 
     @Override

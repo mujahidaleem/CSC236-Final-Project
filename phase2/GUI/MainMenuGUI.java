@@ -13,6 +13,5 @@ public class MainMenuGUI {
         frame.add(mainMenuPanel);
         frame.setVisible(true);
 
-        ThemeMenuBar
     }
 }

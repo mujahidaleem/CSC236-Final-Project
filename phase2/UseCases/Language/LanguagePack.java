@@ -1,6 +1,7 @@
 package UseCases.Language;
 
 import Entities.Events.Event;
+import Entities.Users.Speaker;
 import Entities.Users.User;
 
 /**
@@ -188,7 +189,7 @@ public interface LanguagePack {
      * @param event the event that the organizer is attempting to modify
      * @return a string telling that event cannot be modified
      */
-    String eventUnchangeable(Event event);
+    String eventUnchangeable(String event);
 
     /**
      * Tells the user that the speaker does not exist
@@ -266,13 +267,13 @@ public interface LanguagePack {
 
     String changeEventTimeFailure();
 
-    String speakerRemovalSuccess();
+    String speakerRemovalSuccess(Speaker speaker);
 
-    String speakerRemovalFailure();
+    String speakerRemovalFailure(Speaker speaker);
 
-    String speakerAdditionSuccess();
+    String speakerAdditionSuccess(Speaker speaker);
 
-    String speakerAdditionFailure();
+    String speakerAdditionFailure(Speaker speaker);
 
     String changeEventDurationFailure();
 

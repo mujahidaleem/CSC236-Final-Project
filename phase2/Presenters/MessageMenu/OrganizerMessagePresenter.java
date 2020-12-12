@@ -1,6 +1,9 @@
 package Presenters.MessageMenu;
 
 import Controllers.MessageMenu.OrganizerFriendListController;
+import GUI.MainMenuPanel;
+import GUI.Messages.ChatPanel;
+import GUI.Messages.MessageMenuPanel;
 import UseCases.Language.LanguageManager;
 import UseCases.Message.OrganizerFriendManager;
 import UseCases.Users.OrganizerManager;
@@ -14,18 +17,18 @@ public class OrganizerMessagePresenter extends MessageMenuPresenter {
     public OrganizerManager organizerManager;
 
     /**
-     * Constructor of OrganizerMessagePresenter
-     * OrganizerMessagePresenter presents the organizer's message menu (friend list, messages etc.)
-     *
-     * @param organizerFriendListController Controller for the friend list of the organizer
-     * @param userManager                   Use case for the functions of the user
-     * @param organizerManager              Use case for the functions of the organizer
-     * @param organizerFriendManager        Use case for the functions of the organizer's friend list
-     * @param languageManager               Prints the strings in the current system language
+     * Constructor for OrganizerMessagePresenter
+     * @param userManager contains the users
+     * @param organizerFriendManager contains the messages
+     * @param languageManager contains the strings for generating text
+     * @param messageMenuPanel the panel representing the message menu
+     * @param mainMenuPanel the main menu
+     * @param chatPanel the chat panel
      */
-    public OrganizerMessagePresenter(OrganizerFriendListController organizerFriendListController, UserManager userManager, OrganizerManager organizerManager, OrganizerFriendManager organizerFriendManager, LanguageManager languageManager) {
-        super(organizerFriendListController, userManager, organizerFriendManager, languageManager);
-        this.organizerFriendListController = organizerFriendListController;
+    public OrganizerMessagePresenter(UserManager userManager, OrganizerManager organizerManager,
+                                     OrganizerFriendManager organizerFriendManager, LanguageManager languageManager,
+                                     MessageMenuPanel messageMenuPanel, MainMenuPanel mainMenuPanel, ChatPanel chatPanel) {
+        super(userManager, organizerFriendManager, languageManager, messageMenuPanel, mainMenuPanel, chatPanel);
         this.organizerManager = organizerManager;
     }
 

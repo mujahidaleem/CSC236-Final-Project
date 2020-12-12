@@ -7,34 +7,43 @@ import GUI.Messages.MessageMenuPanel;
 import Presenters.MessageMenu.MessageMenuPresenter;
 import UseCases.Language.LanguageManager;
 import UseCases.Message.AdminFriendManager;
+import UseCases.Message.AttendeeFriendManager;
+import UseCases.Message.OrganizerFriendManager;
 import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
-
+import UseCases.Message.AdminFriendManager;
+import UseCases.Message.AttendeeFriendManager;
+import UseCases.Message.OrganizerFriendManager;
 import javax.swing.*;
 import java.time.LocalDateTime;
 
 public abstract class UserFriendListController {
+    private AdminFriendManager adminFriendManager;
     public UserFriendManager userFriendManager;
-
+    private AttendeeFriendManager attendeeFriendManager;
+    private OrganizerFriendManager organizerFriendManager;
     private MainMenuPanel mainMenuPanel;
     private MessageMenuPresenter messageMenuPresenter;
     private MessageMenuPanel messageMenuPanel;
     private UserManager userManager;
 
     public UserFriendListController(UserFriendManager userFriendManager,
+                                    AdminFriendManager adminFriendManager,
+                                    AttendeeFriendManager attendeeFriendManager,
+                                    OrganizerFriendManager organizerFriendManager,
                                     MainMenuPanel mainMenuPanel,
                                     MessageMenuPresenter messageMenuPresenter,
                                     UserManager userManager,
                                     JFrame frame,
                                     LanguageManager languageManager) {
         this.userFriendManager = userFriendManager;
+        this.adminFriendManager = adminFriendManager;
+        this.attendeeFriendManager = attendeeFriendManager;
+        this.organizerFriendManager = organizerFriendManager;
         this.mainMenuPanel = mainMenuPanel;
         this.messageMenuPresenter = messageMenuPresenter;
         this.userManager = userManager;
         this.messageMenuPanel = new MessageMenuPanel(this, userFriendManager, userManager, frame, languageManager);
-    }
-
-    public UserFriendListController(AdminFriendManager speakerFriendManager, MainMenuPanel mainMenuPanel) {
     }
 
     /**

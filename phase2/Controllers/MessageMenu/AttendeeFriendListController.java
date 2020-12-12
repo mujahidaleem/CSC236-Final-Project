@@ -1,12 +1,11 @@
 package Controllers.MessageMenu;
 
 import GUI.MainMenuPanel;
+import GUI.Messages.MessageMenuPanel;
 import Presenters.MessageMenu.MessageMenuPresenter;
 import UseCases.Language.LanguageManager;
-import UseCases.Message.AdminFriendManager;
-import UseCases.Message.AttendeeFriendManager;
-import UseCases.Message.OrganizerFriendManager;
-import UseCases.Message.UserFriendManager;
+import UseCases.Message.*;
+import UseCases.Users.SpeakerManager;
 import UseCases.Users.UserManager;
 
 import javax.swing.*;
@@ -15,6 +14,16 @@ import javax.swing.*;
  * Controls data specifically for attendees' friend lists.
  */
 public class AttendeeFriendListController extends UserFriendListController {
+    public UserManager userManager;
+    public OrganizerFriendManager organizerFriendManager;
+    public SpeakerFriendManager speakerFriendManager;
+    public SpeakerManager speakerManager;
+    private AdminFriendManager adminFriendManager;
+    public UserFriendManager userFriendManager;
+    private AttendeeFriendManager attendeeFriendManager;
+    private MainMenuPanel mainMenuPanel;
+    private MessageMenuPresenter messageMenuPresenter;
+    private MessageMenuPanel messageMenuPanel;
 
     /**
      * AttendeeFriendList constructor

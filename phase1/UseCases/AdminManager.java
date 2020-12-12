@@ -3,7 +3,6 @@ package UseCases;
 import Entities.Admin;
 import Entities.Speaker;
 import Entities.Attendee;
-import UseCases.UserManager;
 import Entities.Event;
 
 import java.time.LocalDateTime;

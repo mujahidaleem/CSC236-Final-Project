@@ -1,6 +1,7 @@
 package GUI;
 
 import GUI.MainFrame.ThemeManager;
+import UseCases.Language.LanguageManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,8 +20,10 @@ public class GUIPanel {
     protected Color textFieldColour;
 
     protected ThemeManager themeManager;
+    protected LanguageManager languageManager;
 
-    public GUIPanel (JFrame frame){
+
+    public GUIPanel (JFrame frame, LanguageManager languageManager){
         this.frame = frame;
         this.panelWidth = frame.getWidth();
         this.panelHeight = frame.getHeight();
@@ -29,6 +32,7 @@ public class GUIPanel {
         panel.setSize(panelWidth, panelHeight);
         panel.setOpaque(true);
         this.themeManager = new ThemeManager();
+        this.languageManager = languageManager;
     }
 
     public void changePanel(JPanel newPanel){
@@ -57,4 +61,10 @@ public class GUIPanel {
 
     public void changeColours(){
     }
+
+    public void changeLanguage(String language){
+        languageManager.changeLanguage(language);
+        changeText(languageManager);
+    }
+    public void changeText(LanguageManager languageManager){}
 }

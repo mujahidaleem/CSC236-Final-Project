@@ -5,7 +5,9 @@ import Entities.Users.Organizer;
 import Entities.Users.Speaker;
 import Gateways.EventReader;
 import Gateways.MessageReader;
+import Gateways.RoomReader;
 import Gateways.UserReader;
+import UseCases.Events.RoomManager;
 import UseCases.Language.EnglishLanguagePack;
 import UseCases.Message.AttendeeFriendManager;
 import UseCases.Events.EventManager;
@@ -43,14 +45,18 @@ public class Initializer {
         userManager.users.add(jason);
         userManager.users.add(job);
 
-        AttendeeOnlyEvent christmas = new AttendeeOnlyEvent("Christmas", 100, 3, LocalDateTime.parse("2020-11-27T18:00:00"), 60, 1001, new ArrayList<>());
-        AttendeeOnlyEvent halloween = new AttendeeOnlyEvent("Halloween", 101, 3, LocalDateTime.parse("2020-11-28T18:00:00"), 60, 1001, new ArrayList<>());
-        AttendeeOnlyEvent birthday = new AttendeeOnlyEvent("Birthday", 102, 3, LocalDateTime.parse("2020-11-27T19:00:00"),120,1001, new ArrayList<>());
+        AttendeeOnlyEvent christmas = new AttendeeOnlyEvent("Christmas", 0, 3, LocalDateTime.parse("2020-11-27T18:00:00"), 60, 1001, new ArrayList<>());
+        AttendeeOnlyEvent halloween = new AttendeeOnlyEvent("Halloween", 1, 3, LocalDateTime.parse("2020-11-28T18:00:00"), 60, 1001, new ArrayList<>());
+        AttendeeOnlyEvent birthday = new AttendeeOnlyEvent("Birthday", 2, 3, LocalDateTime.parse("2020-11-27T19:00:00"),120,1001, new ArrayList<>());
 
         EventManager eventManager = new EventManager(new ArrayList<>());
         eventManager.getEvents().add(christmas);
         eventManager.getEvents().add(halloween);
         eventManager.getEvents().add(birthday);
+
+        john.get_eventsOrganizing().put(christmas.getEventName(), christmas.getEventTime());
+        john.get_eventsOrganizing().put(halloween.getEventName(), halloween.getEventTime());
+        john.get_eventsOrganizing().put(birthday.getEventName(), birthday.getEventTime());
 
         halloween.add(jason);
         halloween.add(job);
@@ -72,6 +78,20 @@ public class Initializer {
         userReader.saveFile(userManager);
         eventReader.saveFile(eventManager);
         messageReader.saveFile(attendeeFriendManager);
+
+        RoomManager roomManager = new RoomManager();
+        roomManager.addRoom(3);
+        roomManager.addRoom(4);
+        roomManager.addRoom(5);
+
+        roomManager.scheduleEvent(roomManager.getRooms().get(0), christmas.getEventTime(), christmas.getDuration(), christmas);
+        roomManager.scheduleEvent(roomManager.getRooms().get(1), halloween.getEventTime(), halloween.getDuration(), halloween);
+        roomManager.scheduleEvent(roomManager.getRooms().get(2), birthday.getEventTime(), birthday.getDuration(), birthday);
+
+
+
+        RoomReader roomReader = new RoomReader("roomManager.ser");
+        roomReader.saveFile(roomManager);
     }
 
     public void setUpLanguage(){

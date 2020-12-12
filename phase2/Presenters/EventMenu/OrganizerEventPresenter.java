@@ -1,25 +1,19 @@
 package Presenters.EventMenu;
 
-import Controllers.EventMenu.NullSpeakerException;
 import Entities.Events.Event;
 import Entities.Users.Speaker;
-import Controllers.EventMenu.OrganizerEventController;
 import Entities.Users.User;
 import GUI.Events.CreateAccountPanel;
 import GUI.Events.EditEventPanel;
 import GUI.Events.OrganizerEventMenuPanel;
 import GUI.MainMenuPanel;
 import UseCases.Events.EventManager;
-import UseCases.Events.SameEventNameException;
-import UseCases.Language.EnglishLanguagePack;
 import UseCases.Language.LanguageManager;
 import UseCases.Users.OrganizerManager;
 import UseCases.Users.SpeakerManager;
-import jdk.nashorn.internal.scripts.JO;
 
 import javax.swing.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
+
 
 /**
  * Displays the event menu for an organizer and interprets the
@@ -52,126 +46,106 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
         this.createAccountPanel = createAccountPanel;
     }
 
+    /**
+     * Change the information regarding events
+     * @param event given event that needs to be changed
+     */
     public void changeEventInformationResults(Event event){
         JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.changeEventInfoResults(event));
     }
 
+    /**
+     * Show an event duration failure prompt on failure to change the duration of an event
+     */
     public void changeEventDurationFailure(){
         JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.changeEventDurationFailure());
     }
 
+    /**
+     * Show an event capacity failure prompt on failure to change the capacity of an event
+     */
     public void changeEventCapacityFailure(){
-        JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.changeEventCapacityFailure());
+        JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.changeEventDurationFailure());
     }
 
+    /**
+     * how an event room failure prompt on failure to change the room of an event
+     */
     public void changeEventRoomFailure(){
         JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.changeEventRoomFailure());
     }
 
+    /**
+     * Sets up the menu and themes it
+     * @param theme theme of the program
+     */
+    public void setUpMenu(String theme){
+        organizerEventMenuPanel.printMenu(theme);
+        showEventMenu();
+    }
+
+    /**
+     * Shows the event menu
+     */
     public void showEventMenu(){
-        organizerEventMenuPanel.printMenu();
         organizerEventMenuPanel.setText(eventManager.getEvents(), manager.getCurrentUser(), languageManager.languagePack);
         editEventPanel.changePanel(organizerEventMenuPanel.getPanel());
     }
 
+    /**
+     * Shows the edit menu options for an event
+     * @param event event that is being edited
+     * @param i boolean that sets the mode of the event panel
+     */
     public void showEditMenu(Event event, boolean i){
-        editEventPanel.printMenu(i);
+        editEventPanel.setMode(i);
         editEventPanel.setText(event, languageManager.languagePack);
         organizerEventMenuPanel.changePanel(editEventPanel.getPanel());
     }
 
+    /**
+     * Sets up the edit menu to be displayed
+     * @param event event that is being edited
+     * @param i boolean that sets the mode of the event panel
+     * @param theme theme of the event panel
+     */
+    public void setUpEditMenu(Event event, boolean i, String theme){
+        editEventPanel.printMenu(i, theme);
+        showEditMenu(event, i);
+    }
+
+    /**
+     * Sets up the account create menu
+     * @param theme theme of the program
+     */
+    public void setUpCreateAccountMenu(String theme){
+        createAccountPanel.setUpMenu(theme);
+        showCreateAccountMenu();
+    }
+
+    /**
+     * Shows the account create menu
+     */
     public void showCreateAccountMenu(){
-        createAccountPanel.setUpMenu();
         organizerEventMenuPanel.changePanel(createAccountPanel.getPanel());
         createAccountPanel.setText(languageManager.languagePack);
     }
 
     public int showAddSpeakerPrompt(){
-        return Integer.parseInt(JOptionPane.showInputDialog("")); //TODO: Change the text
+        return Integer.parseInt(JOptionPane.showInputDialog(languageManager.languagePack.changeEventPrompts()[19]));
     }
 
     public void showNullSpeaker(){
-        JOptionPane.showMessageDialog(editEventPanel.getPanel(), "", "Warning", JOptionPane.WARNING_MESSAGE); //TODO: change the text
+        JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.unknownSpeaker(), "Warning", JOptionPane.WARNING_MESSAGE);
     }
 
     public void showNonModifiableEventPrompt(String string){
-        JOptionPane.showMessageDialog(organizerEventMenuPanel.getPanel(), "", "Warning", JOptionPane.WARNING_MESSAGE); //TODO: change the text
+        JOptionPane.showMessageDialog(organizerEventMenuPanel.getPanel(), languageManager.languagePack.eventUnchangeable(string), "Warning", JOptionPane.WARNING_MESSAGE);
     }
 
     public void showIncorrectDate(){
-        JOptionPane.showMessageDialog(organizerEventMenuPanel.getPanel(), "", "Warning", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(organizerEventMenuPanel.getPanel(), languageManager.languagePack.unknownDate(), "Warning", JOptionPane.WARNING_MESSAGE);
     }
-
-
-//    /**
-//     * Prints the list of commands that can be executed by the organizer
-//     */
-//    @Override
-//    protected void printCommands() {
-//        languageManager.languagePack.printEventStandardCommands();
-//        languageManager.languagePack.printOrganizerCommands();
-//    }
-//
-//    /**
-//     * The menu for events is initialized and commands relating to events can be
-//     * performed by typing in the correct strings into the command line.
-//     */
-//    @Override
-//    protected void extraCommands(String[] command) {
-//        outer:
-//        try {
-//            switch (command[0]) {
-//                case "3":
-//                    Event event1 = organizerEventController.createEvent(command[1], LocalDateTime.parse(command[2]), Integer.parseInt(command[3]), Integer.parseInt(command[4]), Integer.parseInt(command[5]), command[6]);
-//                    if (event1 == null) {
-//                        createEventResults(false, null);
-//                    } else {
-//                        createEventResults(true, event1);
-//                    }
-//                    break outer;
-//                case "9":
-//                    User user = organizerEventController.createAccount(command[1], command[2], command[3]);
-//                    if (user == null) {
-//                        createUserAccountResults(false, null);
-//                    } else {
-//                        createUserAccountResults(true, user);
-//                    }
-//                    break outer;
-//                case "10":
-//                    printSpeakers();
-//                    break outer;
-//            }
-//            Event event = eventManager.findEvent(command[1]);
-//            if (!organizerEventController.eventModifiable(event)) {
-//                System.out.println(languageManager.languagePack.eventUnchangeable(event));
-//            } else {
-//                switch (command[0]) {
-//                    case "4":
-//                        setSpeakerResults(organizerEventController.addSpeaker(event, Integer.parseInt(command[2])), event);
-//                        break;
-//                    case "7":
-//                        changeEventDateResults(organizerEventController.changeEventDate(event, LocalDateTime.parse(command[2])), event);
-//                        break;
-//                    case "8":
-//                        changeEventRoomResults(organizerEventController.changeEventRoom(event, Integer.parseInt(command[2])), event);
-//                    case "6":
-//                        deleteEvent(organizerEventController.deleteEvent(event), event);
-//                        break;
-//                    case "5":
-//                        removeSpeakerResults(organizerEventController.removeSpeaker(event, Integer.parseInt(command[2])), event);
-//                        break;
-//                    default:
-//                        System.out.println(languageManager.languagePack.unknownCommand());
-//                }
-//            }
-//        } catch (NullPointerException e) {
-//            System.out.println(languageManager.languagePack.unknownEvent());
-//        } catch (NullSpeakerException e) {
-//            System.out.println(languageManager.languagePack.unknownSpeaker());
-//        } catch (DateTimeParseException e) {
-//            System.out.println(languageManager.languagePack.unknownDate());
-//        }
-//    }
 
     /**
      * Prints the result of trying to create a new event
@@ -179,12 +153,15 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      * @param i     Determines whether the command was successful or not
      * @param event The event that the organizer is trying to create
      */
-    public void createEventResults(boolean i, Event event) {
-        if (i) {
-            JOptionPane.showMessageDialog(editEventPanel.getPanel(), event.getEventName() +
-                    languageManager.languagePack.organizerEventResultsSuccess(event)[0]);
-        } else {
-            JOptionPane.showMessageDialog(editEventPanel.getPanel(), "", "Error", JOptionPane.WARNING_MESSAGE); //TODO: change this
+    public void createEventResults(int i, Event event) {
+        if (i == 3) {
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.organizerEventResultsSuccess(event));
+        } else if (i==0) {
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.organizerEventResultsFailure(event)[0], "Error", JOptionPane.WARNING_MESSAGE);
+        } else if (i==1){
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.organizerEventResultsFailure(event)[1], "Error", JOptionPane.WARNING_MESSAGE);
+        } else if (i==2){
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.organizerEventResultsFailure(event)[2], "Error", JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -195,9 +172,9 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      */
     public void addSpeakerResults(boolean i, Speaker speaker) {
         if (i) {
-            JOptionPane.showMessageDialog(editEventPanel.getPanel(), speaker.getName() + languageManager.languagePack.speakerAdditionSuccess());
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.speakerAdditionSuccess(speaker));
         } else {
-            JOptionPane.showMessageDialog(editEventPanel.getPanel(), speaker.getName() + languageManager.languagePack.speakerAdditionFailure());
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.speakerAdditionFailure(speaker));
         }
     }
 
@@ -208,9 +185,9 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
      */
     public void removeSpeakerResults(boolean i, Speaker speaker) {
         if (i) {
-            JOptionPane.showMessageDialog(editEventPanel.getPanel(), speaker.getName() + languageManager.languagePack.speakerRemovalSuccess());
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.speakerRemovalSuccess(speaker));
         } else {
-            JOptionPane.showMessageDialog(editEventPanel.getPanel(), speaker.getName() + languageManager.languagePack.speakerRemovalFailure());
+            JOptionPane.showMessageDialog(editEventPanel.getPanel(), languageManager.languagePack.speakerRemovalFailure(speaker));
         }
     }
 
@@ -265,16 +242,50 @@ public class OrganizerEventPresenter extends EventMenuPresenter {
     }
 
     /**
-     * Prints the list of speakers
+     * Changes the theme of the program
+     * @param theme Theme of the program
      */
-    private void printSpeakers() {
-        System.out.println("------------------------------------------------------");
-        for (Speaker speaker : speakerManager.getSpeakers()) {
-            System.out.println(speaker);
-        }
+    public void changeTheme(String theme){
+        organizerEventMenuPanel.changeTheme(theme);
     }
 
-    public void reprintEvents(){
-        organizerEventMenuPanel.reprintEvents(eventManager.getEvents(), manager.getCurrentUser());
+    /**
+     * Change the theme from the edit panel
+     * @param theme Theme of the program
+     */
+    public void changeEditPanelTheme(String theme){
+        editEventPanel.changeTheme(theme);
+    }
+
+    /**
+     * Change theme from the account panel
+     * @param theme Theme of the program
+     */
+    public void changeAccountPanelTheme(String theme){
+        createAccountPanel.changeTheme(theme);
+    }
+
+    /**
+     * Change language of the program button
+     * @param language Language of the program
+     */
+    public void changeLanguage(String language){
+        organizerEventMenuPanel.changeLanguage(language);
+    }
+
+    /**
+     * Change language from edit panel
+     * @param theme Theme of the program
+     */
+    public void changeEditPanelLanguage(String theme){
+        editEventPanel.changeLanguage(theme);
+    }
+
+    /**
+     * Change theme from account panel
+     * @param theme theme of the program
+     */
+    public void changeAccountPanelLanguage(String theme){
+        createAccountPanel.changeLanguage(theme);
     }
 }

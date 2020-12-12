@@ -2,6 +2,7 @@ package GUI.Events;
 
 import Controllers.EventMenu.NullEventException;
 import Controllers.EventMenu.OrganizerEventController;
+import UseCases.Language.LanguageManager;
 import UseCases.Language.LanguagePack;
 
 
@@ -24,8 +25,8 @@ public class OrganizerEventMenuPanel extends EventMenuPanel{
      * @param organizerEventController the controller that will execute commands
      * @param frame the initial frame of the program
      */
-    public OrganizerEventMenuPanel(OrganizerEventController organizerEventController, JFrame frame){
-        super(organizerEventController, frame);
+    public OrganizerEventMenuPanel(OrganizerEventController organizerEventController, JFrame frame, LanguageManager languageManager){
+        super(organizerEventController, frame, languageManager);
         this.organizerEventController = organizerEventController;
     }
 
@@ -43,7 +44,8 @@ public class OrganizerEventMenuPanel extends EventMenuPanel{
      */
     public void setTextFields(){
         instructions = new JTextArea();
-        instructions.setBounds(sideBarX, sideBarY + 200, labelWidth + 150, labelHeight+20);
+        instructions.setBounds(sideBarX, sideBarY + 180, labelWidth + 100, labelHeight+40);
+        instructions.setLineWrap(true);
         instructions.setEditable(false);
 
         eventToBeChanged = new JLabel();
@@ -63,7 +65,7 @@ public class OrganizerEventMenuPanel extends EventMenuPanel{
         createEventButton = new JButton();
         createEventButton.setBounds(sideBarX, sideBarY + 300, buttonWidth + 40, buttonLayerHeight);
         createEventButton.addActionListener(e -> {
-            organizerEventController.showEditMenu(null, true);
+            organizerEventController.printEditMenu(null, true);
             clearAdditionalText();
         });
 
@@ -72,7 +74,7 @@ public class OrganizerEventMenuPanel extends EventMenuPanel{
         editEventButton.addActionListener(e -> {
             try{
                 if(organizerEventController.eventModifiable(organizerEventController.eventManager.findEvent(eventNameTextField.getText()))){
-                    organizerEventController.showEditMenu(organizerEventController.eventManager.findEvent(eventNameTextField.getText()), false);
+                    organizerEventController.printEditMenu(organizerEventController.eventManager.findEvent(eventNameTextField.getText()), false);
                     clearAdditionalText();
                 } else {
                     organizerEventController.showNonModifiableEventPrompt(eventNameTextField.getText());
@@ -85,7 +87,7 @@ public class OrganizerEventMenuPanel extends EventMenuPanel{
         createAccountButton = new JButton();
         createAccountButton.setBounds(sideBarX, sideBarY + 380, buttonWidth + 40, buttonLayerHeight);
         createAccountButton.addActionListener(e -> {
-            organizerEventController.showCreateAccountMenu();
+            organizerEventController.printAccountMenu();
             clearAdditionalText();
         });
 
@@ -107,14 +109,18 @@ public class OrganizerEventMenuPanel extends EventMenuPanel{
     }
 
     /**
-     * Rests the text in the text fields
+     * Resets the text in the text fields
      */
     public void clearAdditionalText(){
         eventNameTextField.setText("");
-
     }
 
+    /**
+     * Changes the colour of the components to match the theme
+     */
+    @Override
     public void changeColourOfExtraComponents(){
+        System.out.println(textColour);
         createEventButton.setForeground(textColour);
         editEventButton.setForeground(textColour);
         createAccountButton.setForeground(textColour);
@@ -122,6 +128,8 @@ public class OrganizerEventMenuPanel extends EventMenuPanel{
         eventToBeChanged.setForeground(textColour);
         instructions.setForeground(textColour);
         eventNameTextField.setForeground(textColour);
+        System.out.println("TextColour changed");
+
 
         createEventButton.setBackground(buttonColour1);
         editEventButton.setBackground(buttonColour1);

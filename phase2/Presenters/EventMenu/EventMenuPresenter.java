@@ -41,8 +41,12 @@ public class EventMenuPresenter {
     /**
      * Sets up the components of the GUI
      */
-    public void setUpMenu() {
-        eventMenuPanel.printMenu();
+    public void setUpMenu(String theme) {
+        eventMenuPanel.printMenu(theme);
+        showEventMenu();
+    }
+
+    public void showEventMenu(){
         eventMenuPanel.setText(eventManager.getEvents(), manager.getCurrentUser(), languageManager.languagePack);
         eventMenuPanel.changePanel(eventMenuPanel.getPanel());
     }
@@ -50,69 +54,6 @@ public class EventMenuPresenter {
     public void showNullEventError(){
         JOptionPane.showMessageDialog(eventMenuPanel.getPanel(), languageManager.languagePack.unknownEvent(),"Warning", JOptionPane.WARNING_MESSAGE); //TODO:
     }
-
-//    /**
-//     * The menu for events is initialized and commands relating to events can be
-//     * performed by typing in the correct strings into the command line.
-//     */
-//    public void run() {
-//        Scanner userInput = new Scanner(System.in);
-//        while (true) {
-//            printMenu();
-//            String[] command = userInput.nextLine().split("_");
-//            if (command[0].equals("0")) {
-//                break;
-//            }
-//            boolean standard = standardCommands(command);
-//            if (!standard) {
-//                extraCommands(command);
-//            }
-//        }
-//    }
-
-//    /**
-//     * Checks if the inputted command is one of the standard commands and tells the controller to perform it if it is
-//     *
-//     * @param input The command inputted by the user
-//     * @return True if the command is a standard command. False if it is not.
-//     */
-//    protected boolean standardCommands(String[] input) {
-//        try {
-//            Event event = eventManager.findEvent(input[1]);
-//            switch (input[0]) {
-//                case "1":
-//                    signUpResult(controller.signUpForEvent(event), event);
-//                    return true;
-//                case "2":
-//                    removalResult(controller.removeSpotFromEvent(event), event);
-//                    return true;
-//            }
-//        } catch (NullPointerException e) {
-//            System.out.println(languageManager.languagePack.unknownEvent());
-//        } catch (ArrayIndexOutOfBoundsException e) {
-//            System.out.println(languageManager.languagePack.unknownCommand());
-//        }
-//        return false;
-//    }
-//
-//    /**
-//     * Checks if the inputted command is one of the extra commands specific to this type of user. If it is,
-//     * tells the correct controller to run it.
-//     *
-//     * @param input The command inputted by the user.
-//     */
-//    protected void extraCommands(String[] input) {
-//        System.out.println(languageManager.languagePack.unknownCommand());
-//    }
-
-//    /**
-//     * Prints the initial menu of the Event Menu, showing the user the list of events they are attending, the list
-//     * of events they are not attending, and what commands can be used
-//     */
-//    public void printMenu() {
-//        eventMenuPanel.printMenu();
-//        //printCommands();
-//    }
 
     /**
      * Prints the result of trying to sign up for an event
@@ -151,8 +92,20 @@ public class EventMenuPresenter {
         eventMenuPanel.changePanel(mainMenuPanel.getPanel());
     }
 
+    /**
+     * Changes the theme of the program
+     * @param theme Theme of the program
+     */
     public void changeTheme(String theme){
         eventMenuPanel.changeTheme(theme);
+    }
+
+    /**
+     * Changes the language of the program
+     * @param language Language of the program
+     */
+    public void changeLanguage(String language){
+        eventMenuPanel.changeLanguage(language);
     }
 
 }

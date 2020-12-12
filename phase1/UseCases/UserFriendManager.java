@@ -56,7 +56,7 @@ public abstract class UserFriendManager implements Serializable {
      */
 
     public void sendMessageTo(User sender, User recipient, String messageContent) {
-        Message message = new Message(sender, recipient, messageContent);
+        Message message = new Message(1000 + userToMessages.size(), sender, recipient, messageContent);
         if (userToMessages.containsKey(createKey(sender, recipient))) {
             userToMessages.get(createKey(sender, recipient)).add(message);
         } else {

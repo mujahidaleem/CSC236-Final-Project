@@ -1,8 +1,5 @@
 import Controllers.LoginMenuController;
-import Gateways.RoomReader;
-import Gateways.UserReader;
-import Gateways.EventReader;
-import Gateways.MessageReader;
+import Gateways.*;
 import UseCases.Events.EventManager;
 import UseCases.Events.RoomManager;
 import UseCases.Language.LanguageManager;
@@ -23,19 +20,30 @@ public class Main {
 //        userReader.saveUserManager(userManager);
         UserManager userManager = userReader.readData();
 
-//        EventManager eventManager = eventReader.readFile();
-//        eventReader.createTable();
-//        eventReader.saveEventManager(eventManager);
-        EventManager eventManager = eventReader.readData();
+        EventManager eventManager = eventReader.readFile();
+        eventReader.createTable();
+        eventReader.saveEventManager(eventManager);
+        EventManager eventManager1 = eventReader.readData();
 
-//        RoomManager roomManager = roomReader.readFile();
-//        roomReader.saveRoomManager(roomManager);
-        RoomManager roomManager = roomReader.readData();
+        RoomManager roomManager = roomReader.readFile();
+        roomReader.createTable();
+        roomReader.saveRoomManager(roomManager);
+        RoomManager roomManager1 = roomReader.readData();
 
         LanguageManager languageManager = new LanguageManager("english");
 
         LoginMenuController loginMenuController = new LoginMenuController(languageManager, userReader, eventReader, roomReader);
         loginMenuController.printMenu();
+//        ScheduleSaver scheduleSaver = new ScheduleSaver(eventManager);
+
+//        try {
+//            scheduleSaver.generatePDF(LocalDateTime.now());
+//        } catch (DocumentException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
 //
 //        userFriendManager.setCurrentUser(null);
 //        userManager.setCurrentUser(null);

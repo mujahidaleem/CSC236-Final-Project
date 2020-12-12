@@ -46,11 +46,16 @@ public class LoginMenuController {
     private UserCreationPanel creationPanel;
 
     private MainMenuController mainMenuController;
-
+    private String currentTheme = "lightTheme";
+    private String currentLanguage = "english";
 
     /**
      * LoginMenuPresenter constructor
      *
+     * @param userReader the gateway to read the list of users
+     * @param eventReader the gateway to read the list of events
+     * @param roomReader the gateway to read the list of rooms
+     * @param languageManager stores the strings used in the GUI
      */
     public LoginMenuController(LanguageManager languageManager, UserReader userReader, EventReader eventReader, RoomReader roomReader) {
         this.userReader = userReader;
@@ -85,12 +90,15 @@ public class LoginMenuController {
         this.eventMenuFactory = new EventMenuFactory(userManager, eventManager, languageManager, roomManager, frame);
         this.messageMenuFactory = new MessageMenuFactory(userManager, eventManager, languageManager);
 
-        this.loginPanel = new MainLoginPanel(frame, this);
+        this.loginPanel = new MainLoginPanel(frame, this, languageManager);
         this.creationPanel = new UserCreationPanel(frame, languageManager,this);
 
         this.presenter = new LoginMenuPresenter(this, this.languageManager, loginPanel, creationPanel);
     }
 
+    /**
+     * Creates the frame of the GUI and the first panel
+     */
     public void printMenu(){
         frame.setSize(width, height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -99,10 +107,16 @@ public class LoginMenuController {
         frame.setVisible(true);
     }
 
+    /**
+     * Displays the GUI to create an account
+     */
     public void showCreateNewAccountPrompt(){
         presenter.showCreateNewAccountPrompt();
     }
 
+    /**
+     * Returns to the login GUI
+     */
     public void returnToLoginMenu(){
         presenter.showLoginMenu();
     }
@@ -120,7 +134,7 @@ public class LoginMenuController {
                 userManager.setCurrentUser(user);
                 this.mainMenuController = new MainMenuController(eventMenuFactory, messageMenuFactory,
                         userManager, languageManager, eventManager,frame, this);
-                mainMenuController.printMenu();
+                mainMenuController.printMenu(currentTheme);
                 status = true;
                 break;
             }
@@ -129,16 +143,6 @@ public class LoginMenuController {
             presenter.loginFailed();
         }
     }
-
-//    /**
-//     * Creates a main menu presenter in the event of a login
-//     *
-//     * @return MainMenuPresenter
-//     */
-//    public MainMenuPresenter login(LanguageManager languageManager) {
-//        MainMenuController mainMenuController = new MainMenuController(eventMenuFactory.getEventMenu(), messageMenuFactory.createMessageMenu(), userManager);
-//        return new MainMenuPresenter(eventMenuFactory.getEventMenu(), messageMenuFactory.createMessageMenu(), mainMenuController, languageManager);
-//    }
 
     /**
      * Creates a new user.
@@ -166,18 +170,31 @@ public class LoginMenuController {
         roomReader.saveRoomManager(roomManager);
     }
 
+    /**
+     * Tells the user that the wrong login credientials were used
+     */
     public void showWrongCredentials(){
         presenter.loginFailed();
     }
 
+    /**
+     * Changes the language of the system.
+     * @param language the new language
+     */
     public void changeLanguage(String language){
-        if(mainMenuController != null){
-            this.mainMenuController.changeLanguage(language);
-        }
+        currentLanguage = language;
         presenter.changeLanguage(language);
+        if(mainMenuController != null){
+            mainMenuController.changeLanguage(language);
+        }
     }
 
+    /**
+     * Changes the theme of the GUI
+     * @param string the new theme of the GUI
+     */
     public void changeTheme(String string){
+        currentTheme = string;
         presenter.changeTheme(string);
         if(mainMenuController != null){
             mainMenuController.changeTheme(string);

@@ -1,6 +1,7 @@
 package UseCases.Language;
 
 import Entities.Events.Event;
+import Entities.Users.Speaker;
 import Entities.Users.User;
 
 import java.io.Serializable;
@@ -10,7 +11,7 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     public String directory;
 
     /**
-     * EnglishLanguagePack constructor
+     * FrenchLanguagePack constructor
      *
      * @param language the language of the strings
      */
@@ -26,25 +27,13 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String[] eventStandardCommands() {
-//        System.out.println("---------------------------------------------------------------------------------");
-//        System.out.println("Pour revenir au menu principal, tapez 0");
-//        System.out.println("Pour vous inscrire à un événement, tapez 1_Événements");
-//        System.out.println("Pour annuler votre position dans un événement, tapez 2_Événement");
         return new String[]{"Menu principal", "Inscription", "Quitter", "Nom de l'événement"};
     }
 
     @Override
     public String[] organizerEventCommands() {
         return new String[]{"Créer un nouvel événement", "Modifier l'événement", "Créer un compte", "Nom de l'événement",
-                "Pour modifier les détails d'un événement, veuillez saisir \nle nom de l'événement et cliquez sur Modifier l'événement."};
-//        System.out.println("Pour créer un nouvel événement, tapez 3_Nom_YYYY-MM-DDTHH:mm:ss_numéro de chambre_id_la durée_capacité maximale");
-//        System.out.println("Pour affecter un orateur à un événement, tapez 4_événement_OrateurID");
-//        System.out.println("Pour supprimer un orateur d'un événement, tapez 5_événement");
-//        System.out.println("Pour supprimer un événement, tapez 6_événement");
-//        System.out.println("Pour changer la date d'un événement, tapez 7_Événement_nouvelle date");
-//        System.out.println("Pour changer la salle d'un événement, tapez 8_Événement_nouveau numéro de chambre");
-//        System.out.println("Pour créer un nouveau compte de conférencier, tapez 9_Nom_mot de passe");
-//        System.out.println("Pour voir la liste des orateurs, tapez 10");
+                "Pour modifier les détails d'un événement, veuillez saisir le nom de l'événement et cliquez sur Modifier l'événement."};
     }
 
     @Override
@@ -72,7 +61,9 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
 
     @Override
     public String[] organizerEventResultsFailure(Event event) {
-        return new String[]{"Désolé, un événement portant ce nom existe déjà",
+        return new String[]{"Vous ne pouvez pas créer d'événements dans le passé.",
+                "Désolé, un événement portant ce nom existe déjà",
+                "Désolé, la salle n'est pas disponible à ce moment-là.",
                 "Désolé, " + event.getSpeakers() +" n'est pas disponible à ce moment précis.",
                 "Cet événement n'a déjà pas de conférencier.",
                 "Désolé, l'heure de l'événement ne peut pas être modifiée.",
@@ -87,8 +78,8 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     }
 
     @Override
-    public String eventUnchangeable(Event event) {
-        return event.getEventName() + "ne peut pas être modifié par vous car vous n'êtes pas l'organisateur.";
+    public String eventUnchangeable(String event) {
+        return event + "ne peut pas être modifié par vous car vous n'êtes pas l'organisateur.";
     }
 
     @Override
@@ -103,7 +94,25 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
      */
     @Override
     public String[] changeEventPrompts() {
-        return new String[0];
+        return new String[]{"Nom", "Numéro de la salle", "Date", "Durée", "Capacité maximale", "Haut-parleurs", "Année",
+                "AttendeeOnlyEvent", "MultiSpeakerEvent", "OneSpeakerEvent",
+                "Supprimer l'événement", "Enregistrer les modifications", "Annuler", "Ajouter un haut-parleur", "Supprimer le haut-parleur",
+                "Mois", "Jour", "Heure", "Minute"};
+    }
+
+    /**
+     * Contains the string that will be shown upon starting the program
+     *
+     * @return Greetings to the user and available commands
+     */
+    @Override
+    public String unknownUserID() {
+        return "Cette ID n'exist pas";
+    }
+
+    @Override
+    public String invalidIDInput() {
+        return "l'entrée est invalide";
     }
 
     @Override
@@ -246,6 +255,16 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     }
 
     @Override
+    public String[] messageMenuButtons() {
+        return new String[0];
+    }
+
+    @Override
+    public String[] messageMenuLabels() {
+        return new String[0];
+    }
+
+    @Override
     public String logoutPrompt() {
         return "Voulez-vous quitter le programme?";
     }
@@ -268,22 +287,22 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
         return "Désolé, l'heure de l'événement ne peut pas être modifiée.";
     }
 
-    public String speakerRemovalSuccess(){
-        return "suppression réussie";
+    public String speakerRemovalSuccess(Speaker speaker){
+        return speaker.getName() + " ne parle plus à cet événement";
     }
 
-    public String speakerRemovalFailure(){
-        return "suppression échouée";
-    }
-
-    @Override
-    public String speakerAdditionSuccess() {
-        return "ajout réussi";
+    public String speakerRemovalFailure(Speaker speaker){
+        return speaker.getName() + " ne parle déjà pas à cet événement";
     }
 
     @Override
-    public String speakerAdditionFailure() {
-        return "ajout échoué";
+    public String speakerAdditionSuccess(Speaker speaker) {
+        return speaker.getName() + " parlera maintenant de cet événement";
+    }
+
+    @Override
+    public String speakerAdditionFailure(Speaker speaker) {
+        return speaker.getName() + " n'est pas disponible pour le moment";
     }
 
     @Override

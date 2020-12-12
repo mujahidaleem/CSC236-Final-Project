@@ -1,26 +1,30 @@
 package UseCases;
 
 import Entities.Admin;
+import Entities.Speaker;
+import Entities.Attendee;
+import Entities.Event;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class AdminManager extends UserManager{
 
     /**
      * An instance of this stores all the AdminUsers
      */
-        private Admin currentAdmin;
+        private Admin currentUser;
         public ArrayList<Admin> admins;
 
         /**
          * AdminManager constructor
          *
          * @param currentUser the Admin that is logged in
-         * @param Admins  the list of all Admin
+         * @param admins  the list of all Admin
          */
-        public AdminManager(Admin currentUser, List<Admin> Admins) {
+        public AdminManager(Admin currentUser, ArrayList<Admin> admins) {
             super(currentUser);
-            this.currentAdmin = currentUser;
+            this.currentUser = currentUser;
             this.admins = admins;
         }
 
@@ -44,7 +48,7 @@ public class AdminManager extends UserManager{
      * add a new Admin
      */
     public void addAdmin(Admin admin){
-        if(this.admins.contains(admin)== false){
+        if(this.admins.contains(admin) == false){
             this.admins.add(admin);
         }
     }
@@ -52,16 +56,16 @@ public class AdminManager extends UserManager{
     /**
      * get Attendees of a event
      */
-    public ArraryLisy<Attendee> getEventAttendees(Event event){
+    public ArrayList<Integer> getEventAttendees(Event event){
         return event.getAttendees();
     }
 
     /**
      * get Speaker of a event
      */
-    public Speaker getEventSpeakers(Event event){
-        Speaker result=null;
-        if(event.hasSpeaker()==true){
+    public int getEventSpeakers(Event event){
+        int result = 0;
+        if(event.hasSpeaker() == true){
             result = event.getSpeaker();
         }
         return result;
@@ -70,18 +74,18 @@ public class AdminManager extends UserManager{
     /**
      * get eventTime
      */
-    public DateTime getTime(Event event){
+    public LocalDateTime getTime(Event event){
         return event.getEventTime();
     }
 
     /**
      * check attendency
      */
-    public int ckeckSpeakerAttendency(Speaker Speaker){
+    public int checkSpeakerAttendency(Speaker speaker){
         return speaker.getAbsent();
     }
 
-    public int ckeckAttendeeAttendency(Attendee attendee){
+    public int checkAttendeeAttendency(Attendee attendee){
         return attendee.getAbsent();
     }
 

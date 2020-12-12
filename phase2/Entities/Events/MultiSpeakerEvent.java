@@ -23,11 +23,20 @@ public class MultiSpeakerEvent extends Event {
         this.speakers = speakers;
     }
 
+    /**
+     * Get the total number of individuals in the meeting
+     * @return the total number of individuals
+     */
     @Override
     public int getTotalNum() {
         return this.speakers.size() + this.attendees.size();
     }
 
+    /**
+     * tries to add a speaker to an event
+     * @param speaker speaker of the event
+     * @return if the speaker has been added to the event
+     */
     @Override
     public boolean addSpeaker(int speaker) {
         if(speakers.contains(speaker)){
@@ -38,6 +47,11 @@ public class MultiSpeakerEvent extends Event {
         }
     }
 
+    /**
+     * tries to remove a speaker from an event
+     * @param speaker the speaker
+     * @return if the spaker has been removed
+     */
     @Override
     public boolean removeSpeaker(int speaker){
         if (speakers.contains(speaker)){
@@ -48,11 +62,19 @@ public class MultiSpeakerEvent extends Event {
         }
     }
 
+    /**
+     * Gets all the speakers of the event
+     * @return a list of speakers
+     */
     @Override
     public ArrayList<Integer> getSpeakers() {
         return speakers;
     }
 
+    /**
+     * Checks if the event has any speakers
+     * @return if the envet has any speakers
+     */
     @Override
     public boolean hasSpeaker() {
         if(!speakers.isEmpty()) {

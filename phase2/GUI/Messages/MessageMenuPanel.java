@@ -1,8 +1,8 @@
-package GUI.Messages;
+package GUI;
 
 import Controllers.MessageMenu.UserFriendListController;
 import Entities.Users.User;
-import GUI.GUIPanel;
+import UseCases.Language.LanguageManager;
 import UseCases.Language.LanguagePack;
 import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
@@ -12,111 +12,110 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MessageMenuPanel extends GUIPanel {
-        private JTextArea myFriendList;
+    private JTextArea myFriendList;
 
-        private JTextField userIDField;
+    private JTextField userIDField;
 
-        private JButton addFriend;
-        private JButton deleteFriend;
-        private JButton startChat;
-        private JButton returnToMainMenu;
 
-        private JLabel friendListLabel;
-        private JLabel friendIDLabel;
+    private JButton addFriend;
+    private JButton deleteFriend;
+    private JButton startChat;
+    private JButton returnToMainMenu;
 
-        private final UserFriendListController userFriendListController;
-        private final UserFriendManager userFriendManager;
-        private final UserManager userManager;
+    private JLabel friendListLabel;
+    private JLabel friendIDLabel;
 
-        public MessageMenuPanel(UserFriendListController userFriendListController, UserFriendManager userFriendManager, UserManager userManager, JFrame frame){
-            super(frame);
-            this.panel = new JPanel();
-            this.userFriendListController = userFriendListController;
-            this.userFriendManager = userFriendManager;
-            this.userManager = userManager;
-        }
+    private final UserFriendListController userFriendListController;
+    private final UserFriendManager userFriendManager;
+    private final UserManager userManager;
 
-        public void setUpMenu(){
-            createButtons();
-            createLabels();
-            createFriendListArea();
-        }
+    public MessageMenuPanel(UserFriendListController userFriendListController, UserFriendManager userFriendManager, UserManager userManager, JFrame frame, LanguageManager languageManager){
+        super(frame, languageManager);
+        this.panel = new JPanel();
+        this.userFriendListController = userFriendListController;
+        this.userFriendManager = userFriendManager;
+        this.userManager = userManager;
+    }
 
-        public void createButtons(){
-            addFriend = new JButton();
-            addFriend.setBounds(500,10,100,50);
-            addFriend.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    userFriendManager.addNewFriend(userManager.findUser(Integer.parseInt(userIDField.getText())));
-                }
-            });
-            this.panel.add(addFriend);
+    public void setUpMenu(){
+        createButtons();
+        createLabels();
+        createFriendListArea();
+    }
 
-            deleteFriend = new JButton();
-            deleteFriend.setBounds(570, 10, 100, 50);
-            deleteFriend.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    int targetUserID = Integer.parseInt(userIDField.getText());
-                    User targetUser = userManager.findUser(targetUserID);
-                    userFriendListController.removeFrom(targetUser);
-                }
-            });
-            this.panel.add(deleteFriend);
+    public void createButtons(){
+        addFriend = new JButton();
+        addFriend.setBounds(500,10,100,50);
+        addFriend.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                userFriendManager.addNewFriend(userManager.findUser(Integer.parseInt(userIDField.getText())));
+            }
+        });
+        this.panel.add(addFriend);
 
-            startChat = new JButton();
-            startChat.setBounds(670, 10, 100, 50);
-            startChat.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    int targetUserID = Integer.parseInt(userIDField.getText());
-                    User targetUser = userManager.findUser(targetUserID);
-                    userFriendListController.printChatPanel(targetUser);
-                }
-            });
-            this.panel.add(startChat);
+        deleteFriend = new JButton();
+        deleteFriend.setBounds(570, 10, 100, 50);
+        deleteFriend.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int targetUserID = Integer.parseInt(userIDField.getText());
+                User targetUser = userManager.findUser(targetUserID);
+                userFriendListController.removeFrom(targetUser);
+            }
+        });
+        this.panel.add(deleteFriend);
 
-            returnToMainMenu = new JButton();
-            returnToMainMenu.setBounds(770, 10, 100, 50);
-            startChat.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    userFriendListController.returnToMainMenu();
-                }
-            });
-            this.panel.add(returnToMainMenu);
-        }
+        startChat = new JButton();
+        startChat.setBounds(670, 10, 100, 50);
+        startChat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO
+            }
+        });
+        this.panel.add(startChat);
 
-        public void createLabels(){
-            friendListLabel = new JLabel();
-            friendListLabel.setBounds(30, 10, 100, 20);
-            this.panel.add(friendListLabel);
+        returnToMainMenu = new JButton();
+        returnToMainMenu.setBounds(770, 10, 100, 50);
+        startChat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                userFriendListController.returnToMainMenu();
+            }
+        });
+        this.panel.add(returnToMainMenu);
+    }
 
-            friendIDLabel = new JLabel();
-            friendIDLabel.setBounds(800, 10, 100, 20);
-            this.panel.add(friendIDLabel);
-        }
+    public void createLabels(){
+        friendListLabel = new JLabel();
+        friendListLabel.setBounds(30, 10, 100, 20);
+        this.panel.add(friendListLabel);
 
-        public void createFriendListArea(){
-            myFriendList = new JTextArea();
-            myFriendList.setBounds(30, 50, 100, 400);
-            this.panel.add(myFriendList);
-        }
+        friendIDLabel = new JLabel();
+        friendIDLabel.setBounds(800, 10, 100, 20);
+        this.panel.add(friendIDLabel);
+    }
 
-        public void printFriendList(){
+    public void createFriendListArea(){
+        myFriendList = new JTextArea();
+        myFriendList.setBounds(30, 50, 100, 400);
+        this.panel.add(myFriendList);
+    }
 
-        }
-        public void setText(LanguagePack languagePack){
-            addFriend.setText(languagePack.messageMenuButtons()[0]);
-            deleteFriend.setText(languagePack.messageMenuButtons()[1]);
-            startChat.setText(languagePack.messageMenuButtons()[2]);
-            returnToMainMenu.setText(languagePack.messageMenuButtons()[3]);
+    public void printFriendList(){
 
-            friendListLabel.setText(languagePack.messageMenuLabels()[0]);
+    }
+    public void setText(LanguagePack languagePack){
+        addFriend.setText(languagePack.messageMenuButtons()[0]);
+        deleteFriend.setText(languagePack.messageMenuButtons()[1]);
+        startChat.setText(languagePack.messageMenuButtons()[2]);
+        returnToMainMenu.setText(languagePack.messageMenuButtons()[3]);
 
-            myFriendList.setText(userFriendManager.displayFriend(userManager));
-        }
+        friendListLabel.setText(languagePack.messageMenuLabels()[0]);
+
+        myFriendList.setText("");
+    }
 }
 
 

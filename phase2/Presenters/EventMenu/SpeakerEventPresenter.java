@@ -1,7 +1,6 @@
 package Presenters.EventMenu;
 
-import Controllers.EventMenu.SpeakerEventController;
-import Entities.Events.Event;
+
 import GUI.Events.SpeakerEventMenuPanel;
 import GUI.MainMenuPanel;
 import UseCases.Events.EventManager;
@@ -14,6 +13,7 @@ import UseCases.Users.SpeakerManager;
  */
 public class SpeakerEventPresenter extends EventMenuPresenter {
     private SpeakerManager speakerManager;
+    private SpeakerEventMenuPanel speakerEventMenuPanel;
 
     /**
      * EventMenuPresenter constructor
@@ -25,37 +25,23 @@ public class SpeakerEventPresenter extends EventMenuPresenter {
                                  SpeakerEventMenuPanel speakerEventMenuPanel, MainMenuPanel mainMenuPanel) {
         super(manager, eventManager, languageManager, speakerEventMenuPanel, mainMenuPanel);
         this.speakerManager = manager;
+        this.speakerEventMenuPanel = speakerEventMenuPanel;
     }
 
+    /**
+     * Show the event menu
+     */
+    public void showEventMenu(){
+        speakerEventMenuPanel.setText(eventManager.getEvents(), manager.getCurrentUser(), languageManager.languagePack);
+        mainMenuPanel.changePanel(speakerEventMenuPanel.getPanel());
+    }
 
-
-//    /**
-//     * Prints the initial menu of the Event Menu, showing the speaker the list of events they are attending, the list
-//     * of events they are speaking at , the list of events they are not attending, and what commands can be used
-//     */
-//    @Override
-//    public void printMenu() {
-//        System.out.println(manager.getCurrentUser());
-//        System.out.println(languageManager.languagePack.eventMenuHeadings()[0]);
-//        for (Event event : eventManager.getEvents()) {
-//            if (manager.getCurrentUser().getPersonalSchedule().containsKey(event.getEventName())) {
-//                System.out.println(event);
-//            }
-//        }
-//        System.out.println("---------------------------------------------------------------------------------");
-//        System.out.println(languageManager.languagePack.eventMenuHeadings()[2]);
-//        for (Event event : eventManager.getEvents()) {
-//            if (speakerManager.getCurrentSpeaker().getSpeakingSchedule().containsKey(event.getEventName())) {
-//                System.out.println(event);
-//            }
-//        }
-//        System.out.println("----------------------------------------------------------------------------------");
-//        System.out.println(languageManager.languagePack.eventMenuHeadings()[1]);
-//        for (Event event : eventManager.getEvents()) {
-//            if (!manager.getCurrentUser().getPersonalSchedule().containsKey(event.getEventName())) {
-//                System.out.println(event);
-//            }
-//        }
-//        printCommands();
-//    }
+    /**
+     * Sets up the menu in the correct theme
+     * @param theme Theme of the program
+     */
+    public void setUpMenu(String theme){
+        speakerEventMenuPanel.printMenu(theme);
+        showEventMenu();
+    }
 }

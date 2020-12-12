@@ -28,6 +28,9 @@ public class OrganizerEventController extends EventMenuController {
     private OrganizerEventMenuPanel panel;
     private OrganizerEventPresenter eventPresenter;
 
+    private boolean editMenuCreated = false;
+    private boolean accountMenuCreated = false;
+
     /**
      * OrganizerEventController constructor
      *
@@ -39,23 +42,46 @@ public class OrganizerEventController extends EventMenuController {
     public OrganizerEventController(OrganizerManager manager, RoomManager roomManager,
                                     EventManager eventManager, UserManager userManager, LanguageManager languageManager,
                                     SpeakerManager speakerManager,
-                                    AccountCreatorFactory accountCreatorFactory, JFrame frame, MainMenuPanel mainMenuPanel){
+                                    AccountCreatorFactory accountCreatorFactory, JFrame frame, MainMenuPanel mainMenuPanel) {
         super(userManager, eventManager, roomManager, languageManager, frame, mainMenuPanel);
         this.organizerManager = manager;
         this.speakerManager = speakerManager;
         this.accountCreatorFactory = accountCreatorFactory;
         this.eventFactory = new EventFactory();
-        this.panel = new OrganizerEventMenuPanel(this, frame);
+        this.panel = new OrganizerEventMenuPanel(this, frame, languageManager);
         this.eventPresenter = new OrganizerEventPresenter(organizerManager, speakerManager, eventManager,
-                languageManager, panel, new EditEventPanel(frame,this, languageManager.languagePack), mainMenuPanel,
-                new CreateAccountPanel(frame, this, languageManager.languagePack));
+                languageManager, panel, new EditEventPanel(frame, this, languageManager), mainMenuPanel,
+                new CreateAccountPanel(frame, this, languageManager));
     }
 
+    /**
+     * Displays the event menu of an organizer and sets it up if it hasn't already been set up
+     *
+     * @param theme the theme of the GUI
+     */
     @Override
-    public void printMenu(){
-        eventPresenter.setUpMenu();
+    public void printMenu(String theme) {
+        currentTheme = theme;
+        if (menuCreated) {
+            eventPresenter.showEventMenu();
+        } else {
+            eventPresenter.setUpMenu(currentTheme);
+            menuCreated = true;
+        }
     }
 
+    /**
+     * Displays the event menu of an organizer
+     */
+    public void showEventMenu() {
+        eventPresenter.showEventMenu();
+    }
+
+    /**
+     * Tries to remove a user from an event
+     *
+     * @param event the event the user is trying to cancel their spot from
+     */
     @Override
     public void removeSpotFromEvent(Event event) {
         if (eventManager.removeUser(userManager.getCurrentUser(), event)) {
@@ -66,6 +92,11 @@ public class OrganizerEventController extends EventMenuController {
         }
     }
 
+    /**
+     * Tries to sign a user up for an event
+     *
+     * @param event the event the user is trying to attend
+     */
     @Override
     public void signUpForEvent(Event event) {
         boolean canBook = eventManager.spaceAvailable(event) &&                                     // if event still Event and Room still has space
@@ -78,40 +109,57 @@ public class OrganizerEventController extends EventMenuController {
         }
     }
 
-    public void reprintEvents(){
-        eventPresenter.reprintEvents();
-    }
-
-    public void showCreateAccountMenu(){
-        eventPresenter.showCreateAccountMenu();
-    }
-
-    public void createEvent(String name, LocalDateTime dateTime, int roomNumber, int maxCapacity, int duration, String type){
-        if (dateTime.isAfter(LocalDateTime.now()) && eventManager.nameAvailable(name) && roomManager.hasRoom(roomNumber)
-                && roomManager.bookable(roomNumber, dateTime, duration)) {
-            ArrayList<Integer> speakers = new ArrayList<>();
-            speakers.add(0);
-            Event event = eventManager.createEvent(type, name,dateTime,duration,organizerManager.getCurrentOrganizer().getId(), roomNumber, maxCapacity, new ArrayList<>(), speakers);
-            organizerManager.getCurrentOrganizer().get_eventsOrganizing().put(event.getEventName(), event.getEventTime());
-            roomManager.scheduleEvent(roomManager.findRoom(event.getRoomNumber()),event.getEventTime(), event.getDuration(), event);
-            eventPresenter.createEventResults(true, event);
-        } else {
-            eventPresenter.createEventResults(false, null);
+    /**
+     * Creates an event based on the inputted information form the organizer user
+     *
+     * @param name        the name of the event
+     * @param dateTime    the starting time of the event
+     * @param roomNumber  the room number of the event
+     * @param maxCapacity the maximum capacity of the event
+     * @param duration    the duration of the event
+     * @param type        the type of event that is being created
+     */
+    public void createEvent(String name, LocalDateTime dateTime, int roomNumber, int maxCapacity, int duration, String type) {
+        if (dateTime.isAfter(LocalDateTime.now())){
+            if(eventManager.nameAvailable(name)){
+                if(roomManager.hasRoom(roomNumber) && roomManager.bookable(roomNumber, dateTime, duration)){
+                    ArrayList<Integer> speakers = new ArrayList<>();
+                    speakers.add(0);
+                    Event event = eventManager.createEvent(type, name, dateTime, duration, organizerManager.getCurrentOrganizer().getId(), roomNumber, maxCapacity, new ArrayList<>(), speakers);
+                    organizerManager.getCurrentOrganizer().get_eventsOrganizing().put(event.getEventName(), event.getEventTime());
+                    roomManager.scheduleEvent(roomManager.findRoom(event.getRoomNumber()), event.getEventTime(), event.getDuration(), event);
+                    eventPresenter.createEventResults(3, event);
+                } else {
+                    eventPresenter.createEventResults(2, null);
+                }
+            }else {
+                eventPresenter.createEventResults(1, null);
+            }
+        } else{
+            eventPresenter.createEventResults(0, null);
         }
     }
-    //TODO: if there is time, change this so it displays why there was an error.
 
 
-    public void changeEventInformation(Event event, LocalDateTime dateTime, int duration, int maxCapacity, int roomNumber){
-        if(changeEventDate(event, dateTime)){
-            if (changeEventRoom(event, roomNumber)){
-                if (setMaxCapacity(event, maxCapacity)){
-                    if(setDuration(event,duration)){
+    /**
+     * Changes the information of an event based on what the organizer has inputted
+     *
+     * @param event       the event being changed
+     * @param dateTime    the new starting date of the event
+     * @param duration    the new duration of the event
+     * @param maxCapacity the new maximum capacity of the event
+     * @param roomNumber  the new room number of the event
+     */
+    public void changeEventInformation(Event event, LocalDateTime dateTime, int duration, int maxCapacity, int roomNumber) {
+        if (changeEventDate(event, dateTime)) {
+            if (changeEventRoom(event, roomNumber)) {
+                if (setMaxCapacity(event, maxCapacity)) {
+                    if (setDuration(event, duration)) {
                         eventPresenter.changeEventInformationResults(event);
                     } else {
                         eventPresenter.changeEventDurationFailure();
                     }
-                } else{
+                } else {
                     eventPresenter.changeEventCapacityFailure();
                 }
             } else {
@@ -122,87 +170,75 @@ public class OrganizerEventController extends EventMenuController {
         }
     }
 
-    public void showEventMenu(){
-        eventPresenter.showEventMenu();
+    /**
+     * Displays the menu for editing or creating events
+     *
+     * @param event the event that is being created. It is null if a new event is being created
+     * @param i     true if an event is being created, false if an event is being modified
+     */
+    public void printEditMenu(Event event, boolean i) {
+        if (editMenuCreated) {
+            eventPresenter.showEditMenu(event, i);
+        } else {
+            eventPresenter.setUpEditMenu(event, i, currentTheme);
+            editMenuCreated = true;
+        }
     }
 
-    public void showEditMenu(Event event, boolean i){
-        eventPresenter.showEditMenu(event, i);
+    /**
+     * Displays the event for creating new accounts
+     */
+    public void printAccountMenu() {
+        if (accountMenuCreated) {
+            eventPresenter.showCreateAccountMenu();
+        } else {
+            eventPresenter.setUpCreateAccountMenu(currentTheme);
+            accountMenuCreated = true;
+        }
     }
 
-    public int showAddSpeakerPrompt(){
+    /**
+     * Displays a pop up menu asking for the id of the speaker
+     *
+     * @return the id of the speaker
+     */
+    public int showAddSpeakerPrompt() {
         return eventPresenter.showAddSpeakerPrompt();
     }
 
+    /**
+     * changes the theme of the current GUI
+     *
+     * @param string the new theme
+     */
+    public void changeTheme(String string) {
+        currentTheme = string;
+        if (menuCreated) {
+            eventPresenter.changeTheme(string);
+        }
+        if (editMenuCreated) {
+            eventPresenter.changeEditPanelTheme(string);
+        }
+        if (accountMenuCreated) {
+            eventPresenter.changeAccountPanelTheme(string);
+        }
+    }
 
-//    /**
-//     * Tries to create an event with no speakers and add it to the list of events if event name is available and
-//     * if the event created does not create double booking.
-//     *
-//     * @param name       the name of the new event
-//     * @param dateTime       when the new event will happen
-//     * @param roomNum where the new event will happen
-//     * @return whether or not the event can be created
-//     */
-//
-//    public Event createAttendeeOnlyEvent(String name, int roomNum, int maxCapacity, LocalDateTime dateTime,
-//                                                     int duration) {
-//        Event eventCreated = eventManager.createAttendeeOnlyEvent(name, dateTime, duration,
-//                organizerManager.getCurrentOrganizer(), roomNum, maxCapacity);
-//
-//        if (dateTime.isAfter(LocalDateTime.now()) && eventManager.nameAvailable(name) && roomManager.hasRoom(roomNum)
-//                && roomManager.bookable(roomNum, dateTime, duration)) {
-//            return eventCreated;
-//        }
-//        return null;
-//    }
-//
-//    /**
-//     * Tries to create an event with more than 1 speaker and add it to the list of events if event name is available and
-//     * if the event created does not create double booking.
-//     *
-//     * @param name       the name of the new event
-//     * @param dateTime       when the new event will happen
-//     * @param roomNum where the new event will happen
-//     * @return whether or not the event can be created
-//     */
-//
-//    public MultiSpeakerEvent createMultiSpeakerEvent(String name, int roomNum, int maxCapacity, LocalDateTime dateTime,
-//                                         int duration) {
-//        MultiSpeakerEvent eventCreated = eventManager.createMultiSpeakerEvent(name, dateTime, duration,
-//                organizerManager.getCurrentOrganizer(), roomNum, maxCapacity);
-//
-//        if (dateTime.isAfter(LocalDateTime.now()) && eventManager.nameAvailable(name) && roomManager.hasRoom(roomNum)
-//                && roomManager.bookable(roomNum, dateTime, duration)) {
-//            return eventCreated;
-//        }
-//        return null;
-//    }
-//
-//    /**
-//     * Tries to create an event with 1 speaker and add it to the list of events if event name is available and
-//     * if the event created does not create double booking.
-//     *
-//     * @param name       the name of the new event
-//     * @param dateTime       when the new event will happen
-//     * @param roomNum where the new event will happen
-//     * @return whether or not the event can be created
-//     */
-//
-//    public OneSpeakerEvent createOneSpeakerEvent(String name, int roomNum, int maxCapacity, LocalDateTime dateTime,
-//                                                     int duration) {
-//        OneSpeakerEvent eventCreated = eventManager.createOneSpeakerEvent(name, dateTime, duration,
-//                organizerManager.getCurrentOrganizer(), roomNum, maxCapacity);
-//
-//        if (dateTime.isAfter(LocalDateTime.now()) && eventManager.nameAvailable(name) && roomManager.hasRoom(roomNum)
-//                && roomManager.bookable(roomNum, dateTime, duration)) {
-//            return eventCreated;
-//        }
-//        return null;
-//    }
-
-    public Room createRoom(int roomCapacity){
-        return roomManager.addRoom(roomCapacity);
+    /**
+     * Changes the language of the GUI
+     * @param language the new language
+     */
+    public void changeLanguage(String language){
+        currentLanguage = language;
+        if (menuCreated) {
+            eventPresenter.changeLanguage(language);
+        }
+        if (editMenuCreated) {
+            eventPresenter.changeEditPanelLanguage(language);
+        }
+        if (accountMenuCreated) {
+            eventPresenter.changeAccountPanelLanguage(language);
+        }
     }
 
     /**
@@ -228,7 +264,10 @@ public class OrganizerEventController extends EventMenuController {
         }
     }
 
-    public void showNullSpeaker(){
+    /**
+     * Tells the user that the speaker could not be found
+     */
+    public void showNullSpeaker() {
         eventPresenter.showNullSpeaker();
     }
 
@@ -245,7 +284,7 @@ public class OrganizerEventController extends EventMenuController {
             if (eventManager.hasSpeaker(event)) {
                 speakerManager.removeEvent(speaker1, event);
                 eventManager.removeSpeaker(event, speaker);
-                eventPresenter.removeSpeakerResults(true,speaker1);
+                eventPresenter.removeSpeakerResults(true, speaker1);
             } else {
                 eventPresenter.removeSpeakerResults(false, speaker1);
             }
@@ -255,14 +294,14 @@ public class OrganizerEventController extends EventMenuController {
     /**
      * Checks if the date of an event can be changed and if so, changes the date of the event
      *
-     * @param event the event that the organizer is trying to change the date
-     * @param newDateTime  the new date of the event
+     * @param event       the event that the organizer is trying to change the date
+     * @param newDateTime the new date of the event
      * @return whether or not the date of the event has been changed
      */
     public boolean changeEventDate(Event event, LocalDateTime newDateTime) {
         Room currentRoom = roomManager.findRoom(event.getRoomNumber());
 
-        if (roomManager.bookable(event.getRoomNumber(), newDateTime, event.getDuration()) && speakerManager.dateChangeable(event, newDateTime)){
+        if (roomManager.bookable(event.getRoomNumber(), newDateTime, event.getDuration()) && speakerManager.dateChangeable(event, newDateTime)) {
             roomManager.removeEvent(currentRoom, event);
             eventManager.changeDate(event, newDateTime);
             roomManager.scheduleEvent(currentRoom, newDateTime, event.getDuration(), event);
@@ -283,7 +322,7 @@ public class OrganizerEventController extends EventMenuController {
         Room currentRoom = roomManager.findRoom(event.getRoomNumber());
         LocalDateTime startTime = event.getEventTime();
         int duration = event.getDuration();
-        if (roomManager.hasRoom(roomNumber) && roomManager.bookable(roomNumber, startTime, duration)){
+        if (roomManager.hasRoom(roomNumber) && roomManager.bookable(roomNumber, startTime, duration)) {
             Room newRoom = roomManager.findRoom(roomNumber);
             roomManager.removeEvent(currentRoom, event);
             roomManager.scheduleEvent(newRoom, startTime, duration, event);
@@ -292,13 +331,20 @@ public class OrganizerEventController extends EventMenuController {
         return false;
     }
 
-    public boolean setDuration(Event event, int newDuration){
+    /**
+     * Sets the duration of an event to a new value
+     *
+     * @param event       the event being changed
+     * @param newDuration the new duration of the event
+     * @return whether the duration has been successfully changed
+     */
+    public boolean setDuration(Event event, int newDuration) {
         Room currentRoom = roomManager.findRoom(event.getRoomNumber());
         LocalDateTime startTime = event.getEventTime();
 
         roomManager.removeEvent(currentRoom, event);
 
-        if (roomManager.bookable(event.getRoomNumber(), startTime, newDuration)){
+        if (roomManager.bookable(event.getRoomNumber(), startTime, newDuration)) {
             roomManager.scheduleEvent(currentRoom, startTime, newDuration, event);
             eventManager.setDuration(event, newDuration);
             return true;
@@ -308,23 +354,29 @@ public class OrganizerEventController extends EventMenuController {
         return false;
     }
 
-    public boolean setMaxCapacity(Event event, int newMax){
-        if (newMax <= roomManager.findRoom(event.getRoomNumber()).getRoomCapacity()){
+    /**
+     * Sets the maximum capacity of an event to a new value. The new value must be smaller than the capacity of the
+     * room and the number of current people in the event
+     *
+     * @param event  the event being changed
+     * @param newMax the new maximum capacity of the event
+     * @return returns the max capacity of an event
+     */
+    public boolean setMaxCapacity(Event event, int newMax) {
+        if (newMax <= roomManager.findRoom(event.getRoomNumber()).getRoomCapacity() && newMax <= event.getTotalNum()) {
             event.setMaxCapacity(newMax);
             return true;
         }
         return false;
     }
 
-
     /**
      * Checks if the event can be deleted and if so, deletes the event and removes if from all user's schedule
      *
      * @param event the event that the organizer is trying to delete
-     * @return whether or not the event has been deleted
      */
     public void deleteEvent(Event event) throws NullEventException {
-        if(event == null){
+        if (event == null) {
             throw new NullEventException();
         }
         if (organizerManager.cancelEvent(event)) {
@@ -344,22 +396,27 @@ public class OrganizerEventController extends EventMenuController {
      * @return if the current organizer is organizing this event
      */
     public boolean eventModifiable(Event event) throws NullEventException {
-        if(event == null){
+        if (event == null) {
             throw new NullEventException();
         }
         return event.getOrganizer() == organizerManager.getCurrentOrganizer().getId();
     }
 
-    public void showNonModifiableEventPrompt(String string){
+    /**
+     * Tells the organizer that they cannot modify this event.
+     *
+     * @param string the name of the event
+     */
+    public void showNonModifiableEventPrompt(String string) {
         eventPresenter.showNonModifiableEventPrompt(string);
     }
 
     /**
      * Creates an account depending on accountType, returns null if accountType password is nothing or accountype DNE
-     * @param name name of account
-     * @param password password of account
+     *
+     * @param name        name of account
+     * @param password    password of account
      * @param accountType type of account (admin, attendee, organizer, speaker)
-     * @return User account
      */
     public void createAccount(String name, String password, String accountType) {
         User user = accountCreatorFactory.createAccountFactory(userManager.getUsers().size() + 1000, name, password,
@@ -368,11 +425,19 @@ public class OrganizerEventController extends EventMenuController {
         eventPresenter.createUserAccountResults(true, user, accountType);
     }
 
-    public SpeakerManager getSpeakerManager(){
+    /**
+     * returns the speakerManager
+     *
+     * @return speakerManager
+     */
+    public SpeakerManager getSpeakerManager() {
         return speakerManager;
     }
 
-    public void showIncorrectDate(){
+    /**
+     * Tells the user that the date inputted could not be recognized
+     */
+    public void showIncorrectDate() {
         eventPresenter.showIncorrectDate();
     }
 }

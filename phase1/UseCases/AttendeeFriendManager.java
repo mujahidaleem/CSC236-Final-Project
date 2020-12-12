@@ -3,6 +3,7 @@ package UseCases;
 import Entities.Attendee;
 import Entities.Message;
 import Entities.User;
+import UseCases.UserFriendManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

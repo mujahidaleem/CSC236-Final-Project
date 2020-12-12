@@ -2,6 +2,7 @@ package GUI;
 
 import Controllers.MainMenuController;
 import Entities.Events.Event;
+import GUI.MainFrame.ThemeManager;
 import Gateways.ScheduleSaver;
 import UseCases.Events.EventManager;
 
@@ -13,6 +14,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import UseCases.Language.LanguageManager;
 import UseCases.Language.LanguagePack;
 import UseCases.PdfGenerator;
 import com.itextpdf.text.DocumentException;
@@ -47,9 +49,10 @@ public class MainMenuPanel extends GUIPanel {
     private EventManager eventManager;
     private final PdfGenerator pdfGenerator;
     private final MainMenuController mainMenuController;
+    private ThemeManager themeManager;
 
-    public MainMenuPanel(JFrame frame, EventManager eventManager, MainMenuController mainMenuController) {
-        super(frame);
+    public MainMenuPanel(JFrame frame, EventManager eventManager, MainMenuController mainMenuController, LanguageManager languageManager) {
+        super(frame, languageManager);
         this.panel = new JPanel();
         this.panel.setLayout(null);
         this.scheduleSaver = new ScheduleSaver(eventManager);
@@ -61,16 +64,18 @@ public class MainMenuPanel extends GUIPanel {
     /**
      * Create the components of the GUI
      */
-    public void setUpMenu() {
+    public void setUpMenu(String theme) {
         createDateButton();
         createSaveScheduleButton();
         createButtons();
+        changeTheme(theme);
     }
 
     /**
      * Creates the buttons shown on the GUI
      */
     public void createButtons() {
+
         event = new JButton();
         event.setBounds(buttonX, 100, buttonWidth, buttonHeight);
         event.addActionListener(e -> mainMenuController.printEventMenu());
@@ -149,8 +154,6 @@ public class MainMenuPanel extends GUIPanel {
 
         panel.repaint();
         panel.revalidate();
-
-
     }
 
     private void addEvents(LocalDateTime dateTime) {
@@ -191,13 +194,17 @@ public class MainMenuPanel extends GUIPanel {
 
     public void createSaveScheduleButton() {
         saveScheduleButton = new JButton();
-        saveScheduleButton.setBounds(500, 20, 70, 30);
+        saveScheduleButton.setBounds(500, 20, 100, 30);
         saveScheduleButton.addActionListener(e -> {
-            LocalDateTime date = LocalDateTime.parse(yearTextField.getText() + "-" + monthTextField.getText() + "-" + dayTextField.getText() + "T00:00:00");
             try {
-                scheduleSaver.generatePDF(pdfGenerator.getStartOfWeek(date));
-            } catch (DocumentException | IOException e1) {
-                e1.printStackTrace();
+                LocalDateTime date = LocalDateTime.parse(yearTextField.getText() + "-" + monthTextField.getText() + "-" + dayTextField.getText() + "T00:00:00");
+                try {
+                    scheduleSaver.generatePDF(pdfGenerator.getStartOfWeek(date));
+                } catch (DocumentException | IOException e1) {
+                    e1.printStackTrace();
+                }
+            } catch (DateTimeParseException f){
+                mainMenuController.showIncorrectDate();
             }
         });
 
@@ -226,5 +233,34 @@ public class MainMenuPanel extends GUIPanel {
         saveScheduleButton.setText(languagePack.mainMenuCommands()[6]);
         changePasswordButton.setText(languagePack.mainMenuCommands()[7]);
         logoutButton.setText(languagePack.mainMenuCommands()[8]);
+    }
+
+    public void changeColours(){
+        panel.setBackground(backgroundColour);
+
+        event.setForeground(textColour);
+        messages.setForeground(textColour);
+        yearLabel.setForeground(textColour);
+        monthLabel.setForeground(textColour);
+        dayLabel.setForeground(textColour);
+
+        saveScheduleButton.setForeground(textColour);
+        changePasswordButton.setForeground(textColour);
+        logoutButton.setForeground(textColour);
+
+        setDate.setForeground(textColour);
+        setDate.setBackground(buttonColour1);
+        changePasswordButton.setBackground(buttonColour1);
+        event.setBackground(buttonColour1);
+        messages.setBackground(buttonColour1);
+        saveScheduleButton.setBackground(buttonColour1);
+        logoutButton.setBackground(buttonColour1);
+
+        yearTextField.setForeground(textColour);
+        yearTextField.setBackground(textFieldColour);
+        monthTextField.setForeground(textColour);
+        monthTextField.setBackground(textFieldColour);
+        dayTextField.setForeground(textColour);
+        dayTextField.setBackground(textFieldColour);
     }
 }

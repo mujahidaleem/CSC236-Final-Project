@@ -97,7 +97,7 @@ public abstract class UserFriendListController {
     }
 
 
-    public void changeTheme(String theme){
+    public void changeLanguage(String language){
         //TODO: change this
     }
 }

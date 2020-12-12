@@ -13,6 +13,7 @@ import UseCases.Users.UserManager;
 import javax.swing.*;
 
 public class MainMenuController {
+    private boolean menuCreated = false;
 
     private EventMenuController eventMenuController;
     private UserFriendListController friendListController;
@@ -23,6 +24,8 @@ public class MainMenuController {
     private MainMenuPresenter presenter;
 
     private LoginMenuController loginMenuController;
+    private String currentTheme;
+    private String currentLanguage;
 
     /**
      * @param userManager          attribute userManager
@@ -30,7 +33,7 @@ public class MainMenuController {
     public MainMenuController(EventMenuFactory eventMenuFactory, MessageMenuFactory messageMenuFactory,
                               UserManager userManager, LanguageManager languageManager, EventManager eventManager,
                               JFrame frame, LoginMenuController loginMenuController) {
-        this.mainMenuPanel = new MainMenuPanel(frame, eventManager, this);
+        this.mainMenuPanel = new MainMenuPanel(frame, eventManager, this, languageManager);
         this.presenter = new MainMenuPresenter(languageManager, mainMenuPanel);
         this.userManager = userManager;
         this.eventManager = eventManager;
@@ -45,15 +48,13 @@ public class MainMenuController {
      */
 
     public void printEventMenu() {
-        eventMenuController.printMenu();
+        eventMenuController.printMenu(currentTheme);
     }
 
-    /**
-     * main method, called by the main code to initialize MainMenuPresenter
-     */
-
-    public void printMenu() {
-        presenter.setUpMenu();
+    public void printMenu(String theme) {
+        currentTheme = theme;
+        presenter.setUpMenu(currentTheme);
+        menuCreated = true;
     }
 
     /**
@@ -63,10 +64,7 @@ public class MainMenuController {
         friendListController.printMenu();
     }
 
-    public void changeLanguage(String language){
 
-        presenter.changeLanguage(language);
-    }
 
     public void showIncorrectDate(){
         presenter.showIncorrectDate();
@@ -94,12 +92,28 @@ public class MainMenuController {
     }
 
     public void changeTheme(String theme){
-        presenter.changeTheme(theme);
-        if(eventMenuController != null){
+        currentTheme = theme;
+        if(menuCreated){
+            presenter.changeTheme(theme);
+        }
+        if(eventMenuController.isMenuCreated()){
             eventMenuController.changeTheme(theme);
         }
         if(friendListController != null){
             friendListController.changeTheme(theme);
+        }
+    }
+
+    public void changeLanguage(String language){
+        currentLanguage = language;
+        if(menuCreated){
+            presenter.changeLanguage(language);
+        }
+        if(eventMenuController.isMenuCreated()){
+            eventMenuController.changeLanguage(language);
+        }
+        if(friendListController != null){
+            friendListController.changeLanguage(language);
         }
     }
 }

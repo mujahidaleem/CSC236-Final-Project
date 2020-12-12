@@ -1,6 +1,7 @@
 package UseCases.Language;
 
 import Entities.Events.Event;
+import Entities.Users.Speaker;
 import Entities.Users.User;
 
 /**
@@ -188,7 +189,7 @@ public interface LanguagePack {
      * @param event the event that the organizer is attempting to modify
      * @return a string telling that event cannot be modified
      */
-    String eventUnchangeable(Event event);
+    String eventUnchangeable(String event);
 
     /**
      * Tells the user that the speaker does not exist
@@ -250,34 +251,91 @@ public interface LanguagePack {
 
     /**
      * Contains the prompts related to saving the schedule as a pdf
-     * @return as tring telling the user how to save the schedule
+     * @return as string telling the user how to save the schedule
      */
     String saveScheduleAsPdf();
 
+    /**
+     * Contains the prompts relating to the message menu buttons
+     * @return string of the message menu buttons
+     */
     String[] messageMenuButtons();
 
+    /**
+     * Prompts of the message menu labels relating to the friend list
+     * @return string of the message menu labels
+     */
     String[] messageMenuLabels();
 
+    /**
+     * Login prompt on exit
+     * @return string of the login prompt on exit
+     */
     String logoutPrompt();
 
+    /**
+     * Admin menu prompts for commands
+     * @return strings for the menu prompts for the admins
+     */
     String[] adminEventMenuPrompts();
 
+    /**
+     * Prompts on event changes
+     * @param event given event that is being examined
+     * @return string of the event changes
+     */
     String changeEventInfoResults(Event event);
 
+    /**
+     * Failure prompt when the event time wasn't changed
+     * @return Failure prompt when the event time wasn't changed
+     */
     String changeEventTimeFailure();
 
-    String speakerRemovalSuccess();
+    /**
+     * Success prompt when the speaker was removed
+     * @param speaker given speaker that is being examined
+     * @return Success prompt when the speaker was removed
+     */
+    String speakerRemovalSuccess(Speaker speaker);
 
-    String speakerRemovalFailure();
+    /**
+     * Failure prompt when the speaker was removed
+     * @param speaker given speaker that is being examined
+     * @return Failure prompt when the speaker was removed
+     */
+    String speakerRemovalFailure(Speaker speaker);
 
-    String speakerAdditionSuccess();
+    /**
+     * Success prompt when the speaker was added
+     * @param speaker given speaker that is being examined
+     * @return Success prompt when the speaker was added
+     */
+    String speakerAdditionSuccess(Speaker speaker);
 
-    String speakerAdditionFailure();
+    /**
+     * Failure prompt when the speaker was removed
+     * @param speaker given speaker that is being examined
+     * @return Failure prompt when the speaker was removed
+     */
+    String speakerAdditionFailure(Speaker speaker);
 
+    /**
+     * Failure prompt when the event duration failed to change
+     * @return Failure prompt when the event duration failed to change
+     */
     String changeEventDurationFailure();
 
+    /**
+     * Failure prompt when the event capacity failed to change
+     * @return Failure prompt when the event capacity failed to change
+     */
     String changeEventCapacityFailure();
 
+    /**
+     * Failure prompt when the event room failed to change
+     * @return Failure prompt when the event room failed to change
+     */
     String changeEventRoomFailure();
 
     String[] chatPanelButtons();

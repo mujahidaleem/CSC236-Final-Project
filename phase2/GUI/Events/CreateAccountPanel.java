@@ -2,6 +2,7 @@ package GUI.Events;
 
 import Controllers.EventMenu.OrganizerEventController;
 import GUI.GUIPanel;
+import UseCases.Language.LanguageManager;
 import UseCases.Language.LanguagePack;
 
 import javax.swing.*;
@@ -40,23 +41,24 @@ public class CreateAccountPanel extends GUIPanel {
      *
      * @param frame                    the original frame of the program
      * @param organizerEventController the controller that executes all the commands
-     * @param languagePack             contains the strings that will be shown on the GUI
+     * @param languageManager             contains the strings that will be shown on the GUI
      */
-    public CreateAccountPanel(JFrame frame, OrganizerEventController organizerEventController, LanguagePack languagePack) {
-        super(frame);
+    public CreateAccountPanel(JFrame frame, OrganizerEventController organizerEventController, LanguageManager languageManager) {
+        super(frame, languageManager);
         this.organizerEventController = organizerEventController;
-        this.types = new String[]{languagePack.userCreationPrompt()[2], languagePack.userCreationPrompt()[3],
-                languagePack.userCreationPrompt()[6], languagePack.userCreationPrompt()[7]};
+        this.types = new String[]{languageManager.languagePack.userCreationPrompt()[2], languageManager.languagePack.userCreationPrompt()[3],
+                languageManager.languagePack.userCreationPrompt()[6], languageManager.languagePack.userCreationPrompt()[7]};
     }
 
     /**
      * Creates the components of the GUI
      */
-    public void setUpMenu() {
+    public void setUpMenu(String theme) {
         createLabels();
         createType();
         createTextFields();
         createButtons();
+        changeTheme(theme);
     }
 
     /**
@@ -137,5 +139,34 @@ public class CreateAccountPanel extends GUIPanel {
         createAccountButton.setText(languagePack.userCreationPrompt()[4]);
         types = new String[]{languagePack.userCreationPrompt()[2], languagePack.userCreationPrompt()[3],
                 languagePack.userCreationPrompt()[6], languagePack.userCreationPrompt()[7]};
+    }
+
+    /**
+     * Changes the colour of the components to match the chosen theme
+     */
+    public void changeColours(){
+        panel.setBackground(backgroundColour);
+
+        createAccountButton.setForeground(textColour);
+        cancelButton.setForeground(textColour);
+        nameLabel.setForeground(textColour);
+        passwordLabel.setForeground(textColour);
+        accountType.setForeground(textColour);
+        nameTextField.setForeground(textColour);
+        passwordLabel.setForeground(textColour);
+
+        createAccountButton.setBackground(buttonColour1);
+        cancelButton.setBackground(buttonColour1);
+        accountType.setBackground(buttonColour2);
+        nameTextField.setBackground(textFieldColour);
+        passwordTextField.setBackground(textFieldColour);
+    }
+
+    /**
+     * Changes the text to a specific language
+     * @param languageManager stores the text of the GUI for a given language
+     */
+    public void changeText(LanguageManager languageManager){
+        setText(languageManager.languagePack);
     }
 }

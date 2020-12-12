@@ -4,6 +4,7 @@ import Controllers.EventMenu.SpeakerEventController;
 import Entities.Events.Event;
 
 import UseCases.Events.EventManager;
+import UseCases.Language.LanguageManager;
 import UseCases.Language.LanguagePack;
 import UseCases.Users.SpeakerManager;
 
@@ -18,13 +19,25 @@ public class SpeakerEventMenuPanel extends EventMenuPanel{
     private SpeakerManager speakerManager;
     private SpeakerEventController speakerEventController;
 
-    public SpeakerEventMenuPanel(SpeakerEventController speakerEventController, JFrame frame, SpeakerManager speakerManager, EventManager eventManager){
-        super(speakerEventController, frame);
+    /**
+     * Constructor for SpeakerEventMenuPanel
+     * @param speakerEventController the controller that executes the code
+     * @param frame the original frame of the code
+     * @param speakerManager contains the speakers
+     * @param eventManager contains the events
+     * @param languageManager contains the strings used to generate the text of the GUI
+     */
+    public SpeakerEventMenuPanel(SpeakerEventController speakerEventController, JFrame frame,
+                                 SpeakerManager speakerManager, EventManager eventManager, LanguageManager languageManager){
+        super(speakerEventController, frame, languageManager);
         this.speakerEventController = speakerEventController;
         this.speakerManager = speakerManager;
         this.eventManager = eventManager;
     }
 
+    /**
+     * Creates the components unique to this type of user
+     */
     public void printExtraComponents(){
         heading3 = new JLabel();
         heading3.setBounds(labelLayerX, labelLayerY + 380, labelWidth, labelHeight);
@@ -36,6 +49,10 @@ public class SpeakerEventMenuPanel extends EventMenuPanel{
         panel.add(eventsSpeaking);
     }
 
+    /**
+     * Displays the text of the GUI in a specific language
+     * @param languagePack contains the strings needed to create the text
+     */
     public void setAdditionalText(LanguagePack languagePack){
         heading3.setText(languagePack.eventMenuHeadings()[3]);
         StringBuilder eventsSpeakingAt = new StringBuilder();
@@ -45,4 +62,14 @@ public class SpeakerEventMenuPanel extends EventMenuPanel{
             }
         }eventsSpeaking.setText(eventsSpeakingAt.toString());
     }
+
+    /**
+     * Changes the colour of the components to match the theme
+     */
+    public void changeColourOfExtraComponents(){
+        heading3.setForeground(textColour);
+        eventsSpeaking.setForeground(textColour);
+        eventsSpeaking.setBackground(textFieldColour);
+    }
+
 }

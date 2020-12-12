@@ -64,6 +64,10 @@ public class Message implements Serializable {
     }
 
 
+    /**
+     * gets when the message was sent
+     * @return a LocalDateTime signifying when the message was sent
+     */
     public LocalDateTime getTimeSent(){
         return timeSent;
     }

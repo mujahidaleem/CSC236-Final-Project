@@ -171,29 +171,33 @@ public class MainMenuPanel extends GUIPanel {
                 } catch (NullPointerException e) {
                     orders.put(event.getEventTime(), new ArrayList<>());
                 }
-                drawBlock(event, order, scheduleSaver.getLargestNumber(number, event));
-                for (int i = 0; i < event.getDuration() / 60; i++) {
-                    try {
-                        orders.get(event.getEventTime().plusHours(i)).add(order);
-                    } catch (NullPointerException e) {
-                        orders.put(event.getEventTime().plusHours(i), new ArrayList<>());
-                        orders.get(event.getEventTime().plusHours(i)).add(order);
-                    }
+                drawScheduleString(event, order, scheduleSaver.getLargestNumber(number, event));
+
+                //drawBlock(event, order, scheduleSaver.getLargestNumber(number, event));
+                //for (int i = 0; i < event.getDuration() / 60; i++) {
+                  //  try {
+                    //    orders.get(event.getEventTime().plusHours(i)).add(order);
+                    //} catch (NullPointerException e) {
+                      //  orders.put(event.getEventTime().plusHours(i), new ArrayList<>());
+                        //orders.get(event.getEventTime().plusHours(i)).add(order);
+                    //}
+
                 }
             }
         }
+
+    /**
+     * Draws the schedule in txt format
+     * @param event events
+     * @param order order of the event
+     * @param number number of events
+     */
+    private void drawScheduleString(Event event, int order, int number){
+        //Print events here in string format
     }
 
     public void showSchedule(LocalDateTime dateTime) {
-        ArrayList<Event> events = eventManager.getEvents();
-        ArrayList<Event> correct_timed = null;
-        for (Event temp: events ) {
-            if(temp.getEventTime() == dateTime){
-                correct_timed.add(temp);
-            }
-        }
-        //addEvents(correct_timed);
-        //addEvents(pdfGenerator.getStartOfWeek(dateTime));
+        addEvents(pdfGenerator.getStartOfWeek(dateTime));
     }
 
     private Rectangle getPosition(Event event, int order, int number) {

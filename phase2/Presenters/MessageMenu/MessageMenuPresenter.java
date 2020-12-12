@@ -13,7 +13,6 @@ import UseCases.Users.UserManager;
 import javax.swing.*;
 
 public class MessageMenuPresenter {
-    private UserFriendListController userFriendListcontroller;
     private UserManager userManager;
     private UserFriendManager userFriendManager;
     private MessageMenuPanel messageMenuPanel;
@@ -25,19 +24,16 @@ public class MessageMenuPresenter {
      * MessageMenuPresenter Constructor
      * Presents the message menu of the user
      *
-     * @param UserFriendListController Friend list controller for users
      * @param userManager              Use case for user functions
      * @param userFriendManager        Use case for user friend list functions
      * @param languageManager          Displays strings
      */
-    public MessageMenuPresenter(UserFriendListController UserFriendListController,
-                                UserManager userManager,
+    public MessageMenuPresenter(UserManager userManager,
                                 UserFriendManager userFriendManager,
                                 LanguageManager languageManager,
                                 MessageMenuPanel messageMenuPanel,
                                 MainMenuPanel mainMenuPanel,
                                 ChatPanel chatPanel) {
-        this.userFriendListcontroller = UserFriendListController;
         this.userManager = userManager;
         this.userFriendManager = userFriendManager;
         this.languageManager = languageManager;

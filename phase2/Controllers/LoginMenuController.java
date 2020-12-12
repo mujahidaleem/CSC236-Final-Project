@@ -178,7 +178,7 @@ public class LoginMenuController {
     }
 
     /**
-     * Tells the user that the wrong login credientials were used
+     * Tells the user that the wrong login credentials were used
      */
     public void showWrongCredentials(){
         presenter.loginFailed();

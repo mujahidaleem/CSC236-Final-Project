@@ -92,10 +92,18 @@ public class EventMenuPresenter {
         eventMenuPanel.changePanel(mainMenuPanel.getPanel());
     }
 
+    /**
+     * Changes the theme of the program
+     * @param theme Theme of the program
+     */
     public void changeTheme(String theme){
         eventMenuPanel.changeTheme(theme);
     }
 
+    /**
+     * Changes the language of the program
+     * @param language Language of the program
+     */
     public void changeLanguage(String language){
         eventMenuPanel.changeLanguage(language);
     }

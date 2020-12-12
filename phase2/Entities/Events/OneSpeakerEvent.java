@@ -23,17 +23,35 @@ public class OneSpeakerEvent extends Event {
         this.speaker = speaker;
     }
 
+    /**
+     * returns the total number of individuals attending this event
+     * @return the total number of individuals attending this event
+     */
     @Override
     public int getTotalNum() {
-        return attendees.size() + 1;
+        if(hasSpeaker()){
+            return attendees.size() + 1;
+        } else {
+            return attendees.size();
+        }
     }
 
+    /**
+     * tries to add a speaker to an event
+     * @param speakerId the id of a speaker
+     * @return if the speaker has been added
+     */
     @Override
     public boolean addSpeaker(int speakerId) {
         speaker = speakerId;
         return true;
     }
 
+    /**
+     * tries to remove a speaker from an event
+     * @param speakerId the id of the speaker
+     * @return if the speaker has been removed
+     */
     @Override
     public boolean removeSpeaker(int speakerId){
         if (speakerId == speaker){
@@ -43,11 +61,19 @@ public class OneSpeakerEvent extends Event {
         return false;
     }
 
+    /**
+     * checks if the event has a speaker
+     * @return if the event has a speaker
+     */
     @Override
     public boolean hasSpeaker() {
         return speaker != 0;
     }
 
+    /**
+     * Gets a list of speakers of this event, there should only be 1 speaker
+     * @return an array of 1 or 0 speakers
+     */
     @Override
     public ArrayList<Integer> getSpeakers() {
         ArrayList<Integer> speakers = new ArrayList<>();

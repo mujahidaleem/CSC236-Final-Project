@@ -5,7 +5,9 @@ import Controllers.Factories.EventMenuFactory;
 import Controllers.Factories.MessageMenuFactory;
 import Controllers.MessageMenu.UserFriendListController;
 import GUI.MainMenuPanel;
+import Presenters.EventMenu.EventMenuPresenter;
 import Presenters.MainMenuPresenter;
+import Presenters.MessageMenu.MessageMenuPresenter;
 import UseCases.Events.EventManager;
 import UseCases.Language.LanguageManager;
 import UseCases.Users.UserManager;
@@ -41,6 +43,9 @@ public class MainMenuController {
 
         this.eventMenuController = eventMenuFactory.getEventMenu(mainMenuPanel);
         this.friendListController = messageMenuFactory.createMessageMenu(mainMenuPanel);
+    }
+
+    public MainMenuController(EventMenuPresenter eventMenu, MessageMenuPresenter messageMenu, UserManager userManager) {
     }
 
     /**

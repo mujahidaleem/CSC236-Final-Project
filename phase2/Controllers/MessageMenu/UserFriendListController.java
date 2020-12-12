@@ -6,6 +6,7 @@ import GUI.MainMenuPanel;
 import GUI.Messages.MessageMenuPanel;
 import Presenters.MessageMenu.MessageMenuPresenter;
 import UseCases.Language.LanguageManager;
+import UseCases.Message.AdminFriendManager;
 import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
 
@@ -31,6 +32,9 @@ public abstract class UserFriendListController {
         this.messageMenuPresenter = messageMenuPresenter;
         this.userManager = userManager;
         this.messageMenuPanel = new MessageMenuPanel(this, userFriendManager, userManager, frame, languageManager);
+    }
+
+    public UserFriendListController(AdminFriendManager speakerFriendManager, MainMenuPanel mainMenuPanel) {
     }
 
     /**

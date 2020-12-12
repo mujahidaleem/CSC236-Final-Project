@@ -251,7 +251,7 @@ public interface LanguagePack {
 
     /**
      * Contains the prompts related to saving the schedule as a pdf
-     * @return as tring telling the user how to save the schedule
+     * @return as string telling the user how to save the schedule
      */
     String saveScheduleAsPdf();
 

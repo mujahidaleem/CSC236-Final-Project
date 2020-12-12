@@ -11,7 +11,7 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     public String directory;
 
     /**
-     * EnglishLanguagePack constructor
+     * FrenchLanguagePack constructor
      *
      * @param language the language of the strings
      */
@@ -98,6 +98,21 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
                 "AttendeeOnlyEvent", "MultiSpeakerEvent", "OneSpeakerEvent",
                 "Supprimer l'événement", "Enregistrer les modifications", "Annuler", "Ajouter un haut-parleur", "Supprimer le haut-parleur",
                 "Mois", "Jour", "Heure", "Minute"};
+    }
+
+    /**
+     * Contains the string that will be shown upon starting the program
+     *
+     * @return Greetings to the user and available commands
+     */
+    @Override
+    public String unknownUserID() {
+        return null;
+    }
+
+    @Override
+    public String invalidIDInput() {
+        return null;
     }
 
     @Override
@@ -237,6 +252,16 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     @Override
     public String saveScheduleAsPdf() {
         return "Veuillez saisir où vous souhaitez enregistrer le fichier.";
+    }
+
+    @Override
+    public String[] messageMenuButtons() {
+        return new String[0];
+    }
+
+    @Override
+    public String[] messageMenuLabels() {
+        return new String[0];
     }
 
     @Override

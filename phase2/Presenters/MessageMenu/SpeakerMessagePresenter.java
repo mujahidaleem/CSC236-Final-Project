@@ -1,6 +1,9 @@
 package Presenters.MessageMenu;
 
 import Controllers.MessageMenu.SpeakerFriendListController;
+import GUI.MainMenuPanel;
+import GUI.Messages.ChatPanel;
+import GUI.Messages.MessageMenuPanel;
 import UseCases.Events.EventManager;
 import UseCases.Language.LanguageManager;
 import UseCases.Message.SpeakerFriendManager;
@@ -10,22 +13,22 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class SpeakerMessagePresenter extends MessageMenuPresenter {
-    private SpeakerFriendListController speakerFriendListController;
     private SpeakerFriendManager speakerFriendManager;
     private EventManager eventManager;
 
     /**
-     * Constructor of the SpeakerMessagePresenter
-     * Presents the message menu of the speaker this is the same for a MessageMenuPresenter
-     * *Created for extension in phase 2*
+     * Constructor for SpeakerMessagePresenter
      *
-     * @param speakerFriendListController Controller of the speaker's friend list
-     * @param userManager                 Use case for a user's functions
-     * @param speakerFriendManager        Use case for the speaker's friend list's functions
+     * @param userManager          contains the users
+     * @param speakerFriendManager contains the messages
+     * @param languageManager      contains the strings for generating text
+     * @param messageMenuPanel     the panel representing the message menu
+     * @param mainMenuPanel        the main menu
+     * @param chatPanel            the chat panel
      */
-    public SpeakerMessagePresenter(SpeakerFriendListController speakerFriendListController, UserManager userManager, SpeakerFriendManager speakerFriendManager, EventManager eventManager, LanguageManager languageManager) {
-        super(speakerFriendListController, userManager, speakerFriendManager, languageManager);
-        this.speakerFriendListController = speakerFriendListController;
+    public SpeakerMessagePresenter(UserManager userManager, SpeakerFriendManager speakerFriendManager, EventManager eventManager,
+                                   LanguageManager languageManager, MessageMenuPanel messageMenuPanel, MainMenuPanel mainMenuPanel, ChatPanel chatPanel) {
+        super(userManager, speakerFriendManager, languageManager, messageMenuPanel, mainMenuPanel, chatPanel);
         this.speakerFriendManager = speakerFriendManager;
         this.eventManager = eventManager;
     }

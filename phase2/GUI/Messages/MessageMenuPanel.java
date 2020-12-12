@@ -1,7 +1,8 @@
-package GUI;
+package GUI.Messages;
 
 import Controllers.MessageMenu.UserFriendListController;
 import Entities.Users.User;
+import GUI.GUIPanel;
 import UseCases.Language.LanguageManager;
 import UseCases.Language.LanguagePack;
 import UseCases.Message.UserFriendManager;

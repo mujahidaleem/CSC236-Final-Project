@@ -319,4 +319,9 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     public String changeEventRoomFailure() {
         return "échec du vestiaire";
     }
+
+    @Override
+    public String[] chatPanelButtons() {
+        return new String[]{"Envoyer", "Retour aux messages"};
+    }
 }

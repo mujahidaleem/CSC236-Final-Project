@@ -1,26 +1,25 @@
 package Presenters.MessageMenu;
 
-import GUI.MainMenuPanel;
-import GUI.Messages.ChatPanel;
-import GUI.Messages.MessageMenuPanel;
+import Controllers.MessageMenu.AttendeeFriendListController;
 import UseCases.Language.LanguageManager;
 import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
 
 public class AttendeeMessagePresenter extends MessageMenuPresenter {
+    AttendeeFriendListController attendeeFriendListController;
 
     /**
-     * Constructor for AttendeeMessagePresenter
+     * AttendeeMessagePresenter constructor
+     * Presenter for the attendee's messages
      *
-     * @param userManager       contains the users
-     * @param userFriendManager contains the messages
-     * @param languageManager   contains the strings for generating text
-     * @param messageMenuPanel  the panel representing the message menu
-     * @param mainMenuPanel     the main menu
-     * @param chatPanel         the chat panel
+     * @param attendeeFriendListController Friend list controller for the attendees
+     * @param userManager                  Use case for the attendee
+     * @param userFriendManager            Use case for the attendee's friend list
      */
-    public AttendeeMessagePresenter(UserManager userManager, UserFriendManager userFriendManager, LanguageManager languageManager,
-                                    MessageMenuPanel messageMenuPanel, MainMenuPanel mainMenuPanel, ChatPanel chatPanel) {
-        super(userManager, userFriendManager, languageManager, messageMenuPanel, mainMenuPanel, chatPanel);
+
+    public AttendeeMessagePresenter(AttendeeFriendListController attendeeFriendListController, UserManager userManager,
+                                    UserFriendManager userFriendManager, LanguageManager languageManager) {
+        super(attendeeFriendListController, userManager, userFriendManager, languageManager);
+        this.attendeeFriendListController = attendeeFriendListController;
     }
 }

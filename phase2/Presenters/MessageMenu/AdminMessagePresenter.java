@@ -1,8 +1,7 @@
 package Presenters.MessageMenu;
 
-import GUI.MainMenuPanel;
-import GUI.Messages.ChatPanel;
-import GUI.Messages.MessageMenuPanel;
+import Controllers.MessageMenu.AdminFriendListController;
+import Controllers.MessageMenu.AttendeeFriendListController;
 import UseCases.Language.LanguageManager;
 import UseCases.Message.UserFriendManager;
 import UseCases.Users.UserManager;
@@ -10,16 +9,16 @@ import UseCases.Users.UserManager;
 public class AdminMessagePresenter extends MessageMenuPresenter {
 
     /**
-     * Constructor for AdminMessagePresenter
-     * @param userManager contains the users
-     * @param userFriendManager contains the messages
-     * @param languageManager contains the strings for generating text
-     * @param messageMenuPanel the panel representing the message menu
-     * @param mainMenuPanel the main menu
-     * @param chatPanel the chat panel
+     * AdminMessagePresenter constructor
+     * Presenter for the attendee's messages
+     *
+     * @param adminFriendListController Friend list controller for the attendees
+     * @param userManager                  Use case for the attendee
+     * @param userFriendManager            Use case for the attendee's friend list
      */
-    public AdminMessagePresenter(UserManager userManager, UserFriendManager userFriendManager,
-                                 LanguageManager languageManager, MessageMenuPanel messageMenuPanel, MainMenuPanel mainMenuPanel, ChatPanel chatPanel) {
-        super(userManager, userFriendManager, languageManager, messageMenuPanel, mainMenuPanel, chatPanel);
+
+    public AdminMessagePresenter(AdminFriendListController adminFriendListController, UserManager userManager,
+                                    UserFriendManager userFriendManager, LanguageManager languageManager) {
+        super(adminFriendListController, userManager, userFriendManager, languageManager);
     }
 }

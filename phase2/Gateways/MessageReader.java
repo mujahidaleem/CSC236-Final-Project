@@ -75,11 +75,6 @@ public class MessageReader extends MySQLReader{
         }
     }
 
-    /**
-     * Creates a table in a MySQL database with the messages between two users
-     * @param user1 a user
-     * @param user2 another user
-     */
     public void createTable(User user1, User user2){
         String myTableName = "CREATE TABLE IF NOT EXISTS "+"chat"+getKey(user1.getId(), user2.getId())+"(" +
                 "sender INT(64) NOT NULL, receiver INT (64) NOT NULL, message VARCHAR(64), timeSent TIMESTAMP)";
@@ -95,12 +90,6 @@ public class MessageReader extends MySQLReader{
     }
 
 
-    /**
-     * Reads the data in a MySQL table to generate all the meassages sent between a users and their friends
-     * @param user a user
-     * @param userManager contains all the users
-     * @return a collection of all the messages
-     */
     public HashMap<ArrayList<Integer>, ArrayList<Message>> readData(User user, UserManager userManager){
         HashMap<ArrayList<Integer>, ArrayList<Message>> map = new HashMap<>();
         try{
@@ -132,23 +121,12 @@ public class MessageReader extends MySQLReader{
     }
 
 
-    /**
-     * Saves the messages in a userFriendMananger to a MySQL database
-     * @param userFriendManager contains all the messages
-     * @param userManager contains all the users
-     */
     public void saveMessages(UserFriendManager userFriendManager, UserManager userManager) {
         for(ArrayList<Integer> users: userFriendManager.getUserToMessages().keySet()){
             createTable(userManager.findUser(users.get(0)), userManager.findUser(users.get(1)));
             saveMessage(users, userFriendManager.getUserToMessages().get(users));
         }
     }
-
-    /**
-     * Saves the messages between two users
-     * @param users the two users
-     * @param messages the messages between the two users
-     */
     private void saveMessage(ArrayList<Integer> users, ArrayList<Message> messages){
         for (Message message:messages)
             try {
@@ -162,25 +140,12 @@ public class MessageReader extends MySQLReader{
             }
     }
 
-    /**
-     * Turns a message into a string to be saved into the table in the MySQL table
-     * @param i first user
-     * @param j second user
-     * @param message the message
-     * @return a string stating how the data will be saved
-     */
     private String getCommand(int i, int j, Message message){
         return "INSERT IGNORE INTO " + "chat" + getKey(i, j) + "(sender, receiver, message, timeSent) VALUES('" + message.getSenderId() + "', '"+
                 message.getRecipientId() + "', '"+ message.getContent() + "', '" +
                 message.getTimeSent().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "')";
     }
 
-    /**
-     * Takes two users and determines whose id is smaller and returns it as a string
-     * @param i the first user
-     * @param j the second user
-     * @return an string of the two ids, ordered from small to large
-     */
     private String getKey(int i, int j){
         if(i<j){
             return Integer.toString(i) + j;
@@ -189,12 +154,6 @@ public class MessageReader extends MySQLReader{
         }
     }
 
-    /**
-     * Takes two users and determines whose id is smaller and returns it as an array
-     * @param i the first user
-     * @param j the second user
-     * @return an array of the elements, ordered from small to large
-     */
     private ArrayList<Integer> getMapKey(int i, int j){
         ArrayList<Integer> arrayList = new ArrayList<>();
         if(i<j){

@@ -42,9 +42,9 @@ public class EventMenuPanel extends GUIPanel {
 
     /**
      * Constructor for EventMenuPanel
-     * @param eventMenuController the controller that executes commands
-     * @param frame the initial frame of the program
-     * @param languageManager stores all the strings used to generate text
+     *
+     * @param eventMenuController the controller that executes all the commands
+     * @param frame               the original frame of the program
      */
     public EventMenuPanel(EventMenuController eventMenuController, JFrame frame, LanguageManager languageManager) {
         super(frame, languageManager);
@@ -168,10 +168,6 @@ public class EventMenuPanel extends GUIPanel {
         setStrings(languagePack);
     }
 
-    /**
-     * Creates the strings used in the GUI
-     * @param languagePack contains all the strings in a specific language
-     */
     public void setStrings(LanguagePack languagePack){
         mainHeading.setText(languagePack.eventMenuHeadings()[0]);
         heading1.setText(languagePack.eventMenuHeadings()[1]);
@@ -184,11 +180,6 @@ public class EventMenuPanel extends GUIPanel {
         setAdditionalText(languagePack);
     }
 
-    /**
-     * Updates the events menu
-     * @param events contains the list of events
-     * @param user the current user
-     */
     public void reprintEvents(ArrayList<Event> events, User user) {
         StringBuilder eventsAttending = new StringBuilder();
         for (Event event : events) {
@@ -212,9 +203,6 @@ public class EventMenuPanel extends GUIPanel {
     public void setAdditionalText(LanguagePack languagePack) {
     }
 
-    /**
-     * Changes the colours of the components to match the theme
-     */
     public void changeColours() {
         panel.setBackground(backgroundColour);
         eventNameLabel.setForeground(textColour);
@@ -239,32 +227,19 @@ public class EventMenuPanel extends GUIPanel {
 
     }
 
-    /**
-     * Changes the text to a certain language
-     * @param languageManager contains the strings in a specific language
-     */
     public void changeText(LanguageManager languageManager){
         setStrings(languageManager.languagePack);
         setAdditionalText(languageManager.languagePack);
     }
 
-    /**
-     * Changes the colour of componets special to this user
-     */
     public void changeColourOfExtraComponents() {
     }
 
-    /**
-     * Clears all the editable textFields
-     */
     public void clearText() {
         eventNameTextField.setText("");
         clearAdditionalText();
     }
 
-    /**
-     * Clears addtional textFields special to this type of user
-     */
     public void clearAdditionalText(){
     }
 }

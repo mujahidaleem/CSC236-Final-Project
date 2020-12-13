@@ -77,10 +77,6 @@ public class RoomReader extends MySQLReader{
         }
     }
 
-    /**
-     * Reads data from MySQL to generate rooms
-     * @return a roomManager with all the rooms
-     */
     public RoomManager readData(){
         RoomManager roomManager = new RoomManager();
         try{
@@ -99,9 +95,6 @@ public class RoomReader extends MySQLReader{
         return roomManager;
     }
 
-    /**
-     * Creates a table in a MySQL database
-     */
     public void createTable(){
         String myTableName = "CREATE TABLE IF NOT EXISTS rooms(" +
                 "roomNumber INT(64) NOT NULL," +
@@ -118,10 +111,6 @@ public class RoomReader extends MySQLReader{
         }
     }
 
-    /**
-     * Saves all the rooms in the system into a MySQL database
-     * @param roomManager contains all the rooms
-     */
     public void saveRoomManager(RoomManager roomManager) {
         cleanTable("rooms");
         for (Room room : roomManager.getRooms()) {
@@ -137,21 +126,11 @@ public class RoomReader extends MySQLReader{
         }
     }
 
-    /**
-     * turns a room object into a string to save it to a database
-     * @param room the room being saved
-     * @return a string stating how to save the data
-     */
     private String generateInformation(Room room){
         return "INSERT INTO rooms(roomNumber, roomCapacity, schedule) VALUES('" + room.getRoomNumber() + "', '"
                 + room.getRoomCapacity() + "', '" + turnHashMap2IntoString(room.getRoomSchedule()) + "')";
     }
 
-    /**
-     * Turns a hashmap of dates and strings into a string to save it to the database
-     * @param map the collection of dates and strings
-     * @return a string stating how to save the data
-     */
     private String turnHashMap2IntoString(HashMap<ArrayList<LocalDateTime>, String> map){
         StringBuilder stringBuilder = new StringBuilder();
         if(map.size()>0){
@@ -165,11 +144,6 @@ public class RoomReader extends MySQLReader{
         return "";
     }
 
-    /**
-     * Turns a string into a hashmap of dates to strings
-     * @param s the string from the database
-     * @return the schedule of a room
-     */
     private HashMap<ArrayList<LocalDateTime>, String> turnStringToHashMap(String s) {
         HashMap<ArrayList<LocalDateTime>, String> map = new HashMap<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

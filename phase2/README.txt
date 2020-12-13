@@ -11,14 +11,6 @@ change password, logout, go to event menu, and go to message menu will be displa
     In case there is error with running the PDF saver, please go to Project Structure ( Ctrl + Shift + Alt + S) > Libraries
     > + > from Maven and add com.itextpdf.maven:itextdoc:2.0.0
 
-    For the MySQL Database, first add mysql:mysql-connector-java:8.0.22 to libraries.
-    Then add a mysql database
-    name = phase 2
-    host = 127.0.0.1
-    user = root
-    password = csc207group0070
-    database = phase2
-
 
 Functions of the program. 
 Attendee:

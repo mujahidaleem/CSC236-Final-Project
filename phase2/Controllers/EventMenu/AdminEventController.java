@@ -28,7 +28,7 @@ public class AdminEventController extends EventMenuController {
      * @param languageManager stores the strings to be displayed on the GUI
      * @param speakerManager  stores the list of speakers
      * @param adminManager    stores the list of admins
-     * @param frame           the orignial frame of the program
+     * @param frame           the original frame of the program
      * @param mainMenuPanel   the main menu
      */
     public AdminEventController(UserManager userManager, EventManager eventManager, RoomManager roomManager, LanguageManager languageManager,

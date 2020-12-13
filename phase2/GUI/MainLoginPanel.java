@@ -19,7 +19,6 @@ public class MainLoginPanel extends GUIPanel {
     private JPasswordField passwordText;
     private JButton loginButton;
     private JButton createUserButton;
-    private ThemeManager themeManager;
 
     private LoginMenuController loginMenuController;
 
@@ -73,11 +72,11 @@ public class MainLoginPanel extends GUIPanel {
         loginButton.setBounds(450, 300, 200, 25);
         loginButton.addActionListener(e -> {
             try{
-                int username = Integer.parseInt(userText.getText());
-                String password = new String(passwordText.getPassword());
-                clearText();
-                loginMenuController.checkLogin(username, password);
-            } catch (NumberFormatException f) {
+            int username = Integer.parseInt(userText.getText());
+            String password = new String(passwordText.getPassword());
+            clearText();
+            loginMenuController.checkLogin(username, password);
+        } catch (NumberFormatException f) {
                 loginMenuController.showWrongCredentials();
             }
         });

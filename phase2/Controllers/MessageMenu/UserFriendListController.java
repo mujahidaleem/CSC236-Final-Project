@@ -3,47 +3,20 @@ package Controllers.MessageMenu;
 import Entities.Users.Organizer;
 import Entities.Users.User;
 import GUI.MainMenuPanel;
-import GUI.Messages.MessageMenuPanel;
-import Presenters.MessageMenu.MessageMenuPresenter;
-import UseCases.Language.LanguageManager;
-import UseCases.Message.AdminFriendManager;
-import UseCases.Message.AttendeeFriendManager;
-import UseCases.Message.OrganizerFriendManager;
 import UseCases.Message.UserFriendManager;
-import UseCases.Users.UserManager;
-import UseCases.Message.AdminFriendManager;
-import UseCases.Message.AttendeeFriendManager;
-import UseCases.Message.OrganizerFriendManager;
-import javax.swing.*;
+
 import java.time.LocalDateTime;
 
 public abstract class UserFriendListController {
-    private AdminFriendManager adminFriendManager;
     public UserFriendManager userFriendManager;
-    private AttendeeFriendManager attendeeFriendManager;
-    private OrganizerFriendManager organizerFriendManager;
-    private MainMenuPanel mainMenuPanel;
-    private MessageMenuPresenter messageMenuPresenter;
-    private MessageMenuPanel messageMenuPanel;
-    private UserManager userManager;
 
-   public UserFriendListController(UserFriendManager userFriendManager,
-                                 AdminFriendManager adminFriendManager,
-                                  AttendeeFriendManager attendeeFriendManager,
-                                   OrganizerFriendManager organizerFriendManager,
-                                   MainMenuPanel mainMenuPanel,
-                                   MessageMenuPresenter messageMenuPresenter,
-                                   UserManager userManager,
-                                    JFrame frame,
-                                   LanguageManager languageManager) {
+    private MainMenuPanel mainMenuPanel;
+    protected boolean menuCreated;
+
+    public UserFriendListController(UserFriendManager userFriendManager, MainMenuPanel mainMenuPanel) {
         this.userFriendManager = userFriendManager;
-        this.adminFriendManager = adminFriendManager;
-        this.attendeeFriendManager = attendeeFriendManager;
-        this.organizerFriendManager = organizerFriendManager;
         this.mainMenuPanel = mainMenuPanel;
-        this.messageMenuPresenter = messageMenuPresenter;
-        this.userManager = userManager;
-        this.messageMenuPanel = new MessageMenuPanel(this, userFriendManager, userManager, frame, languageManager); }
+    }
 
     /**
      * currentUser Send a message to another User
@@ -51,7 +24,6 @@ public abstract class UserFriendListController {
      * @param recipient      User who receive the Message
      * @param messageContent the content of the message
      */
-
     public void sendingMessage(User sender, User recipient, String messageContent, LocalDateTime dateTime) {
         if (this.userFriendManager.messageable(recipient)) {
             this.userFriendManager.sendMessageTo(sender, recipient, messageContent, dateTime);
@@ -88,18 +60,8 @@ public abstract class UserFriendListController {
         }
     }
 
-    public void printMenu(){messageMenuPresenter.setUpMenu();}
-
-    public void showNullUserError(){messageMenuPresenter.showNullUserError(); }
-
-    public void showInvalidIDInput(){messageMenuPresenter.showInvalidIDInput();}
-
-    public void returnToMainMenu(){messageMenuPresenter.returnToMainMenu();}
-
-    public void printChatPanel(User targetUser){messageMenuPresenter.printChatPanel(targetUser);}
-
-    public User getCurrentUser(){
-        return userFriendManager.getCurrentUser();
+    public void printMenu(){
+        menuCreated = true;
     }
 
     public void setMainMenuPanel(MainMenuPanel mainMenuPanel){
@@ -107,12 +69,13 @@ public abstract class UserFriendListController {
     }
 
     public void changeTheme(String theme){
-        mainMenuPanel.changeTheme(theme);
+
+    }
+    public void changeLanguage(String language){
+
     }
 
-
-    public void changeLanguage(String language){
-        mainMenuPanel.changeLanguage(language);
-
+    public boolean isMenuCreated(){
+        return menuCreated;
     }
 }

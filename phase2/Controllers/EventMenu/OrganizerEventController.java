@@ -360,7 +360,7 @@ public class OrganizerEventController extends EventMenuController {
      *
      * @param event  the event being changed
      * @param newMax the new maximum capacity of the event
-     * @return returns the max capacity of an event
+     * @return
      */
     public boolean setMaxCapacity(Event event, int newMax) {
         if (newMax <= roomManager.findRoom(event.getRoomNumber()).getRoomCapacity() && newMax <= event.getTotalNum()) {
@@ -374,6 +374,7 @@ public class OrganizerEventController extends EventMenuController {
      * Checks if the event can be deleted and if so, deletes the event and removes if from all user's schedule
      *
      * @param event the event that the organizer is trying to delete
+     * @return whether or not the event has been deleted
      */
     public void deleteEvent(Event event) throws NullEventException {
         if (event == null) {

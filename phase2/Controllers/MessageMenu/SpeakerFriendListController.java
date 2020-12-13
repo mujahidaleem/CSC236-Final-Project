@@ -3,29 +3,18 @@ package Controllers.MessageMenu;
 import Entities.Events.Event;
 import Entities.Users.Speaker;
 import GUI.MainMenuPanel;
-import GUI.Messages.MessageMenuPanel;
-import Presenters.MessageMenu.MessageMenuPresenter;
-import UseCases.Language.LanguageManager;
-import UseCases.Message.*;
+import UseCases.Message.SpeakerFriendManager;
 import UseCases.Users.SpeakerManager;
 import UseCases.Users.UserManager;
 
-import javax.swing.*;
 import java.time.LocalDateTime;
 
 
 public class SpeakerFriendListController extends UserFriendListController {
-
     public SpeakerFriendManager speakerFriendManager;
     public SpeakerManager speakerManager;
     public UserManager userManager;
-    private AdminFriendManager adminFriendManager;
-    public UserFriendManager userFriendManager;
-    private AttendeeFriendManager attendeeFriendManager;
-    private OrganizerFriendManager organizerFriendManager;
-    private MainMenuPanel mainMenuPanel;
-    private MessageMenuPresenter messageMenuPresenter;
-    private MessageMenuPanel messageMenuPanel;
+
     /**
      * Constructor of the SpeakerFriendListController
      * Controls the speakers' friend list, as well as allows the speaker to message all attendees in their event
@@ -35,24 +24,8 @@ public class SpeakerFriendListController extends UserFriendListController {
      * @param userManager          contains the list of users
      */
 
-    public SpeakerFriendListController(
-            UserFriendManager userFriendManager,
-            AdminFriendManager adminFriendManager,
-            AttendeeFriendManager attendeeFriendManager,
-            OrganizerFriendManager organizerFriendManager,
-            MessageMenuPresenter messageMenuPresenter,
-            JFrame frame,
-            LanguageManager languageManager, SpeakerFriendManager speakerFriendManager, SpeakerManager speakerManager, UserManager userManager, MainMenuPanel mainMenuPanel) {
-
-        super(userFriendManager,
-                adminFriendManager,
-                attendeeFriendManager,
-                organizerFriendManager,
-                mainMenuPanel,
-                messageMenuPresenter,
-                userManager,
-                frame,
-                languageManager);
+    public SpeakerFriendListController(SpeakerFriendManager speakerFriendManager, SpeakerManager speakerManager, UserManager userManager, MainMenuPanel mainMenuPanel) {
+        super(speakerFriendManager, mainMenuPanel);
         this.speakerFriendManager = speakerFriendManager;
         this.speakerManager = speakerManager;
         this.userManager = userManager;

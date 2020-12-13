@@ -11,7 +11,7 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     public String directory;
 
     /**
-     * FrenchLanguagePack constructor
+     * EnglishLanguagePack constructor
      *
      * @param language the language of the strings
      */
@@ -98,21 +98,6 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
                 "AttendeeOnlyEvent", "MultiSpeakerEvent", "OneSpeakerEvent",
                 "Supprimer l'événement", "Enregistrer les modifications", "Annuler", "Ajouter un haut-parleur", "Supprimer le haut-parleur",
                 "Mois", "Jour", "Heure", "Minute"};
-    }
-
-    /**
-     * Contains the string that will be shown upon starting the program
-     *
-     * @return Greetings to the user and available commands
-     */
-    @Override
-    public String unknownUserID() {
-        return "Cette ID n'exist pas";
-    }
-
-    @Override
-    public String invalidIDInput() {
-        return "l'entrée est invalide";
     }
 
     @Override
@@ -255,16 +240,6 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     }
 
     @Override
-    public String[] messageMenuButtons() {
-        return new String[0];
-    }
-
-    @Override
-    public String[] messageMenuLabels() {
-        return new String[0];
-    }
-
-    @Override
     public String logoutPrompt() {
         return "Voulez-vous quitter le programme?";
     }
@@ -318,10 +293,5 @@ public class FrenchLanguagePack implements LanguagePack, Serializable {
     @Override
     public String changeEventRoomFailure() {
         return "échec du vestiaire";
-    }
-
-    @Override
-    public String[] chatPanelButtons() {
-        return new String[]{"Envoyer", "Retour aux messages"};
     }
 }

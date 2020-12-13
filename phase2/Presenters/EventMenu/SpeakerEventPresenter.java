@@ -28,18 +28,11 @@ public class SpeakerEventPresenter extends EventMenuPresenter {
         this.speakerEventMenuPanel = speakerEventMenuPanel;
     }
 
-    /**
-     * Show the event menu
-     */
     public void showEventMenu(){
         speakerEventMenuPanel.setText(eventManager.getEvents(), manager.getCurrentUser(), languageManager.languagePack);
         mainMenuPanel.changePanel(speakerEventMenuPanel.getPanel());
     }
 
-    /**
-     * Sets up the menu in the correct theme
-     * @param theme Theme of the program
-     */
     public void setUpMenu(String theme){
         speakerEventMenuPanel.printMenu(theme);
         showEventMenu();

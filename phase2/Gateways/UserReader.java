@@ -74,9 +74,6 @@ public class UserReader extends MySQLReader{
         }
     }
 
-    /**
-     * Creates a table in a MySQL database
-     */
     public void createTable(){
         String myTableName = "CREATE TABLE IF NOT EXISTS Users(" +
                 "id INT(64) NOT NULL," +
@@ -98,10 +95,6 @@ public class UserReader extends MySQLReader{
         }
     }
 
-    /**
-     * Reads the data in a MySQL database to generate user information
-     * @return a userManager that stores all the users in the system
-     */
     public UserManager readData(){
         UserManager userManager = new UserManager(null, new ArrayList<>());
         try{
@@ -122,10 +115,6 @@ public class UserReader extends MySQLReader{
         return userManager;
     }
 
-    /**
-     * Saves the userManager into a database in MySQL
-     * @param userManager contains all the users
-     */
     public void saveUserManager(UserManager userManager) {
         cleanTable("users");
         for (User user : userManager.getUsers()) {
@@ -141,11 +130,6 @@ public class UserReader extends MySQLReader{
         }
     }
 
-    /**
-     * Turns a user into a string to be saved into a database
-     * @param user the user
-     * @return a string stating how to save the data
-     */
     private String generateInformation(User user){
         if(user.getClass() == Attendee.class){
             return "INSERT INTO users(id, fullName, password, accountType, eventsAttending, friends) " +
@@ -167,4 +151,58 @@ public class UserReader extends MySQLReader{
                     + turnHashMapIntoString(user.getPersonalSchedule())+"', '" + turnArrayListIntoString(user.getFriendList())+"')";
         }
     }
+//    private String turnHashMapIntoString(HashMap<String, LocalDateTime> arrayList){
+//        if(arrayList.size()>0){
+//            StringBuilder string = new StringBuilder();
+//            for (String s: arrayList.keySet()){
+//                string.append(s).append("=").append(arrayList.get(s).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))).append("_");
+//            }
+//            string.delete(string.length()-1,string.length());
+//            return string.toString();
+//        }else {
+//            return "";
+//        }
+//    }
+//
+//    private HashMap<String, LocalDateTime> turnStringIntoHashMap(String string){
+//        HashMap<String, LocalDateTime> map = new HashMap<>();
+//        if(string != null && string.length()>0){
+//            String[] strings = string.split("_");
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//            for(String s:strings){
+//                String[] s1 = s.split("=");
+//                String event = s1[0];
+//                LocalDateTime date = LocalDateTime.parse(s1[1], formatter);
+//                map.put(event, date);
+//            }
+//            return map;
+//        } else{
+//            return map;
+//        }
+//    }
+//
+//    private String turnArrayListIntoString(ArrayList<Integer> arrayList){
+//        StringBuilder stringBuilder = new StringBuilder();
+//        if(arrayList.size()>0){
+//            for(int i:arrayList){
+//                stringBuilder.append(i).append("_");
+//            }
+//            stringBuilder.delete(stringBuilder.length()-1, stringBuilder.length());
+//        }
+//        return stringBuilder.toString();
+//    }
+//
+//    private ArrayList<Integer> turnStringToArrayList(String string){
+//        ArrayList<Integer> arrayList = new ArrayList<>();
+//        if(string != null && string.length() > 0){
+//            String[] strings = string.split("_");
+//            for(String s:strings){
+//                arrayList.add(Integer.parseInt(s));
+//            }
+//        } else {
+//            return new ArrayList<>();
+//        }
+//        return arrayList;
+//    }
+
 }

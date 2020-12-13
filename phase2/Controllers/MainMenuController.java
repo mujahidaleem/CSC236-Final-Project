@@ -5,9 +5,7 @@ import Controllers.Factories.EventMenuFactory;
 import Controllers.Factories.MessageMenuFactory;
 import Controllers.MessageMenu.UserFriendListController;
 import GUI.MainMenuPanel;
-import Presenters.EventMenu.EventMenuPresenter;
 import Presenters.MainMenuPresenter;
-import Presenters.MessageMenu.MessageMenuPresenter;
 import UseCases.Events.EventManager;
 import UseCases.Language.LanguageManager;
 import UseCases.Users.UserManager;
@@ -45,9 +43,6 @@ public class MainMenuController {
         this.friendListController = messageMenuFactory.createMessageMenu(mainMenuPanel);
     }
 
-    public MainMenuController(EventMenuPresenter eventMenu, MessageMenuPresenter messageMenu, UserManager userManager) {
-    }
-
     /**
      * Calls the Event menu presenter
      */
@@ -70,16 +65,11 @@ public class MainMenuController {
     }
 
 
-    /**
-     * Tells the user that the date inputted could not be recognized
-     */
+
     public void showIncorrectDate(){
         presenter.showIncorrectDate();
     }
 
-    /**
-     * Shows the prompt asking for the new password
-     */
     public void showChangePasswordPrompt(){
         changePassword(presenter.changePassword());
         presenter.showChangePasswordResult();
@@ -95,19 +85,12 @@ public class MainMenuController {
         userManager.changePassword(password);
     }
 
-    /**
-     * Logs the user out of the current session
-     */
     public void logout(){
         loginMenuController.saveFiles();
         userManager.setCurrentUser(null);
         loginMenuController.returnToLoginMenu();
     }
 
-    /**
-     * Changes the theme of the GUI
-     * @param theme the new theme
-     */
     public void changeTheme(String theme){
         currentTheme = theme;
         if(menuCreated){
@@ -121,10 +104,6 @@ public class MainMenuController {
         }
     }
 
-    /**
-     * Changes the language of the GUI
-     * @param language the new language
-     */
     public void changeLanguage(String language){
         currentLanguage = language;
         if(menuCreated){

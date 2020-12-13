@@ -152,11 +152,11 @@ public class MainMenuPanel extends GUIPanel {
     private String setSchedule(LocalDateTime dateTime){
         StringBuilder stringBuilder = new StringBuilder();
         for(int i=0; i<8; i++){
-            stringBuilder.append("--------------------------------------------\n").append(dateTime.plusDays(i).getDayOfWeek());
+            stringBuilder.append("--------------------------------------------\n").append(dateTime.plusDays(i).getDayOfWeek()).append("\n");
             for(Event event:pdfGenerator.sortEvents()){
                 if(event.getEventTime().isAfter(dateTime.plusDays(i)) && event.getEventTime().isBefore(dateTime.plusDays(i+1))){
                     stringBuilder.append(event.getEventName()).append(" ").append(event.getEventTime().
-                            format(DateTimeFormatter.ofPattern("HH:mm:ss"))).append(" room Number: ").append(event.getRoomNumber());
+                            format(DateTimeFormatter.ofPattern("HH:mm:ss"))).append(" room Number: ").append(event.getRoomNumber()).append("\n");
                 }
             }
         }

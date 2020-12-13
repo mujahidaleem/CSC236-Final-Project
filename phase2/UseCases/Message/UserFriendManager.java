@@ -27,12 +27,10 @@ public abstract class UserFriendManager implements Serializable {
     /**
      * Prints out the friends of the user
      */
-    public String displayFriend(UserManager userManager) {
-        StringBuilder returnStr = null;
+    public void displayFriend(UserManager userManager) {
         for (int userId : currentUser.getFriendList()) {
-            returnStr.append(userManager.getUsers().get(userId-1000)).append("\n");
+            System.out.println(userManager.getUsers().get(userId-1000));
         }
-        return returnStr.toString();
     }
 
     /**
@@ -41,12 +39,10 @@ public abstract class UserFriendManager implements Serializable {
      * @param user   The current user
      * @param friend Friend of the user
      */
-    public String displayChatLog(User user, User friend) {
-        StringBuilder returnStr = null;
+    public void displayChatLog(User user, User friend) {
         for (Message message : userToMessages.get(createKey(user, friend))) {
-            returnStr.append(message).append("\n");
+            System.out.println(message);
         }
-        return returnStr.toString();
     }
 
     /**
@@ -120,9 +116,6 @@ public abstract class UserFriendManager implements Serializable {
         this.currentUser = currentUser;
     }
 
-    public User getCurrentUser(){
-        return currentUser;
-    }
     /**
      * Get a list of messages by a user
      *
@@ -132,7 +125,5 @@ public abstract class UserFriendManager implements Serializable {
     public HashMap<ArrayList<Integer>, ArrayList<Message>> getUserToMessages() {
         return userToMessages;
     }
-
-
 }
 

@@ -36,3 +36,5 @@ Extra
 testing the functions of the program will be easier. In this initializer method, all events are created by john, and
 the event Halloween already has full capacity. This initializer will create 3 ser files that will be read when you
 run the program.
+
+Additionally,  if you can't connect to the database, change lines 65-68 in LoginMenuController from read data to readfile
